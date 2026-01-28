@@ -1,0 +1,25 @@
+{
+  "name": "get_expenses_b",
+  "description": "Get all expenses. Returns: untyped list of dicts.",
+  "inputSchema": {
+    "properties": {},
+    "type": "object"
+  },
+  "outputSchema": {
+    "properties": {
+      "result": {
+        "items": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "result"
+    ],
+    "type": "object",
+    "x-fastmcp-wrap-result": true
+  },
+  "annotations": null
+}

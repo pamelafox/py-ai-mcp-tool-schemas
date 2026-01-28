@@ -127,7 +127,7 @@ async def add_expense_cat_a(
     category: str,
     description: str,
 ) -> str:
-    """Add a new expense. Category: no constraints (plain str)."""
+    """Add a new expense for the given date, amount, category, and description."""
     return await _add_expense_impl(expense_date, amount, category, description)
 
 
@@ -138,7 +138,7 @@ async def add_expense_cat_b(
     category: Annotated[str, "Must be one of: food, transport, entertainment, shopping, gadget, other"],
     description: str,
 ) -> str:
-    """Add a new expense. Category: description hints valid values."""
+    """Add a new expense for the given date, amount, category, and description."""
     return await _add_expense_impl(expense_date, amount, category, description)
 
 
@@ -146,22 +146,22 @@ async def add_expense_cat_b(
 async def add_expense_cat_c(
     expense_date: date,
     amount: float,
-    category: Category,
+    category: CATEGORY_LITERAL,
     description: str,
 ) -> str:
-    """Add a new expense. Category: Python Enum."""
-    return await _add_expense_impl(expense_date, amount, category.value, description)
+    """Add a new expense for the given date, amount, category, and description."""
+    return await _add_expense_impl(expense_date, amount, category, description)
 
 
 @mcp.tool
 async def add_expense_cat_d(
     expense_date: date,
     amount: float,
-    category: CATEGORY_LITERAL,
+    category: Category,
     description: str,
 ) -> str:
-    """Add a new expense. Category: Literal with inline allowed values."""
-    return await _add_expense_impl(expense_date, amount, category, description)
+    """Add a new expense for the given date, amount, category, and description."""
+    return await _add_expense_impl(expense_date, amount, category.value, description)
 
 
 # =============================================================================
@@ -176,7 +176,7 @@ async def add_expense_date_a(
     category: Category,
     description: str,
 ) -> str:
-    """Add a new expense. Date: plain str, no format hint."""
+    """Add a new expense for the given date, amount, category, and description."""
     return await _add_expense_impl(_parse_date(expense_date), amount, category.value, description)
 
 
@@ -187,7 +187,7 @@ async def add_expense_date_b(
     category: Category,
     description: str,
 ) -> str:
-    """Add a new expense. Date: str with description hint."""
+    """Add a new expense for the given date, amount, category, and description."""
     return await _add_expense_impl(_parse_date(expense_date), amount, category.value, description)
 
 
@@ -198,7 +198,7 @@ async def add_expense_date_c(
     category: Category,
     description: str,
 ) -> str:
-    """Add a new expense. Date: Python date type."""
+    """Add a new expense for the given date, amount, category, and description."""
     return await _add_expense_impl(expense_date, amount, category.value, description)
 
 
@@ -209,7 +209,7 @@ async def add_expense_date_d(
     category: Category,
     description: str,
 ) -> str:
-    """Add a new expense. Date: str with regex pattern constraint."""
+    """Add a new expense for the given date, amount, category, and description."""
     return await _add_expense_impl(_parse_date(expense_date), amount, category.value, description)
 
 

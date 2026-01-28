@@ -32,7 +32,7 @@ from dotenv import load_dotenv
 from openai import AsyncOpenAI
 from pydantic_ai import Agent
 from pydantic_ai.mcp import MCPServerStreamableHTTP
-from pydantic_ai.models.openai import OpenAIChatModel
+from pydantic_ai.models.openai import OpenAIResponsesModel
 from pydantic_ai.providers.openai import OpenAIProvider
 
 load_dotenv(override=True)
@@ -54,29 +54,32 @@ API_HOST = os.getenv("API_HOST", "github")
 MCP_SERVER_URL = os.getenv("MCP_SERVER_URL", "http://localhost:8000/mcp")
 
 
-def get_model() -> tuple[OpenAIChatModel, DefaultAzureCredential | None]:
+def get_model() -> tuple[OpenAIResponsesModel, DefaultAzureCredential | None]:
     """Configure the model based on API_HOST environment variable."""
     async_credential = None
 
     if API_HOST == "azure":
         async_credential = DefaultAzureCredential()
         token_provider = get_bearer_token_provider(async_credential, "https://cognitiveservices.azure.com/.default")
+        # Responses API uses /openai/v1/ base URL
         client = AsyncOpenAI(
             base_url=os.environ["AZURE_OPENAI_ENDPOINT"],
             api_key=token_provider,
         )
-        model = OpenAIChatModel(
+        model = OpenAIResponsesModel(
             os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT"], provider=OpenAIProvider(openai_client=client)
         )
     elif API_HOST == "github":
         client = AsyncOpenAI(api_key=os.environ["GITHUB_TOKEN"], base_url="https://models.inference.ai.azure.com")
-        model = OpenAIChatModel(os.getenv("GITHUB_MODEL", "gpt-4o"), provider=OpenAIProvider(openai_client=client))
+        model = OpenAIResponsesModel(os.getenv("GITHUB_MODEL", "gpt-4o"), provider=OpenAIProvider(openai_client=client))
     elif API_HOST == "ollama":
         client = AsyncOpenAI(base_url=os.environ.get("OLLAMA_ENDPOINT", "http://localhost:11434/v1"), api_key="none")
-        model = OpenAIChatModel(os.environ["OLLAMA_MODEL"], provider=OpenAIProvider(openai_client=client))
+        model = OpenAIResponsesModel(os.environ["OLLAMA_MODEL"], provider=OpenAIProvider(openai_client=client))
     else:
         client = AsyncOpenAI(api_key=os.environ["OPENAI_API_KEY"])
-        model = OpenAIChatModel(os.environ.get("OPENAI_MODEL", "gpt-4o"), provider=OpenAIProvider(openai_client=client))
+        model = OpenAIResponsesModel(
+            os.environ.get("OPENAI_MODEL", "gpt-4o"), provider=OpenAIProvider(openai_client=client)
+        )
 
     return model, async_credential
 
@@ -86,7 +89,7 @@ def get_model() -> tuple[OpenAIChatModel, DefaultAzureCredential | None]:
 # =============================================================================
 
 
-def create_agent(toolset, model: OpenAIChatModel) -> Agent[None, str]:
+def create_agent(toolset, model: OpenAIResponsesModel) -> Agent[None, str]:
     """Create an agent with the given toolset.
 
     Args:

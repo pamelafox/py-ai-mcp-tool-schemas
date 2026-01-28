@@ -1,0 +1,50 @@
+{
+  "name": "get_expenses_c",
+  "description": "Get all expenses. Returns: typed list of Expense models.",
+  "inputSchema": {
+    "properties": {},
+    "type": "object"
+  },
+  "outputSchema": {
+    "properties": {
+      "result": {
+        "items": {
+          "description": "A single expense record.",
+          "properties": {
+            "date": {
+              "description": "Date of the expense",
+              "format": "date",
+              "type": "string"
+            },
+            "amount": {
+              "description": "Amount spent",
+              "type": "number"
+            },
+            "category": {
+              "description": "Category of expense",
+              "type": "string"
+            },
+            "description": {
+              "description": "Description of the expense",
+              "type": "string"
+            }
+          },
+          "required": [
+            "date",
+            "amount",
+            "category",
+            "description"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "result"
+    ],
+    "type": "object",
+    "x-fastmcp-wrap-result": true
+  },
+  "annotations": null
+}

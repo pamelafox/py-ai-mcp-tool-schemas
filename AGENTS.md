@@ -1,5 +1,9 @@
 # Instructions for coding agents
 
+## Markdown files
+
+Always check for markdownlint issues and resolve them.
+
 ## Updating Python dependencies
 
 When updating or adding Python dependencies:

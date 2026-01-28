@@ -1,0 +1,21 @@
+{
+  "name": "get_expenses_a",
+  "description": "Get all expenses. Returns: formatted text string.",
+  "inputSchema": {
+    "properties": {},
+    "type": "object"
+  },
+  "outputSchema": {
+    "properties": {
+      "result": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "result"
+    ],
+    "type": "object",
+    "x-fastmcp-wrap-result": true
+  },
+  "annotations": null
+}

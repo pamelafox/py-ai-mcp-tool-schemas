@@ -1,0 +1,42 @@
+{
+  "name": "add_expense_cat_b",
+  "description": "Add a new expense for the given date, amount, category, and description.",
+  "inputSchema": {
+    "properties": {
+      "expense_date": {
+        "format": "date",
+        "type": "string"
+      },
+      "amount": {
+        "type": "number"
+      },
+      "category": {
+        "description": "Must be one of: food, transport, entertainment, shopping, gadget, other",
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "expense_date",
+      "amount",
+      "category",
+      "description"
+    ],
+    "type": "object"
+  },
+  "outputSchema": {
+    "properties": {
+      "result": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "result"
+    ],
+    "type": "object",
+    "x-fastmcp-wrap-result": true
+  },
+  "annotations": null
+}

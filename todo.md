@@ -31,8 +31,8 @@ agent = Agent(model, toolsets=[server], allowed_tools=["add_expense_b"])
 | --- | --- | --- |
 | `add_expense_cat_a` | `str` | No constraints |
 | `add_expense_cat_b` | `Annotated[str, "food, transport, ..."]` | Description hints valid values |
-| `add_expense_cat_c` | `Enum` | Python enum |
-| `add_expense_cat_d` | `Literal["food", "transport", ...]` | Inline allowed values |
+| `add_expense_cat_c` | `Literal["food", "transport", ...]` | Inline allowed values |
+| `add_expense_cat_d` | `Enum` | Python enum |
 
 ### Date Field Variants
 
@@ -89,9 +89,9 @@ Uses `pydantic_evals` library with `Dataset`, `Case`, and evaluators.
 
 ## Schemas
 
-- [ ] Generate JSON schemas for all tool variants and save to `schemas/` directory
-- [ ] Verify FastMCP includes backwards-compatible `content` field alongside `structuredContent` (per MCP spec)
-- [ ] Document schema differences between variants (e.g., `list[dict]` vs `list[Expense]` outputSchema)
+- [x] Generate JSON schemas for all tool variants and save to `schemas/` directory
+- [x] Verify FastMCP includes backwards-compatible `content` field alongside `structuredContent` (per MCP spec)
+- [x] Document schema differences between variants (e.g., `list[dict]` vs `list[Expense]` outputSchema)
 
 ## Logfire Integration
 
