@@ -20,7 +20,7 @@
 | add_expense_date_a | expense_date: str | 78.6% | 0.77 | 11 | 14 |
 | add_expense_date_b | expense_date: Annotated[str, ...] | 78.6% | 0.79 | 11 | 14 |
 | add_expense_date_c | expense_date: date | 92.9% | 0.91 | 13 | 14 |
-| add_expense_date_d | expense_date: datetime | 71.4% | 0.70 | 10 | 14 |
+| add_expense_date_d | expense_date: Annotated[str, Field(pattern=...)] | 71.4% | 0.70 | 10 | 14 |
 
 ## Evaluation Breakdown
 
@@ -49,7 +49,7 @@
 | add_expense_date_a | expense_date: str | 78.6% | 11 | 14 |
 | add_expense_date_b | expense_date: Annotated[str, ...] | 78.6% | 11 | 14 |
 | add_expense_date_c | expense_date: date | 92.9% | 13 | 14 |
-| add_expense_date_d | expense_date: datetime | 71.4% | 10 | 14 |
+| add_expense_date_d | expense_date: Annotated[str, Field(pattern=...)] | 71.4% | 10 | 14 |
 
 ### date_match
 
@@ -58,7 +58,7 @@
 | add_expense_date_a | expense_date: str | 91.7% | 11 | 12 |
 | add_expense_date_b | expense_date: Annotated[str, ...] | 91.7% | 11 | 12 |
 | add_expense_date_c | expense_date: date | 100.0% | 12 | 12 |
-| add_expense_date_d | expense_date: datetime | 83.3% | 10 | 12 |
+| add_expense_date_d | expense_date: Annotated[str, Field(pattern=...)] | 83.3% | 10 | 12 |
 
 ### tool_called
 
@@ -71,7 +71,7 @@
 | add_expense_date_a | expense_date: str | 78.6% | 11 | 14 |
 | add_expense_date_b | expense_date: Annotated[str, ...] | 78.6% | 11 | 14 |
 | add_expense_date_c | expense_date: date | 92.9% | 13 | 14 |
-| add_expense_date_d | expense_date: datetime | 71.4% | 10 | 14 |
+| add_expense_date_d | expense_date: Annotated[str, Field(pattern=...)] | 71.4% | 10 | 14 |
 
 ## Detailed Results
 

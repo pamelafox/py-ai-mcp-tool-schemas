@@ -16,7 +16,7 @@ VARIANT_DESCRIPTIONS = {
     "add_expense_date_a": "expense_date: str",
     "add_expense_date_b": "expense_date: Annotated[str, ...]",
     "add_expense_date_c": "expense_date: date",
-    "add_expense_date_d": "expense_date: datetime",
+    "add_expense_date_d": "expense_date: Annotated[str, Field(pattern=...)]",
 }
 
 
