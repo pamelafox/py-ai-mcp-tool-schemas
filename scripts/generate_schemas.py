@@ -16,7 +16,7 @@ import json
 from pathlib import Path
 
 from mcp import ClientSession
-from mcp.client.streamable_http import streamablehttp_client
+from mcp.client.streamable_http import streamable_http_client
 
 MCP_SERVER_URL = "http://localhost:8000/mcp"
 SCHEMAS_DIR = Path(__file__).parent.parent / "schemas"
@@ -31,7 +31,7 @@ VARIANT_GROUPS = {
 
 async def fetch_tools() -> list[dict]:
     """Fetch tool definitions from the MCP server."""
-    async with streamablehttp_client(MCP_SERVER_URL) as (read_stream, write_stream, _):
+    async with streamable_http_client(MCP_SERVER_URL) as (read_stream, write_stream, _):
         async with ClientSession(read_stream, write_stream) as session:
             await session.initialize()
             result = await session.list_tools()
@@ -138,16 +138,25 @@ async def main():
         f.write('| `add_expense_cat_b` | `Annotated[str, "hint"]` | `{"type": "string", "description": "hint"}` |\n')
         f.write('| `add_expense_cat_c` | `Literal[...]` | `{"type": "string", "enum": [...]}` — Explicit enum |\n')
         f.write('| `add_expense_cat_d` | `Enum` | `{"type": "string", "enum": [...]}` — Same as Literal |\n\n')
-        f.write("**Key finding:** Both `Literal` and `Enum` produce identical JSON Schema with explicit `enum` arrays.\n\n")
+        f.write(
+            "**Key finding:** Both `Literal` and `Enum` produce identical JSON Schema "
+            "with explicit `enum` arrays.\n\n"
+        )
 
         f.write("### Date Field Variants\n\n")
         f.write("Testing date format handling:\n\n")
         f.write("| Variant | Python Type | JSON Schema Result |\n")
         f.write("| ------- | ----------- | ------------------ |\n")
         f.write('| `add_expense_date_a` | `str` | `{"type": "string"}` — No format hint |\n')
-        f.write('| `add_expense_date_b` | `Annotated[str, "YYYY-MM-DD"]` | `{"type": "string", "description": "..."}` |\n')
+        f.write(
+            '| `add_expense_date_b` | `Annotated[str, "YYYY-MM-DD"]` '
+            '| `{"type": "string", "description": "..."}` |\n'
+        )
         f.write('| `add_expense_date_c` | `date` | `{"type": "string", "format": "date"}` — ISO 8601 |\n')
-        f.write('| `add_expense_date_d` | `Annotated[str, Field(pattern=...)]` | `{"type": "string", "pattern": "..."}` |\n\n')
+        f.write(
+            '| `add_expense_date_d` | `Annotated[str, Field(pattern=...)]` '
+            '| `{"type": "string", "pattern": "..."}` |\n\n'
+        )
         f.write("**Key finding:** Python's `date` type produces `\"format\": \"date\"` (ISO 8601).\n\n")
 
         f.write("### Output Schema Variants\n\n")

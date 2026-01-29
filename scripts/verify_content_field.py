@@ -8,13 +8,13 @@ import asyncio
 import json
 
 from mcp import ClientSession
-from mcp.client.streamable_http import streamablehttp_client
+from mcp.client.streamable_http import streamable_http_client
 
 MCP_SERVER_URL = "http://localhost:8000/mcp"
 
 
 async def main():
-    async with streamablehttp_client(MCP_SERVER_URL) as (read_stream, write_stream, _):
+    async with streamable_http_client(MCP_SERVER_URL) as (read_stream, write_stream, _):
         async with ClientSession(read_stream, write_stream) as session:
             await session.initialize()
 
@@ -40,7 +40,7 @@ async def main():
 
             # Check for structuredContent field (typed data)
             if hasattr(result, "structuredContent") and result.structuredContent:
-                print(f"\n✓ structuredContent field present")
+                print("\n✓ structuredContent field present")
                 print(f"  {json.dumps(result.structuredContent, indent=2)[:500]}")
             else:
                 print("\n? structuredContent field not present (may be optional)")
