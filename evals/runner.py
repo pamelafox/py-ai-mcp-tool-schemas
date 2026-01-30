@@ -30,18 +30,18 @@ from datetime import datetime
 # Add parent directory to path for imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import logfire
-from azure.identity.aio import DefaultAzureCredential, get_bearer_token_provider
-from dotenv import load_dotenv
-from openai import AsyncOpenAI
-from pydantic_ai import Agent
-from pydantic_ai.mcp import MCPServerStreamableHTTP
-from pydantic_ai.models.openai import OpenAIResponsesModel
-from pydantic_ai.providers.openai import OpenAIProvider
+import logfire  # noqa: E402
+from azure.identity.aio import DefaultAzureCredential, get_bearer_token_provider  # noqa: E402
+from dotenv import load_dotenv  # noqa: E402
+from openai import AsyncOpenAI  # noqa: E402
+from pydantic_ai.mcp import MCPServerStreamableHTTP  # noqa: E402
+from pydantic_ai.models.openai import OpenAIResponsesModel  # noqa: E402
+from pydantic_ai.providers.openai import OpenAIProvider  # noqa: E402
 
-from evals.dataset import EXPENSE_CASES, ExpenseCase
-from evals.evaluators import EvalResult, ToolCallInfo, compute_score, run_all_evaluations
-from evals.report import generate_markdown_report
+from agents.pydanticai_expenses import ToolCallInfo, run_query  # noqa: E402
+from evals.dataset import EXPENSE_CASES, ExpenseCase  # noqa: E402
+from evals.evaluators import EvalResult, compute_score, run_all_evaluations  # noqa: E402
+from evals.report import generate_markdown_report  # noqa: E402
 
 load_dotenv(override=True)
 
@@ -57,21 +57,25 @@ logger.setLevel(logging.INFO)
 # Configuration
 # =============================================================================
 
-API_HOST = os.getenv("API_HOST", "github")
 MCP_SERVER_URL = os.getenv("MCP_SERVER_URL", "http://localhost:8000/mcp")
 
-# Model settings for reproducibility
-MODEL_SETTINGS = {
-    "temperature": 0,
-    "seed": 42,
-}
-
 # Tool variants to test
-CATEGORY_VARIANTS = [
-    "add_expense_cat_a",  # str
+#
+# NOTE: We intentionally exclude `add_expense_cat_a` (free-form `str`) from the
+# default eval set because it is largely a "known-bad" baseline: models have no
+# grounding for the allowed category set, so they often invent categories. It
+# can still be included via `--include-cat-a` or by explicitly listing it in
+# `--variants`.
+CATEGORY_VARIANTS_DEFAULT = [
     "add_expense_cat_b",  # Annotated[str, Field(...)]
     "add_expense_cat_c",  # Literal[...]
     "add_expense_cat_d",  # Enum
+    "add_expense_cat_e",  # Annotated[Enum, Field(description=...)]
+]
+
+CATEGORY_VARIANTS_ALL = [
+    "add_expense_cat_a",  # str
+    *CATEGORY_VARIANTS_DEFAULT,
 ]
 
 DATE_VARIANTS = [
@@ -81,8 +85,87 @@ DATE_VARIANTS = [
     "add_expense_date_d",  # Annotated[date, Field(...)]
 ]
 
-# Default to category variants
-DEFAULT_VARIANTS = CATEGORY_VARIANTS
+MODEL_INPUT_VARIANTS = [
+    "add_expense_model_a",  # Pydantic model input (nested object)
+]
+
+# Default to all variants (category + date + nested model input)
+ALL_VARIANTS = CATEGORY_VARIANTS_DEFAULT + DATE_VARIANTS + MODEL_INPUT_VARIANTS
+
+
+# =============================================================================
+# Model Setup
+# =============================================================================
+
+
+REASONING_LEVELS = ["none", "minimal", "low", "medium", "high", "xhigh"]
+DEFAULT_REASONING: str | None = None
+
+
+DEFAULT_SEED = 42
+
+
+def _supports_openai_reasoning(model_name: str) -> bool:
+    """Return True if the deployed model is expected to support `reasoning.*` params.
+
+    Azure OpenAI deployments are referenced by deployment name, so this is
+    necessarily heuristic. We keep it conservative to avoid hard failures on
+    non-reasoning models (e.g., gpt-4.1-mini).
+    """
+    name = (model_name or "").lower()
+    return name.startswith("gpt-5") or name.startswith("o")
+
+
+def get_model(
+    reasoning_effort: str | None = DEFAULT_REASONING,
+    seed: int = DEFAULT_SEED,
+) -> tuple[OpenAIResponsesModel, dict, DefaultAzureCredential]:
+    """Configure the model for evaluation.
+
+    Args:
+        reasoning_effort: Reasoning effort level (none, minimal, low, medium, high, xhigh)
+        seed: Seed for determinism/reproducibility
+
+    Returns:
+        Tuple of (model, model_settings, async_credential)
+    """
+    async_credential = DefaultAzureCredential()
+    token_provider = get_bearer_token_provider(async_credential, "https://cognitiveservices.azure.com/.default")
+    client = AsyncOpenAI(
+        base_url=os.environ["AZURE_OPENAI_ENDPOINT"],
+        api_key=token_provider,
+    )
+    deployment_name = os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT"]
+    model = OpenAIResponsesModel(deployment_name, provider=OpenAIProvider(openai_client=client))
+    # Model settings for evaluation
+    # `reasoning` stores optional model-provided reasoning summary text (not chain-of-thought).
+    model_settings: dict = {"seed": seed}
+
+    if reasoning_effort is not None and _supports_openai_reasoning(deployment_name):
+        model_settings.update(
+            {
+                "openai_reasoning_effort": reasoning_effort,
+                # NOTE: For GPT-5 models, OpenAI docs indicate `summary="auto"` is
+                # equivalent to the most detailed summarizer available.
+                "openai_reasoning_summary": "auto",
+            }
+        )
+    elif reasoning_effort is not None:
+        logger.info(
+            "Model '%s' does not support reasoning params; running without reasoning.*",
+            deployment_name,
+        )
+    return model, model_settings, async_credential
+
+
+def get_model_name() -> str:
+    """Get the model name from environment."""
+    return os.environ.get("AZURE_OPENAI_CHAT_DEPLOYMENT", "unknown")
+
+
+# =============================================================================
+# Data Classes
+# =============================================================================
 
 
 @dataclass
@@ -90,11 +173,13 @@ class RunResult:
     """Result of a single test case run."""
 
     case_name: str
+    user_query: str
     tool_variant: str
     tool_calls: list[ToolCallInfo]
     eval_results: dict[str, EvalResult]
     overall_score: float
     agent_output: str
+    reasoning: str | None = None  # Model-provided reasoning summary text (if returned)
     error: str | None = None
 
 
@@ -118,146 +203,70 @@ class VariantSummary:
 
 
 # =============================================================================
-# Model Setup
-# =============================================================================
-
-
-def get_model() -> tuple[OpenAIResponsesModel, DefaultAzureCredential | None, str]:
-    """Configure the model based on API_HOST environment variable.
-    
-    Returns:
-        Tuple of (model, async_credential, model_name)
-    """
-    async_credential = None
-
-    if API_HOST == "azure":
-        async_credential = DefaultAzureCredential()
-        token_provider = get_bearer_token_provider(async_credential, "https://cognitiveservices.azure.com/.default")
-        client = AsyncOpenAI(
-            base_url=os.environ["AZURE_OPENAI_ENDPOINT"],
-            api_key=token_provider,
-        )
-        model_name = os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT"]
-        model = OpenAIResponsesModel(model_name, provider=OpenAIProvider(openai_client=client))
-    elif API_HOST == "github":
-        client = AsyncOpenAI(api_key=os.environ["GITHUB_TOKEN"], base_url="https://models.inference.ai.azure.com")
-        model_name = os.getenv("GITHUB_MODEL", "gpt-4o")
-        model = OpenAIResponsesModel(model_name, provider=OpenAIProvider(openai_client=client))
-    elif API_HOST == "ollama":
-        client = AsyncOpenAI(base_url=os.environ.get("OLLAMA_ENDPOINT", "http://localhost:11434/v1"), api_key="none")
-        model_name = os.environ["OLLAMA_MODEL"]
-        model = OpenAIResponsesModel(model_name, provider=OpenAIProvider(openai_client=client))
-    else:
-        client = AsyncOpenAI(api_key=os.environ["OPENAI_API_KEY"])
-        model_name = os.environ.get("OPENAI_MODEL", "gpt-4o")
-        model = OpenAIResponsesModel(model_name, provider=OpenAIProvider(openai_client=client))
-
-    return model, async_credential, model_name
-
-
-# =============================================================================
-# Tool Call Extraction
-# =============================================================================
-
-
-def extract_tool_calls(result) -> list[ToolCallInfo]:
-    """Extract tool call information from agent result.
-
-    Pydantic AI agent results contain message history with tool calls.
-    """
-    tool_calls = []
-
-    # Access all messages from the result
-    for message in result.all_messages():
-        # Look for model responses with tool calls
-        if hasattr(message, "parts"):
-            for part in message.parts:
-                if hasattr(part, "tool_name") and hasattr(part, "args"):
-                    # This is a ToolCallPart
-                    # args can be a JSON string or dict depending on model
-                    args = part.args
-                    if isinstance(args, str):
-                        try:
-                            args = json.loads(args)
-                        except json.JSONDecodeError:
-                            args = {}
-                    elif not isinstance(args, dict):
-                        args = {}
-                    tool_calls.append(
-                        ToolCallInfo(
-                            tool_name=part.tool_name,
-                            arguments=args,
-                        )
-                    )
-
-    return tool_calls
-
-
-# =============================================================================
 # Runner
 # =============================================================================
 
 
 async def run_single_case(
     server,
-    model: OpenAIResponsesModel,
+    model,
+    model_settings: dict,
     tool_variant: str,
     case: ExpenseCase,
 ) -> RunResult:
     """Run a single test case with a specific tool variant."""
-    try:
-        # Filter to only the specified tool variant
-        toolset = server.filtered(lambda ctx, tool, tv=tool_variant: tool.name == tv)
+    query_result = await run_query(server, model, tool_variant, case.prompt, model_settings)
 
-        agent = Agent(
-            model,
-            system_prompt=f"You help users log expenses. Today's date is {datetime.now().strftime('%Y-%m-%d')}.",
-            output_type=str,
-            toolsets=[toolset],
-        )
-
-        result = await agent.run(case.prompt, model_settings=MODEL_SETTINGS)
-
-        # Extract tool calls from result
-        tool_calls = extract_tool_calls(result)
-
-        # Run evaluations
-        eval_results = run_all_evaluations(tool_calls, case)
-        overall_score = compute_score(eval_results)
-
+    if query_result.error:
+        logger.error(f"Error running case {case.name} with {tool_variant}: {query_result.error}")
         return RunResult(
             case_name=case.name,
-            tool_variant=tool_variant,
-            tool_calls=tool_calls,
-            eval_results=eval_results,
-            overall_score=overall_score,
-            agent_output=result.output,
-        )
-
-    except Exception as e:
-        logger.exception(f"Error running case {case.name} with {tool_variant}")
-        return RunResult(
-            case_name=case.name,
+            user_query=case.prompt,
             tool_variant=tool_variant,
             tool_calls=[],
             eval_results={},
             overall_score=0.0,
             agent_output="",
-            error=str(e),
+            error=query_result.error,
         )
+
+    # Run evaluations
+    eval_results = run_all_evaluations(query_result.tool_calls, case)
+    overall_score = compute_score(eval_results)
+
+    return RunResult(
+        case_name=case.name,
+        user_query=case.prompt,
+        tool_variant=tool_variant,
+        tool_calls=query_result.tool_calls,
+        eval_results=eval_results,
+        overall_score=overall_score,
+        agent_output=query_result.output,
+        reasoning=query_result.reasoning,
+    )
 
 
 async def run_evaluation(
     variants: list[str],
     cases: list[ExpenseCase],
+    reasoning_effort: str = DEFAULT_REASONING,
+    seed: int = DEFAULT_SEED,
     progress_callback: Callable[[str], None] | None = None,
-) -> tuple[list[RunResult], dict[str, VariantSummary], str]:
+) -> tuple[list[RunResult], dict[str, VariantSummary], str, dict]:
     """Run full evaluation across variants and cases.
+
+    Args:
+        variants: List of tool variants to test
+        cases: List of test cases to run
+        reasoning_effort: Reasoning effort level (none, minimal, low, medium, high, xhigh)
+        seed: Seed for determinism/reproducibility
+        progress_callback: Optional callback for progress updates
     
     Returns:
-        Tuple of (results, summaries, model_name)
+        Tuple of (results, summaries, model_name, model_settings)
     """
-    model, async_credential, model_name = get_model()
+    model, model_settings, async_credential = get_model(reasoning_effort, seed=seed)
+    model_name = get_model_name()
     results: list[RunResult] = []
     summaries: dict[str, VariantSummary] = {v: VariantSummary(variant_name=v) for v in variants}
 
@@ -272,7 +281,7 @@ async def run_evaluation(
                     if progress_callback:
                         progress_callback(f"[{current}/{total}] {variant} / {case.name}")
 
-                    run_result = await run_single_case(server, model, variant, case)
+                    run_result = await run_single_case(server, model, model_settings, variant, case)
                     results.append(run_result)
 
                     # Update summary
@@ -299,7 +308,7 @@ async def run_evaluation(
         if async_credential:
             await async_credential.close()
 
-    return results, summaries, model_name
+    return results, summaries, model_name, model_settings
 
 
 # =============================================================================
@@ -376,6 +385,7 @@ def export_results(
     results: list[RunResult],
     summaries: dict[str, VariantSummary],
     model_name: str,
+    model_settings: dict,
     output_dir: str | None = None,
 ) -> str:
     """Export results to a timestamped folder.
@@ -398,9 +408,8 @@ def export_results(
     data = {
         "metadata": {
             "timestamp": datetime.now().isoformat(),
-            "api_host": API_HOST,
             "model_name": model_name,
-            "model_settings": MODEL_SETTINGS,
+            "model_settings": model_settings,
             "mcp_server_url": MCP_SERVER_URL,
         },
         "summaries": {
@@ -417,6 +426,7 @@ def export_results(
         "results": [
             {
                 "case_name": r.case_name,
+                "user_query": r.user_query,
                 "tool_variant": r.tool_variant,
                 "tool_calls": [{"tool_name": tc.tool_name, "arguments": tc.arguments} for tc in r.tool_calls],
                 "eval_results": {
@@ -425,6 +435,7 @@ def export_results(
                 },
                 "overall_score": r.overall_score,
                 "agent_output": r.agent_output,
+                "reasoning": r.reasoning,
                 "error": r.error,
             }
             for r in results
@@ -456,14 +467,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--variants",
         type=str,
-        default=",".join(DEFAULT_VARIANTS),
-        help=f"Comma-separated list of tool variants (default: {','.join(DEFAULT_VARIANTS)})",
+        default="",
+        help="Comma-separated list of tool variants (default: all variants)",
     )
     parser.add_argument(
-        "--all",
+        "--include-cat-a",
         action="store_true",
-        dest="all_variants",
-        help="Run all variants (category + date)",
+        help="Include add_expense_cat_a (free-form category: str) in the default variants",
     )
     parser.add_argument(
         "--cases",
@@ -478,6 +488,19 @@ def parse_args() -> argparse.Namespace:
         help="Output folder path (default: evals/runs/<timestamp>)",
     )
     parser.add_argument(
+        "--reasoning",
+        type=str,
+        default=DEFAULT_REASONING,
+        choices=REASONING_LEVELS,
+        help="Reasoning effort level (optional; if omitted, not sent)",
+    )
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=DEFAULT_SEED,
+        help=f"Seed for reproducibility (default: {DEFAULT_SEED})",
+    )
+    parser.add_argument(
         "--verbose",
         action="store_true",
         help="Print detailed results for each case",
@@ -489,8 +512,10 @@ async def main():
     args = parse_args()
 
     # Parse variants
-    if args.all_variants:
-        variants = CATEGORY_VARIANTS + DATE_VARIANTS
+    if not args.variants:
+        variants = ALL_VARIANTS
+        if args.include_cat_a:
+            variants = CATEGORY_VARIANTS_ALL + DATE_VARIANTS
     else:
         variants = [v.strip() for v in args.variants.split(",") if v.strip()]
 
@@ -504,12 +529,24 @@ async def main():
     else:
         cases = EXPENSE_CASES
 
-    logger.info(f"Running evaluation with {len(variants)} variants and {len(cases)} cases")
+    logger.info(
+        "Running evaluation with %s variants, %s cases, reasoning=%s, seed=%s",
+        len(variants),
+        len(cases),
+        args.reasoning,
+        args.seed,
+    )
 
     def progress(msg: str) -> None:
         logger.info(msg)
 
-    results, summaries, model_name = await run_evaluation(variants, cases, progress_callback=progress)
+    results, summaries, model_name, model_settings = await run_evaluation(
+        variants,
+        cases,
+        reasoning_effort=args.reasoning,
+        seed=args.seed,
+        progress_callback=progress,
+    )
 
     # Print summary
     print_summary_table(summaries)
@@ -519,7 +556,9 @@ async def main():
         print_results_table(results)
 
     # Export results
-    output_folder = export_results(results, summaries, model_name, args.output if args.output else None)
+    output_folder = export_results(
+        results, summaries, model_name, model_settings, args.output if args.output else None
+    )
     print(f"\nResults saved to: {output_folder}")
 
 

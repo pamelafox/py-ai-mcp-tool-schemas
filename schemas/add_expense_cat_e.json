@@ -1,9 +1,10 @@
 {
-  "name": "add_expense_date_a",
+  "name": "add_expense_cat_e",
   "description": "Add a new expense.",
   "inputSchema": {
     "properties": {
       "expense_date": {
+        "format": "date",
         "type": "string"
       },
       "amount": {
@@ -18,7 +19,8 @@
           "gadget",
           "other"
         ],
-        "type": "string"
+        "type": "string",
+        "description": "Choose the closest category for the expense. Do not ask follow-up questions just to disambiguate the category; pick the best fit using the description and common sense. If truly unclear, use OTHER.\n\nHeuristics: FOOD=meals, groceries, coffee; TRANSPORT=rideshare, taxi, gas, transit, parking; ENTERTAINMENT=movies, concerts, games; SHOPPING=general retail and household purchases; GADGET=electronics/devices/accessories; OTHER=fees, services, subscriptions, or anything that does not fit well."
       },
       "description": {
         "type": "string"

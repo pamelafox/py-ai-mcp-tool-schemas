@@ -8,6 +8,7 @@ Contains test cases with expense-logging prompts categorized by difficulty:
 
 from dataclasses import dataclass
 from datetime import date, timedelta
+from typing import Literal
 
 
 @dataclass
@@ -19,6 +20,7 @@ class ExpenseCase:
     expected_category: str | None = None  # Expected category value (if applicable)
     expected_date: str | None = None  # Expected date in YYYY-MM-DD format
     expected_amount: float | None = None
+    expected_reimbursable: bool | Literal["unknown"] | None = None
     difficulty: str = "clear"  # clear, ambiguous, edge_case
 
 
@@ -30,8 +32,78 @@ def get_yesterday() -> str:
     return (date.today() - timedelta(days=1)).isoformat()
 
 
-def get_tomorrow() -> str:
-    return (date.today() + timedelta(days=1)).isoformat()
+def get_monday_of_current_week() -> str:
+    """Return ISO date for the Monday of the current week.
+
+    Uses Python's weekday convention: Monday=0 ... Sunday=6.
+    """
+    today = date.today()
+    monday = today - timedelta(days=today.weekday())
+    return monday.isoformat()
+
+
+def get_monday_before_this_one() -> str:
+    """Return ISO date for the Monday of the previous week."""
+    this_monday = date.fromisoformat(get_monday_of_current_week())
+    return (this_monday - timedelta(days=7)).isoformat()
+
+
+def get_two_mondays_ago() -> str:
+    """Return ISO date for the Monday two weeks before the current week."""
+    this_monday = date.fromisoformat(get_monday_of_current_week())
+    return (this_monday - timedelta(days=14)).isoformat()
+
+
+def get_first_monday_of_current_month() -> str:
+    """Return ISO date for the first Monday of the current month."""
+    today = date.today()
+    first = today.replace(day=1)
+    # weekday(): Monday=0 ... Sunday=6
+    offset = (0 - first.weekday()) % 7
+    return (first + timedelta(days=offset)).isoformat()
+
+
+def get_last_day_of_previous_month() -> str:
+    """Return ISO date for the last calendar day of the previous month."""
+    today = date.today()
+    first_of_this_month = today.replace(day=1)
+    last_of_prev_month = first_of_this_month - timedelta(days=1)
+    return last_of_prev_month.isoformat()
+
+
+def get_last_business_day_of_previous_month() -> str:
+    """Return ISO date for the last weekday (Mon-Fri) of the previous month."""
+    last = date.fromisoformat(get_last_day_of_previous_month())
+    # weekday(): Monday=0 ... Sunday=6
+    while last.weekday() >= 5:
+        last -= timedelta(days=1)
+    return last.isoformat()
+
+
+def get_days_ago(days: int) -> str:
+    """Return ISO date for N days ago."""
+    return (date.today() - timedelta(days=days)).isoformat()
+
+
+def get_day_after_tomorrow() -> str:
+    """Return ISO date for the day after tomorrow."""
+    return (date.today() + timedelta(days=2)).isoformat()
+
+
+def get_last_weekday(target_weekday: int) -> str:
+    """Return ISO date for the previous occurrence of a weekday.
+
+    Args:
+        target_weekday: Monday=0 ... Sunday=6
+
+    Notes:
+        Always returns a date strictly before today (i.e. "last Friday" on a Friday means 7 days ago).
+    """
+    today = date.today()
+    delta = (today.weekday() - target_weekday) % 7
+    if delta == 0:
+        delta = 7
+    return (today - timedelta(days=delta)).isoformat()
 
 
 # =============================================================================
@@ -40,6 +112,7 @@ def get_tomorrow() -> str:
 
 EXPENSE_CASES: list[ExpenseCase] = [
     # --- Clear, unambiguous requests ---
+    # These should be straightforward: explicit category and/or clear mapping, and an unambiguous date.
     ExpenseCase(
         name="clear_food_yesterday",
         prompt="Yesterday I bought a sandwich for $12.50.",
@@ -74,57 +147,166 @@ EXPENSE_CASES: list[ExpenseCase] = [
     ),
     ExpenseCase(
         name="clear_gadget",
-        prompt="Yesterday I purchased a laptop for $1200.",
+        prompt="Yesterday I purchased a laptop for 1200 bucks.",
         expected_category="gadget",
         expected_date=get_yesterday(),
         expected_amount=1200.0,
         difficulty="clear",
     ),
-    # --- Ambiguous requests ---
     ExpenseCase(
-        name="ambiguous_no_date",
-        prompt="I spent $50 on groceries.",
+        name="clear_reimbursable_true",
+        prompt="Yesterday I paid $18 for a taxi to a client meeting.",
+        expected_category="transport",
+        expected_date=get_yesterday(),
+        expected_amount=18.0,
+        expected_reimbursable=True,
+        difficulty="clear",
+    ),
+    ExpenseCase(
+        name="clear_reimbursable_true_customer_lunch",
+        prompt="Yesterday I spent $32 on lunch with a customer.",
         expected_category="food",
-        expected_amount=50.0,
-        difficulty="ambiguous",
-        # Date not specified - model should use today or ask
-    ),
-    ExpenseCase(
-        name="ambiguous_vague_category",
-        prompt="Yesterday I paid $30 for stuff at the store.",
         expected_date=get_yesterday(),
-        expected_amount=30.0,
-        difficulty="ambiguous",
-        # Category unclear - could be shopping or other
+        expected_amount=32.0,
+        expected_reimbursable=True,
+        difficulty="clear",
     ),
     ExpenseCase(
-        name="ambiguous_relative_date",
-        prompt="Last week I spent $89 on concert tickets.",
+        name="clear_reimbursable_false",
+        prompt="Yesterday I bought a movie ticket for $22 with friends.",
         expected_category="entertainment",
-        expected_amount=89.0,
-        difficulty="ambiguous",
-        # "Last week" is vague - which day?
+        expected_date=get_yesterday(),
+        expected_amount=22.0,
+        expected_reimbursable=False,
+        difficulty="clear",
     ),
     ExpenseCase(
-        name="ambiguous_mixed_items",
-        prompt="I bought coffee and a phone case for $55 yesterday.",
+        name="clear_reimbursable_false_personal_dinner",
+        prompt="Yesterday I spent $48 on dinner with my family.",
+        expected_category="food",
         expected_date=get_yesterday(),
-        expected_amount=55.0,
+        expected_amount=48.0,
+        expected_reimbursable=False,
+        difficulty="clear",
+    ),
+    ExpenseCase(
+        name="ambiguous_reimbursable_unknown",
+        prompt="Yesterday I bought lunch for $14 after a work event, but I'm not sure if it's reimbursable.",
+        expected_category="food",
+        expected_date=get_yesterday(),
+        expected_amount=14.0,
+        expected_reimbursable="unknown",
         difficulty="ambiguous",
-        # Multiple categories in one purchase
+    ),
+    ExpenseCase(
+        name="ambiguous_reimbursable_unknown_mixed_outing",
+        prompt="Yesterday I spent $24 on drinks after work with coworkers and friends.",
+        expected_category=None,
+        expected_date=get_yesterday(),
+        expected_amount=24.0,
+        expected_reimbursable="unknown",
+        difficulty="ambiguous",
+    ),
+    # --- Hard-but-precise (relative-date) requests ---
+    # These have a single correct date, but require calendar reasoning relative to "today".
+    ExpenseCase(
+        name="relative_date_monday_before_this_one",
+        prompt="I bought a sandwich the Monday before this one for $12.50.",
+        expected_category="food",
+        expected_date=get_monday_before_this_one(),
+        expected_amount=12.50,
+        difficulty="edge_case",
+    ),
+    ExpenseCase(
+        name="relative_date_two_mondays_ago",
+        prompt="Two Mondays ago I spent $8.75 on coffee.",
+        expected_category="food",
+        expected_date=get_two_mondays_ago(),
+        expected_amount=8.75,
+        difficulty="edge_case",
+    ),
+    ExpenseCase(
+        name="relative_date_first_monday_this_month",
+        prompt="I bought a sandwich on the first Monday of this month for $12.50.",
+        expected_category="food",
+        expected_date=get_first_monday_of_current_month(),
+        expected_amount=12.50,
+        difficulty="edge_case",
+    ),
+    ExpenseCase(
+        name="relative_date_last_day_last_month",
+        prompt="On the last day of last month I spent $25.99 on a movie ticket.",
+        expected_category="entertainment",
+        expected_date=get_last_day_of_previous_month(),
+        expected_amount=25.99,
+        difficulty="edge_case",
+    ),
+    ExpenseCase(
+        name="relative_date_last_business_day_last_month",
+        prompt="I paid $60 for gas on the last business day of last month.",
+        expected_category="transport",
+        expected_date=get_last_business_day_of_previous_month(),
+        expected_amount=60.0,
+        difficulty="edge_case",
+    ),
+    ExpenseCase(
+        name="relative_date_day_before_yesterday_coffee",
+        prompt="The day before yesterday I spent $4.50 on coffee.",
+        expected_category="food",
+        expected_date=get_days_ago(2),
+        expected_amount=4.50,
+        difficulty="edge_case",
+    ),
+    ExpenseCase(
+        name="relative_date_three_days_ago_rideshare",
+        prompt="Three days ago I took an Uber to the airport for $38.",
+        expected_category="transport",
+        expected_date=get_days_ago(3),
+        expected_amount=38.0,
+        difficulty="edge_case",
+    ),
+    ExpenseCase(
+        name="relative_date_last_friday_movie",
+        prompt="Last Friday I spent $18 on a movie ticket.",
+        expected_category="entertainment",
+        expected_date=get_last_weekday(4),
+        expected_amount=18.0,
+        difficulty="edge_case",
+    ),
+    ExpenseCase(
+        name="relative_date_day_after_tomorrow_bus_pass",
+        prompt="The day after tomorrow I will buy a bus pass for $20.",
+        expected_category="transport",
+        expected_date=get_day_after_tomorrow(),
+        expected_amount=20.0,
+        difficulty="edge_case",
+    ),
+    # --- Hard-but-precise (category inference) requests ---
+    # These have a single expected category/date, but require mapping from real-world phrasing.
+    ExpenseCase(
+        name="hard_category_grocery_delivery_yesterday",
+        prompt="Yesterday I paid $65 for Instacart grocery delivery.",
+        expected_category="food",
+        expected_date=get_yesterday(),
+        expected_amount=65.0,
+        difficulty="edge_case",
+    ),
+    ExpenseCase(
+        name="hard_category_headphones_last_day_last_month",
+        prompt="On the last day of last month I bought headphones for $79.99.",
+        # "Headphones" is intentionally hard-but-precise: it's not one of the category labels,
+        # so the model must map it into our limited set. We treat it as an electronics purchase
+        # and expect "gadget" (vs plausible-but-wrong "shopping" / "entertainment").
+        expected_category="gadget",
+        expected_date=get_last_day_of_previous_month(),
+        expected_amount=79.99,
+        difficulty="edge_case",
     ),
     # --- Edge cases ---
-    ExpenseCase(
-        name="edge_future_date",
-        prompt=f"I will spend $100 on a hotel tomorrow ({get_tomorrow()}).",
-        expected_date=get_tomorrow(),
-        expected_amount=100.0,
-        difficulty="edge_case",
-        # Future date - should this be allowed?
-    ),
+    # These are still precise, but stress the system with unusual inputs (currency, tiny/huge values, etc.).
     ExpenseCase(
         name="edge_large_amount",
-        prompt="Yesterday I bought a car for $35000.",
+        prompt="Yesterday I bought a car for 35000 USD.",
         expected_category="other",
         expected_date=get_yesterday(),
         expected_amount=35000.0,
@@ -154,6 +336,17 @@ EXPENSE_CASES: list[ExpenseCase] = [
         expected_amount=50.0,
         difficulty="edge_case",
         # Euro symbol instead of dollar
+    ),
+    # --- Spanish language cases ---
+    # Keep a single Spanish case as a language-robustness check without adding
+    # redundancy to the dataset.
+    ExpenseCase(
+        name="spanish_gadget",
+        prompt="Ayer compré una laptop por 1200 dólares.",
+        expected_category="gadget",
+        expected_date=get_yesterday(),
+        expected_amount=1200.0,
+        difficulty="clear",
     ),
 ]
 

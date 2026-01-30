@@ -1,6 +1,6 @@
 {
   "name": "get_expenses_a",
-  "description": "Get all expenses. Returns: formatted text string.",
+  "description": "Get all expenses.",
   "inputSchema": {
     "properties": {},
     "type": "object"

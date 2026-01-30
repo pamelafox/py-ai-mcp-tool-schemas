@@ -1,6 +1,6 @@
 {
   "name": "get_expenses_b",
-  "description": "Get all expenses. Returns: untyped list of dicts.",
+  "description": "Get all expenses.",
   "inputSchema": {
     "properties": {},
     "type": "object"

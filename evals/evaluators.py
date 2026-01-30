@@ -7,8 +7,15 @@ Evaluators check:
 """
 
 import re
+import sys
+import os
 from dataclasses import dataclass
+import json
 
+# Add parent directory to path for imports
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from agents.pydanticai_expenses import ToolCallInfo
 from evals.dataset import ExpenseCase
 
 # Valid category values (must match the Enum/Literal in expenses_mcp.py)
@@ -18,13 +25,31 @@ VALID_CATEGORIES = {"food", "transport", "entertainment", "shopping", "gadget", 
 DATE_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
 
-@dataclass
-class ToolCallInfo:
-    """Information extracted from a tool call."""
+def _extract_arg(arguments: dict, name: str):
+    """Extract an argument value from either a flat or nested tool-call shape.
 
-    tool_name: str
-    arguments: dict
-    result: str | None = None
+    Most variants call tools with flat args:
+      {"expense_date": "...", "category": "...", ...}
+
+    The Pydantic model input variant calls tools with a nested object:
+      {"expense": {"expense_date": "...", "category": "...", ...}}
+    """
+    if not isinstance(arguments, dict):
+        return None
+
+    if name in arguments:
+        return arguments.get(name)
+
+    expense = arguments.get("expense")
+    if isinstance(expense, str):
+        try:
+            expense = json.loads(expense)
+        except json.JSONDecodeError:
+            expense = None
+    if isinstance(expense, dict):
+        return expense.get(name)
+
+    return None
 
 
 @dataclass
@@ -59,7 +84,7 @@ def evaluate_category_valid(tool_calls: list[ToolCallInfo]) -> EvalResult:
     """Check if the category argument is a valid enum value."""
     for tc in tool_calls:
         if tc.tool_name.startswith("add_expense"):
-            category = tc.arguments.get("category")
+            category = _extract_arg(tc.arguments, "category")
             if category is None:
                 return EvalResult(
                     passed=False,
@@ -92,7 +117,7 @@ def evaluate_date_format(tool_calls: list[ToolCallInfo]) -> EvalResult:
     """Check if the date argument is in YYYY-MM-DD format."""
     for tc in tool_calls:
         if tc.tool_name.startswith("add_expense"):
-            date_val = tc.arguments.get("expense_date")
+            date_val = _extract_arg(tc.arguments, "expense_date")
             if date_val is None:
                 return EvalResult(
                     passed=False,
@@ -123,7 +148,7 @@ def evaluate_category_match(tool_calls: list[ToolCallInfo], expected: str) -> Ev
     """Check if the category matches the expected value."""
     for tc in tool_calls:
         if tc.tool_name.startswith("add_expense"):
-            category = tc.arguments.get("category")
+            category = _extract_arg(tc.arguments, "category")
             if category is None:
                 return EvalResult(
                     passed=False,
@@ -150,7 +175,7 @@ def evaluate_date_match(tool_calls: list[ToolCallInfo], expected: str) -> EvalRe
     """Check if the date matches the expected value."""
     for tc in tool_calls:
         if tc.tool_name.startswith("add_expense"):
-            date_val = tc.arguments.get("expense_date")
+            date_val = _extract_arg(tc.arguments, "expense_date")
             if date_val is None:
                 return EvalResult(
                     passed=False,

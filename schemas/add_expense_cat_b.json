@@ -1,6 +1,6 @@
 {
   "name": "add_expense_cat_b",
-  "description": "Add a new expense for the given date, amount, category, and description.",
+  "description": "Add a new expense.",
   "inputSchema": {
     "properties": {
       "expense_date": {

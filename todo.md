@@ -65,6 +65,7 @@ Reference: [pydanticai_mcp_http.py](https://github.com/Azure-Samples/python-ai-a
   - [x] Tool selection decisions
   - [x] Argument construction
   - [x] Output parsing
+- [x] Add `--reasoning` arg to test different reasoning levels
 
 ## Evaluation Framework
 
@@ -72,20 +73,19 @@ Reference: [Pydantic Evals - Evaluators Overview](https://ai.pydantic.dev/evals/
 
 Uses `pydantic_evals` library with `Dataset`, `Case`, and evaluators.
 
-- [ ] Create `evals/` directory for evaluation code
-- [ ] Define test dataset (`Dataset` with `Case` objects) with varied expense-logging prompts:
-  - [ ] Clear, unambiguous requests
-  - [ ] Ambiguous requests (missing date, vague categories)
-  - [ ] Edge cases (negative amounts, future dates, unknown payment methods)
-- [ ] Implement evaluators:
-  - [ ] `HasMatchingSpan` — verify correct tool was called (built-in, uses OpenTelemetry spans)
-  - [ ] Custom evaluator: validate tool arguments match expected types/enum values (access via `ctx.span_tree`)
-  - [ ] `IsInstance` — verify output type for typed returns
-- [ ] Implement evaluation runner that:
-  - [ ] Loops over schema variants (via `allowed_tools`)
-  - [ ] Loops over models
-  - [ ] Runs `dataset.evaluate(task_fn)` for each combination
-- [ ] Generate comparison metrics between schema variants
+- [x] Create `evals/` directory for evaluation code
+- [x] Define test dataset with varied expense-logging prompts:
+  - [x] Clear, unambiguous requests
+  - [x] Ambiguous requests (missing date, vague categories)
+  - [x] Edge cases
+  - [x] Non-English language coverage (Spanish)
+  - [x] Amount wording/currency variability (e.g., bucks, USD, dólares, pesos)
+- [x] Implement evaluators:
+  - [x] `tool_called` — verify an `add_expense_*` tool was called
+  - [x] `category_valid` / `category_match`
+  - [x] `date_format` / `date_match`
+- [x] Implement evaluation runner that loops over schema variants and cases
+- [x] Generate comparison metrics between schema variants (JSON + markdown report)
 
 ## Schemas
 
@@ -113,3 +113,27 @@ Simple setup — just `logfire.configure()` + `logfire.instrument_mcp()` (no cus
 - [ ] Document how to run evaluations
 - [ ] Add example Logfire screenshots
 - [ ] Write up findings on schema features vs model support
+
+## Future Ideas
+
+- [x] Add evaluation for non-English languages
+- [x] Compare different reasoning effort levels for GPT-5.2
+- [x] Experiment with a way to describe what things go in which category, like for ambiguous situations (transport/shopping/gadget)
+- [x] Add a tool variant that accepts a Pydantic model input (e.g., `expense: ExpenseInput`) to test nested JSON/object-shape adherence
+- [x] Add a tool variant that uses a `Union`/`Literal` sentinel for missing values (e.g., `reimbursable: bool | Literal["unknown"]`) to test “proceed vs ask” behavior
+- [ ] Add another argument type that tests regex/gt constraints
+- [ ] Add comparison with other models (Opus, other Microsoft Foundry models)
+- [ ] Add comparison with Copilot SDK, Microsoft Agent Framework
+- [ ] Make runner.py work generically with any agent script
+
+## Evaluation matrix
+
+Once all is done, we should re-run fresh evaluations for:
+
+- [ ] GPT-5.2: none, low, medium, high, xhigh
+- [ ] GPT-4.1-mini: temperature=0
+- [ ] GPT-4.0: temperature=0
+- [ ] Anthropic Opus 4.5
+- [ ] Anthropic Sonnet 4.5
+
+Each evals should be stored in its own folder under `evals/runs/` with clear folder names, e.g., `gpt52_xhigh`, `gpt41mini`, etc.

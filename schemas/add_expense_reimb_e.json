@@ -1,0 +1,62 @@
+{
+  "name": "add_expense_reimb_e",
+  "description": "Add a new expense.",
+  "inputSchema": {
+    "properties": {
+      "expense_date": {
+        "format": "date",
+        "type": "string"
+      },
+      "amount": {
+        "type": "number"
+      },
+      "category": {
+        "enum": [
+          "food",
+          "transport",
+          "entertainment",
+          "shopping",
+          "gadget",
+          "other"
+        ],
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "reimbursable": {
+        "anyOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "const": "unknown",
+            "type": "string"
+          }
+        ],
+        "description": "Whether this expense is reimbursable.\n\nInfer reimbursable status from context; the user does not need to literally say \"reimbursable\". Use true when the expense is clearly for work/business (e.g., work trip, client meeting, business lunch). Use false when the expense is clearly personal (e.g., lunch with friends, personal expense). If it's ambiguous or mixed, use the literal string \"unknown\".\n\nExamples: \n- true: 'Work trip hotel' / 'Taxi to client meeting' / 'Business lunch'\n- false: 'Lunch with friends' / 'Personal expense' / 'Not work-related'\n- unknown: no work/personal signal, or user is unsure"
+      }
+    },
+    "required": [
+      "expense_date",
+      "amount",
+      "category",
+      "description",
+      "reimbursable"
+    ],
+    "type": "object"
+  },
+  "outputSchema": {
+    "properties": {
+      "result": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "result"
+    ],
+    "type": "object",
+    "x-fastmcp-wrap-result": true
+  },
+  "annotations": null
+}

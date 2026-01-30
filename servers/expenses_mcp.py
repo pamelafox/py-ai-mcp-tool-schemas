@@ -28,6 +28,8 @@ if os.getenv("LOGFIRE_TOKEN"):
 SCRIPT_DIR = Path(__file__).parent
 EXPENSES_FILE = SCRIPT_DIR / "expenses.csv"
 
+CSV_FIELDNAMES = ["date", "amount", "category", "description", "payment_method", "reimbursable"]
+
 
 mcp = FastMCP("Expenses Tracker")
 
@@ -58,34 +60,55 @@ class Expense(BaseModel):
     description: str = Field(description="Description of the expense")
 
 
+class ExpenseInput(BaseModel):
+    """Input model for adding a single expense.
+
+    This is used to test how models handle a single nested JSON object argument.
+    """
+
+    expense_date: date = Field(description="Date of the expense")
+    amount: float = Field(description="Amount spent")
+    category: Category = Field(description="Category of expense")
+    description: str = Field(description="Description of the expense")
+
+
 # =============================================================================
 # Shared Implementations
 # =============================================================================
 
 
 async def _add_expense_impl(
-    expense_date: date,
+    expense_date: date | str,
     amount: float,
     category: str,
     description: str,
+    reimbursable: str | None = None,
 ) -> str:
     """Shared implementation for all add_expense variants."""
     if amount <= 0:
         return "Error: Amount must be positive"
 
-    date_iso = expense_date.isoformat()
+    date_iso = expense_date.isoformat() if isinstance(expense_date, date) else str(expense_date)
     logger.info(f"Adding expense: ${amount} for {description} on {date_iso}")
 
     try:
         file_exists = EXPENSES_FILE.exists()
-
         with open(EXPENSES_FILE, "a", newline="", encoding="utf-8") as file:
-            writer = csv.writer(file)
-
+            writer = csv.DictWriter(file, fieldnames=CSV_FIELDNAMES)
             if not file_exists:
-                writer.writerow(["date", "amount", "category", "description"])
+                writer.writeheader()
 
-            writer.writerow([date_iso, amount, category, description])
+            writer.writerow(
+                {
+                    "date": date_iso,
+                    "amount": amount,
+                    "category": category,
+                    "description": description,
+                    # The tools currently do not capture payment method.
+                    "payment_method": "",
+                    "reimbursable": reimbursable or "",
+                }
+            )
 
         return f"Successfully added expense: ${amount} for {description} on {date_iso}"
 
@@ -127,7 +150,7 @@ async def add_expense_cat_a(
     category: str,
     description: str,
 ) -> str:
-    """Add a new expense for the given date, amount, category, and description."""
+    """Add a new expense."""
     return await _add_expense_impl(expense_date, amount, category, description)
 
 
@@ -138,7 +161,7 @@ async def add_expense_cat_b(
     category: Annotated[str, "Must be one of: food, transport, entertainment, shopping, gadget, other"],
     description: str,
 ) -> str:
-    """Add a new expense for the given date, amount, category, and description."""
+    """Add a new expense."""
     return await _add_expense_impl(expense_date, amount, category, description)
 
 
@@ -149,7 +172,7 @@ async def add_expense_cat_c(
     category: CATEGORY_LITERAL,
     description: str,
 ) -> str:
-    """Add a new expense for the given date, amount, category, and description."""
+    """Add a new expense."""
     return await _add_expense_impl(expense_date, amount, category, description)
 
 
@@ -160,7 +183,34 @@ async def add_expense_cat_d(
     category: Category,
     description: str,
 ) -> str:
-    """Add a new expense for the given date, amount, category, and description."""
+    """Add a new expense."""
+    return await _add_expense_impl(expense_date, amount, category.value, description)
+
+
+@mcp.tool
+async def add_expense_cat_e(
+    expense_date: date,
+    amount: float,
+    category: Annotated[
+        Category,
+        Field(
+            description=(
+                "Choose the closest category for the expense. Do not ask follow-up questions just to "
+                "disambiguate the category; pick the best fit using the description and common sense. "
+                "If truly unclear, use OTHER.\n\n"
+                "Heuristics: "
+                "FOOD=meals, groceries, coffee; "
+                "TRANSPORT=rideshare, taxi, gas, transit, parking; "
+                "ENTERTAINMENT=movies, concerts, games; "
+                "SHOPPING=general retail and household purchases; "
+                "GADGET=electronics/devices/accessories; "
+                "OTHER=fees, services, subscriptions, or anything that does not fit well."
+            )
+        ),
+    ],
+    description: str,
+) -> str:
+    """Add a new expense."""
     return await _add_expense_impl(expense_date, amount, category.value, description)
 
 
@@ -176,7 +226,7 @@ async def add_expense_date_a(
     category: Category,
     description: str,
 ) -> str:
-    """Add a new expense for the given date, amount, category, and description."""
+    """Add a new expense."""
     return await _add_expense_impl(_parse_date(expense_date), amount, category.value, description)
 
 
@@ -187,7 +237,7 @@ async def add_expense_date_b(
     category: Category,
     description: str,
 ) -> str:
-    """Add a new expense for the given date, amount, category, and description."""
+    """Add a new expense."""
     return await _add_expense_impl(_parse_date(expense_date), amount, category.value, description)
 
 
@@ -198,7 +248,7 @@ async def add_expense_date_c(
     category: Category,
     description: str,
 ) -> str:
-    """Add a new expense for the given date, amount, category, and description."""
+    """Add a new expense."""
     return await _add_expense_impl(expense_date, amount, category.value, description)
 
 
@@ -209,8 +259,61 @@ async def add_expense_date_d(
     category: Category,
     description: str,
 ) -> str:
-    """Add a new expense for the given date, amount, category, and description."""
+    """Add a new expense."""
     return await _add_expense_impl(_parse_date(expense_date), amount, category.value, description)
+
+
+# =============================================================================
+# Pydantic Model Input Variants (testing nested object arguments)
+# =============================================================================
+
+
+@mcp.tool
+async def add_expense_model_a(expense: ExpenseInput) -> str:
+    """Add a new expense."""
+    return await _add_expense_impl(
+        expense.expense_date,
+        expense.amount,
+        expense.category.value,
+        expense.description,
+    )
+
+
+# =============================================================================
+# Reimbursable Field Variants (testing union/sentinel handling)
+# =============================================================================
+
+
+@mcp.tool
+async def add_expense_reimb_e(
+    expense_date: date,
+    amount: float,
+    category: Category,
+    description: str,
+    reimbursable: Annotated[
+        bool | Literal["unknown"],
+        Field(
+            description=(
+                "Whether this expense is reimbursable.\n\n"
+                "Infer reimbursable status from context; the user does not need to literally say \"reimbursable\". "
+                "Use true when the expense is clearly for work/business (e.g., work trip, client meeting, business lunch). "
+                "Use false when the expense is clearly personal (e.g., lunch with friends, personal expense). "
+                "If it's ambiguous or mixed, use the literal string \"unknown\".\n\n"
+                "Examples: \n"
+                "- true: 'Work trip hotel' / 'Taxi to client meeting' / 'Business lunch'\n"
+                "- false: 'Lunch with friends' / 'Personal expense' / 'Not work-related'\n"
+                "- unknown: no work/personal signal, or user is unsure"
+            )
+        ),
+    ],
+) -> str:
+    """Add a new expense."""
+    reimbursable_str = (
+        reimbursable
+        if isinstance(reimbursable, str) and reimbursable == "unknown"
+        else ("true" if reimbursable else "false")
+    )
+    return await _add_expense_impl(expense_date, amount, category.value, description, reimbursable=reimbursable_str)
 
 
 # =============================================================================
@@ -220,7 +323,7 @@ async def add_expense_date_d(
 
 @mcp.tool
 def get_expenses_a() -> str:
-    """Get all expenses. Returns: formatted text string."""
+    """Get all expenses."""
     expenses = _get_expenses_impl()
     if not expenses:
         return "No expenses found."
@@ -236,13 +339,13 @@ def get_expenses_a() -> str:
 
 @mcp.tool
 def get_expenses_b() -> list[dict]:
-    """Get all expenses. Returns: untyped list of dicts."""
+    """Get all expenses."""
     return _get_expenses_impl()
 
 
 @mcp.tool
 def get_expenses_c() -> list[Expense]:
-    """Get all expenses. Returns: typed list of Expense models."""
+    """Get all expenses."""
     expenses = _get_expenses_impl()
     return [
         Expense(

@@ -1,4 +1,4 @@
-date,amount,category,description,payment_method
+date,amount,category,description,payment_method,reimbursable
 2024-08-01,4.50,food,"Morning coffee",AMEX
 2024-08-01,12.99,food,"Lunch sandwich",AMEX
 2024-08-01,45.00,transport,"Gas station",VISA
@@ -283,3 +283,1722 @@ date,amount,category,description,payment_method
 2026-01-27,0.99,gadget,App purchase
 2026-01-27,200.0,entertainment,Spa treatment
 2026-01-27,50.0,food,Dinner
+2026-01-27,1200.0,gadget,Laptop purchase
+2026-01-27,1200.0,gadget,Laptop purchase
+2026-01-27,1200.0,gadget,Laptop purchase
+2026-01-27,1200.0,gadget,Laptop purchase
+2026-01-27,1200.0,gadget,Laptop purchase
+2026-01-27,1200.0,gadget,Laptop
+2026-01-27,1200.0,gadget,Laptop
+2026-01-27,1200.0,gadget,Laptop
+2026-01-27,1200.0,gadget,Laptop
+2026-01-27,1200.0,gadget,Laptop purchase
+2026-01-27,1200.0,gadget,Laptop
+2026-01-27,12.5,food,Sandwich
+2026-01-27,12.5,food,Sandwich
+2026-01-27,12.5,Food,Sandwich
+2026-01-28,45.0,Gas,Gas
+2026-01-15,25.99,Entertainment,Movie ticket
+2026-01-20,125.0,Clothing,New shoes
+2026-01-27,1200.0,Electronics,Laptop purchase
+2026-01-28,50.0,Groceries,Groceries
+2026-01-27,30.0,Shopping,Stuff at the store
+2026-01-27,55.0,Miscellaneous,Coffee and phone case
+2026-01-29,100.0,Hotel,Hotel stay
+2026-01-27,35000.0,Transportation,Car purchase
+2026-01-27,0.99,Apps,App purchase
+2026-01-27,200.0,Wellness,Spa treatment
+2026-01-27,50.0,Dining,Dinner
+2026-01-27,12.5,food,Sandwich
+2026-01-28,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-27,1200.0,gadget,Laptop purchase
+2026-01-28,50.0,food,Groceries
+2026-01-29,100.0,other,Hotel
+2026-01-27,35000.0,transport,Bought a car
+2026-01-27,0.99,gadget,App purchase
+2026-01-27,200.0,entertainment,Spa treatment
+2026-01-27,50.0,food,dinner
+2026-01-27,12.5,food,Sandwich
+2026-01-28,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-27,1200.0,gadget,Laptop purchase
+2026-01-28,50.0,food,Groceries
+2026-01-27,30.0,shopping,Stuff at the store
+2026-01-29,100.0,other,Hotel
+2026-01-27,35000.0,transport,Car purchase
+2026-01-27,0.99,gadget,App purchase
+2026-01-27,200.0,entertainment,Spa treatment
+2026-01-27,50.0,food,Dinner
+2026-01-27,12.5,food,Sandwich
+2026-01-28,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-27,1200.0,gadget,Laptop purchase
+2026-01-28,50.0,food,groceries
+2026-01-27,30.0,shopping,Stuff at the store
+2026-01-27,12.5,Food,Sandwich
+2026-01-27,12.5,Food,Sandwich
+2026-01-28,45.0,Gas,Gas
+2026-01-28,45.0,Gas,Gas
+2026-01-15,25.99,Entertainment,Movie ticket
+2026-01-15,25.99,Entertainment,Movie ticket
+2026-01-20,125.0,Clothing,New shoes
+2026-01-20,125.0,Clothing,New shoes
+2026-01-27,1200.0,Electronics,Laptop purchase
+2026-01-28,50.0,Groceries,Groceries
+2026-01-27,1200.0,Electronics,Laptop purchase
+2026-01-28,50.0,Groceries,Groceries
+2026-01-27,30.0,Shopping,Stuff at the store
+2026-01-27,30.0,Groceries,Stuff at the store
+2026-01-29,100.0,Lodging,Hotel
+2026-01-27,35000.0,Car,Bought a car
+2026-01-29,100.0,Hotel,Hotel
+2026-01-27,35000.0,Transportation,Bought a car
+2026-01-27,0.99,Apps,App purchase
+2026-01-27,0.99,Apps,App purchase
+2026-01-27,200.0,Wellness,Spa treatment
+2026-01-27,200.0,Health & Wellness,Spa treatment
+2026-01-27,50.0,Dining,Dinner
+2026-01-27,50.0,Dining,Dinner
+2026-01-27,12.5,food,Sandwich
+2026-01-28,45.0,transport,Gas
+2026-01-27,12.5,food,Sandwich
+2026-01-28,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-20,125.0,shopping,New shoes
+2026-01-27,1200.0,gadget,Laptop purchase
+2026-01-27,1200.0,gadget,Laptop purchase
+2026-01-28,50.0,food,groceries
+2026-01-28,50.0,food,groceries
+2026-01-27,30.0,shopping,Stuff at the store
+2026-01-27,30.0,shopping,Stuff at the store
+2026-01-29,100.0,other,Hotel
+2026-01-29,100.0,other,Hotel
+2026-01-27,35000.0,transport,Car purchase
+2026-01-27,35000.0,transport,Bought a car
+2026-01-27,0.99,gadget,App purchase
+2026-01-27,0.99,gadget,App purchase
+2026-01-27,200.0,entertainment,Spa treatment
+2026-01-27,200.0,entertainment,Spa treatment
+2026-01-27,50.0,food,Dinner
+2026-01-27,50.0,food,Dinner
+2026-01-27,12.5,food,Sandwich
+2026-01-28,45.0,transport,Gas
+2026-01-27,12.5,food,Sandwich
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-28,45.0,transport,Gas
+2026-01-20,125.0,shopping,New shoes
+2026-01-27,1200.0,gadget,Laptop purchase
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,50.0,food,groceries
+2026-01-27,1200.0,gadget,Laptop purchase
+2026-01-28,50.0,food,Groceries
+2026-01-27,30.0,shopping,Stuff at the store
+2026-01-29,100.0,other,Hotel
+2026-01-27,35000.0,transport,Bought a car
+2026-01-29,100.0,other,Hotel
+2026-01-27,0.99,gadget,App purchase
+2026-01-27,35000.0,transport,Bought a car
+2026-01-27,200.0,entertainment,Spa treatment
+2026-01-27,0.99,gadget,App purchase
+2026-01-27,50.0,food,Dinner
+2026-01-27,200.0,entertainment,Spa treatment
+2026-01-27,12.5,food,sandwich
+2026-01-27,50.0,food,Dinner
+2026-01-28,45.0,transport,Gas
+2026-01-27,12.5,food,Sandwich
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-28,45.0,transport,Gas
+2026-01-20,125.0,shopping,New shoes
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-27,1200.0,gadget,Laptop purchase
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,50.0,food,groceries
+2026-01-27,1200.0,gadget,Laptop purchase
+2026-01-27,30.0,shopping,Stuff at the store
+2026-01-28,50.0,food,groceries
+2026-01-27,30.0,shopping,Stuff at the store
+2026-01-29,100.0,transport,Hotel
+2026-01-27,35000.0,transport,Car purchase
+2026-01-27,0.99,gadget,App purchase
+2026-01-29,100.0,other,Hotel
+2026-01-27,200.0,entertainment,Spa treatment
+2026-01-27,35000.0,transport,Bought a car
+2026-01-27,50.0,food,Dinner
+2026-01-27,0.99,gadget,App purchase
+2026-01-27,12.5,food,Sandwich
+2026-01-27,200.0,entertainment,Spa treatment
+2026-01-28,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-27,50.0,food,Dinner
+2026-01-20,125.0,shopping,New shoes
+2026-01-27,12.5,food,Sandwich
+2026-01-27,1200.0,gadget,Laptop purchase
+2026-01-28,45.0,transport,Gas
+2026-01-28,50.0,food,groceries
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-27,30.0,shopping,Stuff at the store
+2026-01-27,1200.0,gadget,Laptop purchase
+2026-01-28,50.0,food,groceries
+2026-01-27,55.0,other,Coffee and phone case
+2026-01-29,100.0,other,Hotel
+2026-01-29,100.0,other,Hotel
+2026-01-27,35000.0,other,Bought a car
+2026-01-27,0.99,gadget,App purchase
+2026-01-27,35000.0,transport,Bought a car
+2026-01-27,200.0,entertainment,Spa treatment
+2026-01-27,0.99,gadget,App purchase
+2026-01-27,50.0,food,Dinner
+2026-01-27,200.0,entertainment,Spa treatment
+2026-01-27,12.5,food,Sandwich
+2026-01-28,45.0,transport,Gas
+2026-01-27,50.0,food,Dinner
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-27,12.5,food,Sandwich
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,45.0,transport,Gas
+2026-01-27,1200.0,gadget,Laptop purchase
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-28,50.0,food,groceries
+2026-01-20,125.0,shopping,New shoes
+2026-01-27,30.0,shopping,Stuff at the store
+2026-01-27,1200.0,gadget,Laptop purchase
+2026-01-28,50.0,food,Groceries
+2026-01-27,30.0,shopping,Stuff at the store
+2026-01-29,100.0,other,Hotel
+2026-01-27,35000.0,transport,Bought a car
+2026-01-29,100.0,other,Hotel
+2026-01-27,0.99,gadget,App purchase
+2026-01-27,35000.0,transport,Bought a car
+2026-01-27,200.0,entertainment,Spa treatment
+2026-01-27,0.99,gadget,App purchase
+2026-01-27,50.0,food,Dinner
+2026-01-27,200.0,entertainment,Spa treatment
+2026-01-27,12.5,food,Sandwich
+2026-01-27,50.0,food,Dinner
+2026-01-28,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-27,12.5,food,Sandwich
+2026-01-28,45.0,transport,Gas
+2026-01-20,125.0,shopping,New shoes
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-27,1200.0,gadget,Laptop purchase
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,50.0,food,Groceries
+2026-01-27,1200.0,gadget,Laptop purchase
+2026-01-27,30.0,shopping,Stuff at the store
+2026-01-28,50.0,food,Groceries
+2026-01-27,30.0,shopping,Stuff at the store
+2026-01-29,100.0,other,Hotel
+2026-01-27,35000.0,shopping,Bought a car
+2026-01-29,100.0,other,Hotel
+2026-01-27,35000.0,other,Bought a car
+2026-01-27,0.99,gadget,App purchase
+2026-01-27,0.99,gadget,App purchase
+2026-01-27,200.0,entertainment,Spa treatment
+2026-01-27,200.0,entertainment,Spa treatment
+2026-01-27,50.0,food,Dinner
+2026-01-27,50.0,food,Dinner
+2026-01-27,12.5,food,Sandwich
+2026-01-27,12.5,food,Sandwich
+2026-01-28,45.0,transport,Gas
+2026-01-28,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-20,125.0,shopping,New shoes
+2026-01-27,1200.0,gadget,Laptop purchase
+2026-01-27,1200.0,gadget,Laptop purchase
+2026-01-28,50.0,food,groceries
+2026-01-28,50.0,food,Groceries
+2026-01-27,30.0,shopping,Stuff at the store
+2026-01-27,30.0,shopping,Stuff at the store
+2026-01-29,100.0,other,Hotel
+2026-01-27,35000.0,transport,Bought a car
+2026-01-27,0.99,gadget,App purchase
+2026-01-29,100.0,other,Hotel
+2026-01-27,200.0,entertainment,Spa treatment
+2026-01-27,35000.0,transport,Bought a car
+2026-01-27,50.0,food,Dinner
+2026-01-27,0.99,gadget,App purchase
+2026-01-27,200.0,entertainment,Spa treatment
+2026-01-27,50.0,food,Dinner
+2026-01-28,1200.0,gadget,Laptop
+2026-01-28,1200.0,gadget,Laptop
+2026-01-28,12.5,Food,Sandwich
+2026-01-29,45.0,Gas,Gas
+2026-01-15,25.99,Entertainment,Movie ticket
+2026-01-20,125.0,Clothing,New shoes
+2026-01-28,1200.0,Electronics,Laptop purchase
+2026-01-29,50.0,groceries,Groceries
+2026-01-28,30.0,Groceries,Stuff at the store
+2026-01-30,100.0,Hotel,Hotel
+2026-01-28,35000.0,Car purchase,Bought a car
+2026-01-28,0.99,Apps,App purchase
+2026-01-28,200.0,Spa,Spa treatment
+2026-01-28,50.0,Dining,Dinner
+2026-01-28,12.5,Comida,Sándwich
+2026-01-29,45.0,Gasolina,Gasolina
+2026-01-15,25.99,Entretenimiento,Entrada de cine
+2026-01-20,125.0,Ropa y calzado,Zapatos nuevos
+2026-01-28,1200.0,Electrónica,Compra de laptop
+2026-01-28,12.5,food,sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-29,50.0,food,groceries
+2026-01-28,30.0,shopping,Stuff at the store
+2026-01-30,100.0,other,Hotel
+2026-01-28,35000.0,gadget,Bought a car
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,dinner
+2026-01-29,45.0,transport,Gasolina
+2026-01-15,25.99,entertainment,Entrada de cine
+2026-01-20,125.0,shopping,Zapatos nuevos
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,Sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-30,100.0,other,Hotel
+2026-01-28,35000.0,other,Bought a car
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,dinner
+2026-01-28,12.5,food,Sándwich
+2026-01-29,45.0,transport,Gasolina
+2026-01-15,25.99,entertainment,Entrada de cine
+2026-01-20,125.0,shopping,Zapatos nuevos
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,Sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-28,30.0,shopping,Stuff at the store
+2026-01-30,100.0,other,Hotel
+2026-01-28,35000.0,other,Bought a car
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,dinner
+2026-01-28,12.5,food,Sándwich
+2026-01-29,45.0,transport,Gasolina
+2026-01-15,25.99,entertainment,Entrada de cine
+2026-01-20,125.0,shopping,Zapatos nuevos
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,Sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-29,50.0,food,groceries
+2026-01-28,30.0,shopping,Stuff at the store
+2026-01-30,100.0,other,Hotel
+2026-01-28,35000.0,shopping,Bought a car
+2026-01-28,0.99,gadget,app
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,12.5,food,Sándwich
+2026-01-29,45.0,transport,Gasolina
+2026-01-15,25.99,entertainment,Entrada de cine
+2026-01-20,125.0,shopping,Zapatos nuevos
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,Sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-30,100.0,other,Hotel
+2026-01-28,35000.0,shopping,Bought a car
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,12.5,food,Sándwich
+2026-01-29,45.0,transport,Gasolina
+2026-01-15,25.99,entertainment,Entrada de cine
+2026-01-20,125.0,shopping,Zapatos nuevos
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,Sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-28,30.0,shopping,Stuff at the store
+2026-01-30,100.0,other,Hotel
+2026-01-28,35000.0,other,Bought a car
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,12.5,food,Sándwich
+2026-01-29,45.0,transport,Gasolina
+2026-01-15,25.99,entertainment,Entrada de cine
+2026-01-20,125.0,shopping,Zapatos nuevos
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,Sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-28,30.0,shopping,Stuff at the store
+2026-01-30,100.0,other,Hotel
+2026-01-28,35000.0,transport,Bought a car
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,12.5,Food,Sandwich
+2026-01-29,45.0,Gas,Gas
+2026-01-15,25.99,Entertainment,Movie ticket
+2026-01-20,125.0,Clothing,New shoes
+2026-01-28,1200.0,Electronics,Laptop purchase
+2026-01-30,100.0,Hotel,Hotel
+2026-01-28,35000.0,Car,Bought a car
+2026-01-28,0.99,Apps/Software,App purchase
+2026-01-28,200.0,Spa,Spa treatment
+2026-01-28,50.0,Dinner,Dinner
+2026-01-29,45.0,Gasolina,Gasolina
+2026-01-15,25.99,Entretenimiento,Entrada de cine
+2026-01-20,125.0,Ropa y calzado,Zapatos nuevos
+2026-01-28,1200.0,Electrónica,Compra de laptop
+2026-01-28,12.5,food,Sandwich
+2026-01-29,45.0,transport,gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-29,50.0,food,groceries
+2026-01-30,100.0,other,Hotel
+2026-01-28,35000.0,other,Bought a car
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,12.5,food,Sándwich
+2026-01-29,45.0,transport,Gasolina
+2026-01-15,25.99,entertainment,Entrada de cine
+2026-01-20,125.0,shopping,Zapatos nuevos
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,Sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-30,100.0,other,Hotel
+2026-01-28,35000.0,shopping,Bought a car
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,12.5,food,Sándwich
+2026-01-29,45.0,transport,Gasolina
+2026-01-15,25.99,entertainment,Entrada de cine
+2026-01-20,125.0,shopping,Zapatos nuevos
+2026-01-28,1200.0,gadget,Laptop
+2026-01-28,12.5,food,sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-29,50.0,food,groceries
+2026-01-30,100.0,other,Hotel
+2026-01-28,35000.0,other,Bought a car
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,12.5,food,Sándwich
+2026-01-29,45.0,transport,Gasolina
+2026-01-15,25.99,entertainment,Entrada de cine
+2026-01-20,125.0,shopping,Zapatos nuevos
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,Food,Sandwich
+2026-01-29,45.0,Gas,Gas
+2026-01-15,25.99,Entertainment,Movie ticket
+2026-01-20,125.0,Clothing,New shoes
+2026-01-28,1200.0,Electronics,Laptop purchase
+2026-01-29,50.0,Groceries,Groceries
+2026-01-28,30.0,Miscellaneous,Stuff at the store
+2026-01-30,100.0,Hotel,Hotel
+2026-01-28,35000.0,Car,Bought a car (USD)
+2026-01-28,0.99,Apps & Software,App purchase
+2026-01-28,200.0,Health & Wellness,Spa treatment
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,Food,Sandwich
+2026-01-29,45.0,Gas,Gas
+2026-01-15,25.99,Entertainment,Movie ticket
+2026-01-20,125.0,Clothing,New shoes
+2026-01-28,1200.0,Electronics,Laptop purchase
+2026-01-29,50.0,groceries,Groceries
+2026-01-28,30.0,Shopping,Stuff at the store
+2026-01-30,100.0,Hotel,Hotel stay
+2026-01-28,35000.0,Car,Bought a car (USD)
+2026-01-28,0.99,Apps,App purchase
+2026-01-28,200.0,Health & Wellness,Spa treatment
+2026-01-28,0.5,food,sandwich
+2026-01-28,50.0,Dining,Dinner
+2026-01-28,12.5,Comida,Sándwich
+2026-01-29,45.0,Gasolina,Pago de gasolina
+2026-01-15,25.99,Entretenimiento,Entrada de cine
+2026-01-20,125.0,Calzado,Zapatos nuevos
+2026-01-28,1200.0,Electrónica,Compra de laptop
+2026-01-28,12.5,food,Sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-29,50.0,food,groceries
+2026-01-28,0.5,food,Sandwich
+2026-01-30,100.0,other,Hotel
+2026-01-28,35000.0,transport,Bought a car (USD)
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,other,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,12.5,food,Sándwich
+2026-01-29,45.0,transport,Gasolina
+2026-01-15,25.99,entertainment,Entrada de cine
+2026-01-20,125.0,shopping,Zapatos nuevos
+2026-01-28,1200.0,gadget,Laptop
+2026-01-28,12.5,food,sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-29,50.0,food,groceries
+2026-01-28,30.0,shopping,Stuff at the store
+2026-01-30,100.0,other,Hotel
+2026-01-28,35000.0,transport,Bought a car for 35000 USD
+2026-01-28,0.5,food,sandwich
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,12.5,food,Sándwich
+2026-01-29,45.0,transport,gasolina
+2026-01-15,25.99,entertainment,Entrada de cine
+2026-01-20,125.0,shopping,Zapatos nuevos
+2026-01-28,1200.0,gadget,Laptop
+2026-01-28,0.5,food,sandwich
+2026-01-28,12.5,food,sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-29,50.0,food,groceries
+2026-01-28,30.0,shopping,stuff at the store
+2026-01-30,100.0,other,Hotel
+2026-01-28,35000.0,transport,Bought a car for 35000 USD
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,0.5,food,Sandwich
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,12.5,food,Sándwich
+2026-01-29,45.0,transport,Gasolina
+2026-01-15,25.99,entertainment,Entrada de cine
+2026-01-20,125.0,shopping,Zapatos nuevos
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,0.5,food,sandwich
+2026-01-28,0.5,food,Sandwich
+2026-01-28,0.5,food,Sandwich
+2026-01-28,0.5,food,sandwich
+2026-01-28,0.5,food,sandwich
+2026-01-28,0.5,food,sandwich
+2026-01-28,0.5,food,Sandwich
+2026-01-28,0.5,food,Sandwich
+2026-01-28,0.5,food,Sandwich
+2026-01-28,0.5,food,sandwich
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,sandwich
+2026-01-28,12.5,food,sandwich
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,sandwich
+2026-01-28,0.5,food,Sandwich
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,sandwich
+2026-01-28,12.5,food,sandwich
+2026-01-28,0.5,food,sandwich
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,sandwich
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,sandwich
+2026-01-28,12.5,food,sandwich
+2026-01-28,30.0,shopping,stuff at the store
+2026-01-28,30.0,shopping,Stuff at the store
+2026-01-28,30.0,shopping,Stuff at the store
+2026-01-28,30.0,shopping,Stuff at the store
+2026-01-28,30.0,shopping,Stuff at the store
+2026-01-28,30.0,shopping,Stuff at the store
+2026-01-28,30.0,shopping,Stuff at the store
+2026-01-28,30.0,shopping,Stuff at the store
+2026-01-28,12.5,Food,Sandwich
+2026-01-29,45.0,Gas,Gas
+2026-01-15,25.99,Entertainment,Movie ticket
+2026-01-20,125.0,Clothing,New shoes
+2026-01-28,1200.0,Electronics,Laptop purchase
+2026-01-29,50.0,groceries,groceries
+2026-01-28,30.0,Shopping,Stuff at the store
+2026-01-19,12.5,Food,Sandwich
+2026-01-19,8.75,Coffee,Coffee
+2026-01-05,12.5,Food,Sandwich
+2025-12-31,25.99,Entertainment,Movie ticket
+2025-12-31,60.0,Gas,Gas
+2026-01-27,4.5,Coffee,Coffee
+2026-01-26,38.0,Transportation,Uber to the airport
+2026-01-23,18.0,Entertainment,Movie ticket
+2026-01-31,20.0,Transportation,Bus pass
+2026-01-28,65.0,Groceries,Instacart grocery delivery
+2025-12-31,79.99,Electronics,Headphones
+2026-01-28,12.5,Food,Sandwich
+2026-01-28,12.5,Food,Lunch
+2026-01-28,35000.0,Car purchase,Bought a car
+2026-01-28,0.99,Apps,App purchase
+2026-01-28,200.0,Spa,Spa treatment
+2026-01-28,50.0,Food,Dinner
+2026-01-28,12.5,Comida,Sándwich
+2026-01-29,45.0,Gasolina,Gasolina
+2026-01-15,25.99,Entretenimiento,Entrada de cine
+2026-01-20,125.0,Ropa y calzado,Zapatos nuevos
+2026-01-28,1200.0,Electrónica,Compra de laptop
+2026-01-28,12.5,food,Sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-19,12.5,food,Sandwich
+2026-01-19,8.75,food,Coffee
+2026-01-05,12.5,food,Sandwich
+2025-12-31,25.99,entertainment,Movie ticket
+2025-12-31,60.0,transport,Gas
+2026-01-27,4.5,food,coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,Movie ticket
+2026-01-31,20.0,transport,Bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2025-12-31,79.99,gadget,Headphones
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,Lunch
+2026-01-28,35000.0,other,Bought a car
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,12.5,food,Sándwich
+2026-01-29,45.0,transport,Gasolina
+2026-01-15,25.99,entertainment,Entrada de cine
+2026-01-20,125.0,shopping,Zapatos nuevos
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-29,50.0,food,groceries
+2026-01-28,30.0,shopping,Stuff at the store
+2026-01-19,12.5,food,Sandwich
+2026-01-19,8.75,food,Coffee
+2026-01-05,12.5,food,Sandwich
+2025-12-31,25.99,entertainment,Movie ticket
+2025-12-31,60.0,transport,Gas
+2026-01-27,4.5,food,Coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,Movie ticket
+2026-01-31,20.0,transport,Bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2025-12-31,79.99,gadget,Headphones
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,Lunch
+2026-01-28,35000.0,other,Bought a car (USD)
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,12.5,food,Sándwich
+2026-01-29,45.0,transport,Gasolina
+2026-01-15,25.99,entertainment,Entrada de cine
+2026-01-20,125.0,shopping,Zapatos nuevos
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,Sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-29,50.0,food,groceries
+2026-01-28,30.0,shopping,Stuff at the store
+2026-01-19,12.5,food,Sandwich
+2026-01-19,8.75,food,Coffee
+2026-01-05,12.5,food,Sandwich
+2025-12-31,25.99,entertainment,Movie ticket
+2025-12-31,60.0,transport,Gas
+2026-01-27,4.5,food,coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,Movie ticket
+2026-01-31,20.0,transport,Bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2025-12-31,79.99,gadget,Headphones
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,Lunch
+2026-01-28,35000.0,other,Bought a car
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,12.5,food,Sándwich
+2026-01-29,45.0,transport,gasolina
+2026-01-15,25.99,entertainment,Entrada de cine
+2026-01-20,125.0,shopping,Zapatos nuevos
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,Sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-29,50.0,food,groceries
+2026-01-19,12.5,food,Sandwich
+2026-01-19,8.75,food,Coffee
+2026-01-05,12.5,food,Sandwich
+2025-12-31,25.99,entertainment,Movie ticket
+2025-12-31,60.0,transport,Gas
+2026-01-27,4.5,food,coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,Movie ticket
+2026-01-31,20.0,transport,Bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2025-12-31,79.99,gadget,Headphones
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,Lunch
+2026-01-28,35000.0,other,Bought a car
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,12.5,food,Sándwich
+2026-01-29,45.0,transport,gasolina
+2026-01-15,25.99,entertainment,entrada de cine
+2026-01-20,125.0,shopping,Zapatos nuevos
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,Sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-28,30.0,shopping,Stuff at the store
+2026-01-19,12.5,food,Sandwich
+2026-01-19,8.75,food,Coffee
+2026-01-05,12.5,food,Sandwich
+2025-12-31,25.99,entertainment,Movie ticket
+2025-12-31,60.0,transport,Gas
+2026-01-27,4.5,food,coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,Movie ticket
+2026-01-31,20.0,transport,Bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2025-12-31,79.99,gadget,Headphones
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,Lunch
+2026-01-28,35000.0,other,Bought a car
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,12.5,food,Sándwich
+2026-01-29,45.0,transport,Gasolina
+2026-01-15,25.99,entertainment,Entrada de cine
+2026-01-20,125.0,shopping,Zapatos nuevos
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,Sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-29,50.0,food,groceries
+2026-01-28,30.0,shopping,stuff at the store
+2026-01-19,12.5,food,Sandwich
+2026-01-19,8.75,food,Coffee
+2026-01-05,12.5,food,Sandwich
+2025-12-31,25.99,entertainment,Movie ticket
+2025-12-31,60.0,transport,Gas
+2026-01-27,4.5,food,coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,Movie ticket
+2026-01-31,20.0,transport,Bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2025-12-31,79.99,gadget,Headphones
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,Lunch
+2026-01-28,35000.0,transport,Bought a car
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,12.5,food,Sándwich
+2026-01-29,45.0,transport,Gasolina
+2026-01-15,25.99,entertainment,Entrada de cine
+2026-01-20,125.0,shopping,Zapatos nuevos
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,Sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-19,12.5,food,Sandwich
+2026-01-19,8.75,food,coffee
+2026-01-05,12.5,food,Sandwich
+2025-12-31,25.99,entertainment,Movie ticket
+2025-12-31,60.0,transport,Gas
+2026-01-27,4.5,food,Coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,Movie ticket
+2026-01-31,20.0,transport,Bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2025-12-31,79.99,gadget,Headphones
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,lunch
+2026-01-28,35000.0,other,Bought a car
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,12.5,food,Sándwich
+2026-01-29,45.0,transport,gasolina
+2026-01-15,25.99,entertainment,Entrada de cine
+2026-01-20,125.0,shopping,Zapatos nuevos
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,Food,Sandwich
+2026-01-29,45.0,Gas,Gas
+2026-01-15,25.99,Entertainment,Movie ticket
+2026-01-20,125.0,Clothing,New shoes
+2026-01-28,1200.0,Electronics,Laptop purchase
+2026-01-29,50.0,groceries,Groceries
+2026-01-19,12.5,Food,Sandwich
+2026-01-12,8.75,Coffee,Coffee
+2026-01-05,12.5,Food,Sandwich
+2025-12-31,25.99,Entertainment,Movie ticket
+2025-12-31,60.0,Gas,Gas
+2026-01-27,4.5,Coffee,Coffee
+2026-01-26,38.0,Transportation,Uber to the airport
+2026-01-23,18.0,Entertainment,Movie ticket
+2026-01-31,20.0,Transportation,Bus pass
+2026-01-28,65.0,Groceries,Instacart grocery delivery
+2025-12-31,79.99,Electronics,Headphones
+2026-01-28,12.5,Food,Sandwich
+2026-01-28,12.5,Food,Lunch
+2026-01-28,35000.0,Transportation,Car purchase (USD)
+2026-01-28,0.99,Apps & Software,App purchase
+2026-01-28,200.0,Personal Care,Spa treatment
+2026-01-28,50.0,Dining,Dinner
+2026-01-28,12.5,Comida,Sándwich
+2026-01-29,45.0,Gasolina,Pago de gasolina
+2026-01-15,25.99,Entretenimiento,Entrada de cine
+2026-01-20,125.0,Calzado,Zapatos nuevos
+2026-01-28,1200.0,Electrónica,Compra de laptop (USD)
+2026-01-28,12.5,food,Sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-29,50.0,food,groceries
+2026-01-28,30.0,shopping,stuff at the store
+2026-01-19,12.5,food,Sandwich
+2026-01-19,8.75,food,coffee
+2026-01-05,12.5,food,Sandwich
+2025-12-31,25.99,entertainment,Movie ticket
+2025-12-31,60.0,transport,Gas
+2026-01-27,4.5,food,coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,Movie ticket
+2026-01-31,20.0,transport,Bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2025-12-31,79.99,gadget,Headphones
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,Lunch
+2026-01-28,35000.0,transport,Bought a car (USD)
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,other,Spa treatment
+2026-01-28,50.0,food,dinner
+2026-01-28,12.5,food,Sándwich
+2026-01-29,45.0,transport,gasolina
+2026-01-15,25.99,entertainment,Entrada de cine
+2026-01-20,125.0,shopping,Zapatos nuevos
+2026-01-28,1200.0,gadget,Compra de laptop (1200 USD)
+2026-01-28,12.5,food,Sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-29,50.0,food,groceries
+2026-01-28,30.0,shopping,Stuff at the store
+2026-01-19,12.5,food,Sandwich
+2026-01-19,8.75,food,coffee
+2026-01-05,12.5,food,sandwich
+2025-12-31,25.99,entertainment,Movie ticket
+2025-12-31,60.0,transport,Gas
+2026-01-27,4.5,food,coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,Movie ticket
+2026-01-31,20.0,transport,Bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2025-12-31,79.99,gadget,Headphones
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,Lunch
+2026-01-28,35000.0,transport,Bought a car for 35000 USD
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,12.5,food,Sándwich
+2026-01-29,45.0,transport,Gasolina
+2026-01-15,25.99,entertainment,entrada de cine
+2026-01-20,125.0,shopping,Zapatos nuevos
+2026-01-28,1200.0,gadget,Compra de laptop (USD)
+2026-01-28,12.5,food,Sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-29,50.0,food,groceries
+2026-01-28,30.0,shopping,stuff at the store
+2026-01-19,12.5,food,Sandwich
+2026-01-19,8.75,food,coffee
+2026-01-05,12.5,food,sandwich
+2025-12-31,25.99,entertainment,Movie ticket
+2025-12-31,60.0,transport,Gas
+2026-01-27,4.5,food,coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,Movie ticket
+2026-01-31,20.0,transport,Bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2025-12-31,79.99,gadget,Headphones
+2026-01-28,12.5,food,sandwich
+2026-01-28,12.5,food,Lunch
+2026-01-28,35000.0,transport,Bought a car
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,other,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,12.5,food,Sándwich
+2026-01-29,45.0,transport,Gasolina
+2026-01-15,25.99,entertainment,Entrada de cine
+2026-01-20,125.0,shopping,Zapatos nuevos
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,Sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-29,50.0,food,groceries
+2026-01-28,30.0,shopping,Stuff at the store
+2026-01-19,12.5,food,Sandwich
+2026-01-19,8.75,food,coffee
+2026-01-05,12.5,food,sandwich
+2025-12-31,25.99,entertainment,Movie ticket
+2025-12-31,60.0,transport,Gas
+2026-01-27,4.5,food,coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,Movie ticket
+2026-01-31,20.0,transport,Bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2025-12-31,79.99,gadget,Headphones
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,Lunch
+2026-01-28,35000.0,transport,Bought a car
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,other,Spa treatment
+2026-01-28,50.0,food,dinner
+2026-01-28,12.5,food,Sándwich
+2026-01-29,45.0,transport,Gasolina
+2026-01-15,25.99,entertainment,Entrada de cine
+2026-01-20,125.0,shopping,Zapatos nuevos
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,Sandwich
+2026-01-29,45.0,transport,gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-29,50.0,food,groceries
+2026-01-28,30.0,shopping,Stuff at the store
+2026-01-19,12.5,food,sandwich
+2026-01-19,8.75,food,coffee
+2026-01-05,12.5,food,Sandwich
+2025-12-31,25.99,entertainment,Movie ticket
+2025-12-31,60.0,transport,Gas
+2026-01-27,4.5,food,coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,Movie ticket
+2026-01-31,20.0,transport,Bus pass
+2026-01-29,50.0,food,groceries
+2026-01-28,65.0,food,Instacart grocery delivery
+2025-12-31,79.99,gadget,Headphones
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,Lunch
+2026-01-29,50.0,food,Groceries
+2026-01-28,35000.0,transport,Bought a car (USD)
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,Dinner (€50)
+2026-01-28,12.5,food,Sándwich
+2026-01-29,50.0,food,groceries
+2026-01-29,45.0,transport,Gasolina
+2026-01-15,25.99,entertainment,Entrada de cine
+2026-01-20,125.0,shopping,Zapatos nuevos
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-29,50.0,food,groceries
+2026-01-28,30.0,shopping,Stuff at the store
+2026-01-19,12.5,food,Sandwich
+2026-01-19,8.75,food,coffee
+2026-01-05,12.5,food,Sandwich
+2025-12-31,25.99,entertainment,Movie ticket
+2025-12-31,60.0,transport,Gas
+2026-01-27,4.5,food,coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,Movie ticket
+2026-01-31,20.0,transport,Bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2025-12-31,79.99,gadget,Headphones
+2026-01-28,12.5,food,Sandwich
+2026-01-28,12.5,food,Lunch
+2026-01-28,35000.0,transport,Bought a car (USD)
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,12.5,food,Sándwich
+2026-01-29,45.0,transport,Gasolina
+2026-01-15,25.99,entertainment,Entrada de cine
+2026-01-20,125.0,shopping,Zapatos nuevos
+2026-01-28,1200.0,gadget,Laptop
+2026-01-28,12.5,food,Sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-29,50.0,food,groceries
+2026-01-28,30.0,shopping,stuff at the store
+2026-01-19,12.5,food,Sandwich
+2026-01-19,8.75,food,coffee
+2026-01-05,12.5,food,Sandwich
+2025-12-31,25.99,entertainment,Movie ticket
+2025-12-31,60.0,transport,Gas
+2026-01-27,4.5,food,Coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,Movie ticket
+2026-01-31,20.0,transport,Bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2025-12-31,79.99,gadget,Headphones
+2026-01-28,12.5,food,sandwich
+2026-01-28,12.5,food,Lunch
+2026-01-28,35000.0,other,Bought a car (USD)
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,12.5,food,Sándwich
+2026-01-29,45.0,transport,Gasolina
+2026-01-15,25.99,entertainment,Entrada de cine
+2026-01-20,125.0,shopping,Zapatos nuevos
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-29,50.0,food,groceries
+2026-01-28,12.5,Food,Sandwich
+2026-01-29,45.0,Gas,Gas payment
+2026-01-15,25.99,Entertainment,movie ticket
+2026-01-20,125.0,Shoes,New shoes
+2026-01-28,1200.0,electronics,Purchased a laptop
+2026-01-20,12.5,Food,Sandwich
+2026-01-12,8.75,coffee,Coffee
+2026-01-05,12.5,Food,Sandwich
+2026-01-31,25.99,Entertainment,Movie ticket
+2025-12-31,60.0,Gas,Gas payment
+2026-01-27,4.5,coffee,coffee
+2026-01-26,38.0,Transport,Uber to the airport
+2026-01-24,18.0,Entertainment,Movie ticket
+2026-01-28,65.0,Grocery Delivery,Instacart grocery delivery
+2026-01-31,79.99,Electronics,Headphones
+2026-01-28,12.5,Food,sandwich
+2026-01-28,12.5,lunch,Lunch
+2026-01-28,35000.0,car,Bought a car
+2026-01-28,0.99,Apps,App purchase
+2026-01-28,200.0,Spa,Spa treatment
+2026-01-28,50.0,dinner,dinner
+2026-01-28,12.5,Comida,Sándwich
+2026-01-29,45.0,Gasolina,Pago por gasolina
+2026-01-15,25.99,ocio,entrada de cine
+2026-01-20,125.0,zapatos,zapatos nuevos
+2026-01-28,1200.0,Electrónica,Compra de laptop
+2026-01-28,12.5,food,sandwich
+2026-01-29,45.0,transport,gas
+2026-01-15,25.99,entertainment,movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Purchased a laptop
+2026-01-19,12.5,food,sandwich
+2026-01-12,8.75,food,coffee
+2026-01-05,12.5,food,Sandwich
+2026-01-31,25.99,entertainment,movie ticket
+2025-12-31,60.0,transport,gas
+2026-01-27,4.5,food,coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,movie ticket
+2026-01-31,20.0,transport,Bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2026-01-31,79.99,gadget,headphones
+2026-01-28,12.5,food,sandwich
+2026-01-28,12.5,food,lunch
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,other,spa treatment
+2026-01-28,50.0,food,dinner
+2026-01-28,12.5,food,sándwich
+2026-01-29,45.0,transport,gasolina
+2026-01-15,25.99,entertainment,Entrada de cine
+2026-01-20,125.0,shopping,Zapatos nuevos
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,sandwich
+2026-01-29,45.0,transport,gas
+2026-01-15,25.99,entertainment,movie ticket
+2026-01-20,125.0,shopping,bought new shoes
+2026-01-28,1200.0,gadget,laptop purchase
+2026-01-19,12.5,food,Sandwich
+2026-01-12,8.75,food,coffee
+2026-01-05,12.5,food,Sandwich
+2026-01-31,25.99,entertainment,movie ticket
+2026-01-27,4.5,food,coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,movie ticket
+2026-01-31,20.0,transport,Bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2026-01-31,79.99,gadget,Bought headphones
+2026-01-28,12.5,food,bought a sandwich
+2026-01-28,12.5,food,Lunch
+2026-01-28,35000.0,other,Car purchase
+2026-01-28,0.99,gadget,Paid for an app
+2026-01-28,200.0,other,spa treatment
+2026-01-28,50.0,food,dinner
+2026-01-28,12.5,food,Compré un sándwich
+2026-01-29,45.0,transport,gasolina
+2026-01-15,25.99,entertainment,Entrada de cine
+2026-01-20,125.0,shopping,Compré zapatos nuevos
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,sandwich
+2026-01-29,45.0,transport,gas
+2026-01-15,25.99,entertainment,movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,laptop purchase
+2026-01-20,12.5,food,Sandwich
+2026-01-12,8.75,food,coffee
+2026-01-05,12.5,food,Sandwich
+2026-01-31,25.99,entertainment,movie ticket
+2025-12-31,60.0,transport,Gas
+2026-01-27,4.5,food,coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,Movie ticket
+2026-01-31,20.0,transport,bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2026-01-31,79.99,gadget,Headphones purchase
+2026-01-28,12.5,food,sandwich
+2026-01-28,12.5,food,lunch
+2026-01-28,0.99,gadget,Paid for an app
+2026-01-28,200.0,other,spa treatment
+2026-01-28,50.0,food,dinner
+2026-01-28,12.5,food,Compra de un sándwich
+2026-01-29,45.0,transport,gasolina
+2026-01-15,25.99,entertainment,entrada de cine
+2026-01-20,125.0,shopping,Compré zapatos nuevos
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,sandwich
+2026-01-29,45.0,transport,gas
+2026-01-15,25.99,entertainment,movie ticket
+2026-01-20,125.0,shopping,new shoes
+2026-01-28,1200.0,gadget,laptop purchase
+2026-01-19,12.5,food,sandwich
+2026-01-12,8.75,food,coffee
+2026-01-05,12.5,food,sandwich
+2026-01-31,25.99,entertainment,movie ticket
+2026-01-30,60.0,transport,gas on the last business day of last month
+2026-01-27,4.5,food,coffee
+2026-01-26,38.0,transport,Uber ride to the airport
+2026-01-24,18.0,entertainment,movie ticket
+2026-01-31,20.0,transport,bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2026-01-31,79.99,gadget,headphones
+2026-01-28,12.5,food,sandwich
+2026-01-28,12.5,food,lunch
+2026-01-28,35000.0,transport,car purchase
+2026-01-28,0.99,gadget,Paid for an app
+2026-01-28,200.0,other,spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,12.5,food,Sándwich
+2026-01-29,45.0,transport,Gasolina
+2026-01-15,25.99,entertainment,entrada de cine
+2026-01-20,125.0,shopping,Compré zapatos nuevos
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,sandwich
+2026-01-29,45.0,transport,gas
+2026-01-15,25.99,entertainment,movie ticket
+2026-01-20,125.0,shopping,Bought new shoes
+2026-01-28,1200.0,gadget,Purchased a laptop
+2026-01-19,12.5,food,sandwich
+2026-01-12,8.75,food,coffee
+2026-01-05,12.5,food,sandwich
+2026-01-31,25.99,entertainment,movie ticket
+2025-12-31,60.0,transport,Gas
+2026-01-27,4.5,food,coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,movie ticket
+2026-01-31,20.0,transport,bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2026-01-31,79.99,gadget,Headphones purchase
+2026-01-28,12.5,food,sandwich
+2026-01-28,12.5,food,Lunch
+2026-01-28,35000.0,other,car purchase
+2026-01-28,0.99,gadget,Paid for an app
+2026-01-28,200.0,other,spa treatment
+2026-01-28,50.0,food,dinner
+2026-01-28,12.5,food,sándwich
+2026-01-29,45.0,transport,gasolina
+2026-01-15,25.99,entertainment,Entrada de cine
+2026-01-20,125.0,shopping,Zapatos nuevos
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-20,12.5,food,Sandwich
+2026-01-12,8.75,food,coffee
+2026-01-05,12.5,food,sandwich
+2026-01-31,25.99,entertainment,movie ticket
+2025-12-31,60.0,transport,Gas
+2026-01-27,4.5,food,coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,movie ticket
+2026-01-31,20.0,transport,Bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2026-01-31,79.99,gadget,Headphones
+2026-01-28,12.5,food,sandwich
+2026-01-28,12.5,food,Lunch
+2026-01-28,0.99,gadget,Paid for an app
+2026-01-28,200.0,entertainment,spa treatment
+2026-01-28,50.0,food,dinner
+2026-01-28,12.5,food,sandwich
+2026-01-29,45.0,transport,gasolina
+2026-01-15,25.99,entertainment,Entrada de cine
+2026-01-20,125.0,shopping,Zapatos nuevos
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,sandwich
+2026-01-29,45.0,transport,gas
+2026-01-15,25.99,entertainment,movie ticket
+2026-01-20,125.0,shopping,Bought new shoes
+2026-01-28,1200.0,gadget,Purchase of a laptop
+2026-01-19,12.5,food,sandwich
+2026-01-12,8.75,food,coffee
+2026-01-05,12.5,food,Sandwich
+2026-01-31,25.99,entertainment,movie ticket
+2026-01-27,4.5,food,coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,movie ticket
+2026-01-31,20.0,transport,bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2026-01-31,79.99,gadget,Headphones purchase
+2026-01-28,12.5,food,sandwich
+2026-01-28,12.5,food,lunch
+2026-01-28,35000.0,other,Car purchase
+2026-01-28,0.99,gadget,Paid for an app
+2026-01-28,200.0,entertainment,spa treatment
+2026-01-28,50.0,food,dinner
+2026-01-28,12.5,food,sándwich
+2026-01-29,45.0,transport,gasolina
+2026-01-15,25.99,entertainment,entrada de cine
+2026-01-20,125.0,shopping,Compra de zapatos nuevos
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-19,12.5,food,sandwich
+2026-01-12,8.75,food,coffee
+2026-01-05,12.5,food,sandwich
+2026-01-31,25.99,entertainment,movie ticket
+2026-01-30,60.0,transport,Gas
+2026-01-27,4.5,food,coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,movie ticket
+2026-01-31,20.0,transport,Bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2026-01-31,79.99,gadget,headphones
+2026-01-28,12.5,food,sandwich
+2026-01-28,12.5,food,lunch
+2026-01-28,0.99,gadget,Paid for an app
+2026-01-28,200.0,entertainment,spa treatment
+2026-01-28,50.0,food,dinner
+2026-01-28,12.5,food,compré un sándwich
+2026-01-29,45.0,transport,gasolina
+2026-01-15,25.99,entertainment,Entrada de cine
+2026-01-20,125.0,shopping,Zapatos nuevos
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,0.5,food,sandwich
+2026-01-28,12.5,food,Bought a sandwich
+2026-01-28,12.5,food,sandwich
+2026-01-29,45.0,transport,gas
+2026-01-15,25.99,entertainment,movie ticket
+2026-01-24,18.0,entertainment,Movie ticket
+2026-01-28,65.0,food,Instacart grocery delivery
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,Sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-19,12.5,food,Sandwich
+2026-01-12,8.75,food,Coffee
+2026-01-05,12.5,food,Sandwich
+2025-12-31,25.99,entertainment,Movie ticket
+2025-12-31,60.0,transport,Gas
+2026-01-27,4.5,food,coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,Movie ticket
+2026-01-31,20.0,transport,Bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2025-12-31,79.99,gadget,Headphones
+2026-01-28,35000.0,transport,Bought a car
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,1200.0,gadget,Compra de laptop (USD)
+2026-01-28,12.5,food,sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-19,12.5,food,Sandwich
+2026-01-19,8.75,food,coffee
+2026-01-05,12.5,food,Sandwich
+2025-12-31,25.99,entertainment,Movie ticket
+2025-12-31,60.0,transport,Gas
+2026-01-27,4.5,food,coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,Movie ticket
+2026-01-31,20.0,transport,Bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2025-12-31,79.99,gadget,Headphones
+2026-01-28,35000.0,transport,Bought a car
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,Sandwich
+2026-01-29,45.0,transport,gas
+2026-01-15,25.99,entertainment,movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-19,12.5,food,Sandwich
+2026-01-19,8.75,food,coffee
+2026-01-05,12.5,food,Sandwich
+2025-12-31,25.99,entertainment,Movie ticket
+2025-12-31,60.0,transport,Gas
+2026-01-27,4.5,food,coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,Movie ticket
+2026-01-31,20.0,transport,Bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2025-12-31,79.99,gadget,Headphones
+2026-01-28,35000.0,other,Bought a car
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,Sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-19,12.5,food,Sandwich
+2026-01-12,8.75,food,Coffee
+2026-01-05,12.5,food,Sandwich
+2025-12-31,25.99,entertainment,Movie ticket
+2025-12-31,60.0,transport,Gas
+2026-01-27,4.5,food,Coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,Movie ticket
+2026-01-31,20.0,transport,Bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2025-12-31,79.99,gadget,Headphones
+2026-01-28,35000.0,transport,Bought a car (USD)
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,other,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,Sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-19,12.5,food,Sandwich
+2026-01-19,8.75,food,Coffee
+2026-01-05,12.5,food,Sandwich
+2025-12-31,25.99,entertainment,Movie ticket
+2025-12-31,60.0,transport,Gas
+2026-01-27,4.5,food,coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,Movie ticket
+2026-01-31,20.0,transport,Bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2025-12-31,79.99,gadget,Headphones
+2026-01-28,35000.0,transport,Bought a car
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,Sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-19,12.5,food,Sandwich
+2026-01-19,8.75,food,coffee
+2026-01-05,12.5,food,Sandwich
+2025-12-31,25.99,entertainment,Movie ticket
+2025-12-31,60.0,transport,Gas
+2026-01-27,4.5,food,Coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,Movie ticket
+2026-01-31,20.0,transport,Bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2025-12-31,79.99,gadget,Headphones
+2026-01-28,35000.0,other,Bought a car (USD)
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,Sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-19,12.5,food,Sandwich
+2026-01-12,8.75,food,coffee
+2026-01-05,12.5,food,Sandwich
+2025-12-31,25.99,entertainment,Movie ticket
+2025-12-31,60.0,transport,Gas
+2026-01-27,4.5,food,coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,Movie ticket
+2026-01-31,20.0,transport,Bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2025-12-31,79.99,gadget,Headphones
+2026-01-28,35000.0,transport,Car purchase
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,Sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-19,12.5,food,Sandwich
+2026-01-12,8.75,food,coffee
+2026-01-05,12.5,food,Sandwich
+2025-12-31,25.99,entertainment,Movie ticket
+2025-12-31,60.0,transport,Gas
+2026-01-27,4.5,food,Coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,Movie ticket
+2026-01-31,20.0,transport,Bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2025-12-31,79.99,gadget,Headphones
+2026-01-28,35000.0,transport,Bought a car (USD)
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,1200.0,gadget,Compra de laptop
+2026-01-28,12.5,food,sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,Movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-19,12.5,food,sandwich
+2026-01-19,8.75,food,coffee
+2026-01-05,12.5,food,Sandwich
+2025-12-31,25.99,entertainment,Movie ticket
+2025-12-31,60.0,transport,Gas
+2026-01-27,4.5,food,Coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,Movie ticket
+2026-01-31,20.0,transport,Bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2025-12-31,79.99,gadget,Headphones
+2026-01-28,35000.0,transport,Bought a car
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,1200.0,gadget,Compra de una laptop
+2026-01-28,12.5,food,Sandwich
+2026-01-29,45.0,transport,Gas
+2026-01-15,25.99,entertainment,movie ticket
+2026-01-20,125.0,shopping,New shoes
+2026-01-28,1200.0,gadget,Laptop purchase
+2026-01-19,12.5,food,Sandwich
+2026-01-19,8.75,food,Coffee
+2026-01-05,12.5,food,Sandwich
+2025-12-31,25.99,entertainment,Movie ticket
+2025-12-31,60.0,transport,Gas
+2026-01-27,4.5,food,Coffee
+2026-01-26,38.0,transport,Uber to the airport
+2026-01-23,18.0,entertainment,Movie ticket
+2026-01-31,20.0,transport,Bus pass
+2026-01-28,65.0,food,Instacart grocery delivery
+2025-12-31,79.99,gadget,Headphones
+2026-01-28,35000.0,other,Car purchase
+2026-01-28,0.99,gadget,App purchase
+2026-01-28,200.0,entertainment,Spa treatment
+2026-01-28,50.0,food,Dinner
+2026-01-28,1200.0,gadget,Compra de una laptop
+2026-01-28,12.5,food,sandwich,,
+2026-01-29,45.0,transport,gas,,
+2026-01-15,25.99,entertainment,movie ticket,,
+2026-01-20,125.0,shopping,Bought new shoes,,
+2026-01-28,1200.0,gadget,Laptop purchase,,
+2026-01-28,18.0,transport,Taxi to a client meeting,,
+2026-01-28,32.0,food,Lunch with a customer,,
+2026-01-28,22.0,entertainment,movie ticket with friends,,
+2026-01-28,48.0,food,Dinner with family,,
+2026-01-28,14.0,food,Lunch after work event,,
+2026-01-28,24.0,entertainment,Drinks after work with coworkers and friends,,
+2026-01-20,12.5,food,sandwich,,
+2026-01-12,8.75,food,coffee,,
+2026-01-06,12.5,food,Sandwich bought on the first Monday of January,,
+2026-01-31,25.99,entertainment,movie ticket,,
+2026-01-30,60.0,transport,Gas for vehicle,,
+2026-01-27,4.5,food,coffee,,
+2026-01-26,38.0,transport,Uber to the airport,,
+2026-01-24,18.0,entertainment,movie ticket,,
+2026-01-31,20.0,transport,Bus pass,,
+2026-01-28,65.0,food,Instacart grocery delivery,,
+2026-01-31,79.99,gadget,headphones,,
+2026-01-28,35000.0,other,Car purchase,,
+2026-01-28,0.99,gadget,Paid for an app,,
+2026-01-28,200.0,other,spa treatment,,
+2026-01-28,50.0,food,dinner,,
+2026-01-28,1200.0,gadget,Compra de laptop,,
+2026-01-28,12.5,food,sandwich,,
+2026-01-29,45.0,transport,Gas,,
+2026-01-15,25.99,entertainment,movie ticket,,
+2026-01-20,125.0,shopping,Bought new shoes,,
+2026-01-28,1200.0,gadget,Laptop purchase,,
+2026-01-28,18.0,transport,Taxi to client meeting,,
+2026-01-28,32.0,food,lunch with a customer,,
+2026-01-28,22.0,entertainment,Movie ticket with friends,,
+2026-01-28,48.0,food,Dinner with family,,
+2026-01-28,14.0,food,Lunch after work event,,
+2026-01-28,24.0,entertainment,Drinks after work with coworkers and friends,,
+2026-01-19,12.5,food,Sandwich,,
+2026-01-12,8.75,food,coffee,,
+2026-01-05,12.5,food,Bought a sandwich,,
+2026-01-31,25.99,entertainment,movie ticket,,
+2026-01-30,60.0,transport,Gas expense on the last business day of last month,,
+2026-01-27,4.5,food,coffee,,
+2026-01-26,38.0,transport,Uber to the airport,,
+2026-01-24,18.0,entertainment,movie ticket,,
+2026-01-31,20.0,transport,Bus pass,,
+2026-01-28,65.0,food,Instacart grocery delivery,,
+2026-01-31,79.99,gadget,headphones,,
+2026-01-28,35000.0,other,Car purchase,,
+2026-01-28,0.99,gadget,App purchase,,
+2026-01-28,200.0,other,spa treatment,,
+2026-01-28,50.0,food,dinner,,
+2026-01-28,1200.0,gadget,Compra de laptop,,
+2026-01-28,12.5,food,sandwich,,
+2026-01-29,45.0,transport,Gas,,
+2026-01-15,25.99,entertainment,Movie ticket,,
+2026-01-20,125.0,shopping,New shoes,,
+2026-01-28,1200.0,gadget,Purchased a laptop,,
+2026-01-28,18.0,transport,Taxi to a client meeting,,
+2026-01-28,32.0,food,Lunch with a customer,,
+2026-01-28,22.0,entertainment,Movie ticket with friends,,
+2026-01-28,48.0,food,Dinner with family,,
+2026-01-28,14.0,food,Lunch after work event,,
+2026-01-28,24.0,entertainment,Drinks after work with coworkers and friends,,
+2026-01-19,12.5,food,Sandwich purchased,,
+2026-01-12,8.75,food,coffee,,
+2026-01-05,12.5,food,sandwich,,
+2026-01-31,25.99,entertainment,Movie ticket,,
+2026-01-30,60.0,transport,Gas for business,,
+2026-01-27,4.5,food,coffee,,
+2026-01-26,38.0,transport,Uber to the airport,,
+2026-01-24,18.0,entertainment,movie ticket,,
+2026-01-31,20.0,transport,Bus pass purchase,,
+2026-01-28,65.0,food,Instacart grocery delivery,,
+2026-01-31,79.99,gadget,Headphones purchase,,
+2026-01-28,0.99,gadget,Payment for an app,,
+2026-01-28,200.0,other,spa treatment,,
+2026-01-28,50.0,food,dinner,,
+2026-01-28,1200.0,gadget,Compra de laptop,,
+2026-01-28,12.5,food,sandwich,,
+2026-01-29,45.0,transport,Gas payment,,
+2026-01-15,25.99,entertainment,movie ticket,,
+2026-01-20,125.0,shopping,New shoes purchase,,
+2026-01-28,1200.0,gadget,Laptop purchase,,
+2026-01-28,18.0,transport,Taxi to a client meeting,,
+2026-01-28,32.0,food,Lunch with a customer,,
+2026-01-28,22.0,entertainment,movie ticket with friends,,
+2026-01-28,48.0,food,Dinner with family,,
+2026-01-28,14.0,food,Lunch after a work event,,
+2026-01-28,24.0,food,Drinks after work with coworkers and friends,,
+2026-01-19,12.5,food,Sandwich purchase,,
+2026-01-12,8.75,food,coffee,,
+2026-01-05,12.5,food,sandwich,,
+2026-01-31,25.99,entertainment,movie ticket,,
+2026-01-30,60.0,transport,Gas purchase,,
+2026-01-27,4.5,food,coffee,,
+2026-01-26,38.0,transport,Uber ride to the airport,,
+2026-01-23,18.0,entertainment,movie ticket,,
+2026-01-31,20.0,transport,Bus pass purchase,,
+2026-01-28,65.0,food,Instacart grocery delivery,,
+2026-01-31,79.99,gadget,Bought headphones,,
+2026-01-28,35000.0,shopping,Car purchase,,
+2026-01-28,0.99,gadget,Purchased an app,,
+2026-01-28,200.0,other,spa treatment,,
+2026-01-28,50.0,food,dinner,,
+2026-01-28,1200.0,gadget,Compra de una laptop,,
+2026-01-28,12.5,food,sandwich,,
+2026-01-29,45.0,transport,gas,,
+2026-01-15,25.99,entertainment,movie ticket,,
+2026-01-20,125.0,shopping,New shoes,,
+2026-01-28,1200.0,gadget,Purchased a laptop,,
+2026-01-28,18.0,transport,Taxi to client meeting,,
+2026-01-28,32.0,food,Lunch with a customer,,
+2026-01-28,22.0,entertainment,Movie ticket with friends,,
+2026-01-28,48.0,food,dinner with family,,
+2026-01-28,14.0,food,"Lunch after work event, likely reimbursable",,
+2026-01-28,24.0,entertainment,Drinks after work with coworkers and friends,,
+2026-01-19,12.5,food,Sandwich,,
+2026-01-12,8.75,food,coffee,,
+2026-01-06,12.5,food,Sandwich purchased on the first Monday of January,,
+2026-01-31,25.99,entertainment,movie ticket,,
+2026-01-30,60.0,transport,Gas for vehicle (business),,
+2026-01-27,4.5,food,coffee,,
+2026-01-26,38.0,transport,Uber to the airport,,
+2026-01-24,18.0,entertainment,movie ticket,,
+2026-01-31,20.0,transport,Bus pass,,
+2026-01-28,65.0,food,Instacart grocery delivery,,
+2026-01-31,79.99,gadget,headphones,,
+2026-01-28,0.99,gadget,App purchase,,
+2026-01-28,200.0,other,spa treatment,,
+2026-01-28,50.0,food,dinner,,
+2026-01-28,1200.0,gadget,Compra de laptop,,
+2026-01-28,12.5,food,sandwich,,
+2026-01-29,45.0,transport,Gas,,
+2026-01-15,25.99,entertainment,movie ticket,,
+2026-01-20,125.0,shopping,New shoes,,
+2026-01-28,1200.0,gadget,Laptop purchase,,
+2026-01-28,18.0,transport,Taxi to client meeting,,
+2026-01-28,32.0,food,lunch with a customer,,
+2026-01-28,22.0,entertainment,Movie ticket with friends,,
+2026-01-28,48.0,food,dinner with family,,
+2026-01-28,14.0,food,Lunch after work event,,
+2026-01-28,24.0,entertainment,drinks after work with coworkers and friends,,
+2026-01-20,12.5,food,Sandwich,,
+2026-01-12,8.75,food,Coffee,,
+2026-01-05,12.5,food,Sandwich purchase,,
+2026-01-31,25.99,entertainment,movie ticket,,
+2026-01-30,60.0,transport,Gas for business use,,
+2026-01-27,4.5,food,coffee,,
+2026-01-26,38.0,transport,Uber to the airport,,
+2026-01-23,18.0,entertainment,movie ticket,,
+2026-01-31,20.0,transport,Bus pass purchase,,
+2026-01-28,65.0,food,Instacart grocery delivery,,
+2026-01-31,79.99,gadget,Headphones,,
+2026-01-28,0.99,gadget,App purchase,,
+2026-01-28,200.0,other,Spa treatment,,
+2026-01-28,50.0,food,Dinner,,
+2026-01-28,1200.0,gadget,Compra de laptop,,
+2026-01-28,12.5,food,sandwich,,
+2026-01-29,45.0,transport,gas,,
+2026-01-15,25.99,entertainment,movie ticket,,
+2026-01-20,125.0,shopping,New shoes,,
+2026-01-28,1200.0,gadget,Purchased a laptop,,
+2026-01-28,18.0,transport,Taxi to client meeting,,
+2026-01-28,32.0,food,lunch with a customer,,
+2026-01-28,22.0,entertainment,movie ticket with friends,,
+2026-01-28,48.0,food,dinner with family,,
+2026-01-28,14.0,food,"Lunch after a work event, unsure if reimbursable",,
+2026-01-28,24.0,entertainment,Drinks after work with coworkers and friends,,
+2026-01-19,12.5,food,Sandwich,,
+2026-01-12,8.75,food,coffee,,
+2026-01-05,12.5,food,Sandwich bought on the first Monday of January 2026,,
+2026-01-31,25.99,entertainment,movie ticket,,
+2026-01-30,60.0,transport,Gas,,
+2026-01-27,4.5,food,coffee,,
+2026-01-26,38.0,transport,Uber to the airport,,
+2026-01-24,18.0,entertainment,Movie ticket,,
+2026-01-31,20.0,transport,Bus pass,,
+2026-01-28,65.0,food,Instacart grocery delivery,,
+2026-01-31,79.99,gadget,Bought headphones,,
+2026-01-28,0.99,gadget,Paid for an app,,
+2026-01-28,200.0,other,spa treatment,,
+2026-01-28,50.0,food,dinner,,
+2026-01-28,1200.0,gadget,Compra de laptop,,
+2026-01-28,12.5,food,sandwich,,
+2026-01-29,45.0,transport,Gas,,
+2026-01-15,25.99,entertainment,movie ticket,,
+2026-01-20,125.0,shopping,New shoes,,
+2026-01-28,1200.0,gadget,Purchased a laptop,,
+2026-01-28,18.0,transport,Taxi to client meeting,,
+2026-01-28,32.0,food,lunch with a customer,,
+2026-01-28,22.0,entertainment,Movie ticket with friends,,
+2026-01-28,48.0,food,Dinner with family,,
+2026-01-28,14.0,food,Lunch after work event,,
+2026-01-28,24.0,entertainment,Drinks after work with coworkers and friends,,
+2026-01-19,12.5,food,Sandwich purchase,,
+2026-01-12,8.75,food,Coffee,,
+2026-01-05,12.5,food,Sandwich bought on the first Monday of January 2026,,
+2026-01-31,25.99,entertainment,movie ticket,,
+2026-01-30,60.0,transport,Gas for business,,
+2026-01-27,4.5,food,coffee,,
+2026-01-26,38.0,transport,Uber to the airport,,
+2026-01-23,18.0,entertainment,movie ticket,,
+2026-01-31,20.0,transport,Bus pass,,
+2026-01-28,65.0,food,Instacart grocery delivery,,
+2026-01-31,79.99,gadget,Bought headphones,,
+2026-01-28,0.99,gadget,Paid for an app,,
+2026-01-28,200.0,entertainment,spa treatment,,
+2026-01-28,50.0,food,Dinner,,
+2026-01-28,1200.0,gadget,Compra de laptop,,
+2026-01-28,12.5,food,Sandwich,,
+2026-01-29,45.0,transport,gas,,
+2026-01-15,25.99,entertainment,movie ticket,,
+2026-01-20,125.0,shopping,New shoes,,
+2026-01-28,1200.0,gadget,Purchased a laptop,,
+2026-01-28,18.0,transport,Taxi to a client meeting,,
+2026-01-28,32.0,food,Lunch with a customer,,
+2026-01-28,22.0,entertainment,Movie ticket with friends,,
+2026-01-28,48.0,food,Dinner with family,,
+2026-01-28,24.0,entertainment,Drinks after work with coworkers and friends,,
+2026-01-19,12.5,food,Sandwich purchased on the Monday before this week,,
+2026-01-12,8.75,food,Coffee,,
+2026-01-05,12.5,food,Sandwich bought on the first Monday of January,,
+2026-01-31,25.99,entertainment,movie ticket,,
+2026-01-30,60.0,transport,Gas payment on the last business day of last month,,
+2026-01-27,4.5,food,Coffee,,
+2026-01-26,38.0,transport,Uber to the airport,,
+2026-01-23,18.0,entertainment,movie ticket,,
+2026-01-31,20.0,transport,Bus pass,,
+2026-01-28,65.0,food,Instacart grocery delivery,,
+2026-01-31,79.99,gadget,Bought headphones,,
+2026-01-28,35000.0,other,Bought a car,,
+2026-01-28,0.99,gadget,Paid for an app,,
+2026-01-28,200.0,entertainment,Spa treatment,,
+2026-01-28,50.0,food,dinner,,
+2026-01-28,1200.0,gadget,Compra de laptop,,

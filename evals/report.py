@@ -7,16 +7,21 @@ Usage:
 import argparse
 import json
 
+from evals.dataset import EXPENSE_CASES
+
 # Descriptions for each variant type
 VARIANT_DESCRIPTIONS = {
     "add_expense_cat_a": "category: str",
     "add_expense_cat_b": "category: Annotated[str, ...]",
     "add_expense_cat_c": "category: Literal[...]",
     "add_expense_cat_d": "category: ExpenseCategory (Enum)",
+    "add_expense_cat_e": "category: Annotated[ExpenseCategory, Field(description=...)]",
     "add_expense_date_a": "expense_date: str",
     "add_expense_date_b": "expense_date: Annotated[str, ...]",
     "add_expense_date_c": "expense_date: date",
     "add_expense_date_d": "expense_date: Annotated[str, Field(pattern=...)]",
+    "add_expense_model_a": "expense: ExpenseInput (Pydantic model)",
+    "add_expense_reimb_e": 'reimbursable: bool | Literal["unknown"]',
 }
 
 
@@ -28,6 +33,16 @@ def get_variant_description(name: str) -> str:
 def generate_markdown_report(data: dict) -> str:
     """Generate a markdown report from evaluation JSON data."""
     lines = []
+
+    case_prompts = {c.name: c.prompt for c in EXPENSE_CASES}
+
+    def _md_escape_cell(value: object) -> str:
+        # Keep tables well-formed even if messages contain pipes/newlines.
+        return str(value).replace("|", "\\|").replace("\n", " ").strip()
+
+    def _append_blockquote(text: str) -> None:
+        for line in text.splitlines() or [""]:
+            lines.append(f"> {line}".rstrip())
 
     # Header
     lines.append("# MCP Tool Schema Evaluation Report")
@@ -42,8 +57,11 @@ def generate_markdown_report(data: dict) -> str:
     lines.append(f"- **Model**: {meta.get('model_name', 'N/A')}")
     model_settings = meta.get("model_settings", {})
     if model_settings:
-        lines.append(f"- **Temperature**: {model_settings.get('temperature', 'N/A')}")
+        lines.append(f"- **Reasoning Effort**: {model_settings.get('openai_reasoning_effort', 'N/A')}")
+        lines.append(f"- **Reasoning Summary**: {model_settings.get('openai_reasoning_summary', 'N/A')}")
         lines.append(f"- **Seed**: {model_settings.get('seed', 'N/A')}")
+        # Keep temperature for older runs that may have it.
+        lines.append(f"- **Temperature**: {model_settings.get('temperature', 'N/A')}")
     lines.append(f"- **MCP Server URL**: {meta.get('mcp_server_url', 'N/A')}")
     lines.append("")
 
@@ -52,19 +70,19 @@ def generate_markdown_report(data: dict) -> str:
     if summaries:
         lines.append("## Variant Comparison")
         lines.append("")
-        lines.append("| Variant | Description | Pass Rate | Avg Score | Passed | Total |")
-        lines.append("|---------|-------------|-----------|-----------|--------|-------|")
+        lines.append("| Variant | Description | Avg Score | Total |")
+        lines.append("|---------|-------------|-----------|-------|")
 
         # Sort alphabetically by variant name (a -> d)
         sorted_summaries = sorted(summaries.items(), key=lambda x: x[0])
 
         for name, s in sorted_summaries:
             desc = get_variant_description(name)
-            pass_rate = s.get("pass_rate", 0) * 100
             avg_score = s.get("avg_score", 0)
-            passed = s.get("passed_cases", 0)
             total = s.get("total_cases", 0)
-            lines.append(f"| {name} | {desc} | {pass_rate:.1f}% | {avg_score:.2f} | {passed} | {total} |")
+            lines.append(
+                f"| {_md_escape_cell(name)} | {_md_escape_cell(desc)} | {avg_score:.2f} | {_md_escape_cell(total)} |"
+            )
 
         lines.append("")
 
@@ -78,12 +96,17 @@ def generate_markdown_report(data: dict) -> str:
         for s in summaries.values():
             all_evals.update(s.get("eval_counts", {}).keys())
 
+        has_cat_variants = any("_cat_" in n for n, _ in sorted_summaries)
+        has_date_variants = any("_date_" in n for n, _ in sorted_summaries)
+        has_model_variants = any("_model_" in n for n, _ in sorted_summaries)
+
         for eval_name in sorted(all_evals):
-            # Filter variants based on eval type
-            if eval_name in ("category_match", "category_valid"):
-                relevant_summaries = [(n, s) for n, s in sorted_summaries if "_cat_" in n]
-            elif eval_name in ("date_match", "date_format"):
-                relevant_summaries = [(n, s) for n, s in sorted_summaries if "_date_" in n]
+            # Filter variants based on eval type only when those variant types exist.
+            # Otherwise, show all variants so tables don't come out empty.
+            if eval_name in ("category_match", "category_valid") and (has_cat_variants or has_model_variants):
+                relevant_summaries = [(n, s) for n, s in sorted_summaries if ("_cat_" in n or "_model_" in n)]
+            elif eval_name in ("date_match", "date_format") and (has_date_variants or has_model_variants):
+                relevant_summaries = [(n, s) for n, s in sorted_summaries if ("_date_" in n or "_model_" in n)]
             else:
                 relevant_summaries = sorted_summaries
 
@@ -97,7 +120,12 @@ def generate_markdown_report(data: dict) -> str:
                 counts = s.get("eval_counts", {}).get(eval_name, {"passed": 0, "failed": 0})
                 total = counts["passed"] + counts["failed"]
                 rate = (counts["passed"] / total * 100) if total > 0 else 0
-                lines.append(f"| {name} | {desc} | {rate:.1f}% | {counts['passed']} | {total} |")
+                passed = _md_escape_cell(counts["passed"])
+                total_ = _md_escape_cell(total)
+                lines.append(
+                    f"| {_md_escape_cell(name)} | {_md_escape_cell(desc)} | {rate:.1f}% |"
+                    f" {passed} | {total_} |"
+                )
 
             lines.append("")
 
@@ -114,10 +142,16 @@ def generate_markdown_report(data: dict) -> str:
             case = r.get("case_name", "N/A")
             variant = r.get("tool_variant", "N/A")
             score = r.get("overall_score", 0)
-            status = "PASS" if score >= 0.8 else "FAIL"
 
-            lines.append(f"### {variant} / {case}: {status} ({score:.2f})")
+            lines.append(f"### {variant} / {case}: {score:.2f}")
             lines.append("")
+
+            user_query = r.get("user_query") or r.get("prompt") or case_prompts.get(case)
+            if user_query:
+                lines.append("**User Query**:")
+                lines.append("")
+                _append_blockquote(str(user_query))
+                lines.append("")
 
             if r.get("error"):
                 lines.append(f"**Error**: {r['error']}")
@@ -129,22 +163,43 @@ def generate_markdown_report(data: dict) -> str:
                 lines.append("**Tool Calls**:")
                 lines.append("")
                 for tc in tool_calls:
-                    lines.append(f"- `{tc['tool_name']}`")
-                    lines.append("  ```json")
-                    lines.append(f"  {json.dumps(tc['arguments'], indent=2)}")
-                    lines.append("  ```")
+                    lines.append(f"- Tool: `{tc['tool_name']}`")
+                    lines.append("")
+                    lines.append("```json")
+                    lines.append(json.dumps(tc["arguments"], indent=2))
+                    lines.append("```")
+                    lines.append("")
             else:
                 lines.append("**No tool calls made**")
 
+            lines.append("")
+
+            agent_output = r.get("agent_output")
+            if agent_output:
+                lines.append("**Assistant Output**:")
+                lines.append("")
+                _append_blockquote(agent_output)
+                lines.append("")
+
+            # Show model-provided reasoning summary text (not chain-of-thought)
+            reasoning = r.get("reasoning")
+            lines.append("**Reasoning Summary**:")
+            lines.append("")
+            lines.append("```")
+            lines.append(reasoning if reasoning else "(none returned)")
+            lines.append("```")
             lines.append("")
 
             eval_results = r.get("eval_results", {})
             if eval_results:
                 lines.append("**Evaluations**:")
                 lines.append("")
+                lines.append("| Result | Evaluator | Message |")
+                lines.append("|---|---|---|")
                 for eval_name, er in eval_results.items():
-                    status_symbol = "+" if er.get("passed") else "-"
-                    lines.append(f"- [{status_symbol}] {eval_name}: {er.get('message', '')}")
+                    symbol = "✅" if er.get("passed") else "❌"
+                    message = _md_escape_cell(er.get("message", ""))
+                    lines.append(f"| {symbol} | {_md_escape_cell(eval_name)} | {message} |")
                 lines.append("")
 
         lines.append("</details>")

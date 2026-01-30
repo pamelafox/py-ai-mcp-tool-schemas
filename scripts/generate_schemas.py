@@ -23,8 +23,16 @@ SCHEMAS_DIR = Path(__file__).parent.parent / "schemas"
 
 # Variant groups for diff generation (baseline is first in each list)
 VARIANT_GROUPS = {
-    "category": ["add_expense_cat_a", "add_expense_cat_b", "add_expense_cat_c", "add_expense_cat_d"],
+    "category": [
+        "add_expense_cat_a",
+        "add_expense_cat_b",
+        "add_expense_cat_c",
+        "add_expense_cat_d",
+        "add_expense_cat_e",
+    ],
     "date": ["add_expense_date_a", "add_expense_date_b", "add_expense_date_c", "add_expense_date_d"],
+    # Compare a flat-args baseline against a nested-object Pydantic model input.
+    "input_shape": ["add_expense_cat_d", "add_expense_model_a"],
     "output": ["get_expenses_a", "get_expenses_b", "get_expenses_c"],
 }
 
@@ -137,7 +145,11 @@ async def main():
         f.write('| `add_expense_cat_a` | `str` | `{"type": "string"}` — No constraints |\n')
         f.write('| `add_expense_cat_b` | `Annotated[str, "hint"]` | `{"type": "string", "description": "hint"}` |\n')
         f.write('| `add_expense_cat_c` | `Literal[...]` | `{"type": "string", "enum": [...]}` — Explicit enum |\n')
-        f.write('| `add_expense_cat_d` | `Enum` | `{"type": "string", "enum": [...]}` — Same as Literal |\n\n')
+        f.write('| `add_expense_cat_d` | `Enum` | `{"type": "string", "enum": [...]}` — Same as Literal |\n')
+        f.write(
+            '| `add_expense_cat_e` | `Annotated[Enum, Field(description=...)]` '
+            '| `{"type": "string", "enum": [...], "description": "..."}` — Enum + guidance |\n\n'
+        )
         f.write(
             "**Key finding:** Both `Literal` and `Enum` produce identical JSON Schema "
             "with explicit `enum` arrays.\n\n"
@@ -159,6 +171,16 @@ async def main():
         )
         f.write("**Key finding:** Python's `date` type produces `\"format\": \"date\"` (ISO 8601).\n\n")
 
+        f.write("### Input Shape Variants\n\n")
+        f.write("Testing flat arguments vs a single nested Pydantic model input:\n\n")
+        f.write("| Variant | Python Type | JSON Schema Result |\n")
+        f.write("| ------- | ----------- | ------------------ |\n")
+        f.write('| `add_expense_cat_d` | `expense_date: date, amount: float, category: Enum, description: str` | Flat `properties` at top-level |\n')
+        f.write('| `add_expense_model_a` | `expense: ExpenseInput (BaseModel)` | Single top-level `expense` object with nested `properties` |\n\n')
+        f.write(
+            "**Key finding:** Nested object inputs can trigger different model behavior (e.g., passing a dict vs stringified JSON).\n\n"
+        )
+
         f.write("### Output Schema Variants\n\n")
         f.write("Testing return type handling:\n\n")
         f.write("| Variant | Python Return Type | outputSchema Result |\n")
@@ -179,6 +201,9 @@ async def main():
 
         f.write("### Date Variants\n\n")
         f.write(generate_group_diffs(tools_by_name, "date", VARIANT_GROUPS["date"]))
+
+        f.write("### Input Shape Variants\n\n")
+        f.write(generate_group_diffs(tools_by_name, "input_shape", VARIANT_GROUPS["input_shape"]))
 
         f.write("### Output Variants\n\n")
         f.write(generate_group_diffs(tools_by_name, "output", VARIANT_GROUPS["output"]))

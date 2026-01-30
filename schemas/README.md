@@ -18,6 +18,7 @@ Testing constrained value handling:
 | `add_expense_cat_b` | `Annotated[str, "hint"]` | `{"type": "string", "description": "hint"}` |
 | `add_expense_cat_c` | `Literal[...]` | `{"type": "string", "enum": [...]}` — Explicit enum |
 | `add_expense_cat_d` | `Enum` | `{"type": "string", "enum": [...]}` — Same as Literal |
+| `add_expense_cat_e` | `Annotated[Enum, Field(description=...)]` | `{"type": "string", "enum": [...], "description": "..."}` — Enum + guidance |
 
 **Key finding:** Both `Literal` and `Enum` produce identical JSON Schema with explicit `enum` arrays.
 
@@ -33,6 +34,17 @@ Testing date format handling:
 | `add_expense_date_d` | `Annotated[str, Field(pattern=...)]` | `{"type": "string", "pattern": "..."}` |
 
 **Key finding:** Python's `date` type produces `"format": "date"` (ISO 8601).
+
+### Input Shape Variants
+
+Testing flat arguments vs a single nested Pydantic model input:
+
+| Variant | Python Type | JSON Schema Result |
+| ------- | ----------- | ------------------ |
+| `add_expense_cat_d` | `expense_date: date, amount: float, category: Enum, description: str` | Flat `properties` at top-level |
+| `add_expense_model_a` | `expense: ExpenseInput (BaseModel)` | Single top-level `expense` object with nested `properties` |
+
+**Key finding:** Nested object inputs can trigger different model behavior (e.g., passing a dict vs stringified JSON).
 
 ### Output Schema Variants
 
@@ -102,6 +114,26 @@ Unified diffs comparing each variant against the baseline (`_a` variant).
        "description": {
 ```
 
+#### `add_expense_cat_a` → `add_expense_cat_e`
+
+```diff
+--- add_expense_cat_a.json+++ add_expense_cat_e.json@@ -8,6 +8,15 @@         "type": "number"
+       },
+       "category": {
++        "description": "Choose the closest category for the expense. Do not ask follow-up questions just to disambiguate the category; pick the best fit using the description and common sense. If truly unclear, use OTHER.\n\nHeuristics: FOOD=meals, groceries, coffee; TRANSPORT=rideshare, taxi, gas, transit, parking; ENTERTAINMENT=movies, concerts, games; SHOPPING=general retail and household purchases; GADGET=electronics/devices/accessories; OTHER=fees, services, subscriptions, or anything that does not fit well.",
++        "enum": [
++          "food",
++          "transport",
++          "entertainment",
++          "shopping",
++          "gadget",
++          "other"
++        ],
+         "type": "string"
+       },
+       "description": {
+```
+
 ### Date Variants
 
 #### `add_expense_date_a` → `add_expense_date_b`
@@ -138,6 +170,82 @@ Unified diffs comparing each variant against the baseline (`_a` variant).
          "type": "string"
        }
      },
+```
+
+### Input Shape Variants
+
+#### `add_expense_cat_d` → `add_expense_model_a`
+
+```diff
+--- add_expense_cat_d.json+++ add_expense_model_a.json@@ -4,33 +4,46 @@   "icons": null,
+   "inputSchema": {
+     "properties": {
+-      "amount": {
+-        "type": "number"
+-      },
+-      "category": {
+-        "enum": [
+-          "food",
+-          "transport",
+-          "entertainment",
+-          "shopping",
+-          "gadget",
+-          "other"
++      "expense": {
++        "description": "Input model for adding a single expense.\n\nThis is used to test how models handle a single nested JSON object argument.",
++        "properties": {
++          "amount": {
++            "description": "Amount spent",
++            "type": "number"
++          },
++          "category": {
++            "description": "Category of expense",
++            "enum": [
++              "food",
++              "transport",
++              "entertainment",
++              "shopping",
++              "gadget",
++              "other"
++            ],
++            "type": "string"
++          },
++          "description": {
++            "description": "Description of the expense",
++            "type": "string"
++          },
++          "expense_date": {
++            "description": "Date of the expense",
++            "format": "date",
++            "type": "string"
++          }
++        },
++        "required": [
++          "expense_date",
++          "amount",
++          "category",
++          "description"
+         ],
+-        "type": "string"
+-      },
+-      "description": {
+-        "type": "string"
+-      },
+-      "expense_date": {
+-        "format": "date",
+-        "type": "string"
++        "type": "object"
+       }
+     },
+     "required": [
+-      "expense_date",
+-      "amount",
+-      "category",
+-      "description"
++      "expense"
+     ],
+     "type": "object"
+   },
 ```
 
 ### Output Variants
@@ -214,7 +322,7 @@ Verified by `scripts/verify_content_field.py`.
 
 ### add_expense_cat_a
 
-Add a new expense for the given date, amount, category, and description.
+Add a new expense.
 
 **Input parameters:**
 
@@ -227,7 +335,7 @@ Add a new expense for the given date, amount, category, and description.
 
 ### add_expense_cat_b
 
-Add a new expense for the given date, amount, category, and description.
+Add a new expense.
 
 **Input parameters:**
 
@@ -240,7 +348,7 @@ Add a new expense for the given date, amount, category, and description.
 
 ### add_expense_cat_c
 
-Add a new expense for the given date, amount, category, and description.
+Add a new expense.
 
 **Input parameters:**
 
@@ -253,7 +361,7 @@ Add a new expense for the given date, amount, category, and description.
 
 ### add_expense_cat_d
 
-Add a new expense for the given date, amount, category, and description.
+Add a new expense.
 
 **Input parameters:**
 
@@ -264,9 +372,24 @@ Add a new expense for the given date, amount, category, and description.
 
 **Output schema:** See `add_expense_cat_d.json`
 
+### add_expense_cat_e
+
+Add a new expense.
+
+**Input parameters:**
+
+- `expense_date`: string
+- `amount`: number
+- `category`: enum: ['food', 'transport', 'entertainment', 'shopping', 'gadget', 'other'] — Choose the closest category for the expense. Do not ask follow-up questions just to disambiguate the category; pick the best fit using the description and common sense. If truly unclear, use OTHER.
+
+Heuristics: FOOD=meals, groceries, coffee; TRANSPORT=rideshare, taxi, gas, transit, parking; ENTERTAINMENT=movies, concerts, games; SHOPPING=general retail and household purchases; GADGET=electronics/devices/accessories; OTHER=fees, services, subscriptions, or anything that does not fit well.
+- `description`: string
+
+**Output schema:** See `add_expense_cat_e.json`
+
 ### add_expense_date_a
 
-Add a new expense for the given date, amount, category, and description.
+Add a new expense.
 
 **Input parameters:**
 
@@ -279,7 +402,7 @@ Add a new expense for the given date, amount, category, and description.
 
 ### add_expense_date_b
 
-Add a new expense for the given date, amount, category, and description.
+Add a new expense.
 
 **Input parameters:**
 
@@ -292,7 +415,7 @@ Add a new expense for the given date, amount, category, and description.
 
 ### add_expense_date_c
 
-Add a new expense for the given date, amount, category, and description.
+Add a new expense.
 
 **Input parameters:**
 
@@ -305,7 +428,7 @@ Add a new expense for the given date, amount, category, and description.
 
 ### add_expense_date_d
 
-Add a new expense for the given date, amount, category, and description.
+Add a new expense.
 
 **Input parameters:**
 
@@ -316,21 +439,54 @@ Add a new expense for the given date, amount, category, and description.
 
 **Output schema:** See `add_expense_date_d.json`
 
+### add_expense_model_a
+
+Add a new expense.
+
+**Input parameters:**
+
+- `expense`: object — Input model for adding a single expense.
+
+This is used to test how models handle a single nested JSON object argument.
+
+**Output schema:** See `add_expense_model_a.json`
+
+### add_expense_reimb_e
+
+Add a new expense.
+
+**Input parameters:**
+
+- `expense_date`: string
+- `amount`: number
+- `category`: enum: ['food', 'transport', 'entertainment', 'shopping', 'gadget', 'other']
+- `description`: string
+- `reimbursable`: unknown — Whether this expense is reimbursable.
+
+Infer reimbursable status from context; the user does not need to literally say "reimbursable". Use true when the expense is clearly for work/business (e.g., work trip, client meeting, business lunch). Use false when the expense is clearly personal (e.g., lunch with friends, personal expense). If it's ambiguous or mixed, use the literal string "unknown".
+
+Examples: 
+- true: 'Work trip hotel' / 'Taxi to client meeting' / 'Business lunch'
+- false: 'Lunch with friends' / 'Personal expense' / 'Not work-related'
+- unknown: no work/personal signal, or user is unsure
+
+**Output schema:** See `add_expense_reimb_e.json`
+
 ### get_expenses_a
 
-Get all expenses. Returns: formatted text string.
+Get all expenses.
 
 **Output schema:** See `get_expenses_a.json`
 
 ### get_expenses_b
 
-Get all expenses. Returns: untyped list of dicts.
+Get all expenses.
 
 **Output schema:** See `get_expenses_b.json`
 
 ### get_expenses_c
 
-Get all expenses. Returns: typed list of Expense models.
+Get all expenses.
 
 **Output schema:** See `get_expenses_c.json`
 

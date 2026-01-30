@@ -1,0 +1,62 @@
+{
+  "name": "add_expense_model_a",
+  "description": "Add a new expense.",
+  "inputSchema": {
+    "properties": {
+      "expense": {
+        "description": "Input model for adding a single expense.\n\nThis is used to test how models handle a single nested JSON object argument.",
+        "properties": {
+          "expense_date": {
+            "description": "Date of the expense",
+            "format": "date",
+            "type": "string"
+          },
+          "amount": {
+            "description": "Amount spent",
+            "type": "number"
+          },
+          "category": {
+            "enum": [
+              "food",
+              "transport",
+              "entertainment",
+              "shopping",
+              "gadget",
+              "other"
+            ],
+            "type": "string",
+            "description": "Category of expense"
+          },
+          "description": {
+            "description": "Description of the expense",
+            "type": "string"
+          }
+        },
+        "required": [
+          "expense_date",
+          "amount",
+          "category",
+          "description"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "expense"
+    ],
+    "type": "object"
+  },
+  "outputSchema": {
+    "properties": {
+      "result": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "result"
+    ],
+    "type": "object",
+    "x-fastmcp-wrap-result": true
+  },
+  "annotations": null
+}
