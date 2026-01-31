@@ -13,7 +13,7 @@
       "total_cases": 27,
       "passed_cases": 27,
       "pass_rate": 1.0,
-      "avg_score": 0.9555555555555556,
+      "avg_score": 0.917283950617284,
       "eval_counts": {
         "tool_called": {
           "passed": 27,
@@ -34,6 +34,10 @@
         "date_match": {
           "passed": 21,
           "failed": 6
+        },
+        "reimbursable_match": {
+          "passed": 0,
+          "failed": 6
         }
       }
     },
@@ -42,7 +46,7 @@
       "total_cases": 27,
       "passed_cases": 27,
       "pass_rate": 1.0,
-      "avg_score": 0.9703703703703703,
+      "avg_score": 0.9320987654320988,
       "eval_counts": {
         "tool_called": {
           "passed": 27,
@@ -63,6 +67,10 @@
         "date_match": {
           "passed": 23,
           "failed": 4
+        },
+        "reimbursable_match": {
+          "passed": 0,
+          "failed": 6
         }
       }
     },
@@ -71,7 +79,7 @@
       "total_cases": 27,
       "passed_cases": 26,
       "pass_rate": 0.9629629629629629,
-      "avg_score": 0.9333333333333333,
+      "avg_score": 0.8950617283950618,
       "eval_counts": {
         "tool_called": {
           "passed": 26,
@@ -92,6 +100,10 @@
         "date_match": {
           "passed": 22,
           "failed": 5
+        },
+        "reimbursable_match": {
+          "passed": 0,
+          "failed": 6
         }
       }
     },
@@ -100,7 +112,7 @@
       "total_cases": 27,
       "passed_cases": 27,
       "pass_rate": 1.0,
-      "avg_score": 0.9703703703703703,
+      "avg_score": 0.9320987654320988,
       "eval_counts": {
         "tool_called": {
           "passed": 27,
@@ -121,6 +133,10 @@
         "date_match": {
           "passed": 24,
           "failed": 3
+        },
+        "reimbursable_match": {
+          "passed": 0,
+          "failed": 6
         }
       }
     },
@@ -129,7 +145,7 @@
       "total_cases": 27,
       "passed_cases": 26,
       "pass_rate": 0.9629629629629629,
-      "avg_score": 0.9259259259259259,
+      "avg_score": 0.8876543209876544,
       "eval_counts": {
         "tool_called": {
           "passed": 26,
@@ -150,6 +166,10 @@
         "date_match": {
           "passed": 21,
           "failed": 6
+        },
+        "reimbursable_match": {
+          "passed": 0,
+          "failed": 6
         }
       }
     },
@@ -158,7 +178,7 @@
       "total_cases": 27,
       "passed_cases": 26,
       "pass_rate": 0.9629629629629629,
-      "avg_score": 0.9333333333333333,
+      "avg_score": 0.8950617283950618,
       "eval_counts": {
         "tool_called": {
           "passed": 26,
@@ -179,6 +199,10 @@
         "date_match": {
           "passed": 22,
           "failed": 5
+        },
+        "reimbursable_match": {
+          "passed": 0,
+          "failed": 6
         }
       }
     },
@@ -187,7 +211,7 @@
       "total_cases": 27,
       "passed_cases": 26,
       "pass_rate": 0.9629629629629629,
-      "avg_score": 0.9333333333333333,
+      "avg_score": 0.8950617283950618,
       "eval_counts": {
         "tool_called": {
           "passed": 26,
@@ -208,6 +232,10 @@
         "date_match": {
           "passed": 22,
           "failed": 5
+        },
+        "reimbursable_match": {
+          "passed": 0,
+          "failed": 6
         }
       }
     },
@@ -216,7 +244,7 @@
       "total_cases": 27,
       "passed_cases": 26,
       "pass_rate": 0.9629629629629629,
-      "avg_score": 0.9407407407407407,
+      "avg_score": 0.9024691358024691,
       "eval_counts": {
         "tool_called": {
           "passed": 26,
@@ -237,6 +265,10 @@
         "date_match": {
           "passed": 23,
           "failed": 4
+        },
+        "reimbursable_match": {
+          "passed": 0,
+          "failed": 6
         }
       }
     },
@@ -245,7 +277,7 @@
       "total_cases": 27,
       "passed_cases": 26,
       "pass_rate": 0.9629629629629629,
-      "avg_score": 0.9407407407407407,
+      "avg_score": 0.908641975308642,
       "eval_counts": {
         "tool_called": {
           "passed": 26,
@@ -266,6 +298,10 @@
         "date_match": {
           "passed": 23,
           "failed": 4
+        },
+        "reimbursable_match": {
+          "passed": 0,
+          "failed": 6
         }
       }
     }
@@ -546,9 +582,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I have logged your $18 taxi expense for the client meeting on January 28, 2026. Anything else you'd like to add?",
       "reasoning": null,
       "error": null
@@ -593,9 +634,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I have logged your expense of $32 for lunch with a customer on January 28, 2026. If you have more expenses to add, feel free to tell me!",
       "reasoning": null,
       "error": null
@@ -640,9 +686,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I have logged your $22 expense for the movie ticket with friends on January 28, 2026. If you have any more expenses to add, just let me know!",
       "reasoning": null,
       "error": null
@@ -687,9 +738,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I've logged your expense of $48 for dinner with your family on January 28, 2026. Let me know if you need to add anything else!",
       "reasoning": null,
       "error": null
@@ -734,9 +790,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I have logged your lunch expense of $14 from yesterday after the work event. If you need to categorize it as reimbursable or non-reimbursable later, just let me know!",
       "reasoning": null,
       "error": null
@@ -776,9 +837,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8,
       "agent_output": "I've logged your expense of $24 for drinks after work with coworkers and friends on January 28, 2026. If you have more expenses to add, just let me know!",
       "reasoning": null,
       "error": null
@@ -1805,9 +1871,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I have logged your $18 taxi expense for the client meeting yesterday.",
       "reasoning": null,
       "error": null
@@ -1852,9 +1923,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I've logged your $32 lunch expense with a customer on January 28, 2026. If you have any more expenses to add or need further assistance, just let me know!",
       "reasoning": null,
       "error": null
@@ -1899,9 +1975,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I have logged your expense for a movie ticket with friends on January 28, 2026, amounting to $22 under entertainment. Would you like to add anything else?",
       "reasoning": null,
       "error": null
@@ -1946,9 +2027,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I've recorded your expense of $48 for dinner with your family yesterday. If you have any more expenses to log, just let me know!",
       "reasoning": null,
       "error": null
@@ -1993,9 +2079,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I've logged the $14 lunch expense from yesterday, after your work event. If you want, I can mark it as reimbursable or keep it as a personal expense. Would you like me to do that?",
       "reasoning": null,
       "error": null
@@ -2035,9 +2126,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8,
       "agent_output": "I've logged your expense of $24 for drinks after work with coworkers and friends on January 28, 2026. If you have more expenses to add, just let me know!",
       "reasoning": null,
       "error": null
@@ -3064,9 +3160,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I have logged your expense of $18 for a taxi to a client meeting on January 28, 2026. Is there anything else you would like to add?",
       "reasoning": null,
       "error": null
@@ -3111,9 +3212,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I have logged your $32 expense for lunch with a customer on January 28, 2026. If you have any more expenses to add, feel free to tell me!",
       "reasoning": null,
       "error": null
@@ -3158,9 +3264,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I have logged your $22 expense for the movie ticket you bought with friends yesterday. If you have any more expenses to add, feel free to tell me!",
       "reasoning": null,
       "error": null
@@ -3205,9 +3316,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I have recorded an expense for $48 on dinner with your family from yesterday. If you need to add more expenses or anything else, just let me know!",
       "reasoning": null,
       "error": null
@@ -3252,9 +3368,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I've logged your lunch expense of $14 from yesterday after the work event under the food category. If you need help with anything else, just let me know!",
       "reasoning": null,
       "error": null
@@ -3294,9 +3415,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8,
       "agent_output": "I've logged your $24 expense for drinks after work with coworkers and friends on January 28, 2026, under entertainment. Would you like to log any other expenses?",
       "reasoning": null,
       "error": null
@@ -4313,9 +4439,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I have logged your $18 expense for the taxi ride to the client meeting on January 28, 2026. Is there anything else you would like to add?",
       "reasoning": null,
       "error": null
@@ -4360,9 +4491,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I have logged your expense of $32 for lunch with a customer yesterday (January 28, 2026). If you have more expenses to log, feel free to tell me!",
       "reasoning": null,
       "error": null
@@ -4407,9 +4543,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I have logged your $22 expense for the movie ticket with friends on January 28, 2026. Would you like to add more expenses?",
       "reasoning": null,
       "error": null
@@ -4454,9 +4595,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I have logged your $48 dinner expense with your family on January 28, 2026. Would you like to add any more expenses?",
       "reasoning": null,
       "error": null
@@ -4501,9 +4647,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I have logged your $14 lunch from yesterday after the work event. If you need any more expenses recorded, just let me know!",
       "reasoning": null,
       "error": null
@@ -4543,9 +4694,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8,
       "agent_output": "I have logged your $24 expense for drinks after work with coworkers and friends on January 28, 2026. Is there anything else you'd like to log?",
       "reasoning": null,
       "error": null
@@ -5572,9 +5728,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I have logged the $18 taxi expense for your client meeting on January 28, 2026. Would you like to log any other expenses?",
       "reasoning": null,
       "error": null
@@ -5619,9 +5780,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I've logged your expense of $32 for lunch with a customer on January 28, 2026. If you have any more expenses to add, just let me know!",
       "reasoning": null,
       "error": null
@@ -5666,9 +5832,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I've logged your expense for the movie ticket with friends on January 28, 2026, for $22 under entertainment. Is there anything else you'd like to add?",
       "reasoning": null,
       "error": null
@@ -5713,9 +5884,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I have logged your $48 expense for dinner with your family on January 28, 2026. If there's anything else you'd like to log or check, just let me know!",
       "reasoning": null,
       "error": null
@@ -5760,9 +5936,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "The lunch expense of $14 from yesterday after the work event has been logged as a reimbursable food expense. If you have any other expenses to add or questions, feel free to ask!",
       "reasoning": null,
       "error": null
@@ -5802,9 +5983,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8,
       "agent_output": "I have logged your expense of $24 for drinks after work with coworkers and friends on January 28, 2026. If you have any other expenses to log, just let me know!",
       "reasoning": null,
       "error": null
@@ -6821,9 +7007,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I have logged the $18 expense for the taxi to your client meeting on January 28, 2026. Is there anything else you would like to record?",
       "reasoning": null,
       "error": null
@@ -6868,9 +7059,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I've logged your $32 expense for lunch with a customer on January 28, 2026. If you have any more expenses to record, just let me know!",
       "reasoning": null,
       "error": null
@@ -6915,9 +7111,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I have logged your movie ticket expense of $22 on January 28, 2026. If you have any other expenses to add, feel free to let me know!",
       "reasoning": null,
       "error": null
@@ -6962,9 +7163,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I have logged your expense of $48 for dinner with your family on January 28, 2026. If you have any more expenses to add or need assistance, feel free to ask!",
       "reasoning": null,
       "error": null
@@ -7009,9 +7215,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I've logged your lunch expense of $14 from yesterday after the work event. Since it was related to work, it could be considered reimbursable. If you want me to mark it specifically as reimbursable or non-reimbursable, please let me know.",
       "reasoning": null,
       "error": null
@@ -7051,9 +7262,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8,
       "agent_output": "I've logged your $24 expense for drinks after work with coworkers and friends on January 28, 2026. If you have more expenses to add, just let me know!",
       "reasoning": null,
       "error": null
@@ -8070,9 +8286,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I've logged your $18 taxi expense for the client meeting on January 28, 2026. Would you like to add any other expenses?",
       "reasoning": null,
       "error": null
@@ -8117,9 +8338,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I have logged your expense of $32 for lunch with a customer on January 28, 2026. If you have more expenses to add, just let me know!",
       "reasoning": null,
       "error": null
@@ -8164,9 +8390,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I've logged your expense of $22 for the movie ticket you bought yesterday with friends. If you need to add more expenses, just let me know!",
       "reasoning": null,
       "error": null
@@ -8211,9 +8442,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I've logged your dinner expense of $48 on January 28, 2026. If you have any other expenses to record, feel free to tell me!",
       "reasoning": null,
       "error": null
@@ -8258,9 +8494,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I've logged your lunch purchase from yesterday for $14 after the work event. If you want me to mark it as reimbursable later, just let me know!",
       "reasoning": null,
       "error": null
@@ -8300,9 +8541,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8,
       "agent_output": "I have logged your expense of $24 for drinks after work with coworkers and friends on January 28, 2026.",
       "reasoning": null,
       "error": null
@@ -9319,9 +9565,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I've logged your $18 taxi expense for the client meeting on January 28, 2026. Is there anything else you'd like to add?",
       "reasoning": null,
       "error": null
@@ -9366,9 +9617,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I have logged your expense of $32 for lunch with a customer on January 28, 2026. If you have more expenses to record, feel free to tell me!",
       "reasoning": null,
       "error": null
@@ -9413,9 +9669,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I have logged your $22 expense for a movie ticket with friends on January 28, 2026. Is there anything else you would like to add?",
       "reasoning": null,
       "error": null
@@ -9460,9 +9721,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I have logged your expense of $48 for dinner with your family yesterday. If you have any more expenses to add, just let me know!",
       "reasoning": null,
       "error": null
@@ -9507,9 +9773,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I have logged your lunch expense of $14 from yesterday after the work event. If you want, I can mark it as reimbursable or keep it as a personal expense. Let me know your preference!",
       "reasoning": null,
       "error": null
@@ -9549,9 +9820,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8,
       "agent_output": "I've logged your $24 expense for drinks after work with coworkers and friends on January 28, 2026. If you have more expenses to add, feel free to tell me!",
       "reasoning": null,
       "error": null
@@ -10580,9 +10856,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I have logged your $18 expense for a taxi to a client meeting on January 28, 2026.",
       "reasoning": null,
       "error": null
@@ -10629,9 +10910,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "Your expense of $32 for lunch with a customer on January 28, 2026, has been logged. Is there anything else you'd like to add?",
       "reasoning": null,
       "error": null
@@ -10678,9 +10964,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I have logged your movie ticket purchase of $22 on January 28, 2026, under entertainment expenses. Let me know if you want to add more expenses!",
       "reasoning": null,
       "error": null
@@ -10727,9 +11018,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8333333333333334,
       "agent_output": "I have logged your expense of $48 for dinner with your family on January 28, 2026. If you have more expenses to add or need any other assistance, feel free to let me know!",
       "reasoning": null,
       "error": null
@@ -10761,6 +11057,11 @@
           "message": "No add_expense tool call found"
         },
         "date_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "No add_expense tool call found"
+        },
+        "reimbursable_match": {
           "passed": false,
           "score": 0.0,
           "message": "No add_expense tool call found"
@@ -10808,9 +11109,14 @@
           "passed": true,
           "score": 1.0,
           "message": "Date '2026-01-28' matches expected '2026-01-28'"
+        },
+        "reimbursable_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Reimbursable argument missing"
         }
       },
-      "overall_score": 1.0,
+      "overall_score": 0.8,
       "agent_output": "I've logged your $24 expense for drinks after work with coworkers and friends on January 28, 2026. If you have any more expenses to add, just let me know!",
       "reasoning": null,
       "error": null

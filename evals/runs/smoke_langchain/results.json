@@ -1,0 +1,733 @@
+{
+  "metadata": {
+    "timestamp": "2026-01-30T15:51:08.130762",
+    "agent": "langchain",
+    "model_name": "gpt-5.2",
+    "model_settings": {
+      "seed": 42
+    },
+    "mcp_server_url": "http://localhost:8000/mcp"
+  },
+  "summaries": {
+    "add_expense_cat_a": {
+      "variant_name": "add_expense_cat_a",
+      "total_cases": 1,
+      "passed_cases": 0,
+      "pass_rate": 0.0,
+      "avg_score": 0.3333333333333333,
+      "eval_counts": {
+        "tool_called": {
+          "passed": 1,
+          "failed": 0
+        },
+        "category_valid": {
+          "passed": 0,
+          "failed": 1
+        },
+        "category_match": {
+          "passed": 0,
+          "failed": 1
+        }
+      }
+    },
+    "add_expense_cat_b": {
+      "variant_name": "add_expense_cat_b",
+      "total_cases": 1,
+      "passed_cases": 1,
+      "pass_rate": 1.0,
+      "avg_score": 1.0,
+      "eval_counts": {
+        "tool_called": {
+          "passed": 1,
+          "failed": 0
+        },
+        "category_valid": {
+          "passed": 1,
+          "failed": 0
+        },
+        "category_match": {
+          "passed": 1,
+          "failed": 0
+        }
+      }
+    },
+    "add_expense_cat_c": {
+      "variant_name": "add_expense_cat_c",
+      "total_cases": 1,
+      "passed_cases": 1,
+      "pass_rate": 1.0,
+      "avg_score": 1.0,
+      "eval_counts": {
+        "tool_called": {
+          "passed": 1,
+          "failed": 0
+        },
+        "category_valid": {
+          "passed": 1,
+          "failed": 0
+        },
+        "category_match": {
+          "passed": 1,
+          "failed": 0
+        }
+      }
+    },
+    "add_expense_cat_d": {
+      "variant_name": "add_expense_cat_d",
+      "total_cases": 1,
+      "passed_cases": 1,
+      "pass_rate": 1.0,
+      "avg_score": 1.0,
+      "eval_counts": {
+        "tool_called": {
+          "passed": 1,
+          "failed": 0
+        },
+        "category_valid": {
+          "passed": 1,
+          "failed": 0
+        },
+        "category_match": {
+          "passed": 1,
+          "failed": 0
+        }
+      }
+    },
+    "add_expense_cat_e": {
+      "variant_name": "add_expense_cat_e",
+      "total_cases": 1,
+      "passed_cases": 1,
+      "pass_rate": 1.0,
+      "avg_score": 1.0,
+      "eval_counts": {
+        "tool_called": {
+          "passed": 1,
+          "failed": 0
+        },
+        "category_valid": {
+          "passed": 1,
+          "failed": 0
+        },
+        "category_match": {
+          "passed": 1,
+          "failed": 0
+        }
+      }
+    },
+    "add_expense_date_a": {
+      "variant_name": "add_expense_date_a",
+      "total_cases": 1,
+      "passed_cases": 0,
+      "pass_rate": 0.0,
+      "avg_score": 1.0,
+      "eval_counts": {
+        "tool_called": {
+          "passed": 1,
+          "failed": 0
+        },
+        "date_format": {
+          "passed": 1,
+          "failed": 0
+        },
+        "date_match": {
+          "passed": 1,
+          "failed": 0
+        }
+      }
+    },
+    "add_expense_date_b": {
+      "variant_name": "add_expense_date_b",
+      "total_cases": 1,
+      "passed_cases": 0,
+      "pass_rate": 0.0,
+      "avg_score": 1.0,
+      "eval_counts": {
+        "tool_called": {
+          "passed": 1,
+          "failed": 0
+        },
+        "date_format": {
+          "passed": 1,
+          "failed": 0
+        },
+        "date_match": {
+          "passed": 1,
+          "failed": 0
+        }
+      }
+    },
+    "add_expense_date_c": {
+      "variant_name": "add_expense_date_c",
+      "total_cases": 1,
+      "passed_cases": 0,
+      "pass_rate": 0.0,
+      "avg_score": 1.0,
+      "eval_counts": {
+        "tool_called": {
+          "passed": 1,
+          "failed": 0
+        },
+        "date_format": {
+          "passed": 1,
+          "failed": 0
+        },
+        "date_match": {
+          "passed": 1,
+          "failed": 0
+        }
+      }
+    },
+    "add_expense_date_d": {
+      "variant_name": "add_expense_date_d",
+      "total_cases": 1,
+      "passed_cases": 0,
+      "pass_rate": 0.0,
+      "avg_score": 1.0,
+      "eval_counts": {
+        "tool_called": {
+          "passed": 1,
+          "failed": 0
+        },
+        "date_format": {
+          "passed": 1,
+          "failed": 0
+        },
+        "date_match": {
+          "passed": 1,
+          "failed": 0
+        }
+      }
+    },
+    "add_expense_model_a": {
+      "variant_name": "add_expense_model_a",
+      "total_cases": 1,
+      "passed_cases": 1,
+      "pass_rate": 1.0,
+      "avg_score": 1.0,
+      "eval_counts": {
+        "tool_called": {
+          "passed": 1,
+          "failed": 0
+        },
+        "category_valid": {
+          "passed": 1,
+          "failed": 0
+        },
+        "category_match": {
+          "passed": 1,
+          "failed": 0
+        },
+        "date_format": {
+          "passed": 1,
+          "failed": 0
+        },
+        "date_match": {
+          "passed": 1,
+          "failed": 0
+        }
+      }
+    },
+    "add_expense_reimb_e": {
+      "variant_name": "add_expense_reimb_e",
+      "total_cases": 1,
+      "passed_cases": 0,
+      "pass_rate": 0.0,
+      "avg_score": 1.0,
+      "eval_counts": {
+        "tool_called": {
+          "passed": 1,
+          "failed": 0
+        }
+      }
+    }
+  },
+  "results": [
+    {
+      "case_name": "clear_food_yesterday",
+      "user_query": "Yesterday I bought a sandwich for $12.50.",
+      "tool_variant": "add_expense_cat_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_cat_a",
+          "arguments": {
+            "expense_date": "2026-01-29",
+            "amount": 12.5,
+            "category": "Food",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_cat_a' was called"
+        },
+        "category_valid": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Category 'Food' is not a valid enum value"
+        },
+        "category_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Category 'Food' does not match expected 'Food & drink'"
+        }
+      },
+      "overall_score": 0.3333333333333333,
+      "agent_output": [
+        {
+          "type": "text",
+          "text": "Logged: **$12.50** \u2014 **Sandwich** (Food) on **2026-01-29**.",
+          "annotations": [],
+          "id": "msg_0c78bc1e7200b88600697d43bfd38081949c03f96506933cc9"
+        }
+      ],
+      "reasoning": null,
+      "error": null
+    },
+    {
+      "case_name": "clear_food_yesterday",
+      "user_query": "Yesterday I bought a sandwich for $12.50.",
+      "tool_variant": "add_expense_cat_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_cat_b",
+          "arguments": {
+            "expense_date": "2026-01-29",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_cat_b' was called"
+        },
+        "category_valid": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Category 'Food & drink' is valid"
+        },
+        "category_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Category 'Food & drink' matches expected 'Food & drink'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": [
+        {
+          "type": "text",
+          "text": "Logged: **$12.50** \u2014 **Sandwich** (**Food & drink**) on **2026-01-29**.",
+          "annotations": [],
+          "id": "msg_0559486f4d83a45400697d43c59a088193bc12fde9ecd00621"
+        }
+      ],
+      "reasoning": null,
+      "error": null
+    },
+    {
+      "case_name": "clear_food_yesterday",
+      "user_query": "Yesterday I bought a sandwich for $12.50.",
+      "tool_variant": "add_expense_cat_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_cat_c",
+          "arguments": {
+            "expense_date": "2026-01-29",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_cat_c' was called"
+        },
+        "category_valid": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Category 'Food & drink' is valid"
+        },
+        "category_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Category 'Food & drink' matches expected 'Food & drink'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": [
+        {
+          "type": "text",
+          "text": "Logged: **$12.50** for **Sandwich** on **2026-01-29** under **Food & drink**.",
+          "annotations": [],
+          "id": "msg_0d78d6a45b6095cd00697d43ca91fc8190a2a669985cb88efa"
+        }
+      ],
+      "reasoning": null,
+      "error": null
+    },
+    {
+      "case_name": "clear_food_yesterday",
+      "user_query": "Yesterday I bought a sandwich for $12.50.",
+      "tool_variant": "add_expense_cat_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_cat_d",
+          "arguments": {
+            "expense_date": "2026-01-29",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_cat_d' was called"
+        },
+        "category_valid": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Category 'Food & drink' is valid"
+        },
+        "category_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Category 'Food & drink' matches expected 'Food & drink'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": [
+        {
+          "type": "text",
+          "text": "Logged: **$12.50** on **2026-01-29** \u2014 **Food & drink** (Sandwich).",
+          "annotations": [],
+          "id": "msg_02d495664542e10c00697d43cf86688190a0eebfd3be141668"
+        }
+      ],
+      "reasoning": null,
+      "error": null
+    },
+    {
+      "case_name": "clear_food_yesterday",
+      "user_query": "Yesterday I bought a sandwich for $12.50.",
+      "tool_variant": "add_expense_cat_e",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_cat_e",
+          "arguments": {
+            "expense_date": "2026-01-29",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_cat_e' was called"
+        },
+        "category_valid": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Category 'Food & drink' is valid"
+        },
+        "category_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Category 'Food & drink' matches expected 'Food & drink'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": [
+        {
+          "type": "text",
+          "text": "Logged: **$12.50** on **2026-01-29** \u2014 **Food & drink** (Sandwich).",
+          "annotations": [],
+          "id": "msg_0fd24e65161536d700697d43d345248190af2b6feec511a511"
+        }
+      ],
+      "reasoning": null,
+      "error": null
+    },
+    {
+      "case_name": "clear_food_yesterday",
+      "user_query": "Yesterday I bought a sandwich for $12.50.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-01-29",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-01-29' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-01-29' matches expected '2026-01-29'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": [
+        {
+          "type": "text",
+          "text": "Logged: **$12.50** for **Sandwich** on **2026-01-29** under **Food & drink**.",
+          "annotations": [],
+          "id": "msg_0d0a418c822712ed00697d43d6c7148196a9557fe07cee64b6"
+        }
+      ],
+      "reasoning": null,
+      "error": null
+    },
+    {
+      "case_name": "clear_food_yesterday",
+      "user_query": "Yesterday I bought a sandwich for $12.50.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-01-29",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-01-29' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-01-29' matches expected '2026-01-29'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": [
+        {
+          "type": "text",
+          "text": "Logged: **$12.50** \u2014 **Sandwich** (**Food & drink**) on **2026-01-29**.",
+          "annotations": [],
+          "id": "msg_02a4548e9de356f000697d43daf0b88193b96e76feba0b5df8"
+        }
+      ],
+      "reasoning": null,
+      "error": null
+    },
+    {
+      "case_name": "clear_food_yesterday",
+      "user_query": "Yesterday I bought a sandwich for $12.50.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-01-29",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-01-29' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-01-29' matches expected '2026-01-29'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": [
+        {
+          "type": "text",
+          "text": "Logged: **$12.50** on **2026-01-29** \u2014 **Food & drink** (\u201cSandwich\u201d).",
+          "annotations": [],
+          "id": "msg_0cdeca480d27849200697d43de82b881948ff46a44ffb2ff1e"
+        }
+      ],
+      "reasoning": null,
+      "error": null
+    },
+    {
+      "case_name": "clear_food_yesterday",
+      "user_query": "Yesterday I bought a sandwich for $12.50.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-01-29",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-01-29' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-01-29' matches expected '2026-01-29'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": [
+        {
+          "type": "text",
+          "text": "Logged: **$12.50** on **2026-01-29** \u2014 **Food & drink** (Sandwich).",
+          "annotations": [],
+          "id": "msg_05196cbc32a83a7200697d43e2535c819094397c3822247603"
+        }
+      ],
+      "reasoning": null,
+      "error": null
+    },
+    {
+      "case_name": "clear_food_yesterday",
+      "user_query": "Yesterday I bought a sandwich for $12.50.",
+      "tool_variant": "add_expense_model_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_model_a",
+          "arguments": {
+            "expense": {
+              "expense_date": "2026-01-29",
+              "amount": 12.5,
+              "category": "Food & drink",
+              "description": "Sandwich"
+            }
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_model_a' was called"
+        },
+        "category_valid": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Category 'Food & drink' is valid"
+        },
+        "category_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Category 'Food & drink' matches expected 'Food & drink'"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-01-29' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-01-29' matches expected '2026-01-29'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": [
+        {
+          "type": "text",
+          "text": "Logged: **$12.50** \u2014 **Sandwich** (**Food & drink**) on **2026-01-29**.",
+          "annotations": [],
+          "id": "msg_06f3abc1a131cf7800697d43e637108194987d4f1d43f700f8"
+        }
+      ],
+      "reasoning": null,
+      "error": null
+    },
+    {
+      "case_name": "clear_food_yesterday",
+      "user_query": "Yesterday I bought a sandwich for $12.50.",
+      "tool_variant": "add_expense_reimb_e",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_reimb_e",
+          "arguments": {
+            "expense_date": "2026-01-29",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich",
+            "reimbursable": "unknown"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_reimb_e' was called"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": [
+        {
+          "type": "text",
+          "text": "Logged: **$12.50** for **Sandwich** on **2026-01-29** (Food & drink).",
+          "annotations": [],
+          "id": "msg_0c1b647f04612d2200697d43eb7a788190812b45dc5e6991df"
+        }
+      ],
+      "reasoning": null,
+      "error": null
+    }
+  ]
+}

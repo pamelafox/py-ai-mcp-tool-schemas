@@ -57,7 +57,7 @@ Output schema tests belong on `get_expenses_data` — it returns actual data the
 
 Reference: [pydanticai_mcp_http.py](https://github.com/Azure-Samples/python-ai-agent-frameworks-demos/blob/main/examples/pydanticai_mcp_http.py)
 
-- [x] Create `agents/pydanticai_expenses.py` based on reference above
+- [x] Create `agents/pydanticai.py` based on reference above
 - [x] Use `MCPServerStreamableHTTP(url="http://localhost:8000/mcp")`
 - [x] Add `allowed_tools` parameter to select which schema variant to test (not in reference — we add this)
 - [x] Multi-provider setup already in reference (Azure, GitHub, Ollama, OpenAI)
@@ -122,9 +122,10 @@ Simple setup — just `logfire.configure()` + `logfire.instrument_mcp()` (no cus
 - [x] Add a tool variant that accepts a Pydantic model input (e.g., `expense: ExpenseInput`) to test nested JSON/object-shape adherence
 - [x] Add a tool variant that uses a `Union`/`Literal` sentinel for missing values (e.g., `reimbursable: bool | Literal["unknown"]`) to test “proceed vs ask” behavior
 - [ ] Add another argument type that tests regex/gt constraints
-- [ ] Add comparison with other models (Opus, other Microsoft Foundry models)
-- [ ] Add comparison with Copilot SDK, Microsoft Agent Framework
-- [ ] Make runner.py work generically with any agent script
+- [ ] Add comparison with other models (Opus, awaiting access)
+- [x] Add comparison with Copilot SDK, Microsoft Agent Framework
+- [x] Make runner.py work generically with any agent script
+- [ ] Remove `--seed` from agents if Responses API confirmed not to support it (already removed from langchain_agent.py)
 
 ## Evaluation matrix
 

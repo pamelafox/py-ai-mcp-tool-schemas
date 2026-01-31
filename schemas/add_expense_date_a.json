@@ -11,12 +11,16 @@
       },
       "category": {
         "enum": [
-          "food",
-          "transport",
-          "entertainment",
-          "shopping",
-          "gadget",
-          "other"
+          "Food & Drink",
+          "Transit & Fuel",
+          "Media & Streaming",
+          "Apparel & Beauty",
+          "Electronics & Tech",
+          "Home & Office",
+          "Health & Fitness",
+          "Arts & Hobbies",
+          "Fees & Services",
+          "Misc"
         ],
         "type": "string"
       },

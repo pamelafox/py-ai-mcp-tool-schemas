@@ -1,0 +1,116 @@
+{
+  "metadata": {
+    "timestamp": "2026-01-30T11:06:31.438218",
+    "agent": "copilot",
+    "model_name": "gpt-4.1-mini",
+    "model_settings": {
+      "seed": 42
+    },
+    "mcp_server_url": "http://localhost:8000/mcp"
+  },
+  "summaries": {
+    "add_expense_cat_c": {
+      "variant_name": "add_expense_cat_c",
+      "total_cases": 2,
+      "passed_cases": 2,
+      "pass_rate": 1.0,
+      "avg_score": 1.0,
+      "eval_counts": {
+        "tool_called": {
+          "passed": 2,
+          "failed": 0
+        },
+        "category_valid": {
+          "passed": 2,
+          "failed": 0
+        },
+        "category_match": {
+          "passed": 2,
+          "failed": 0
+        }
+      }
+    }
+  },
+  "results": [
+    {
+      "case_name": "clear_food_yesterday",
+      "user_query": "Yesterday I bought a sandwich for $12.50.",
+      "tool_variant": "add_expense_cat_c",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Adding expense"
+          }
+        },
+        {
+          "tool_name": "add_expense_cat_c",
+          "arguments": {
+            "expense_date": "2026-01-29",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_cat_c' was called"
+        },
+        "category_valid": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Category 'Food & drink' is valid"
+        },
+        "category_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Category 'Food & drink' matches expected 'Food & drink'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Added your $12.50 sandwich expense from January 29th under Food & drink.",
+      "reasoning": "The user wants to add an expense for a sandwich they bought yesterday. Yesterday would be 2026-01-29. The amount is $12.50, and a sandwich would fall under \"Food & drink\" category.",
+      "error": null
+    },
+    {
+      "case_name": "clear_transport_today",
+      "user_query": "I paid $45 for gas today (2026-01-30).",
+      "tool_variant": "add_expense_cat_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_cat_c",
+          "arguments": {
+            "expense_date": "2026-01-30",
+            "amount": 45,
+            "category": "Transit and Fuel",
+            "description": "Gas"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_cat_c' was called"
+        },
+        "category_valid": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Category 'Transit and Fuel' is valid"
+        },
+        "category_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Category 'Transit and Fuel' matches expected 'Transit and Fuel'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done! I've recorded your $45 gas expense for today under \"Transit and Fuel.\"",
+      "reasoning": "The user wants to add an expense for gas. I have the add_expense tool available. Let me use it with the details provided:\n- Date: 2026-01-30\n- Amount: 45\n- Category: \"Transit and Fuel\" seems appropriate for gas\n- Description: \"Gas\"",
+      "error": null
+    }
+  ]
+}

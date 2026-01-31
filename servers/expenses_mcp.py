@@ -40,15 +40,30 @@ mcp = FastMCP("Expenses Tracker")
 
 
 class Category(Enum):
-    FOOD = "food"
-    TRANSPORT = "transport"
-    ENTERTAINMENT = "entertainment"
-    SHOPPING = "shopping"
-    GADGET = "gadget"
-    OTHER = "other"
+    FOOD_AND_DRINK = "Food & drink"
+    TRANSIT_AND_FUEL = "Transit and Fuel"
+    MEDIA_AND_STREAMING = "Media & streaming"
+    APPAREL_AND_BEAUTY = "Apparel and Beauty"
+    ELECTRONICS_AND_TECH = "Electronics & tech"
+    HOME_AND_OFFICE = "Home and office"
+    HEALTH_AND_FITNESS = "Health & Fitness"
+    ARTS_AND_HOBBIES = "Arts and hobbies"
+    FEES_AND_SERVICES = "Fees & services"
+    MISC = "Misc"
 
 
-CATEGORY_LITERAL = Literal["food", "transport", "entertainment", "shopping", "gadget", "other"]
+CATEGORY_LITERAL = Literal[
+    "Food & drink",
+    "Transit and Fuel",
+    "Media & streaming",
+    "Apparel and Beauty",
+    "Electronics & tech",
+    "Home and office",
+    "Health & Fitness",
+    "Arts and hobbies",
+    "Fees & services",
+    "Misc",
+]
 
 
 class Expense(BaseModel):
@@ -158,7 +173,11 @@ async def add_expense_cat_a(
 async def add_expense_cat_b(
     expense_date: date,
     amount: float,
-    category: Annotated[str, "Must be one of: food, transport, entertainment, shopping, gadget, other"],
+    category: Annotated[
+        str,
+        "Must be one of: Food & drink, Transit and Fuel, Media & streaming, Apparel and Beauty, "
+        "Electronics & tech, Home and office, Health & Fitness, Arts and hobbies, Fees & services, Misc",
+    ],
     description: str,
 ) -> str:
     """Add a new expense."""
@@ -197,14 +216,18 @@ async def add_expense_cat_e(
             description=(
                 "Choose the closest category for the expense. Do not ask follow-up questions just to "
                 "disambiguate the category; pick the best fit using the description and common sense. "
-                "If truly unclear, use OTHER.\n\n"
+                "If truly unclear, use Misc.\n\n"
                 "Heuristics: "
-                "FOOD=meals, groceries, coffee; "
-                "TRANSPORT=rideshare, taxi, gas, transit, parking; "
-                "ENTERTAINMENT=movies, concerts, games; "
-                "SHOPPING=general retail and household purchases; "
-                "GADGET=electronics/devices/accessories; "
-                "OTHER=fees, services, subscriptions, or anything that does not fit well."
+                "Food & drink=meals, groceries, coffee, restaurants, snacks; "
+                "Transit and Fuel=rideshare, taxi, gas, parking, public transit, tolls; "
+                "Media & streaming=movies, concerts, subscriptions, streaming, games, tickets; "
+                "Apparel and Beauty=clothing, shoes, cosmetics, haircuts, personal care; "
+                "Electronics & tech=devices, gadgets, accessories, apps, software; "
+                "Home and office=furniture, supplies, housewares, decor, cleaning; "
+                "Health & Fitness=gym, medical, wellness, supplements, pharmacy; "
+                "Arts and hobbies=crafts, sports equipment, creative supplies, lessons; "
+                "Fees & services=banking, professional services, insurance, subscriptions; "
+                "Misc=anything that does not fit well into other categories."
             )
         ),
     ],

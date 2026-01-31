@@ -12,15 +12,19 @@
       },
       "category": {
         "enum": [
-          "food",
-          "transport",
-          "entertainment",
-          "shopping",
-          "gadget",
-          "other"
+          "Food & Drink",
+          "Transit & Fuel",
+          "Media & Streaming",
+          "Apparel & Beauty",
+          "Electronics & Tech",
+          "Home & Office",
+          "Health & Fitness",
+          "Arts & Hobbies",
+          "Fees & Services",
+          "Misc"
         ],
         "type": "string",
-        "description": "Choose the closest category for the expense. Do not ask follow-up questions just to disambiguate the category; pick the best fit using the description and common sense. If truly unclear, use OTHER.\n\nHeuristics: FOOD=meals, groceries, coffee; TRANSPORT=rideshare, taxi, gas, transit, parking; ENTERTAINMENT=movies, concerts, games; SHOPPING=general retail and household purchases; GADGET=electronics/devices/accessories; OTHER=fees, services, subscriptions, or anything that does not fit well."
+        "description": "Choose the closest category for the expense. Do not ask follow-up questions just to disambiguate the category; pick the best fit using the description and common sense. If truly unclear, use Misc.\n\nHeuristics: Food & Drink=meals, groceries, coffee, restaurants, snacks; Transit & Fuel=rideshare, taxi, gas, parking, public transit, tolls; Media & Streaming=movies, concerts, subscriptions, streaming, games, tickets; Apparel & Beauty=clothing, shoes, cosmetics, haircuts, personal care; Electronics & Tech=devices, gadgets, accessories, apps, software; Home & Office=furniture, supplies, housewares, decor, cleaning; Health & Fitness=gym, medical, wellness, supplements, pharmacy; Arts & Hobbies=crafts, sports equipment, creative supplies, lessons; Fees & Services=banking, professional services, insurance, subscriptions; Misc=anything that does not fit well into other categories."
       },
       "description": {
         "type": "string"

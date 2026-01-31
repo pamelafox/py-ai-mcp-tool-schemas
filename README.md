@@ -13,7 +13,7 @@ It contains:
 | Path | What it is |
 | --- | --- |
 | [servers/expenses_mcp.py](servers/expenses_mcp.py) | MCP server (streamable HTTP) exposing schema variants |
-| [agents/pydanticai_expenses.py](agents/pydanticai_expenses.py) | Agent runner used standalone and by evals |
+| [agents/pydanticai_agent.py](agents/pydanticai_agent.py) | Agent runner used standalone and by evals |
 | [evals/](evals/) | Dataset, evaluators, runner, report generator |
 | [schemas/](schemas/) | Auto-generated JSON schemas + diffs |
 
@@ -59,21 +59,21 @@ This server exposes multiple variants of the same logical operations (e.g., cate
 
 ## Run the agent
 
-The agent in [agents/pydanticai_expenses.py](agents/pydanticai_expenses.py) connects to the MCP server and can be limited to specific tools.
+The agent in [agents/pydanticai_agent.py](agents/pydanticai_agent.py) connects to the MCP server and can be limited to specific tools.
 
 Examples:
 
 ```bash
 # default tool variant
-uv run python agents/pydanticai_expenses.py
+uv run python agents/pydanticai_agent.py
 
 # single variant
-uv run python agents/pydanticai_expenses.py --tools add_expense_cat_c \
+uv run python agents/pydanticai_agent.py --tools add_expense_cat_c \
   --query "Yesterday I purchased a laptop for 1200 bucks." \
   --reasoning medium
 
 # multiple allowed tools
-uv run python agents/pydanticai_expenses.py --tools add_expense_cat_c,get_expenses_c
+uv run python agents/pydanticai_agent.py --tools add_expense_cat_c,get_expenses_c
 ```
 
 Reasoning effort levels supported by the CLI:

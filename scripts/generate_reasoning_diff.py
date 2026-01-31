@@ -15,7 +15,7 @@ if str(REPO_ROOT) not in sys.path:
 
 def _load_agent_functions():
     # Import after we ensure REPO_ROOT is on sys.path.
-    from agents.pydanticai_expenses import get_model, run_query
+    from agents.pydanticai_agent import get_model, run_query
 
     return get_model, run_query
 

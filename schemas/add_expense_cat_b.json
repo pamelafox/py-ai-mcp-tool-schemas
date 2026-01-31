@@ -11,7 +11,7 @@
         "type": "number"
       },
       "category": {
-        "description": "Must be one of: food, transport, entertainment, shopping, gadget, other",
+        "description": "Must be one of: Food & Drink, Transit & Fuel, Media & Streaming, Apparel & Beauty, Electronics & Tech, Home & Office, Health & Fitness, Arts & Hobbies, Fees & Services, Misc",
         "type": "string"
       },
       "description": {

@@ -15,15 +15,15 @@
 
 | Variant | Description | Avg Score | Total |
 |---------|-------------|-----------|-------|
-| add_expense_cat_b | category: Annotated[str, ...] | 0.96 | 27 |
-| add_expense_cat_c | category: Literal[...] | 0.97 | 27 |
-| add_expense_cat_d | category: ExpenseCategory (Enum) | 0.93 | 27 |
-| add_expense_cat_e | category: Annotated[ExpenseCategory, Field(description=...)] | 0.97 | 27 |
-| add_expense_date_a | expense_date: str | 0.93 | 27 |
-| add_expense_date_b | expense_date: Annotated[str, ...] | 0.93 | 27 |
-| add_expense_date_c | expense_date: date | 0.93 | 27 |
-| add_expense_date_d | expense_date: Annotated[str, Field(pattern=...)] | 0.94 | 27 |
-| add_expense_model_a | expense: ExpenseInput (Pydantic model) | 0.94 | 27 |
+| add_expense_cat_b | category: Annotated[str, ...] | 0.92 | 27 |
+| add_expense_cat_c | category: Literal[...] | 0.93 | 27 |
+| add_expense_cat_d | category: ExpenseCategory (Enum) | 0.90 | 27 |
+| add_expense_cat_e | category: Annotated[ExpenseCategory, Field(description=...)] | 0.93 | 27 |
+| add_expense_date_a | expense_date: str | 0.89 | 27 |
+| add_expense_date_b | expense_date: Annotated[str, ...] | 0.90 | 27 |
+| add_expense_date_c | expense_date: date | 0.90 | 27 |
+| add_expense_date_d | expense_date: Annotated[str, Field(pattern=...)] | 0.90 | 27 |
+| add_expense_model_a | expense: ExpenseInput (Pydantic model) | 0.91 | 27 |
 
 ## Evaluation Breakdown
 
@@ -35,6 +35,10 @@
 | add_expense_cat_c | category: Literal[...] | 100.0% | 25 | 25 |
 | add_expense_cat_d | category: ExpenseCategory (Enum) | 96.0% | 24 | 25 |
 | add_expense_cat_e | category: Annotated[ExpenseCategory, Field(description=...)] | 96.0% | 24 | 25 |
+| add_expense_date_a | expense_date: str | 96.0% | 24 | 25 |
+| add_expense_date_b | expense_date: Annotated[str, ...] | 96.0% | 24 | 25 |
+| add_expense_date_c | expense_date: date | 96.0% | 24 | 25 |
+| add_expense_date_d | expense_date: Annotated[str, Field(pattern=...)] | 96.0% | 24 | 25 |
 | add_expense_model_a | expense: ExpenseInput (Pydantic model) | 96.0% | 24 | 25 |
 
 ### category_valid
@@ -45,12 +49,20 @@
 | add_expense_cat_c | category: Literal[...] | 100.0% | 27 | 27 |
 | add_expense_cat_d | category: ExpenseCategory (Enum) | 96.3% | 26 | 27 |
 | add_expense_cat_e | category: Annotated[ExpenseCategory, Field(description=...)] | 100.0% | 27 | 27 |
+| add_expense_date_a | expense_date: str | 96.3% | 26 | 27 |
+| add_expense_date_b | expense_date: Annotated[str, ...] | 96.3% | 26 | 27 |
+| add_expense_date_c | expense_date: date | 96.3% | 26 | 27 |
+| add_expense_date_d | expense_date: Annotated[str, Field(pattern=...)] | 96.3% | 26 | 27 |
 | add_expense_model_a | expense: ExpenseInput (Pydantic model) | 96.3% | 26 | 27 |
 
 ### date_format
 
 | Variant | Description | Pass Rate | Passed | Total |
 |---------|-------------|-----------|--------|-------|
+| add_expense_cat_b | category: Annotated[str, ...] | 100.0% | 27 | 27 |
+| add_expense_cat_c | category: Literal[...] | 100.0% | 27 | 27 |
+| add_expense_cat_d | category: ExpenseCategory (Enum) | 96.3% | 26 | 27 |
+| add_expense_cat_e | category: Annotated[ExpenseCategory, Field(description=...)] | 100.0% | 27 | 27 |
 | add_expense_date_a | expense_date: str | 96.3% | 26 | 27 |
 | add_expense_date_b | expense_date: Annotated[str, ...] | 96.3% | 26 | 27 |
 | add_expense_date_c | expense_date: date | 96.3% | 26 | 27 |
@@ -61,11 +73,29 @@
 
 | Variant | Description | Pass Rate | Passed | Total |
 |---------|-------------|-----------|--------|-------|
+| add_expense_cat_b | category: Annotated[str, ...] | 77.8% | 21 | 27 |
+| add_expense_cat_c | category: Literal[...] | 85.2% | 23 | 27 |
+| add_expense_cat_d | category: ExpenseCategory (Enum) | 81.5% | 22 | 27 |
+| add_expense_cat_e | category: Annotated[ExpenseCategory, Field(description=...)] | 88.9% | 24 | 27 |
 | add_expense_date_a | expense_date: str | 77.8% | 21 | 27 |
 | add_expense_date_b | expense_date: Annotated[str, ...] | 81.5% | 22 | 27 |
 | add_expense_date_c | expense_date: date | 81.5% | 22 | 27 |
 | add_expense_date_d | expense_date: Annotated[str, Field(pattern=...)] | 85.2% | 23 | 27 |
 | add_expense_model_a | expense: ExpenseInput (Pydantic model) | 85.2% | 23 | 27 |
+
+### reimbursable_match
+
+| Variant | Description | Pass Rate | Passed | Total |
+|---------|-------------|-----------|--------|-------|
+| add_expense_cat_b | category: Annotated[str, ...] | 0.0% | 0 | 6 |
+| add_expense_cat_c | category: Literal[...] | 0.0% | 0 | 6 |
+| add_expense_cat_d | category: ExpenseCategory (Enum) | 0.0% | 0 | 6 |
+| add_expense_cat_e | category: Annotated[ExpenseCategory, Field(description=...)] | 0.0% | 0 | 6 |
+| add_expense_date_a | expense_date: str | 0.0% | 0 | 6 |
+| add_expense_date_b | expense_date: Annotated[str, ...] | 0.0% | 0 | 6 |
+| add_expense_date_c | expense_date: date | 0.0% | 0 | 6 |
+| add_expense_date_d | expense_date: Annotated[str, Field(pattern=...)] | 0.0% | 0 | 6 |
+| add_expense_model_a | expense: ExpenseInput (Pydantic model) | 0.0% | 0 | 6 |
 
 ### tool_called
 
@@ -286,7 +316,7 @@
 | ✅ | category_match | Category 'gadget' matches expected 'gadget' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
 
-### add_expense_cat_b / clear_reimbursable_true: 1.00
+### add_expense_cat_b / clear_reimbursable_true: 0.83
 
 **User Query**:
 
@@ -325,8 +355,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'transport' matches expected 'transport' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_cat_b / clear_reimbursable_true_customer_lunch: 1.00
+### add_expense_cat_b / clear_reimbursable_true_customer_lunch: 0.83
 
 **User Query**:
 
@@ -365,8 +396,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'food' matches expected 'food' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_cat_b / clear_reimbursable_false: 1.00
+### add_expense_cat_b / clear_reimbursable_false: 0.83
 
 **User Query**:
 
@@ -405,8 +437,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'entertainment' matches expected 'entertainment' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_cat_b / clear_reimbursable_false_personal_dinner: 1.00
+### add_expense_cat_b / clear_reimbursable_false_personal_dinner: 0.83
 
 **User Query**:
 
@@ -445,8 +478,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'food' matches expected 'food' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_cat_b / ambiguous_reimbursable_unknown: 1.00
+### add_expense_cat_b / ambiguous_reimbursable_unknown: 0.83
 
 **User Query**:
 
@@ -485,8 +519,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'food' matches expected 'food' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_cat_b / ambiguous_reimbursable_unknown_mixed_outing: 1.00
+### add_expense_cat_b / ambiguous_reimbursable_unknown_mixed_outing: 0.80
 
 **User Query**:
 
@@ -524,6 +559,7 @@
 | ✅ | category_valid | Category 'entertainment' is valid |
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
 ### add_expense_cat_b / relative_date_monday_before_this_one: 0.80
 
@@ -1364,7 +1400,7 @@
 | ✅ | category_match | Category 'gadget' matches expected 'gadget' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
 
-### add_expense_cat_c / clear_reimbursable_true: 1.00
+### add_expense_cat_c / clear_reimbursable_true: 0.83
 
 **User Query**:
 
@@ -1403,8 +1439,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'transport' matches expected 'transport' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_cat_c / clear_reimbursable_true_customer_lunch: 1.00
+### add_expense_cat_c / clear_reimbursable_true_customer_lunch: 0.83
 
 **User Query**:
 
@@ -1443,8 +1480,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'food' matches expected 'food' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_cat_c / clear_reimbursable_false: 1.00
+### add_expense_cat_c / clear_reimbursable_false: 0.83
 
 **User Query**:
 
@@ -1483,8 +1521,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'entertainment' matches expected 'entertainment' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_cat_c / clear_reimbursable_false_personal_dinner: 1.00
+### add_expense_cat_c / clear_reimbursable_false_personal_dinner: 0.83
 
 **User Query**:
 
@@ -1523,8 +1562,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'food' matches expected 'food' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_cat_c / ambiguous_reimbursable_unknown: 1.00
+### add_expense_cat_c / ambiguous_reimbursable_unknown: 0.83
 
 **User Query**:
 
@@ -1563,8 +1603,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'food' matches expected 'food' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_cat_c / ambiguous_reimbursable_unknown_mixed_outing: 1.00
+### add_expense_cat_c / ambiguous_reimbursable_unknown_mixed_outing: 0.80
 
 **User Query**:
 
@@ -1602,6 +1643,7 @@
 | ✅ | category_valid | Category 'entertainment' is valid |
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
 ### add_expense_cat_c / relative_date_monday_before_this_one: 1.00
 
@@ -2442,7 +2484,7 @@
 | ✅ | category_match | Category 'gadget' matches expected 'gadget' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
 
-### add_expense_cat_d / clear_reimbursable_true: 1.00
+### add_expense_cat_d / clear_reimbursable_true: 0.83
 
 **User Query**:
 
@@ -2481,8 +2523,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'transport' matches expected 'transport' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_cat_d / clear_reimbursable_true_customer_lunch: 1.00
+### add_expense_cat_d / clear_reimbursable_true_customer_lunch: 0.83
 
 **User Query**:
 
@@ -2521,8 +2564,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'food' matches expected 'food' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_cat_d / clear_reimbursable_false: 1.00
+### add_expense_cat_d / clear_reimbursable_false: 0.83
 
 **User Query**:
 
@@ -2561,8 +2605,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'entertainment' matches expected 'entertainment' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_cat_d / clear_reimbursable_false_personal_dinner: 1.00
+### add_expense_cat_d / clear_reimbursable_false_personal_dinner: 0.83
 
 **User Query**:
 
@@ -2601,8 +2646,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'food' matches expected 'food' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_cat_d / ambiguous_reimbursable_unknown: 1.00
+### add_expense_cat_d / ambiguous_reimbursable_unknown: 0.83
 
 **User Query**:
 
@@ -2641,8 +2687,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'food' matches expected 'food' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_cat_d / ambiguous_reimbursable_unknown_mixed_outing: 1.00
+### add_expense_cat_d / ambiguous_reimbursable_unknown_mixed_outing: 0.80
 
 **User Query**:
 
@@ -2680,6 +2727,7 @@
 | ✅ | category_valid | Category 'entertainment' is valid |
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
 ### add_expense_cat_d / relative_date_monday_before_this_one: 1.00
 
@@ -3508,7 +3556,7 @@
 | ✅ | category_match | Category 'gadget' matches expected 'gadget' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
 
-### add_expense_cat_e / clear_reimbursable_true: 1.00
+### add_expense_cat_e / clear_reimbursable_true: 0.83
 
 **User Query**:
 
@@ -3547,8 +3595,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'transport' matches expected 'transport' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_cat_e / clear_reimbursable_true_customer_lunch: 1.00
+### add_expense_cat_e / clear_reimbursable_true_customer_lunch: 0.83
 
 **User Query**:
 
@@ -3587,8 +3636,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'food' matches expected 'food' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_cat_e / clear_reimbursable_false: 1.00
+### add_expense_cat_e / clear_reimbursable_false: 0.83
 
 **User Query**:
 
@@ -3627,8 +3677,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'entertainment' matches expected 'entertainment' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_cat_e / clear_reimbursable_false_personal_dinner: 1.00
+### add_expense_cat_e / clear_reimbursable_false_personal_dinner: 0.83
 
 **User Query**:
 
@@ -3667,8 +3718,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'food' matches expected 'food' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_cat_e / ambiguous_reimbursable_unknown: 1.00
+### add_expense_cat_e / ambiguous_reimbursable_unknown: 0.83
 
 **User Query**:
 
@@ -3707,8 +3759,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'food' matches expected 'food' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_cat_e / ambiguous_reimbursable_unknown_mixed_outing: 1.00
+### add_expense_cat_e / ambiguous_reimbursable_unknown_mixed_outing: 0.80
 
 **User Query**:
 
@@ -3746,6 +3799,7 @@
 | ✅ | category_valid | Category 'food' is valid |
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
 ### add_expense_cat_e / relative_date_monday_before_this_one: 1.00
 
@@ -4586,7 +4640,7 @@
 | ✅ | category_match | Category 'gadget' matches expected 'gadget' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
 
-### add_expense_date_a / clear_reimbursable_true: 1.00
+### add_expense_date_a / clear_reimbursable_true: 0.83
 
 **User Query**:
 
@@ -4625,8 +4679,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'transport' matches expected 'transport' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_date_a / clear_reimbursable_true_customer_lunch: 1.00
+### add_expense_date_a / clear_reimbursable_true_customer_lunch: 0.83
 
 **User Query**:
 
@@ -4665,8 +4720,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'food' matches expected 'food' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_date_a / clear_reimbursable_false: 1.00
+### add_expense_date_a / clear_reimbursable_false: 0.83
 
 **User Query**:
 
@@ -4705,8 +4761,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'entertainment' matches expected 'entertainment' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_date_a / clear_reimbursable_false_personal_dinner: 1.00
+### add_expense_date_a / clear_reimbursable_false_personal_dinner: 0.83
 
 **User Query**:
 
@@ -4745,8 +4802,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'food' matches expected 'food' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_date_a / ambiguous_reimbursable_unknown: 1.00
+### add_expense_date_a / ambiguous_reimbursable_unknown: 0.83
 
 **User Query**:
 
@@ -4785,8 +4843,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'food' matches expected 'food' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_date_a / ambiguous_reimbursable_unknown_mixed_outing: 1.00
+### add_expense_date_a / ambiguous_reimbursable_unknown_mixed_outing: 0.80
 
 **User Query**:
 
@@ -4824,6 +4883,7 @@
 | ✅ | category_valid | Category 'entertainment' is valid |
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
 ### add_expense_date_a / relative_date_monday_before_this_one: 1.00
 
@@ -5652,7 +5712,7 @@
 | ✅ | category_match | Category 'gadget' matches expected 'gadget' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
 
-### add_expense_date_b / clear_reimbursable_true: 1.00
+### add_expense_date_b / clear_reimbursable_true: 0.83
 
 **User Query**:
 
@@ -5691,8 +5751,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'transport' matches expected 'transport' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_date_b / clear_reimbursable_true_customer_lunch: 1.00
+### add_expense_date_b / clear_reimbursable_true_customer_lunch: 0.83
 
 **User Query**:
 
@@ -5731,8 +5792,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'food' matches expected 'food' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_date_b / clear_reimbursable_false: 1.00
+### add_expense_date_b / clear_reimbursable_false: 0.83
 
 **User Query**:
 
@@ -5771,8 +5833,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'entertainment' matches expected 'entertainment' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_date_b / clear_reimbursable_false_personal_dinner: 1.00
+### add_expense_date_b / clear_reimbursable_false_personal_dinner: 0.83
 
 **User Query**:
 
@@ -5811,8 +5874,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'food' matches expected 'food' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_date_b / ambiguous_reimbursable_unknown: 1.00
+### add_expense_date_b / ambiguous_reimbursable_unknown: 0.83
 
 **User Query**:
 
@@ -5851,8 +5915,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'food' matches expected 'food' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_date_b / ambiguous_reimbursable_unknown_mixed_outing: 1.00
+### add_expense_date_b / ambiguous_reimbursable_unknown_mixed_outing: 0.80
 
 **User Query**:
 
@@ -5890,6 +5955,7 @@
 | ✅ | category_valid | Category 'entertainment' is valid |
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
 ### add_expense_date_b / relative_date_monday_before_this_one: 0.80
 
@@ -6718,7 +6784,7 @@
 | ✅ | category_match | Category 'gadget' matches expected 'gadget' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
 
-### add_expense_date_c / clear_reimbursable_true: 1.00
+### add_expense_date_c / clear_reimbursable_true: 0.83
 
 **User Query**:
 
@@ -6757,8 +6823,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'transport' matches expected 'transport' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_date_c / clear_reimbursable_true_customer_lunch: 1.00
+### add_expense_date_c / clear_reimbursable_true_customer_lunch: 0.83
 
 **User Query**:
 
@@ -6797,8 +6864,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'food' matches expected 'food' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_date_c / clear_reimbursable_false: 1.00
+### add_expense_date_c / clear_reimbursable_false: 0.83
 
 **User Query**:
 
@@ -6837,8 +6905,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'entertainment' matches expected 'entertainment' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_date_c / clear_reimbursable_false_personal_dinner: 1.00
+### add_expense_date_c / clear_reimbursable_false_personal_dinner: 0.83
 
 **User Query**:
 
@@ -6877,8 +6946,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'food' matches expected 'food' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_date_c / ambiguous_reimbursable_unknown: 1.00
+### add_expense_date_c / ambiguous_reimbursable_unknown: 0.83
 
 **User Query**:
 
@@ -6917,8 +6987,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'food' matches expected 'food' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_date_c / ambiguous_reimbursable_unknown_mixed_outing: 1.00
+### add_expense_date_c / ambiguous_reimbursable_unknown_mixed_outing: 0.80
 
 **User Query**:
 
@@ -6956,6 +7027,7 @@
 | ✅ | category_valid | Category 'entertainment' is valid |
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
 ### add_expense_date_c / relative_date_monday_before_this_one: 1.00
 
@@ -7784,7 +7856,7 @@
 | ✅ | category_match | Category 'gadget' matches expected 'gadget' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
 
-### add_expense_date_d / clear_reimbursable_true: 1.00
+### add_expense_date_d / clear_reimbursable_true: 0.83
 
 **User Query**:
 
@@ -7823,8 +7895,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'transport' matches expected 'transport' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_date_d / clear_reimbursable_true_customer_lunch: 1.00
+### add_expense_date_d / clear_reimbursable_true_customer_lunch: 0.83
 
 **User Query**:
 
@@ -7863,8 +7936,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'food' matches expected 'food' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_date_d / clear_reimbursable_false: 1.00
+### add_expense_date_d / clear_reimbursable_false: 0.83
 
 **User Query**:
 
@@ -7903,8 +7977,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'entertainment' matches expected 'entertainment' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_date_d / clear_reimbursable_false_personal_dinner: 1.00
+### add_expense_date_d / clear_reimbursable_false_personal_dinner: 0.83
 
 **User Query**:
 
@@ -7943,8 +8018,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'food' matches expected 'food' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_date_d / ambiguous_reimbursable_unknown: 1.00
+### add_expense_date_d / ambiguous_reimbursable_unknown: 0.83
 
 **User Query**:
 
@@ -7983,8 +8059,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'food' matches expected 'food' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_date_d / ambiguous_reimbursable_unknown_mixed_outing: 1.00
+### add_expense_date_d / ambiguous_reimbursable_unknown_mixed_outing: 0.80
 
 **User Query**:
 
@@ -8022,6 +8099,7 @@
 | ✅ | category_valid | Category 'entertainment' is valid |
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
 ### add_expense_date_d / relative_date_monday_before_this_one: 1.00
 
@@ -8860,7 +8938,7 @@
 | ✅ | category_match | Category 'gadget' matches expected 'gadget' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
 
-### add_expense_model_a / clear_reimbursable_true: 1.00
+### add_expense_model_a / clear_reimbursable_true: 0.83
 
 **User Query**:
 
@@ -8901,8 +8979,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'transport' matches expected 'transport' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_model_a / clear_reimbursable_true_customer_lunch: 1.00
+### add_expense_model_a / clear_reimbursable_true_customer_lunch: 0.83
 
 **User Query**:
 
@@ -8943,8 +9022,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'food' matches expected 'food' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_model_a / clear_reimbursable_false: 1.00
+### add_expense_model_a / clear_reimbursable_false: 0.83
 
 **User Query**:
 
@@ -8985,8 +9065,9 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'entertainment' matches expected 'entertainment' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
-### add_expense_model_a / clear_reimbursable_false_personal_dinner: 1.00
+### add_expense_model_a / clear_reimbursable_false_personal_dinner: 0.83
 
 **User Query**:
 
@@ -9027,6 +9108,7 @@
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | category_match | Category 'food' matches expected 'food' |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
 ### add_expense_model_a / ambiguous_reimbursable_unknown: 0.00
 
@@ -9055,8 +9137,9 @@
 | ❌ | date_format | No add_expense tool call found |
 | ❌ | category_match | No add_expense tool call found |
 | ❌ | date_match | No add_expense tool call found |
+| ❌ | reimbursable_match | No add_expense tool call found |
 
-### add_expense_model_a / ambiguous_reimbursable_unknown_mixed_outing: 1.00
+### add_expense_model_a / ambiguous_reimbursable_unknown_mixed_outing: 0.80
 
 **User Query**:
 
@@ -9096,6 +9179,7 @@
 | ✅ | category_valid | Category 'entertainment' is valid |
 | ✅ | date_format | Date '2026-01-28' is in correct format |
 | ✅ | date_match | Date '2026-01-28' matches expected '2026-01-28' |
+| ❌ | reimbursable_match | Reimbursable argument missing |
 
 ### add_expense_model_a / relative_date_monday_before_this_one: 1.00
 

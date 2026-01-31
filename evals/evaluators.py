@@ -15,11 +15,24 @@ import json
 # Add parent directory to path for imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from agents.pydanticai_expenses import ToolCallInfo
+from agents.pydanticai_agent import ToolCallInfo
 from evals.dataset import ExpenseCase
 
-# Valid category values (must match the Enum/Literal in expenses_mcp.py)
-VALID_CATEGORIES = {"food", "transport", "entertainment", "shopping", "gadget", "other"}
+# Valid category values (must match the Enum/Literal in expenses_mcp.py exactly)
+# Exact string matching - no case normalization
+# Note: Categories intentionally use inconsistent formatting (& vs "and", mixed casing)
+VALID_CATEGORIES = {
+    "Food & drink",
+    "Transit and Fuel",
+    "Media & streaming",
+    "Apparel and Beauty",
+    "Electronics & tech",
+    "Home and office",
+    "Health & Fitness",
+    "Arts and hobbies",
+    "Fees & services",
+    "Misc",
+}
 
 # Date pattern for YYYY-MM-DD format
 DATE_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
@@ -91,9 +104,8 @@ def evaluate_category_valid(tool_calls: list[ToolCallInfo]) -> EvalResult:
                     score=0.0,
                     message="Category argument missing",
                 )
-            # Normalize to lowercase for comparison
-            category_lower = category.lower() if isinstance(category, str) else str(category).lower()
-            if category_lower in VALID_CATEGORIES:
+            # Exact string match - no normalization
+            if category in VALID_CATEGORIES:
                 return EvalResult(
                     passed=True,
                     score=1.0,
@@ -155,8 +167,8 @@ def evaluate_category_match(tool_calls: list[ToolCallInfo], expected: str) -> Ev
                     score=0.0,
                     message="Category argument missing",
                 )
-            category_lower = category.lower() if isinstance(category, str) else str(category).lower()
-            if category_lower == expected.lower():
+            # Exact string match - no normalization
+            if category == expected:
                 return EvalResult(
                     passed=True,
                     score=1.0,
@@ -197,22 +209,122 @@ def evaluate_date_match(tool_calls: list[ToolCallInfo], expected: str) -> EvalRe
     return EvalResult(passed=False, score=0.0, message="No add_expense tool call found")
 
 
+def evaluate_reimbursable_match(tool_calls: list[ToolCallInfo], expected: bool | str) -> EvalResult:
+    """Check if the reimbursable flag matches the expected value.
+
+    Expected is one of:
+    - True
+    - False
+    - "unknown"
+
+    The actual value is taken from the tool call argument `reimbursable`.
+    """
+    expected_norm = expected
+    if isinstance(expected, str):
+        expected_norm = expected.strip().lower()
+
+    for tc in tool_calls:
+        if tc.tool_name.startswith("add_expense"):
+            actual = _extract_arg(tc.arguments, "reimbursable")
+            if actual is None:
+                return EvalResult(
+                    passed=False,
+                    score=0.0,
+                    message="Reimbursable argument missing",
+                )
+
+            if isinstance(actual, str):
+                actual_norm = actual.strip().lower()
+                if actual_norm in ("true", "false"):
+                    actual_norm = (actual_norm == "true")
+            else:
+                actual_norm = actual
+
+            if expected_norm == "unknown":
+                passed = isinstance(actual_norm, str) and actual_norm == "unknown"
+            else:
+                passed = (actual_norm is True and expected_norm is True) or (actual_norm is False and expected_norm is False)
+
+            if passed:
+                return EvalResult(
+                    passed=True,
+                    score=1.0,
+                    message=f"Reimbursable '{actual}' matches expected '{expected}'",
+                )
+
+            return EvalResult(
+                passed=False,
+                score=0.0,
+                message=f"Reimbursable '{actual}' does not match expected '{expected}'",
+                details={"actual": actual, "expected": expected},
+            )
+
+    return EvalResult(passed=False, score=0.0, message="No add_expense tool call found")
+
+
+def _variant_supports_eval(tool_variant: str, eval_name: str) -> bool:
+    """Check if a tool variant should be evaluated by a given evaluator.
+
+    Evaluators only apply to relevant variant families:
+    - tool_called → all variants (universal)
+    - category_valid, category_match → _cat_* or _model_* variants
+    - date_format, date_match → _date_* or _model_* variants
+    - reimbursable_match → _reimb_* or _model_* variants
+    """
+    # Universal evaluator
+    if eval_name == "tool_called":
+        return True
+
+    # Model variants support all evaluators
+    if "_model_" in tool_variant:
+        return True
+
+    # Category evaluators
+    if eval_name in ("category_valid", "category_match"):
+        return "_cat_" in tool_variant
+
+    # Date evaluators
+    if eval_name in ("date_format", "date_match"):
+        return "_date_" in tool_variant
+
+    # Reimbursable evaluator
+    if eval_name == "reimbursable_match":
+        return "_reimb_" in tool_variant
+
+    # Unknown evaluator → default to True
+    return True
+
+
 def run_all_evaluations(
-    tool_calls: list[ToolCallInfo], case: ExpenseCase
+    tool_calls: list[ToolCallInfo], case: ExpenseCase, tool_variant: str = ""
 ) -> dict[str, EvalResult]:
-    """Run all applicable evaluations for a test case."""
+    """Run all applicable evaluations for a test case.
+
+    Args:
+        tool_calls: List of tool calls made during the run.
+        case: The expense case being evaluated.
+        tool_variant: Name of the tool variant being tested (used to filter evaluators).
+    """
     results: dict[str, EvalResult] = {}
 
-    # Always check these
+    # Always check tool_called (universal)
     results["tool_called"] = evaluate_tool_called(tool_calls)
-    results["category_valid"] = evaluate_category_valid(tool_calls)
-    results["date_format"] = evaluate_date_format(tool_calls)
 
-    # Check expected values if specified
-    if case.expected_category:
+    # Category evaluators - only for category and model variants
+    if _variant_supports_eval(tool_variant, "category_valid"):
+        results["category_valid"] = evaluate_category_valid(tool_calls)
+    if case.expected_category and _variant_supports_eval(tool_variant, "category_match"):
         results["category_match"] = evaluate_category_match(tool_calls, case.expected_category)
-    if case.expected_date:
+
+    # Date evaluators - only for date and model variants
+    if _variant_supports_eval(tool_variant, "date_format"):
+        results["date_format"] = evaluate_date_format(tool_calls)
+    if case.expected_date and _variant_supports_eval(tool_variant, "date_match"):
         results["date_match"] = evaluate_date_match(tool_calls, case.expected_date)
+
+    # Reimbursable evaluator - only for reimb and model variants
+    if case.expected_reimbursable is not None and _variant_supports_eval(tool_variant, "reimbursable_match"):
+        results["reimbursable_match"] = evaluate_reimbursable_match(tool_calls, case.expected_reimbursable)
 
     return results
 

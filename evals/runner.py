@@ -31,22 +31,28 @@ from datetime import datetime
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import logfire  # noqa: E402
-from azure.identity.aio import DefaultAzureCredential, get_bearer_token_provider  # noqa: E402
 from dotenv import load_dotenv  # noqa: E402
-from openai import AsyncOpenAI  # noqa: E402
-from pydantic_ai.mcp import MCPServerStreamableHTTP  # noqa: E402
-from pydantic_ai.models.openai import OpenAIResponsesModel  # noqa: E402
-from pydantic_ai.providers.openai import OpenAIProvider  # noqa: E402
 
-from agents.pydanticai_expenses import ToolCallInfo, run_query  # noqa: E402
+from agents.agentframework_agent import run_query as agentframework_run_query  # noqa: E402
+from agents.copilotsdk_agent import run_query as copilot_run_query  # noqa: E402
+from agents.langchain_agent import run_query as langchain_run_query  # noqa: E402
+from agents.pydanticai_agent import ToolCallInfo  # noqa: E402
+from agents.pydanticai_agent import run_query as pydanticai_run_query
 from evals.dataset import EXPENSE_CASES, ExpenseCase  # noqa: E402
+
+# Agent types
+AGENT_PYDANTICAI = "pydanticai"
+AGENT_COPILOT = "copilot"
+AGENT_LANGCHAIN = "langchain"
+AGENT_AGENTFRAMEWORK = "agentframework"
+AVAILABLE_AGENTS = [AGENT_PYDANTICAI, AGENT_COPILOT, AGENT_LANGCHAIN, AGENT_AGENTFRAMEWORK]
 from evals.evaluators import EvalResult, compute_score, run_all_evaluations  # noqa: E402
 from evals.report import generate_markdown_report  # noqa: E402
 
 load_dotenv(override=True)
 
-# Configure Logfire tracing
-logfire.configure()
+# Configure Logfire tracing (console=False disables terminal output)
+logfire.configure(console=False)
 logfire.instrument_pydantic_ai()
 
 logging.basicConfig(level=logging.WARNING)
@@ -85,12 +91,16 @@ DATE_VARIANTS = [
     "add_expense_date_d",  # Annotated[date, Field(...)]
 ]
 
+REIMBURSABLE_VARIANTS = [
+    "add_expense_reimb_e",  # Annotated[bool | Literal["unknown"], Field(...)]
+]
+
 MODEL_INPUT_VARIANTS = [
     "add_expense_model_a",  # Pydantic model input (nested object)
 ]
 
-# Default to all variants (category + date + nested model input)
-ALL_VARIANTS = CATEGORY_VARIANTS_DEFAULT + DATE_VARIANTS + MODEL_INPUT_VARIANTS
+# Default to all variants (category + date + reimbursable + nested model input)
+ALL_VARIANTS = CATEGORY_VARIANTS_DEFAULT + DATE_VARIANTS + REIMBURSABLE_VARIANTS + MODEL_INPUT_VARIANTS
 
 
 # =============================================================================
@@ -105,62 +115,13 @@ DEFAULT_REASONING: str | None = None
 DEFAULT_SEED = 42
 
 
-def _supports_openai_reasoning(model_name: str) -> bool:
-    """Return True if the deployed model is expected to support `reasoning.*` params.
-
-    Azure OpenAI deployments are referenced by deployment name, so this is
-    necessarily heuristic. We keep it conservative to avoid hard failures on
-    non-reasoning models (e.g., gpt-4.1-mini).
-    """
-    name = (model_name or "").lower()
-    return name.startswith("gpt-5") or name.startswith("o")
-
-
-def get_model(
-    reasoning_effort: str | None = DEFAULT_REASONING,
-    seed: int = DEFAULT_SEED,
-) -> tuple[OpenAIResponsesModel, dict, DefaultAzureCredential]:
-    """Configure the model for evaluation.
-
+def get_model_name(deployment: str | None = None) -> str:
+    """Get the model name.
+    
     Args:
-        reasoning_effort: Reasoning effort level (none, minimal, low, medium, high, xhigh)
-        seed: Seed for determinism/reproducibility
-
-    Returns:
-        Tuple of (model, model_settings, async_credential)
+        deployment: Optional deployment name override (defaults to AZURE_OPENAI_CHAT_DEPLOYMENT env var)
     """
-    async_credential = DefaultAzureCredential()
-    token_provider = get_bearer_token_provider(async_credential, "https://cognitiveservices.azure.com/.default")
-    client = AsyncOpenAI(
-        base_url=os.environ["AZURE_OPENAI_ENDPOINT"],
-        api_key=token_provider,
-    )
-    deployment_name = os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT"]
-    model = OpenAIResponsesModel(deployment_name, provider=OpenAIProvider(openai_client=client))
-    # Model settings for evaluation
-    # `reasoning` stores optional model-provided reasoning summary text (not chain-of-thought).
-    model_settings: dict = {"seed": seed}
-
-    if reasoning_effort is not None and _supports_openai_reasoning(deployment_name):
-        model_settings.update(
-            {
-                "openai_reasoning_effort": reasoning_effort,
-                # NOTE: For GPT-5 models, OpenAI docs indicate `summary="auto"` is
-                # equivalent to the most detailed summarizer available.
-                "openai_reasoning_summary": "auto",
-            }
-        )
-    elif reasoning_effort is not None:
-        logger.info(
-            "Model '%s' does not support reasoning params; running without reasoning.*",
-            deployment_name,
-        )
-    return model, model_settings, async_credential
-
-
-def get_model_name() -> str:
-    """Get the model name from environment."""
-    return os.environ.get("AZURE_OPENAI_CHAT_DEPLOYMENT", "unknown")
+    return deployment or os.environ.get("AZURE_OPENAI_CHAT_DEPLOYMENT", "unknown")
 
 
 # =============================================================================
@@ -208,14 +169,49 @@ class VariantSummary:
 
 
 async def run_single_case(
-    server,
-    model,
-    model_settings: dict,
     tool_variant: str,
     case: ExpenseCase,
+    agent: str = AGENT_PYDANTICAI,
+    deployment: str | None = None,
+    seed: int | None = None,
+    temperature: float | None = None,
+    reasoning_effort: str | None = None,
 ) -> RunResult:
-    """Run a single test case with a specific tool variant."""
-    query_result = await run_query(server, model, tool_variant, case.prompt, model_settings)
+    """Run a single test case with a specific tool variant.
+    
+    Args:
+        tool_variant: Name of the tool variant to test
+        case: Test case to run
+        agent: Agent framework to use (pydanticai, copilot, or langchain)
+        deployment: Deployment/model name
+        seed: Seed for determinism/reproducibility
+        temperature: Sampling temperature
+        reasoning_effort: Reasoning effort level (pydanticai only)
+    """
+    if agent == AGENT_COPILOT:
+        query_result = await copilot_run_query(tool_variant, case.prompt, model=deployment)
+    elif agent == AGENT_LANGCHAIN:
+        # Note: langchain with Responses API doesn't support seed
+        query_result = await langchain_run_query(
+            tool_variant, case.prompt, model=deployment,
+            temperature=temperature, reasoning_effort=reasoning_effort
+        )
+    elif agent == AGENT_AGENTFRAMEWORK:
+        query_result = await agentframework_run_query(
+            tool_variant, case.prompt, model=deployment, seed=seed,
+            temperature=temperature, reasoning_effort=reasoning_effort
+        )
+    else:
+        query_result = await pydanticai_run_query(
+            tool_variant, case.prompt, model=deployment, seed=seed,
+            temperature=temperature, reasoning_effort=reasoning_effort
+        )
+
+    # Convert agent-specific ToolCallInfo to pydanticai ToolCallInfo for compatibility
+    tool_calls = [
+        ToolCallInfo(tool_name=tc.tool_name, arguments=tc.arguments)
+        for tc in query_result.tool_calls
+    ]
 
     if query_result.error:
         logger.error(f"Error running case {case.name} with {tool_variant}: {query_result.error}")
@@ -231,14 +227,14 @@ async def run_single_case(
         )
 
     # Run evaluations
-    eval_results = run_all_evaluations(query_result.tool_calls, case)
+    eval_results = run_all_evaluations(tool_calls, case, tool_variant)
     overall_score = compute_score(eval_results)
 
     return RunResult(
         case_name=case.name,
         user_query=case.prompt,
         tool_variant=tool_variant,
-        tool_calls=query_result.tool_calls,
+        tool_calls=tool_calls,
         eval_results=eval_results,
         overall_score=overall_score,
         agent_output=query_result.output,
@@ -251,7 +247,10 @@ async def run_evaluation(
     cases: list[ExpenseCase],
     reasoning_effort: str = DEFAULT_REASONING,
     seed: int = DEFAULT_SEED,
+    temperature: float | None = None,
+    deployment: str | None = None,
     progress_callback: Callable[[str], None] | None = None,
+    agent: str = AGENT_PYDANTICAI,
 ) -> tuple[list[RunResult], dict[str, VariantSummary], str, dict]:
     """Run full evaluation across variants and cases.
 
@@ -260,53 +259,70 @@ async def run_evaluation(
         cases: List of test cases to run
         reasoning_effort: Reasoning effort level (none, minimal, low, medium, high, xhigh)
         seed: Seed for determinism/reproducibility
+        temperature: Optional sampling temperature
+        deployment: Optional deployment/model name
         progress_callback: Optional callback for progress updates
+        agent: Agent framework to use (pydanticai, copilot, or langchain)
     
     Returns:
         Tuple of (results, summaries, model_name, model_settings)
     """
-    model, model_settings, async_credential = get_model(reasoning_effort, seed=seed)
-    model_name = get_model_name()
+    model_name = get_model_name(deployment)
     results: list[RunResult] = []
     summaries: dict[str, VariantSummary] = {v: VariantSummary(variant_name=v) for v in variants}
 
-    try:
-        async with MCPServerStreamableHTTP(url=MCP_SERVER_URL) as server:
-            total = len(variants) * len(cases)
-            current = 0
+    # Build model_settings dict for metadata
+    # Only include settings that are actually applied by the agent
+    model_settings: dict = {"seed": seed}
+    if temperature is not None:
+        model_settings["temperature"] = temperature
+    # reasoning_effort only applies to pydanticai agent (copilot uses VS Code settings)
+    if reasoning_effort is not None and agent == AGENT_PYDANTICAI:
+        model_settings["reasoning_effort"] = reasoning_effort
 
-            for variant in variants:
-                for case in cases:
-                    current += 1
-                    if progress_callback:
-                        progress_callback(f"[{current}/{total}] {variant} / {case.name}")
+    total = len(variants) * len(cases)
+    current = 0
 
-                    run_result = await run_single_case(server, model, model_settings, variant, case)
-                    results.append(run_result)
+    for variant in variants:
+        for case in cases:
+            current += 1
+            if progress_callback:
+                progress_callback(f"[{current}/{total}] {variant} / {case.name}")
 
-                    # Update summary
-                    summary = summaries[variant]
-                    summary.total_cases += 1
-                    summary.total_score += run_result.overall_score
+            run_result = await run_single_case(
+                tool_variant=variant,
+                case=case,
+                agent=agent,
+                deployment=deployment,
+                seed=seed,
+                temperature=temperature,
+                reasoning_effort=reasoning_effort,
+            )
+            results.append(run_result)
 
-                    # Count as passed if tool was called and category is valid
-                    tool_called = run_result.eval_results.get("tool_called")
-                    category_valid = run_result.eval_results.get("category_valid")
-                    if tool_called and tool_called.passed and category_valid and category_valid.passed:
-                        summary.passed_cases += 1
+            # Add delay for copilot agent to avoid rate limiting
+            if agent == AGENT_COPILOT:
+                await asyncio.sleep(10)
 
-                    # Track individual eval results
-                    for eval_name, eval_result in run_result.eval_results.items():
-                        if eval_name not in summary.eval_counts:
-                            summary.eval_counts[eval_name] = {"passed": 0, "failed": 0}
-                        if eval_result.passed:
-                            summary.eval_counts[eval_name]["passed"] += 1
-                        else:
-                            summary.eval_counts[eval_name]["failed"] += 1
+            # Update summary
+            summary = summaries[variant]
+            summary.total_cases += 1
+            summary.total_score += run_result.overall_score
 
-    finally:
-        if async_credential:
-            await async_credential.close()
+            # Count as passed if tool was called and category is valid
+            tool_called = run_result.eval_results.get("tool_called")
+            category_valid = run_result.eval_results.get("category_valid")
+            if tool_called and tool_called.passed and category_valid and category_valid.passed:
+                summary.passed_cases += 1
+
+            # Track individual eval results
+            for eval_name, eval_result in run_result.eval_results.items():
+                if eval_name not in summary.eval_counts:
+                    summary.eval_counts[eval_name] = {"passed": 0, "failed": 0}
+                if eval_result.passed:
+                    summary.eval_counts[eval_name]["passed"] += 1
+                else:
+                    summary.eval_counts[eval_name]["failed"] += 1
 
     return results, summaries, model_name, model_settings
 
@@ -387,6 +403,7 @@ def export_results(
     model_name: str,
     model_settings: dict,
     output_dir: str | None = None,
+    agent: str = AGENT_PYDANTICAI,
 ) -> str:
     """Export results to a timestamped folder.
     
@@ -408,6 +425,7 @@ def export_results(
     data = {
         "metadata": {
             "timestamp": datetime.now().isoformat(),
+            "agent": agent,
             "model_name": model_name,
             "model_settings": model_settings,
             "mcp_server_url": MCP_SERVER_URL,
@@ -505,6 +523,25 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Print detailed results for each case",
     )
+    parser.add_argument(
+        "--temperature",
+        type=float,
+        default=None,
+        help="Sampling temperature (e.g., 0-2). If omitted, provider default is used.",
+    )
+    parser.add_argument(
+        "--deployment",
+        type=str,
+        default=None,
+        help="Azure OpenAI deployment name (default: AZURE_OPENAI_CHAT_DEPLOYMENT env var)",
+    )
+    parser.add_argument(
+        "--agent",
+        type=str,
+        default=AGENT_PYDANTICAI,
+        choices=AVAILABLE_AGENTS,
+        help=f"Agent framework to use (default: {AGENT_PYDANTICAI})",
+    )
     return parser.parse_args()
 
 
@@ -530,11 +567,13 @@ async def main():
         cases = EXPENSE_CASES
 
     logger.info(
-        "Running evaluation with %s variants, %s cases, reasoning=%s, seed=%s",
+        "Running evaluation with %s variants, %s cases, agent=%s, reasoning=%s, seed=%s, deployment=%s",
         len(variants),
         len(cases),
+        args.agent,
         args.reasoning,
         args.seed,
+        args.deployment or "(env)",
     )
 
     def progress(msg: str) -> None:
@@ -545,7 +584,10 @@ async def main():
         cases,
         reasoning_effort=args.reasoning,
         seed=args.seed,
+        temperature=args.temperature,
+        deployment=args.deployment,
         progress_callback=progress,
+        agent=args.agent,
     )
 
     # Print summary
@@ -557,7 +599,9 @@ async def main():
 
     # Export results
     output_folder = export_results(
-        results, summaries, model_name, model_settings, args.output if args.output else None
+        results, summaries, model_name, model_settings, 
+        args.output if args.output else None,
+        agent=args.agent,
     )
     print(f"\nResults saved to: {output_folder}")
 

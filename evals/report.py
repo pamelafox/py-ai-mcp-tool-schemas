@@ -53,12 +53,16 @@ def generate_markdown_report(data: dict) -> str:
     lines.append("## Metadata")
     lines.append("")
     lines.append(f"- **Timestamp**: {meta.get('timestamp', 'N/A')}")
+    lines.append(f"- **Agent**: {meta.get('agent', 'N/A')}")
     lines.append(f"- **API Host**: {meta.get('api_host', 'N/A')}")
     lines.append(f"- **Model**: {meta.get('model_name', 'N/A')}")
     model_settings = meta.get("model_settings", {})
     if model_settings:
-        lines.append(f"- **Reasoning Effort**: {model_settings.get('openai_reasoning_effort', 'N/A')}")
-        lines.append(f"- **Reasoning Summary**: {model_settings.get('openai_reasoning_summary', 'N/A')}")
+        # Support both old (openai_reasoning_effort) and new (reasoning_effort) key names
+        reasoning_effort = model_settings.get('reasoning_effort') or model_settings.get('openai_reasoning_effort', 'N/A')
+        reasoning_summary = model_settings.get('reasoning_summary') or model_settings.get('openai_reasoning_summary', 'N/A')
+        lines.append(f"- **Reasoning Effort**: {reasoning_effort}")
+        lines.append(f"- **Reasoning Summary**: {reasoning_summary}")
         lines.append(f"- **Seed**: {model_settings.get('seed', 'N/A')}")
         # Keep temperature for older runs that may have it.
         lines.append(f"- **Temperature**: {model_settings.get('temperature', 'N/A')}")
@@ -99,16 +103,23 @@ def generate_markdown_report(data: dict) -> str:
         has_cat_variants = any("_cat_" in n for n, _ in sorted_summaries)
         has_date_variants = any("_date_" in n for n, _ in sorted_summaries)
         has_model_variants = any("_model_" in n for n, _ in sorted_summaries)
+        has_reimb_variants = any("_reimb_" in n for n, _ in sorted_summaries)
 
         for eval_name in sorted(all_evals):
-            # Filter variants based on eval type only when those variant types exist.
-            # Otherwise, show all variants so tables don't come out empty.
-            if eval_name in ("category_match", "category_valid") and (has_cat_variants or has_model_variants):
-                relevant_summaries = [(n, s) for n, s in sorted_summaries if ("_cat_" in n or "_model_" in n)]
-            elif eval_name in ("date_match", "date_format") and (has_date_variants or has_model_variants):
-                relevant_summaries = [(n, s) for n, s in sorted_summaries if ("_date_" in n or "_model_" in n)]
-            else:
-                relevant_summaries = sorted_summaries
+            # Prefer: show the variants that actually have counts for this evaluator.
+            # This matters for post-processed runs where an evaluator was added later.
+            relevant_summaries = [(n, s) for n, s in sorted_summaries if eval_name in s.get("eval_counts", {})]
+
+            # Fallback: keep older heuristic filters if somehow none have counts.
+            if not relevant_summaries:
+                if eval_name in ("category_match", "category_valid") and (has_cat_variants or has_model_variants):
+                    relevant_summaries = [(n, s) for n, s in sorted_summaries if ("_cat_" in n or "_model_" in n)]
+                elif eval_name in ("date_match", "date_format") and (has_date_variants or has_model_variants):
+                    relevant_summaries = [(n, s) for n, s in sorted_summaries if ("_date_" in n or "_model_" in n)]
+                elif eval_name in ("reimbursable_match",) and (has_reimb_variants or has_model_variants):
+                    relevant_summaries = [(n, s) for n, s in sorted_summaries if ("_reimb_" in n or "_model_" in n)]
+                else:
+                    relevant_summaries = sorted_summaries
 
             lines.append(f"### {eval_name}")
             lines.append("")
@@ -197,7 +208,7 @@ def generate_markdown_report(data: dict) -> str:
                 lines.append("| Result | Evaluator | Message |")
                 lines.append("|---|---|---|")
                 for eval_name, er in eval_results.items():
-                    symbol = "✅" if er.get("passed") else "❌"
+                    symbol = "✅ Pass" if er.get("passed") else "❌ Fail"
                     message = _md_escape_cell(er.get("message", ""))
                     lines.append(f"| {symbol} | {_md_escape_cell(eval_name)} | {message} |")
                 lines.append("")

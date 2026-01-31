@@ -116,7 +116,7 @@ EXPENSE_CASES: list[ExpenseCase] = [
     ExpenseCase(
         name="clear_food_yesterday",
         prompt="Yesterday I bought a sandwich for $12.50.",
-        expected_category="food",
+        expected_category="Food & drink",
         expected_date=get_yesterday(),
         expected_amount=12.50,
         difficulty="clear",
@@ -124,7 +124,7 @@ EXPENSE_CASES: list[ExpenseCase] = [
     ExpenseCase(
         name="clear_transport_today",
         prompt=f"I paid $45 for gas today ({get_today()}).",
-        expected_category="transport",
+        expected_category="Transit and Fuel",
         expected_date=get_today(),
         expected_amount=45.0,
         difficulty="clear",
@@ -132,7 +132,7 @@ EXPENSE_CASES: list[ExpenseCase] = [
     ExpenseCase(
         name="clear_entertainment",
         prompt="On 2026-01-15 I spent $25.99 on a movie ticket.",
-        expected_category="entertainment",
+        expected_category="Media & streaming",
         expected_date="2026-01-15",
         expected_amount=25.99,
         difficulty="clear",
@@ -140,7 +140,7 @@ EXPENSE_CASES: list[ExpenseCase] = [
     ExpenseCase(
         name="clear_shopping",
         prompt="I bought new shoes for $125 on January 20, 2026.",
-        expected_category="shopping",
+        expected_category="Apparel and Beauty",
         expected_date="2026-01-20",
         expected_amount=125.0,
         difficulty="clear",
@@ -148,7 +148,7 @@ EXPENSE_CASES: list[ExpenseCase] = [
     ExpenseCase(
         name="clear_gadget",
         prompt="Yesterday I purchased a laptop for 1200 bucks.",
-        expected_category="gadget",
+        expected_category="Electronics & tech",
         expected_date=get_yesterday(),
         expected_amount=1200.0,
         difficulty="clear",
@@ -156,7 +156,7 @@ EXPENSE_CASES: list[ExpenseCase] = [
     ExpenseCase(
         name="clear_reimbursable_true",
         prompt="Yesterday I paid $18 for a taxi to a client meeting.",
-        expected_category="transport",
+        expected_category="Transit and Fuel",
         expected_date=get_yesterday(),
         expected_amount=18.0,
         expected_reimbursable=True,
@@ -165,7 +165,7 @@ EXPENSE_CASES: list[ExpenseCase] = [
     ExpenseCase(
         name="clear_reimbursable_true_customer_lunch",
         prompt="Yesterday I spent $32 on lunch with a customer.",
-        expected_category="food",
+        expected_category="Food & drink",
         expected_date=get_yesterday(),
         expected_amount=32.0,
         expected_reimbursable=True,
@@ -174,7 +174,7 @@ EXPENSE_CASES: list[ExpenseCase] = [
     ExpenseCase(
         name="clear_reimbursable_false",
         prompt="Yesterday I bought a movie ticket for $22 with friends.",
-        expected_category="entertainment",
+        expected_category="Media & streaming",
         expected_date=get_yesterday(),
         expected_amount=22.0,
         expected_reimbursable=False,
@@ -183,7 +183,7 @@ EXPENSE_CASES: list[ExpenseCase] = [
     ExpenseCase(
         name="clear_reimbursable_false_personal_dinner",
         prompt="Yesterday I spent $48 on dinner with my family.",
-        expected_category="food",
+        expected_category="Food & drink",
         expected_date=get_yesterday(),
         expected_amount=48.0,
         expected_reimbursable=False,
@@ -192,7 +192,7 @@ EXPENSE_CASES: list[ExpenseCase] = [
     ExpenseCase(
         name="ambiguous_reimbursable_unknown",
         prompt="Yesterday I bought lunch for $14 after a work event, but I'm not sure if it's reimbursable.",
-        expected_category="food",
+        expected_category="Food & drink",
         expected_date=get_yesterday(),
         expected_amount=14.0,
         expected_reimbursable="unknown",
@@ -212,7 +212,7 @@ EXPENSE_CASES: list[ExpenseCase] = [
     ExpenseCase(
         name="relative_date_monday_before_this_one",
         prompt="I bought a sandwich the Monday before this one for $12.50.",
-        expected_category="food",
+        expected_category="Food & drink",
         expected_date=get_monday_before_this_one(),
         expected_amount=12.50,
         difficulty="edge_case",
@@ -220,7 +220,7 @@ EXPENSE_CASES: list[ExpenseCase] = [
     ExpenseCase(
         name="relative_date_two_mondays_ago",
         prompt="Two Mondays ago I spent $8.75 on coffee.",
-        expected_category="food",
+        expected_category="Food & drink",
         expected_date=get_two_mondays_ago(),
         expected_amount=8.75,
         difficulty="edge_case",
@@ -228,7 +228,7 @@ EXPENSE_CASES: list[ExpenseCase] = [
     ExpenseCase(
         name="relative_date_first_monday_this_month",
         prompt="I bought a sandwich on the first Monday of this month for $12.50.",
-        expected_category="food",
+        expected_category="Food & drink",
         expected_date=get_first_monday_of_current_month(),
         expected_amount=12.50,
         difficulty="edge_case",
@@ -236,7 +236,7 @@ EXPENSE_CASES: list[ExpenseCase] = [
     ExpenseCase(
         name="relative_date_last_day_last_month",
         prompt="On the last day of last month I spent $25.99 on a movie ticket.",
-        expected_category="entertainment",
+        expected_category="Media & streaming",
         expected_date=get_last_day_of_previous_month(),
         expected_amount=25.99,
         difficulty="edge_case",
@@ -244,7 +244,7 @@ EXPENSE_CASES: list[ExpenseCase] = [
     ExpenseCase(
         name="relative_date_last_business_day_last_month",
         prompt="I paid $60 for gas on the last business day of last month.",
-        expected_category="transport",
+        expected_category="Transit and Fuel",
         expected_date=get_last_business_day_of_previous_month(),
         expected_amount=60.0,
         difficulty="edge_case",
@@ -252,7 +252,7 @@ EXPENSE_CASES: list[ExpenseCase] = [
     ExpenseCase(
         name="relative_date_day_before_yesterday_coffee",
         prompt="The day before yesterday I spent $4.50 on coffee.",
-        expected_category="food",
+        expected_category="Food & drink",
         expected_date=get_days_ago(2),
         expected_amount=4.50,
         difficulty="edge_case",
@@ -260,7 +260,7 @@ EXPENSE_CASES: list[ExpenseCase] = [
     ExpenseCase(
         name="relative_date_three_days_ago_rideshare",
         prompt="Three days ago I took an Uber to the airport for $38.",
-        expected_category="transport",
+        expected_category="Transit and Fuel",
         expected_date=get_days_ago(3),
         expected_amount=38.0,
         difficulty="edge_case",
@@ -268,7 +268,7 @@ EXPENSE_CASES: list[ExpenseCase] = [
     ExpenseCase(
         name="relative_date_last_friday_movie",
         prompt="Last Friday I spent $18 on a movie ticket.",
-        expected_category="entertainment",
+        expected_category="Media & streaming",
         expected_date=get_last_weekday(4),
         expected_amount=18.0,
         difficulty="edge_case",
@@ -276,7 +276,7 @@ EXPENSE_CASES: list[ExpenseCase] = [
     ExpenseCase(
         name="relative_date_day_after_tomorrow_bus_pass",
         prompt="The day after tomorrow I will buy a bus pass for $20.",
-        expected_category="transport",
+        expected_category="Transit and Fuel",
         expected_date=get_day_after_tomorrow(),
         expected_amount=20.0,
         difficulty="edge_case",
@@ -286,7 +286,7 @@ EXPENSE_CASES: list[ExpenseCase] = [
     ExpenseCase(
         name="hard_category_grocery_delivery_yesterday",
         prompt="Yesterday I paid $65 for Instacart grocery delivery.",
-        expected_category="food",
+        expected_category="Food & drink",
         expected_date=get_yesterday(),
         expected_amount=65.0,
         difficulty="edge_case",
@@ -296,8 +296,8 @@ EXPENSE_CASES: list[ExpenseCase] = [
         prompt="On the last day of last month I bought headphones for $79.99.",
         # "Headphones" is intentionally hard-but-precise: it's not one of the category labels,
         # so the model must map it into our limited set. We treat it as an electronics purchase
-        # and expect "gadget" (vs plausible-but-wrong "shopping" / "entertainment").
-        expected_category="gadget",
+        # and expect "electronics & tech" (vs plausible-but-wrong "apparel & beauty" / "arts & hobbies").
+        expected_category="Electronics & tech",
         expected_date=get_last_day_of_previous_month(),
         expected_amount=79.99,
         difficulty="edge_case",
@@ -307,7 +307,7 @@ EXPENSE_CASES: list[ExpenseCase] = [
     ExpenseCase(
         name="edge_large_amount",
         prompt="Yesterday I bought a car for 35000 USD.",
-        expected_category="other",
+        expected_category="Misc",
         expected_date=get_yesterday(),
         expected_amount=35000.0,
         difficulty="edge_case",
@@ -315,7 +315,7 @@ EXPENSE_CASES: list[ExpenseCase] = [
     ExpenseCase(
         name="edge_small_amount",
         prompt="I paid $0.99 for an app yesterday.",
-        expected_category="gadget",
+        expected_category="Electronics & tech",
         expected_date=get_yesterday(),
         expected_amount=0.99,
         difficulty="edge_case",
@@ -323,15 +323,15 @@ EXPENSE_CASES: list[ExpenseCase] = [
     ExpenseCase(
         name="edge_unknown_category",
         prompt="Yesterday I spent $200 on a spa treatment.",
+        expected_category="Health & Fitness",
         expected_date=get_yesterday(),
         expected_amount=200.0,
         difficulty="edge_case",
-        # "spa treatment" doesn't fit standard categories
     ),
     ExpenseCase(
         name="edge_currency_symbol",
         prompt="I spent €50 on dinner yesterday.",
-        expected_category="food",
+        expected_category="Food & drink",
         expected_date=get_yesterday(),
         expected_amount=50.0,
         difficulty="edge_case",
@@ -343,7 +343,7 @@ EXPENSE_CASES: list[ExpenseCase] = [
     ExpenseCase(
         name="spanish_gadget",
         prompt="Ayer compré una laptop por 1200 dólares.",
-        expected_category="gadget",
+        expected_category="Electronics & tech",
         expected_date=get_yesterday(),
         expected_amount=1200.0,
         difficulty="clear",

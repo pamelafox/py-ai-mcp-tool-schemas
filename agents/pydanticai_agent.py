@@ -8,16 +8,16 @@ Usage:
     uv run python servers/expenses_mcp.py
 
     # Run with default tool (add_expense_cat_c):
-    uv run python agents/pydanticai_expenses.py
+    uv run python agents/pydanticai_agent.py
 
     # Run with specific tool variant:
-    uv run python agents/pydanticai_expenses.py --tools add_expense_cat_a
+    uv run python agents/pydanticai_agent.py --tools add_expense_cat_a
 
     # Run with multiple tools:
-    uv run python agents/pydanticai_expenses.py --tools add_expense_cat_c,get_expenses_c
+    uv run python agents/pydanticai_agent.py --tools add_expense_cat_c,get_expenses_c
 
     # Run with custom query:
-    uv run python agents/pydanticai_expenses.py --query "I spent $50 on groceries today"
+    uv run python agents/pydanticai_agent.py --query "I spent $50 on groceries today"
 """
 
 import argparse
@@ -46,11 +46,11 @@ from pydantic_ai.providers.openai import OpenAIProvider
 load_dotenv(override=True)
 
 logging.basicConfig(level=logging.WARNING)
-logger = logging.getLogger("pydanticai_expenses")
+logger = logging.getLogger("pydanticai")
 logger.setLevel(logging.INFO)
 
 # Reference: https://logfire.pydantic.dev/docs/integrations/llms/pydanticai/
-logfire.configure(console=None)
+logfire.configure(console=False)
 logfire.instrument_pydantic_ai()
 
 # Instrument HTTP calls to see raw requests to Azure OpenAI.
@@ -110,6 +110,7 @@ def get_model(
     reasoning_effort: str | None = DEFAULT_REASONING,
     seed: int | None = None,
     temperature: float | None = None,
+    deployment: str | None = None,
 ) -> tuple[OpenAIResponsesModel, dict, DefaultAzureCredential]:
     """Configure the model for Azure OpenAI.
 
@@ -117,6 +118,7 @@ def get_model(
         reasoning_effort: Optional reasoning effort level (none, minimal, low, medium, high, xhigh)
         seed: Optional seed for determinism/reproducibility
         temperature: Optional sampling temperature
+        deployment: Optional deployment name (defaults to AZURE_OPENAI_CHAT_DEPLOYMENT env var)
 
     Returns:
         Tuple of (model, model_settings, async_credential)
@@ -128,7 +130,7 @@ def get_model(
         base_url=os.environ["AZURE_OPENAI_ENDPOINT"],
         api_key=token_provider,
     )
-    deployment_name = os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT"]
+    deployment_name = deployment or os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT"]
     model = OpenAIResponsesModel(deployment_name, provider=OpenAIProvider(openai_client=client))
 
     model_settings: dict = {}
@@ -277,9 +279,7 @@ def create_agent(toolset, model: OpenAIResponsesModel) -> Agent[None, str]:
         model,
         system_prompt=(
             "You help users log expenses. "
-            f"Today's date is {datetime.now().strftime('%Y-%m-%d')}. "
-            "When a tool requires a reimbursable value, infer it from context (work/business vs personal) "
-            "without asking follow-up questions unless strictly necessary."
+            f"Today's date is {datetime.now().strftime('%Y-%m-%d')}."
         ),
         output_type=str,
         toolsets=[toolset],
@@ -292,39 +292,49 @@ def create_agent(toolset, model: OpenAIResponsesModel) -> Agent[None, str]:
 
 
 async def run_query(
-    server: MCPServerStreamableHTTP,
-    model: OpenAIResponsesModel,
     tool_name: str,
     query: str,
-    model_settings: dict,
+    model: str | None = None,
+    seed: int | None = None,
+    temperature: float | None = None,
+    reasoning_effort: str | None = None,
 ) -> QueryResult:
     """Run a single query against the agent with a specific tool.
 
     Args:
-        server: The MCP server connection
-        model: The model to use
         tool_name: Name of the tool to use (filters to only this tool)
         query: The user query to send
-        model_settings: Model settings (e.g., reasoning effort)
+        model: Optional deployment name (defaults to AZURE_OPENAI_CHAT_DEPLOYMENT env var)
+        seed: Optional seed for determinism/reproducibility
+        temperature: Optional sampling temperature
+        reasoning_effort: Optional reasoning effort level
 
     Returns:
         QueryResult with output, tool calls, and optional reasoning
     """
+    pydantic_model, model_settings, async_credential = get_model(
+        reasoning_effort=reasoning_effort,
+        seed=seed,
+        temperature=temperature,
+        deployment=model,
+    )
+
     try:
-        # Filter to only the specified tool
-        toolset = server.filtered(lambda ctx, tool, tn=tool_name: tool.name == tn)
+        async with MCPServerStreamableHTTP(url=MCP_SERVER_URL) as server:
+            # Filter to only the specified tool
+            toolset = server.filtered(lambda ctx, tool, tn=tool_name: tool.name == tn)
 
-        agent = create_agent(toolset, model)
-        result = await agent.run(query, model_settings=model_settings)
+            agent = create_agent(toolset, pydantic_model)
+            result = await agent.run(query, model_settings=model_settings)
 
-        tool_calls = extract_tool_calls(result)
-        reasoning = extract_reasoning(result)
+            tool_calls = extract_tool_calls(result)
+            reasoning = extract_reasoning(result)
 
-        return QueryResult(
-            output=result.output,
-            tool_calls=tool_calls,
-            reasoning=reasoning,
-        )
+            return QueryResult(
+                output=result.output,
+                tool_calls=tool_calls,
+                reasoning=reasoning,
+            )
 
     except Exception as e:
         logger.exception(f"Error running query with tool {tool_name}")
@@ -333,6 +343,8 @@ async def run_query(
             tool_calls=[],
             error=str(e),
         )
+    finally:
+        await async_credential.close()
 
 
 # =============================================================================
@@ -418,7 +430,7 @@ async def main():
             logger.info(f"Query: {args.query}")
 
             tracer = otel_trace.get_tracer(__name__)
-            with tracer.start_as_current_span("pydanticai_expenses.run") as span:
+            with tracer.start_as_current_span("pydanticai.run") as span:
                 ctx = span.get_span_context()
                 trace_id_hex = f"{ctx.trace_id:032x}"
                 result = await agent.run(args.query, model_settings=model_settings)

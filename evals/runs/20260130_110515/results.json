@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "timestamp": "2026-01-30T11:05:15.338459",
+    "agent": "copilot",
+    "model_name": "gpt-5.2",
+    "model_settings": {
+      "seed": 42
+    },
+    "mcp_server_url": "http://localhost:8000/mcp"
+  },
+  "summaries": {
+    "add_expense_cat_c": {
+      "variant_name": "add_expense_cat_c",
+      "total_cases": 1,
+      "passed_cases": 1,
+      "pass_rate": 1.0,
+      "avg_score": 1.0,
+      "eval_counts": {
+        "tool_called": {
+          "passed": 1,
+          "failed": 0
+        },
+        "category_valid": {
+          "passed": 1,
+          "failed": 0
+        },
+        "category_match": {
+          "passed": 1,
+          "failed": 0
+        }
+      }
+    }
+  },
+  "results": [
+    {
+      "case_name": "clear_food_yesterday",
+      "user_query": "Yesterday I bought a sandwich for $12.50.",
+      "tool_variant": "add_expense_cat_c",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Recording expense"
+          }
+        },
+        {
+          "tool_name": "add_expense_cat_c",
+          "arguments": {
+            "expense_date": "2026-01-29",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_cat_c' was called"
+        },
+        "category_valid": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Category 'Food & drink' is valid"
+        },
+        "category_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Category 'Food & drink' matches expected 'Food & drink'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Logging this purchase as an expense with yesterday\u2019s date.\nAdded: **$12.50** on **2026-01-29** \u2014 **Food & drink** (\u201cSandwich\u201d).",
+      "reasoning": "I need to add an expense using the tool. First, I have to find yesterday's date relative to the current date, which is January 30, 2026, making yesterday January 29, 2026. The expense category is Food & Drink, and the description is \"sandwich,\" with an amount of $12.50. I\u2019ll use the tool for this. Additionally, I have to generate a report at the same time, so I\u2019ll call both actions in parallel.",
+      "error": null
+    }
+  ]
+}
