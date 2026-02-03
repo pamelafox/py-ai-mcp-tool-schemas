@@ -127,6 +127,8 @@ async def run_query(
                 if content:
                     reasoning_parts.append(str(content))
 
+    client = None
+    session = None
     try:
         client = CopilotClient(
             options=CopilotClientOptions(
@@ -173,6 +175,12 @@ async def run_query(
             tool_calls=[],
             error=str(e),
         )
+    finally:
+        # Clean up session and client to prevent memory leaks
+        if session is not None:
+            await session.destroy()
+        if client is not None:
+            await client.stop()
 
 
 # =============================================================================

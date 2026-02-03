@@ -300,10 +300,6 @@ async def run_evaluation(
             )
             results.append(run_result)
 
-            # Add delay for copilot agent to avoid rate limiting
-            if agent == AGENT_COPILOT:
-                await asyncio.sleep(10)
-
             # Update summary
             summary = summaries[variant]
             summary.total_cases += 1
