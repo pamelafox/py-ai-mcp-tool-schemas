@@ -6,17 +6,19 @@ Evaluators check:
 - Whether tool arguments match expected values
 """
 
+import csv
 import re
 import sys
 import os
 from dataclasses import dataclass
+from pathlib import Path
 import json
 
 # Add parent directory to path for imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from agents.pydanticai_agent import ToolCallInfo
-from evals.dataset import ExpenseCase
+from evals.dataset import ExpenseCase, OutputCase
 
 # Valid category values (must match the Enum/Literal in expenses_mcp.py exactly)
 # Exact string matching - no case normalization
@@ -36,6 +38,10 @@ VALID_CATEGORIES = {
 
 # Date pattern for YYYY-MM-DD format
 DATE_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+# Description patterns
+DESCRIPTION_CAPITALIZED_PATTERN = re.compile(r"^[A-Z]")
+DESCRIPTION_ENDS_PERIOD_PATTERN = re.compile(r"\.$")
 
 
 def _extract_arg(arguments: dict, name: str):
@@ -209,56 +215,57 @@ def evaluate_date_match(tool_calls: list[ToolCallInfo], expected: str) -> EvalRe
     return EvalResult(passed=False, score=0.0, message="No add_expense tool call found")
 
 
-def evaluate_reimbursable_match(tool_calls: list[ToolCallInfo], expected: bool | str) -> EvalResult:
-    """Check if the reimbursable flag matches the expected value.
-
-    Expected is one of:
-    - True
-    - False
-    - "unknown"
-
-    The actual value is taken from the tool call argument `reimbursable`.
-    """
-    expected_norm = expected
-    if isinstance(expected, str):
-        expected_norm = expected.strip().lower()
-
+def evaluate_description_capitalized(tool_calls: list[ToolCallInfo]) -> EvalResult:
+    """Check if the description starts with a capital letter."""
     for tc in tool_calls:
         if tc.tool_name.startswith("add_expense"):
-            actual = _extract_arg(tc.arguments, "reimbursable")
-            if actual is None:
+            description = _extract_arg(tc.arguments, "description")
+            if description is None:
                 return EvalResult(
                     passed=False,
                     score=0.0,
-                    message="Reimbursable argument missing",
+                    message="Description argument missing",
                 )
-
-            if isinstance(actual, str):
-                actual_norm = actual.strip().lower()
-                if actual_norm in ("true", "false"):
-                    actual_norm = (actual_norm == "true")
-            else:
-                actual_norm = actual
-
-            if expected_norm == "unknown":
-                passed = isinstance(actual_norm, str) and actual_norm == "unknown"
-            else:
-                passed = (actual_norm is True and expected_norm is True) or (actual_norm is False and expected_norm is False)
-
-            if passed:
+            if DESCRIPTION_CAPITALIZED_PATTERN.match(str(description)):
                 return EvalResult(
                     passed=True,
                     score=1.0,
-                    message=f"Reimbursable '{actual}' matches expected '{expected}'",
+                    message=f"Description '{description}' starts with capital letter",
+                    details={"description": description},
                 )
-
             return EvalResult(
                 passed=False,
                 score=0.0,
-                message=f"Reimbursable '{actual}' does not match expected '{expected}'",
-                details={"actual": actual, "expected": expected},
+                message=f"Description '{description}' does not start with capital letter",
+                details={"description": description},
             )
+    return EvalResult(passed=False, score=0.0, message="No add_expense tool call found")
 
+
+def evaluate_description_ends_period(tool_calls: list[ToolCallInfo]) -> EvalResult:
+    """Check if the description ends with a period."""
+    for tc in tool_calls:
+        if tc.tool_name.startswith("add_expense"):
+            description = _extract_arg(tc.arguments, "description")
+            if description is None:
+                return EvalResult(
+                    passed=False,
+                    score=0.0,
+                    message="Description argument missing",
+                )
+            if DESCRIPTION_ENDS_PERIOD_PATTERN.search(str(description)):
+                return EvalResult(
+                    passed=True,
+                    score=1.0,
+                    message=f"Description '{description}' ends with period",
+                    details={"description": description},
+                )
+            return EvalResult(
+                passed=False,
+                score=0.0,
+                message=f"Description '{description}' does not end with period",
+                details={"description": description},
+            )
     return EvalResult(passed=False, score=0.0, message="No add_expense tool call found")
 
 
@@ -269,7 +276,7 @@ def _variant_supports_eval(tool_variant: str, eval_name: str) -> bool:
     - tool_called → all variants (universal)
     - category_valid, category_match → _cat_* or _model_* variants
     - date_format, date_match → _date_* or _model_* variants
-    - reimbursable_match → _reimb_* or _model_* variants
+    - description_capitalized, description_ends_period → _desc_* variants
     """
     # Universal evaluator
     if eval_name == "tool_called":
@@ -287,9 +294,9 @@ def _variant_supports_eval(tool_variant: str, eval_name: str) -> bool:
     if eval_name in ("date_format", "date_match"):
         return "_date_" in tool_variant
 
-    # Reimbursable evaluator
-    if eval_name == "reimbursable_match":
-        return "_reimb_" in tool_variant
+    # Description evaluators
+    if eval_name in ("description_capitalized", "description_ends_period"):
+        return "_desc_" in tool_variant
 
     # Unknown evaluator → default to True
     return True
@@ -322,9 +329,11 @@ def run_all_evaluations(
     if case.expected_date and _variant_supports_eval(tool_variant, "date_match"):
         results["date_match"] = evaluate_date_match(tool_calls, case.expected_date)
 
-    # Reimbursable evaluator - only for reimb and model variants
-    if case.expected_reimbursable is not None and _variant_supports_eval(tool_variant, "reimbursable_match"):
-        results["reimbursable_match"] = evaluate_reimbursable_match(tool_calls, case.expected_reimbursable)
+    # Description evaluators - only for desc variants
+    if _variant_supports_eval(tool_variant, "description_capitalized"):
+        results["description_capitalized"] = evaluate_description_capitalized(tool_calls)
+    if _variant_supports_eval(tool_variant, "description_ends_period"):
+        results["description_ends_period"] = evaluate_description_ends_period(tool_calls)
 
     return results
 
@@ -334,3 +343,160 @@ def compute_score(results: dict[str, EvalResult]) -> float:
     if not results:
         return 0.0
     return sum(r.score for r in results.values()) / len(results)
+
+
+# =============================================================================
+# Output Variant Evaluators
+# =============================================================================
+
+EXPENSES_FILE_DEFAULT = Path(__file__).parent.parent / "servers" / "expenses.csv"
+
+
+def _get_expenses_file() -> Path:
+    """Get the expenses file path, respecting the EXPENSES_FILE env var."""
+    return Path(os.getenv("EXPENSES_FILE", EXPENSES_FILE_DEFAULT))
+
+
+def _load_expenses_for_eval() -> list[dict]:
+    """Load expenses from the CSV file for evaluation answer checking."""
+    try:
+        with open(_get_expenses_file(), newline="", encoding="utf-8") as f:
+            return list(csv.DictReader(f))
+    except FileNotFoundError:
+        return []
+
+
+def _extract_numbers(text: str) -> list[float]:
+    """Extract numeric values from text, handling currency and comma formatting."""
+    cleaned = re.sub(r"[$€£,]", "", text)
+    matches = re.findall(r"\b\d+\.?\d*\b", cleaned)
+    return [float(m) for m in matches]
+
+
+def _number_close(expected: float, actual: float, tolerance: float = 0.015) -> bool:
+    """Check if two numbers are close within relative tolerance."""
+    if expected == 0:
+        return abs(actual) < 0.01
+    return abs(actual - expected) / abs(expected) < tolerance
+
+
+def compute_expected_value(check_type: str, check_params: dict | None = None) -> str | float | int | list[dict]:
+    """Compute the expected answer from the current expenses CSV data."""
+    expenses = _load_expenses_for_eval()
+    if not expenses:
+        return 0
+
+    amounts = [float(e["amount"]) for e in expenses]
+
+    if check_type == "count":
+        return len(expenses)
+    elif check_type == "max_amount":
+        return max(amounts)
+    elif check_type == "min_amount":
+        return min(amounts)
+    elif check_type == "earliest_date":
+        return min(e["date"] for e in expenses)
+    elif check_type == "field_of_max":
+        field = check_params["field"]
+        max_row = max(expenses, key=lambda e: float(e["amount"]))
+        return max_row[field]
+    elif check_type == "top_n_table":
+        n = check_params["n"]
+        by_amount = sorted(expenses, key=lambda e: float(e["amount"]), reverse=True)[:n]
+        return [{"description": e["description"], "amount": float(e["amount"]), "category": e["category"], "date": e["date"]} for e in by_amount]
+    elif check_type == "filter_table":
+        field = check_params["field"]
+        value = check_params["value"]
+        filtered = [e for e in expenses if e[field] == value]
+        return [{"description": e["description"], "amount": float(e["amount"]), "date": e["date"]} for e in filtered]
+    else:
+        return ""
+
+
+def _check_table_rows(agent_output: str, expected_rows: list[dict]) -> EvalResult:
+    """Check that a markdown table in the agent output contains all expected rows."""
+    output_lower = agent_output.lower()
+    found = 0
+    missing = []
+    for row in expected_rows:
+        # Check that the description appears in the output (case-insensitive)
+        desc = row["description"].lower()
+        if desc in output_lower:
+            found += 1
+        else:
+            missing.append(row["description"])
+
+    if found == len(expected_rows):
+        # Also verify it looks like a markdown table (has | characters)
+        has_pipe = "|" in agent_output
+        if has_pipe:
+            return EvalResult(
+                passed=True,
+                score=1.0,
+                message=f"Markdown table contains all {len(expected_rows)} expected rows",
+            )
+        return EvalResult(
+            passed=False,
+            score=0.5,
+            message=f"All {len(expected_rows)} rows found but output does not appear to be a markdown table",
+            details={"output": agent_output[:500]},
+        )
+
+    score = found / len(expected_rows) if expected_rows else 0.0
+    return EvalResult(
+        passed=False,
+        score=score,
+        message=f"Table missing {len(missing)} of {len(expected_rows)} rows: {missing}",
+        details={"found": found, "total": len(expected_rows), "missing": missing, "output": agent_output[:500]},
+    )
+
+
+def evaluate_output_answer(agent_output: str, case: OutputCase) -> EvalResult:
+    """Evaluate whether the agent's text answer is correct for an output query."""
+    expected = compute_expected_value(case.check_type, case.check_params)
+
+    # Table checks
+    if isinstance(expected, list):
+        return _check_table_rows(agent_output, expected)
+
+    if isinstance(expected, (int, float)):
+        numbers = _extract_numbers(agent_output)
+        expected_float = float(expected)
+        if any(_number_close(expected_float, n) for n in numbers):
+            return EvalResult(
+                passed=True,
+                score=1.0,
+                message=f"Answer contains expected value {expected}",
+                details={"expected": expected, "found_numbers": numbers},
+            )
+        return EvalResult(
+            passed=False,
+            score=0.0,
+            message=f"Expected {expected}, found numbers: {numbers}",
+            details={"expected": expected, "found_numbers": numbers, "output": agent_output[:200]},
+        )
+
+    # String match (e.g., date, category name)
+    expected_str = str(expected)
+    if expected_str.lower() in agent_output.lower():
+        return EvalResult(
+            passed=True,
+            score=1.0,
+            message=f"Answer contains expected value '{expected_str}'",
+        )
+    return EvalResult(
+        passed=False,
+        score=0.0,
+        message=f"Expected '{expected_str}' not found in output",
+        details={"expected": expected_str, "output": agent_output[:200]},
+    )
+
+
+def run_output_evaluations(
+    tool_calls: list[ToolCallInfo], case: OutputCase, agent_output: str, tool_variant: str = ""
+) -> dict[str, EvalResult]:
+    """Run all evaluations for an output test case."""
+    results: dict[str, EvalResult] = {}
+    results["tool_called"] = evaluate_tool_called(tool_calls, expected_prefix="get_expenses")
+    results["answer_correct"] = evaluate_output_answer(agent_output, case)
+    return results

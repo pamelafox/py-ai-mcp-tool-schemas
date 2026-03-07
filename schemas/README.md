@@ -35,6 +35,19 @@ Testing date format handling:
 
 **Key finding:** Python's `date` type produces `"format": "date"` (ISO 8601).
 
+### Description Field Variants
+
+Testing pattern constraints on string fields:
+
+| Variant | Python Type | JSON Schema Result |
+| ------- | ----------- | ------------------ |
+| `add_expense_desc_a` | `str` | `{"type": "string"}` — No constraints |
+| `add_expense_desc_b` | `Annotated[str, "Start with capital..."]` | `{"type": "string", "description": "..."}` — Text instruction |
+| `add_expense_desc_c` | `Annotated[str, Field(pattern=...)]` | `{"type": "string", "pattern": "^[A-Z].*\\.$"}` — Regex constraint |
+| `add_expense_desc_d` | `Annotated[str, Field(pattern=..., description=...)]` | `{"type": "string", "pattern": "...", "description": "..."}` — Both |
+
+**Key finding:** Tests whether text instructions vs regex patterns vs both are more effective at guiding model output format.
+
 ### Input Shape Variants
 
 Testing flat arguments vs a single nested Pydantic model input:
@@ -70,7 +83,7 @@ Unified diffs comparing each variant against the baseline (`_a` variant).
 --- add_expense_cat_a.json+++ add_expense_cat_b.json@@ -8,6 +8,7 @@         "type": "number"
        },
        "category": {
-+        "description": "Must be one of: Food & Drink, Transit & Fuel, Media & Streaming, Apparel & Beauty, Electronics & Tech, Home & Office, Health & Fitness, Arts & Hobbies, Fees & Services, Misc",
++        "description": "Must be one of: Food & drink, Transit and Fuel, Media & streaming, Apparel and Beauty, Electronics & tech, Home and office, Health & Fitness, Arts and hobbies, Fees & services, Misc",
          "type": "string"
        },
        "description": {
@@ -83,15 +96,15 @@ Unified diffs comparing each variant against the baseline (`_a` variant).
        },
        "category": {
 +        "enum": [
-+          "Food & Drink",
-+          "Transit & Fuel",
-+          "Media & Streaming",
-+          "Apparel & Beauty",
-+          "Electronics & Tech",
-+          "Home & Office",
++          "Food & drink",
++          "Transit and Fuel",
++          "Media & streaming",
++          "Apparel and Beauty",
++          "Electronics & tech",
++          "Home and office",
 +          "Health & Fitness",
-+          "Arts & Hobbies",
-+          "Fees & Services",
++          "Arts and hobbies",
++          "Fees & services",
 +          "Misc"
 +        ],
          "type": "string"
@@ -106,15 +119,15 @@ Unified diffs comparing each variant against the baseline (`_a` variant).
        },
        "category": {
 +        "enum": [
-+          "Food & Drink",
-+          "Transit & Fuel",
-+          "Media & Streaming",
-+          "Apparel & Beauty",
-+          "Electronics & Tech",
-+          "Home & Office",
++          "Food & drink",
++          "Transit and Fuel",
++          "Media & streaming",
++          "Apparel and Beauty",
++          "Electronics & tech",
++          "Home and office",
 +          "Health & Fitness",
-+          "Arts & Hobbies",
-+          "Fees & Services",
++          "Arts and hobbies",
++          "Fees & services",
 +          "Misc"
 +        ],
          "type": "string"
@@ -128,17 +141,17 @@ Unified diffs comparing each variant against the baseline (`_a` variant).
 --- add_expense_cat_a.json+++ add_expense_cat_e.json@@ -8,6 +8,19 @@         "type": "number"
        },
        "category": {
-+        "description": "Choose the closest category for the expense. Do not ask follow-up questions just to disambiguate the category; pick the best fit using the description and common sense. If truly unclear, use Misc.\n\nHeuristics: Food & Drink=meals, groceries, coffee, restaurants, snacks; Transit & Fuel=rideshare, taxi, gas, parking, public transit, tolls; Media & Streaming=movies, concerts, subscriptions, streaming, games, tickets; Apparel & Beauty=clothing, shoes, cosmetics, haircuts, personal care; Electronics & Tech=devices, gadgets, accessories, apps, software; Home & Office=furniture, supplies, housewares, decor, cleaning; Health & Fitness=gym, medical, wellness, supplements, pharmacy; Arts & Hobbies=crafts, sports equipment, creative supplies, lessons; Fees & Services=banking, professional services, insurance, subscriptions; Misc=anything that does not fit well into other categories.",
++        "description": "Choose the closest category for the expense. Do not ask follow-up questions just to disambiguate the category; pick the best fit using the description and common sense. If truly unclear, use Misc.\n\nHeuristics: Food & drink=meals, groceries, coffee, restaurants, snacks; Transit and Fuel=rideshare, taxi, gas, parking, public transit, tolls; Media & streaming=movies, concerts, subscriptions, streaming, games, tickets; Apparel and Beauty=clothing, shoes, cosmetics, haircuts, personal care; Electronics & tech=devices, gadgets, accessories, apps, software; Home and office=furniture, supplies, housewares, decor, cleaning; Health & Fitness=gym, medical, wellness, supplements, pharmacy; Arts and hobbies=crafts, sports equipment, creative supplies, lessons; Fees & services=banking, professional services, insurance, subscriptions; Misc=anything that does not fit well into other categories.",
 +        "enum": [
-+          "Food & Drink",
-+          "Transit & Fuel",
-+          "Media & Streaming",
-+          "Apparel & Beauty",
-+          "Electronics & Tech",
-+          "Home & Office",
++          "Food & drink",
++          "Transit and Fuel",
++          "Media & streaming",
++          "Apparel and Beauty",
++          "Electronics & tech",
++          "Home and office",
 +          "Health & Fitness",
-+          "Arts & Hobbies",
-+          "Fees & Services",
++          "Arts and hobbies",
++          "Fees & services",
 +          "Misc"
 +        ],
          "type": "string"
@@ -184,6 +197,45 @@ Unified diffs comparing each variant against the baseline (`_a` variant).
      },
 ```
 
+### Description Variants
+
+#### `add_expense_desc_a` → `add_expense_desc_b`
+
+```diff
+--- add_expense_desc_a.json+++ add_expense_desc_b.json@@ -23,6 +23,7 @@         "type": "string"
+       },
+       "description": {
++        "description": "Start with a capital letter and end with a period",
+         "type": "string"
+       },
+       "expense_date": {
+```
+
+#### `add_expense_desc_a` → `add_expense_desc_c`
+
+```diff
+--- add_expense_desc_a.json+++ add_expense_desc_c.json@@ -23,6 +23,7 @@         "type": "string"
+       },
+       "description": {
++        "pattern": "^[A-Z].*\\.$",
+         "type": "string"
+       },
+       "expense_date": {
+```
+
+#### `add_expense_desc_a` → `add_expense_desc_d`
+
+```diff
+--- add_expense_desc_a.json+++ add_expense_desc_d.json@@ -23,6 +23,8 @@         "type": "string"
+       },
+       "description": {
++        "description": "Start with a capital letter and end with a period",
++        "pattern": "^[A-Z].*\\.$",
+         "type": "string"
+       },
+       "expense_date": {
+```
+
 ### Input Shape Variants
 
 #### `add_expense_cat_d` → `add_expense_model_a`
@@ -197,15 +249,15 @@ Unified diffs comparing each variant against the baseline (`_a` variant).
 -      },
 -      "category": {
 -        "enum": [
--          "Food & Drink",
--          "Transit & Fuel",
--          "Media & Streaming",
--          "Apparel & Beauty",
--          "Electronics & Tech",
--          "Home & Office",
+-          "Food & drink",
+-          "Transit and Fuel",
+-          "Media & streaming",
+-          "Apparel and Beauty",
+-          "Electronics & tech",
+-          "Home and office",
 -          "Health & Fitness",
--          "Arts & Hobbies",
--          "Fees & Services",
+-          "Arts and hobbies",
+-          "Fees & services",
 -          "Misc"
 +      "expense": {
 +        "description": "Input model for adding a single expense.\n\nThis is used to test how models handle a single nested JSON object argument.",
@@ -217,15 +269,15 @@ Unified diffs comparing each variant against the baseline (`_a` variant).
 +          "category": {
 +            "description": "Category of expense",
 +            "enum": [
-+              "Food & Drink",
-+              "Transit & Fuel",
-+              "Media & Streaming",
-+              "Apparel & Beauty",
-+              "Electronics & Tech",
-+              "Home & Office",
++              "Food & drink",
++              "Transit and Fuel",
++              "Media & streaming",
++              "Apparel and Beauty",
++              "Electronics & tech",
++              "Home and office",
 +              "Health & Fitness",
-+              "Arts & Hobbies",
-+              "Fees & Services",
++              "Arts and hobbies",
++              "Fees & services",
 +              "Misc"
 +            ],
 +            "type": "string"
@@ -361,7 +413,7 @@ Add a new expense.
 
 - `expense_date`: string
 - `amount`: number
-- `category`: string — Must be one of: Food & Drink, Transit & Fuel, Media & Streaming, Apparel & Beauty, Electronics & Tech, Home & Office, Health & Fitness, Arts & Hobbies, Fees & Services, Misc
+- `category`: string — Must be one of: Food & drink, Transit and Fuel, Media & streaming, Apparel and Beauty, Electronics & tech, Home and office, Health & Fitness, Arts and hobbies, Fees & services, Misc
 - `description`: string
 
 **Output schema:** See `add_expense_cat_b.json`
@@ -374,7 +426,7 @@ Add a new expense.
 
 - `expense_date`: string
 - `amount`: number
-- `category`: enum: ['Food & Drink', 'Transit & Fuel', 'Media & Streaming', 'Apparel & Beauty', 'Electronics & Tech', 'Home & Office', 'Health & Fitness', 'Arts & Hobbies', 'Fees & Services', 'Misc']
+- `category`: enum: ['Food & drink', 'Transit and Fuel', 'Media & streaming', 'Apparel and Beauty', 'Electronics & tech', 'Home and office', 'Health & Fitness', 'Arts and hobbies', 'Fees & services', 'Misc']
 - `description`: string
 
 **Output schema:** See `add_expense_cat_c.json`
@@ -387,7 +439,7 @@ Add a new expense.
 
 - `expense_date`: string
 - `amount`: number
-- `category`: enum: ['Food & Drink', 'Transit & Fuel', 'Media & Streaming', 'Apparel & Beauty', 'Electronics & Tech', 'Home & Office', 'Health & Fitness', 'Arts & Hobbies', 'Fees & Services', 'Misc']
+- `category`: enum: ['Food & drink', 'Transit and Fuel', 'Media & streaming', 'Apparel and Beauty', 'Electronics & tech', 'Home and office', 'Health & Fitness', 'Arts and hobbies', 'Fees & services', 'Misc']
 - `description`: string
 
 **Output schema:** See `add_expense_cat_d.json`
@@ -400,9 +452,9 @@ Add a new expense.
 
 - `expense_date`: string
 - `amount`: number
-- `category`: enum: ['Food & Drink', 'Transit & Fuel', 'Media & Streaming', 'Apparel & Beauty', 'Electronics & Tech', 'Home & Office', 'Health & Fitness', 'Arts & Hobbies', 'Fees & Services', 'Misc'] — Choose the closest category for the expense. Do not ask follow-up questions just to disambiguate the category; pick the best fit using the description and common sense. If truly unclear, use Misc.
+- `category`: enum: ['Food & drink', 'Transit and Fuel', 'Media & streaming', 'Apparel and Beauty', 'Electronics & tech', 'Home and office', 'Health & Fitness', 'Arts and hobbies', 'Fees & services', 'Misc'] — Choose the closest category for the expense. Do not ask follow-up questions just to disambiguate the category; pick the best fit using the description and common sense. If truly unclear, use Misc.
 
-Heuristics: Food & Drink=meals, groceries, coffee, restaurants, snacks; Transit & Fuel=rideshare, taxi, gas, parking, public transit, tolls; Media & Streaming=movies, concerts, subscriptions, streaming, games, tickets; Apparel & Beauty=clothing, shoes, cosmetics, haircuts, personal care; Electronics & Tech=devices, gadgets, accessories, apps, software; Home & Office=furniture, supplies, housewares, decor, cleaning; Health & Fitness=gym, medical, wellness, supplements, pharmacy; Arts & Hobbies=crafts, sports equipment, creative supplies, lessons; Fees & Services=banking, professional services, insurance, subscriptions; Misc=anything that does not fit well into other categories.
+Heuristics: Food & drink=meals, groceries, coffee, restaurants, snacks; Transit and Fuel=rideshare, taxi, gas, parking, public transit, tolls; Media & streaming=movies, concerts, subscriptions, streaming, games, tickets; Apparel and Beauty=clothing, shoes, cosmetics, haircuts, personal care; Electronics & tech=devices, gadgets, accessories, apps, software; Home and office=furniture, supplies, housewares, decor, cleaning; Health & Fitness=gym, medical, wellness, supplements, pharmacy; Arts and hobbies=crafts, sports equipment, creative supplies, lessons; Fees & services=banking, professional services, insurance, subscriptions; Misc=anything that does not fit well into other categories.
 - `description`: string
 
 **Output schema:** See `add_expense_cat_e.json`
@@ -415,7 +467,7 @@ Add a new expense.
 
 - `expense_date`: string
 - `amount`: number
-- `category`: enum: ['Food & Drink', 'Transit & Fuel', 'Media & Streaming', 'Apparel & Beauty', 'Electronics & Tech', 'Home & Office', 'Health & Fitness', 'Arts & Hobbies', 'Fees & Services', 'Misc']
+- `category`: enum: ['Food & drink', 'Transit and Fuel', 'Media & streaming', 'Apparel and Beauty', 'Electronics & tech', 'Home and office', 'Health & Fitness', 'Arts and hobbies', 'Fees & services', 'Misc']
 - `description`: string
 
 **Output schema:** See `add_expense_date_a.json`
@@ -428,7 +480,7 @@ Add a new expense.
 
 - `expense_date`: string — Date in YYYY-MM-DD format
 - `amount`: number
-- `category`: enum: ['Food & Drink', 'Transit & Fuel', 'Media & Streaming', 'Apparel & Beauty', 'Electronics & Tech', 'Home & Office', 'Health & Fitness', 'Arts & Hobbies', 'Fees & Services', 'Misc']
+- `category`: enum: ['Food & drink', 'Transit and Fuel', 'Media & streaming', 'Apparel and Beauty', 'Electronics & tech', 'Home and office', 'Health & Fitness', 'Arts and hobbies', 'Fees & services', 'Misc']
 - `description`: string
 
 **Output schema:** See `add_expense_date_b.json`
@@ -441,7 +493,7 @@ Add a new expense.
 
 - `expense_date`: string
 - `amount`: number
-- `category`: enum: ['Food & Drink', 'Transit & Fuel', 'Media & Streaming', 'Apparel & Beauty', 'Electronics & Tech', 'Home & Office', 'Health & Fitness', 'Arts & Hobbies', 'Fees & Services', 'Misc']
+- `category`: enum: ['Food & drink', 'Transit and Fuel', 'Media & streaming', 'Apparel and Beauty', 'Electronics & tech', 'Home and office', 'Health & Fitness', 'Arts and hobbies', 'Fees & services', 'Misc']
 - `description`: string
 
 **Output schema:** See `add_expense_date_c.json`
@@ -454,10 +506,62 @@ Add a new expense.
 
 - `expense_date`: string (pattern: `^\d{4}-\d{2}-\d{2}$`)
 - `amount`: number
-- `category`: enum: ['Food & Drink', 'Transit & Fuel', 'Media & Streaming', 'Apparel & Beauty', 'Electronics & Tech', 'Home & Office', 'Health & Fitness', 'Arts & Hobbies', 'Fees & Services', 'Misc']
+- `category`: enum: ['Food & drink', 'Transit and Fuel', 'Media & streaming', 'Apparel and Beauty', 'Electronics & tech', 'Home and office', 'Health & Fitness', 'Arts and hobbies', 'Fees & services', 'Misc']
 - `description`: string
 
 **Output schema:** See `add_expense_date_d.json`
+
+### add_expense_desc_a
+
+Add a new expense.
+
+**Input parameters:**
+
+- `expense_date`: string
+- `amount`: number
+- `category`: enum: ['Food & drink', 'Transit and Fuel', 'Media & streaming', 'Apparel and Beauty', 'Electronics & tech', 'Home and office', 'Health & Fitness', 'Arts and hobbies', 'Fees & services', 'Misc']
+- `description`: string
+
+**Output schema:** See `add_expense_desc_a.json`
+
+### add_expense_desc_b
+
+Add a new expense.
+
+**Input parameters:**
+
+- `expense_date`: string
+- `amount`: number
+- `category`: enum: ['Food & drink', 'Transit and Fuel', 'Media & streaming', 'Apparel and Beauty', 'Electronics & tech', 'Home and office', 'Health & Fitness', 'Arts and hobbies', 'Fees & services', 'Misc']
+- `description`: string — Start with a capital letter and end with a period
+
+**Output schema:** See `add_expense_desc_b.json`
+
+### add_expense_desc_c
+
+Add a new expense.
+
+**Input parameters:**
+
+- `expense_date`: string
+- `amount`: number
+- `category`: enum: ['Food & drink', 'Transit and Fuel', 'Media & streaming', 'Apparel and Beauty', 'Electronics & tech', 'Home and office', 'Health & Fitness', 'Arts and hobbies', 'Fees & services', 'Misc']
+- `description`: string (pattern: `^[A-Z].*\.$`)
+
+**Output schema:** See `add_expense_desc_c.json`
+
+### add_expense_desc_d
+
+Add a new expense.
+
+**Input parameters:**
+
+- `expense_date`: string
+- `amount`: number
+- `category`: enum: ['Food & drink', 'Transit and Fuel', 'Media & streaming', 'Apparel and Beauty', 'Electronics & tech', 'Home and office', 'Health & Fitness', 'Arts and hobbies', 'Fees & services', 'Misc']
+- `description`: string (pattern: `^[A-Z].*\.$`) — Start with a capital letter and end with a period
+
+**Output schema:** See `add_expense_desc_d.json`
 
 ### add_expense_model_a
 
@@ -470,27 +574,6 @@ Add a new expense.
 This is used to test how models handle a single nested JSON object argument.
 
 **Output schema:** See `add_expense_model_a.json`
-
-### add_expense_reimb_e
-
-Add a new expense.
-
-**Input parameters:**
-
-- `expense_date`: string
-- `amount`: number
-- `category`: enum: ['Food & Drink', 'Transit & Fuel', 'Media & Streaming', 'Apparel & Beauty', 'Electronics & Tech', 'Home & Office', 'Health & Fitness', 'Arts & Hobbies', 'Fees & Services', 'Misc']
-- `description`: string
-- `reimbursable`: unknown — Whether this expense is reimbursable.
-
-Infer reimbursable status from context; the user does not need to literally say "reimbursable". Use true when the expense is clearly for work/business (e.g., work trip, client meeting, business lunch). Use false when the expense is clearly personal (e.g., lunch with friends, personal expense). If it's ambiguous or mixed, use the literal string "unknown".
-
-Examples: 
-- true: 'Work trip hotel' / 'Taxi to client meeting' / 'Business lunch'
-- false: 'Lunch with friends' / 'Personal expense' / 'Not work-related'
-- unknown: no work/personal signal, or user is unsure
-
-**Output schema:** See `add_expense_reimb_e.json`
 
 ### get_expenses_a
 

@@ -7,7 +7,7 @@ Usage:
 import argparse
 import json
 
-from evals.dataset import EXPENSE_CASES
+from evals.dataset import EXPENSE_CASES, OUTPUT_CASES
 
 # Descriptions for each variant type
 VARIANT_DESCRIPTIONS = {
@@ -22,6 +22,9 @@ VARIANT_DESCRIPTIONS = {
     "add_expense_date_d": "expense_date: Annotated[str, Field(pattern=...)]",
     "add_expense_model_a": "expense: ExpenseInput (Pydantic model)",
     "add_expense_reimb_e": 'reimbursable: bool | Literal["unknown"]',
+    "get_expenses_a": "return: str (formatted text)",
+    "get_expenses_b": "return: list[dict] (untyped)",
+    "get_expenses_c": "return: list[Expense] (Pydantic model)",
 }
 
 
@@ -35,6 +38,7 @@ def generate_markdown_report(data: dict) -> str:
     lines = []
 
     case_prompts = {c.name: c.prompt for c in EXPENSE_CASES}
+    case_prompts.update({c.name: c.prompt for c in OUTPUT_CASES})
 
     def _md_escape_cell(value: object) -> str:
         # Keep tables well-formed even if messages contain pipes/newlines.
@@ -74,8 +78,8 @@ def generate_markdown_report(data: dict) -> str:
     if summaries:
         lines.append("## Variant Comparison")
         lines.append("")
-        lines.append("| Variant | Description | Avg Score | Total |")
-        lines.append("|---------|-------------|-----------|-------|")
+        lines.append("| Variant | Description | Avg Score | Avg Latency | Avg Input Tokens | Avg Output Tokens | Avg Tool Response Size | Total |")
+        lines.append("|---------|-------------|-----------|-------------|------------------|-------------------|------------------------|-------|")
 
         # Sort alphabetically by variant name (a -> d)
         sorted_summaries = sorted(summaries.items(), key=lambda x: x[0])
@@ -84,8 +88,16 @@ def generate_markdown_report(data: dict) -> str:
             desc = get_variant_description(name)
             avg_score = s.get("avg_score", 0)
             total = s.get("total_cases", 0)
+            avg_latency = s.get("avg_latency_ms", 0)
+            latency_str = f"{avg_latency:.0f}ms" if avg_latency else "N/A"
+            avg_input = s.get("avg_input_tokens", 0)
+            input_str = f"{avg_input:.0f}" if avg_input else "N/A"
+            avg_output = s.get("avg_output_tokens", 0)
+            output_str = f"{avg_output:.0f}" if avg_output else "N/A"
+            avg_resp_size = s.get("avg_tool_response_size", 0)
+            resp_size_str = f"{avg_resp_size:.0f} chars" if avg_resp_size else "N/A"
             lines.append(
-                f"| {_md_escape_cell(name)} | {_md_escape_cell(desc)} | {avg_score:.2f} | {_md_escape_cell(total)} |"
+                f"| {_md_escape_cell(name)} | {_md_escape_cell(desc)} | {avg_score:.2f} | {latency_str} | {input_str} | {output_str} | {resp_size_str} | {_md_escape_cell(total)} |"
             )
 
         lines.append("")
@@ -156,6 +168,23 @@ def generate_markdown_report(data: dict) -> str:
 
             lines.append(f"### {variant} / {case}: {score:.2f}")
             lines.append("")
+
+            latency_ms = r.get("latency_ms")
+            input_tokens = r.get("input_tokens")
+            output_tokens = r.get("output_tokens")
+            tool_response_size = r.get("tool_response_size")
+            metrics_parts = []
+            if latency_ms is not None:
+                metrics_parts.append(f"Latency: {latency_ms:.0f}ms")
+            if input_tokens is not None:
+                metrics_parts.append(f"Input tokens: {input_tokens}")
+            if output_tokens is not None:
+                metrics_parts.append(f"Output tokens: {output_tokens}")
+            if tool_response_size is not None:
+                metrics_parts.append(f"Tool response size: {tool_response_size} chars")
+            if metrics_parts:
+                lines.append(f"**Metrics**: {' | '.join(metrics_parts)}")
+                lines.append("")
 
             user_query = r.get("user_query") or r.get("prompt") or case_prompts.get(case)
             if user_query:

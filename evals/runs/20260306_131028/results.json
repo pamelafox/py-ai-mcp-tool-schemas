@@ -1,0 +1,729 @@
+{
+  "metadata": {
+    "timestamp": "2026-03-06T13:10:28.783749",
+    "agent": "pydanticai",
+    "model_name": "gpt-5.3-codex",
+    "model_settings": {
+      "seed": 42
+    },
+    "mcp_server_url": "http://localhost:8000/mcp"
+  },
+  "summaries": {
+    "get_expenses_a": {
+      "variant_name": "get_expenses_a",
+      "total_cases": 7,
+      "passed_cases": 7,
+      "pass_rate": 1.0,
+      "avg_score": 1.0,
+      "avg_latency_ms": 6009.0,
+      "avg_input_tokens": 2155.0,
+      "avg_output_tokens": 53.0,
+      "avg_tool_response_size": 6297.0,
+      "eval_counts": {
+        "tool_called": {
+          "passed": 7,
+          "failed": 0
+        },
+        "answer_correct": {
+          "passed": 7,
+          "failed": 0
+        }
+      }
+    },
+    "get_expenses_b": {
+      "variant_name": "get_expenses_b",
+      "total_cases": 7,
+      "passed_cases": 7,
+      "pass_rate": 1.0,
+      "avg_score": 1.0,
+      "avg_latency_ms": 4979.0,
+      "avg_input_tokens": 2037.0,
+      "avg_output_tokens": 53.0,
+      "avg_tool_response_size": 7494.0,
+      "eval_counts": {
+        "tool_called": {
+          "passed": 7,
+          "failed": 0
+        },
+        "answer_correct": {
+          "passed": 7,
+          "failed": 0
+        }
+      }
+    },
+    "get_expenses_c": {
+      "variant_name": "get_expenses_c",
+      "total_cases": 7,
+      "passed_cases": 7,
+      "pass_rate": 1.0,
+      "avg_score": 1.0,
+      "avg_latency_ms": 5540.0,
+      "avg_input_tokens": 2037.0,
+      "avg_output_tokens": 52.0,
+      "avg_tool_response_size": 7306.0,
+      "eval_counts": {
+        "tool_called": {
+          "passed": 7,
+          "failed": 0
+        },
+        "answer_correct": {
+          "passed": 7,
+          "failed": 0
+        }
+      }
+    }
+  },
+  "results": [
+    {
+      "case_name": "count_all",
+      "user_query": "How many expenses are recorded in total? Reply with just the number.",
+      "tool_variant": "get_expenses_a",
+      "tool_calls": [
+        {
+          "tool_name": "get_expenses_a",
+          "arguments": {}
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'get_expenses_a' was called"
+        },
+        "answer_correct": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Answer contains expected value 68"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "68",
+      "reasoning": null,
+      "latency_ms": 11292.832416016608,
+      "input_tokens": 2146,
+      "output_tokens": 21,
+      "tool_response_size": 6297,
+      "error": null
+    },
+    {
+      "case_name": "max_expense",
+      "user_query": "What is the dollar amount of the single most expensive expense? Reply with just the number.",
+      "tool_variant": "get_expenses_a",
+      "tool_calls": [
+        {
+          "tool_name": "get_expenses_a",
+          "arguments": {}
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'get_expenses_a' was called"
+        },
+        "answer_correct": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Answer contains expected value 35000.0"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "35000.00",
+      "reasoning": null,
+      "latency_ms": 6239.2868750030175,
+      "input_tokens": 2154,
+      "output_tokens": 24,
+      "tool_response_size": 6297,
+      "error": null
+    },
+    {
+      "case_name": "min_expense",
+      "user_query": "What is the dollar amount of the cheapest expense? Reply with just the number.",
+      "tool_variant": "get_expenses_a",
+      "tool_calls": [
+        {
+          "tool_name": "get_expenses_a",
+          "arguments": {}
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'get_expenses_a' was called"
+        },
+        "answer_correct": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Answer contains expected value 0.99"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "0.99",
+      "reasoning": null,
+      "latency_ms": 4138.756041997112,
+      "input_tokens": 2150,
+      "output_tokens": 23,
+      "tool_response_size": 6297,
+      "error": null
+    },
+    {
+      "case_name": "earliest_date",
+      "user_query": "What is the date of the earliest recorded expense? Reply in YYYY-MM-DD format.",
+      "tool_variant": "get_expenses_a",
+      "tool_calls": [
+        {
+          "tool_name": "get_expenses_a",
+          "arguments": {}
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'get_expenses_a' was called"
+        },
+        "answer_correct": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Answer contains expected value '2025-01-02'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "2025-01-02",
+      "reasoning": null,
+      "latency_ms": 4028.3583749842364,
+      "input_tokens": 2152,
+      "output_tokens": 26,
+      "tool_response_size": 6297,
+      "error": null
+    },
+    {
+      "case_name": "category_of_max",
+      "user_query": "What category does the most expensive expense belong to? Reply with just the category name.",
+      "tool_variant": "get_expenses_a",
+      "tool_calls": [
+        {
+          "tool_name": "get_expenses_a",
+          "arguments": {}
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'get_expenses_a' was called"
+        },
+        "answer_correct": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Answer contains expected value 'Misc'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Misc",
+      "reasoning": null,
+      "latency_ms": 4534.2046250007115,
+      "input_tokens": 2152,
+      "output_tokens": 21,
+      "tool_response_size": 6297,
+      "error": null
+    },
+    {
+      "case_name": "top3_table",
+      "user_query": "Show the 3 most expensive expenses as a markdown table with columns: Description, Amount, Category, Date.",
+      "tool_variant": "get_expenses_a",
+      "tool_calls": [
+        {
+          "tool_name": "get_expenses_a",
+          "arguments": {}
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'get_expenses_a' was called"
+        },
+        "answer_correct": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Markdown table contains all 3 expected rows"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "| Description              | Amount     | Category            | Date       |\n|--------------------------|------------|---------------------|------------|\n| Used car down payment    | $35,000.00 | Misc                | 2025-03-06 |\n| New laptop               | $1,200.00  | Electronics & tech  | 2025-01-30 |\n| Tablet                   | $500.00    | Electronics & tech  | 2025-02-15 |",
+      "reasoning": null,
+      "latency_ms": 5994.59037501947,
+      "input_tokens": 2162,
+      "output_tokens": 118,
+      "tool_response_size": 6297,
+      "error": null
+    },
+    {
+      "case_name": "electronics_table",
+      "user_query": "Show all expenses in the 'Electronics & tech' category as a markdown table with columns: Description, Amount, Date.",
+      "tool_variant": "get_expenses_a",
+      "tool_calls": [
+        {
+          "tool_name": "get_expenses_a",
+          "arguments": {}
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'get_expenses_a' was called"
+        },
+        "answer_correct": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Markdown table contains all 6 expected rows"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "| Description | Amount | Date |\n|---|---:|---|\n| Wireless headphones | $349.99 | 2025-01-17 |\n| Phone charging cable | $19.99 | 2025-01-28 |\n| New laptop | $1200.00 | 2025-01-30 |\n| Mobile app purchase | $0.99 | 2025-02-11 |\n| Tablet | $500.00 | 2025-02-15 |\n| USB hub | $29.99 | 2025-02-28 |",
+      "reasoning": null,
+      "latency_ms": 5837.225541996304,
+      "input_tokens": 2168,
+      "output_tokens": 139,
+      "tool_response_size": 6297,
+      "error": null
+    },
+    {
+      "case_name": "count_all",
+      "user_query": "How many expenses are recorded in total? Reply with just the number.",
+      "tool_variant": "get_expenses_b",
+      "tool_calls": [
+        {
+          "tool_name": "get_expenses_b",
+          "arguments": {}
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'get_expenses_b' was called"
+        },
+        "answer_correct": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Answer contains expected value 68"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "68",
+      "reasoning": null,
+      "latency_ms": 5377.180375013268,
+      "input_tokens": 2028,
+      "output_tokens": 21,
+      "tool_response_size": 7494,
+      "error": null
+    },
+    {
+      "case_name": "max_expense",
+      "user_query": "What is the dollar amount of the single most expensive expense? Reply with just the number.",
+      "tool_variant": "get_expenses_b",
+      "tool_calls": [
+        {
+          "tool_name": "get_expenses_b",
+          "arguments": {}
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'get_expenses_b' was called"
+        },
+        "answer_correct": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Answer contains expected value 35000.0"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "35000.00",
+      "reasoning": null,
+      "latency_ms": 5496.675708011026,
+      "input_tokens": 2036,
+      "output_tokens": 24,
+      "tool_response_size": 7494,
+      "error": null
+    },
+    {
+      "case_name": "min_expense",
+      "user_query": "What is the dollar amount of the cheapest expense? Reply with just the number.",
+      "tool_variant": "get_expenses_b",
+      "tool_calls": [
+        {
+          "tool_name": "get_expenses_b",
+          "arguments": {}
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'get_expenses_b' was called"
+        },
+        "answer_correct": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Answer contains expected value 0.99"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "0.99",
+      "reasoning": null,
+      "latency_ms": 5193.633749993751,
+      "input_tokens": 2032,
+      "output_tokens": 23,
+      "tool_response_size": 7494,
+      "error": null
+    },
+    {
+      "case_name": "earliest_date",
+      "user_query": "What is the date of the earliest recorded expense? Reply in YYYY-MM-DD format.",
+      "tool_variant": "get_expenses_b",
+      "tool_calls": [
+        {
+          "tool_name": "get_expenses_b",
+          "arguments": {}
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'get_expenses_b' was called"
+        },
+        "answer_correct": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Answer contains expected value '2025-01-02'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "2025-01-02",
+      "reasoning": null,
+      "latency_ms": 4295.306416985113,
+      "input_tokens": 2034,
+      "output_tokens": 26,
+      "tool_response_size": 7494,
+      "error": null
+    },
+    {
+      "case_name": "category_of_max",
+      "user_query": "What category does the most expensive expense belong to? Reply with just the category name.",
+      "tool_variant": "get_expenses_b",
+      "tool_calls": [
+        {
+          "tool_name": "get_expenses_b",
+          "arguments": {}
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'get_expenses_b' was called"
+        },
+        "answer_correct": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Answer contains expected value 'Misc'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Misc",
+      "reasoning": null,
+      "latency_ms": 3868.3012909896206,
+      "input_tokens": 2034,
+      "output_tokens": 21,
+      "tool_response_size": 7494,
+      "error": null
+    },
+    {
+      "case_name": "top3_table",
+      "user_query": "Show the 3 most expensive expenses as a markdown table with columns: Description, Amount, Category, Date.",
+      "tool_variant": "get_expenses_b",
+      "tool_calls": [
+        {
+          "tool_name": "get_expenses_b",
+          "arguments": {}
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'get_expenses_b' was called"
+        },
+        "answer_correct": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Markdown table contains all 3 expected rows"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "| Description              | Amount    | Category            | Date       |\n|--------------------------|-----------|---------------------|------------|\n| Used car down payment    | 35000.00  | Misc                | 2025-03-06 |\n| New laptop               | 1200.00   | Electronics & tech  | 2025-01-30 |\n| Tablet                   | 500.00    | Electronics & tech  | 2025-02-15 |",
+      "reasoning": null,
+      "latency_ms": 5544.840500020655,
+      "input_tokens": 2044,
+      "output_tokens": 117,
+      "tool_response_size": 7494,
+      "error": null
+    },
+    {
+      "case_name": "electronics_table",
+      "user_query": "Show all expenses in the 'Electronics & tech' category as a markdown table with columns: Description, Amount, Date.",
+      "tool_variant": "get_expenses_b",
+      "tool_calls": [
+        {
+          "tool_name": "get_expenses_b",
+          "arguments": {}
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'get_expenses_b' was called"
+        },
+        "answer_correct": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Markdown table contains all 6 expected rows"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "| Description | Amount | Date |\n|---|---:|---|\n| Wireless headphones | 349.99 | 2025-01-17 |\n| Phone charging cable | 19.99 | 2025-01-28 |\n| New laptop | 1200.00 | 2025-01-30 |\n| Mobile app purchase | 0.99 | 2025-02-11 |\n| Tablet | 500.00 | 2025-02-15 |\n| USB hub | 29.99 | 2025-02-28 |",
+      "reasoning": null,
+      "latency_ms": 5076.635584002361,
+      "input_tokens": 2050,
+      "output_tokens": 139,
+      "tool_response_size": 7494,
+      "error": null
+    },
+    {
+      "case_name": "count_all",
+      "user_query": "How many expenses are recorded in total? Reply with just the number.",
+      "tool_variant": "get_expenses_c",
+      "tool_calls": [
+        {
+          "tool_name": "get_expenses_c",
+          "arguments": {}
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'get_expenses_c' was called"
+        },
+        "answer_correct": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Answer contains expected value 68"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "68",
+      "reasoning": null,
+      "latency_ms": 3251.1994170199614,
+      "input_tokens": 2028,
+      "output_tokens": 21,
+      "tool_response_size": 7306,
+      "error": null
+    },
+    {
+      "case_name": "max_expense",
+      "user_query": "What is the dollar amount of the single most expensive expense? Reply with just the number.",
+      "tool_variant": "get_expenses_c",
+      "tool_calls": [
+        {
+          "tool_name": "get_expenses_c",
+          "arguments": {}
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'get_expenses_c' was called"
+        },
+        "answer_correct": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Answer contains expected value 35000.0"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "35000",
+      "reasoning": null,
+      "latency_ms": 8920.373000000836,
+      "input_tokens": 2036,
+      "output_tokens": 22,
+      "tool_response_size": 7306,
+      "error": null
+    },
+    {
+      "case_name": "min_expense",
+      "user_query": "What is the dollar amount of the cheapest expense? Reply with just the number.",
+      "tool_variant": "get_expenses_c",
+      "tool_calls": [
+        {
+          "tool_name": "get_expenses_c",
+          "arguments": {}
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'get_expenses_c' was called"
+        },
+        "answer_correct": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Answer contains expected value 0.99"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "0.99",
+      "reasoning": null,
+      "latency_ms": 5320.914416020969,
+      "input_tokens": 2032,
+      "output_tokens": 23,
+      "tool_response_size": 7306,
+      "error": null
+    },
+    {
+      "case_name": "earliest_date",
+      "user_query": "What is the date of the earliest recorded expense? Reply in YYYY-MM-DD format.",
+      "tool_variant": "get_expenses_c",
+      "tool_calls": [
+        {
+          "tool_name": "get_expenses_c",
+          "arguments": {}
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'get_expenses_c' was called"
+        },
+        "answer_correct": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Answer contains expected value '2025-01-02'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "2025-01-02",
+      "reasoning": null,
+      "latency_ms": 5254.265915980795,
+      "input_tokens": 2034,
+      "output_tokens": 26,
+      "tool_response_size": 7306,
+      "error": null
+    },
+    {
+      "case_name": "category_of_max",
+      "user_query": "What category does the most expensive expense belong to? Reply with just the category name.",
+      "tool_variant": "get_expenses_c",
+      "tool_calls": [
+        {
+          "tool_name": "get_expenses_c",
+          "arguments": {}
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'get_expenses_c' was called"
+        },
+        "answer_correct": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Answer contains expected value 'Misc'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Misc",
+      "reasoning": null,
+      "latency_ms": 4689.423749980051,
+      "input_tokens": 2034,
+      "output_tokens": 21,
+      "tool_response_size": 7306,
+      "error": null
+    },
+    {
+      "case_name": "top3_table",
+      "user_query": "Show the 3 most expensive expenses as a markdown table with columns: Description, Amount, Category, Date.",
+      "tool_variant": "get_expenses_c",
+      "tool_calls": [
+        {
+          "tool_name": "get_expenses_c",
+          "arguments": {}
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'get_expenses_c' was called"
+        },
+        "answer_correct": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Markdown table contains all 3 expected rows"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "| Description              | Amount    | Category           | Date       |\n|--------------------------|-----------|--------------------|------------|\n| Used car down payment    | 35000.00  | Misc               | 2025-03-06 |\n| New laptop               | 1200.00   | Electronics & tech | 2025-01-30 |\n| Tablet                   | 500.00    | Electronics & tech | 2025-02-15 |",
+      "reasoning": null,
+      "latency_ms": 5102.598041994497,
+      "input_tokens": 2044,
+      "output_tokens": 115,
+      "tool_response_size": 7306,
+      "error": null
+    },
+    {
+      "case_name": "electronics_table",
+      "user_query": "Show all expenses in the 'Electronics & tech' category as a markdown table with columns: Description, Amount, Date.",
+      "tool_variant": "get_expenses_c",
+      "tool_calls": [
+        {
+          "tool_name": "get_expenses_c",
+          "arguments": {}
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'get_expenses_c' was called"
+        },
+        "answer_correct": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Markdown table contains all 6 expected rows"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "| Description | Amount | Date |\n|---|---:|---|\n| Wireless headphones | 349.99 | 2025-01-17 |\n| Phone charging cable | 19.99 | 2025-01-28 |\n| New laptop | 1200.00 | 2025-01-30 |\n| Mobile app purchase | 0.99 | 2025-02-11 |\n| Tablet | 500.00 | 2025-02-15 |\n| USB hub | 29.99 | 2025-02-28 |",
+      "reasoning": null,
+      "latency_ms": 6238.14550001407,
+      "input_tokens": 2050,
+      "output_tokens": 139,
+      "tool_response_size": 7306,
+      "error": null
+    }
+  ]
+}

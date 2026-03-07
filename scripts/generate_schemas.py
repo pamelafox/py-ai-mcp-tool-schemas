@@ -31,6 +31,7 @@ VARIANT_GROUPS = {
         "add_expense_cat_e",
     ],
     "date": ["add_expense_date_a", "add_expense_date_b", "add_expense_date_c", "add_expense_date_d"],
+    "description": ["add_expense_desc_a", "add_expense_desc_b", "add_expense_desc_c", "add_expense_desc_d"],
     # Compare a flat-args baseline against a nested-object Pydantic model input.
     "input_shape": ["add_expense_cat_d", "add_expense_model_a"],
     "output": ["get_expenses_a", "get_expenses_b", "get_expenses_c"],
@@ -171,6 +172,28 @@ async def main():
         )
         f.write("**Key finding:** Python's `date` type produces `\"format\": \"date\"` (ISO 8601).\n\n")
 
+        f.write("### Description Field Variants\n\n")
+        f.write("Testing pattern constraints on string fields:\n\n")
+        f.write("| Variant | Python Type | JSON Schema Result |\n")
+        f.write("| ------- | ----------- | ------------------ |\n")
+        f.write('| `add_expense_desc_a` | `str` | `{"type": "string"}` — No constraints |\n')
+        f.write(
+            '| `add_expense_desc_b` | `Annotated[str, "Start with capital..."]` '
+            '| `{"type": "string", "description": "..."}` — Text instruction |\n'
+        )
+        f.write(
+            '| `add_expense_desc_c` | `Annotated[str, Field(pattern=...)]` '
+            '| `{"type": "string", "pattern": "^[A-Z].*\\\\.$"}` — Regex constraint |\n'
+        )
+        f.write(
+            '| `add_expense_desc_d` | `Annotated[str, Field(pattern=..., description=...)]` '
+            '| `{"type": "string", "pattern": "...", "description": "..."}` — Both |\n\n'
+        )
+        f.write(
+            "**Key finding:** Tests whether text instructions vs regex patterns vs both "
+            "are more effective at guiding model output format.\n\n"
+        )
+
         f.write("### Input Shape Variants\n\n")
         f.write("Testing flat arguments vs a single nested Pydantic model input:\n\n")
         f.write("| Variant | Python Type | JSON Schema Result |\n")
@@ -201,6 +224,9 @@ async def main():
 
         f.write("### Date Variants\n\n")
         f.write(generate_group_diffs(tools_by_name, "date", VARIANT_GROUPS["date"]))
+
+        f.write("### Description Variants\n\n")
+        f.write(generate_group_diffs(tools_by_name, "description", VARIANT_GROUPS["description"]))
 
         f.write("### Input Shape Variants\n\n")
         f.write(generate_group_diffs(tools_by_name, "input_shape", VARIANT_GROUPS["input_shape"]))

@@ -2,6 +2,10 @@
 
 Talk: **Improving MCP tool schemas to increase agent reliability**
 
+Talk abstract:
+
+As agents increasingly stitch together tools from many MCP servers, schema quality has become a critical factor in whether tool calls succeed at all. Agents rely entirely on tool schemas—not server code—to choose tools, construct arguments, and interpret results, making clear, expressive schemas essential for reliability. In this talk, we build MCP servers with FastMCP and Pydantic, consume them with Pydantic AI agents, and instrument runs with Logfire to observe tool selection and parsing in detail. We then evaluate tool-calling reliability and output correctness across models at scale using the Pydantic AI evaluation framework. Well-designed input and output schemas can both improve agent reliability, while also making our code more robust and type-safe. Win-win!
+
 ## Architecture
 
 Single MCP server (`servers/expenses_mcp.py`) exposes multiple tool variants with different schemas. All tools call a shared implementation. Agent selects which variant to use via `allowed_tools`.

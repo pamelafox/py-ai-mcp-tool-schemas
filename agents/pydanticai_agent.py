@@ -39,9 +39,10 @@ from opentelemetry.instrumentation.httpx import HTTPXClientInstrumentor
 from opentelemetry.instrumentation.openai import OpenAIInstrumentor
 from pydantic_ai import Agent
 from pydantic_ai.mcp import MCPServerStreamableHTTP
-from pydantic_ai.messages import ModelResponse, ThinkingPart, ToolCallPart
+from pydantic_ai.messages import ModelRequest, ModelResponse, ThinkingPart, ToolCallPart, ToolReturnPart
 from pydantic_ai.models.openai import OpenAIResponsesModel
 from pydantic_ai.providers.openai import OpenAIProvider
+from pydantic_ai.usage import RunUsage
 
 load_dotenv(override=True)
 
@@ -98,6 +99,8 @@ class QueryResult:
     output: str
     tool_calls: list[ToolCallInfo]
     reasoning: str | None = None  # Model-provided reasoning summary text (if returned)
+    usage: RunUsage | None = None  # Token usage from the model
+    tool_response_content: str | None = None  # Raw content returned by the tool
     error: str | None = None
 
 
@@ -239,6 +242,21 @@ def extract_tool_calls(result) -> list[ToolCallInfo]:
     return tool_calls
 
 
+def extract_tool_response_content(result) -> str | None:
+    """Extract the raw content returned by tools from an agent result.
+
+    Concatenates all ToolReturnPart contents into a single string.
+    Useful for measuring the size of data returned by different tool variants.
+    """
+    parts = []
+    for message in result.all_messages():
+        if isinstance(message, ModelRequest):
+            for part in message.parts:
+                if isinstance(part, ToolReturnPart):
+                    parts.append(str(part.content))
+    return "\n".join(parts) if parts else None
+
+
 def extract_reasoning(result) -> str | None:
     """Extract model-provided reasoning summary text from an agent result.
 
@@ -329,11 +347,14 @@ async def run_query(
 
             tool_calls = extract_tool_calls(result)
             reasoning = extract_reasoning(result)
+            tool_response_content = extract_tool_response_content(result)
 
             return QueryResult(
                 output=result.output,
                 tool_calls=tool_calls,
                 reasoning=reasoning,
+                usage=result.usage(),
+                tool_response_content=tool_response_content,
             )
 
     except Exception as e:

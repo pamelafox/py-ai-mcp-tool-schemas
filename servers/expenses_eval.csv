@@ -1,0 +1,948 @@
+date,amount,category,description
+2025-01-02,4.50,Food & drink,Morning coffee
+2025-01-02,12.99,Food & drink,Lunch sandwich
+2025-01-03,45.00,Transit and Fuel,Gas station fill-up
+2025-01-04,8.75,Food & drink,Breakfast burrito
+2025-01-05,15.00,Transit and Fuel,Parking downtown
+2025-01-06,25.99,Media & streaming,Movie ticket
+2025-01-07,6.00,Food & drink,Afternoon coffee
+2025-01-08,32.50,Food & drink,Grocery shopping
+2025-01-09,89.99,Media & streaming,Concert ticket
+2025-01-10,5.25,Food & drink,Snack from vending machine
+2025-01-11,18.00,Transit and Fuel,Uber ride to airport
+2025-01-12,42.00,Food & drink,Dinner at Italian restaurant
+2025-01-13,7.50,Food & drink,Coffee and pastry
+2025-01-14,125.00,Apparel and Beauty,New running shoes
+2025-01-15,22.99,Media & streaming,Streaming service subscription
+2025-01-16,60.00,Transit and Fuel,Weekly gas fill-up
+2025-01-17,349.99,Electronics & tech,Wireless headphones
+2025-01-18,15.50,Food & drink,Lunch at deli
+2025-01-19,9.99,Media & streaming,Music streaming subscription
+2025-01-20,35.00,Health & Fitness,Gym day pass
+2025-01-21,200.00,Home and office,Desk lamp and organizer
+2025-01-22,4.75,Food & drink,Espresso
+2025-01-23,55.00,Apparel and Beauty,Haircut
+2025-01-24,12.00,Transit and Fuel,Bus pass reload
+2025-01-25,85.00,Arts and hobbies,Watercolor paint set
+2025-01-26,150.00,Fees & services,Tax preparation fee
+2025-01-27,28.00,Food & drink,Sushi takeout
+2025-01-28,19.99,Electronics & tech,Phone charging cable
+2025-01-29,75.00,Health & Fitness,Monthly gym membership
+2025-01-30,1200.00,Electronics & tech,New laptop
+2025-02-01,3.50,Food & drink,Vending machine snack
+2025-02-02,40.00,Transit and Fuel,Parking at airport
+2025-02-03,65.00,Food & drink,Grocery delivery
+2025-02-04,14.99,Media & streaming,Video game subscription
+2025-02-05,250.00,Apparel and Beauty,Winter jacket
+2025-02-06,8.00,Food & drink,Bagel and coffee
+2025-02-07,30.00,Arts and hobbies,Sketchbook and pencils
+2025-02-08,110.00,Fees & services,Annual software license
+2025-02-09,22.00,Transit and Fuel,Taxi to downtown
+2025-02-10,45.00,Health & Fitness,Yoga class pack
+2025-02-11,0.99,Electronics & tech,Mobile app purchase
+2025-02-12,16.50,Food & drink,Ramen lunch
+2025-02-13,95.00,Home and office,Office chair cushion
+2025-02-14,38.00,Food & drink,Valentine dinner appetizers
+2025-02-15,500.00,Electronics & tech,Tablet
+2025-02-16,7.25,Food & drink,Smoothie
+2025-02-17,11.00,Transit and Fuel,Train ticket
+2025-02-18,180.00,Apparel and Beauty,Designer sunglasses
+2025-02-19,25.00,Media & streaming,Concert livestream ticket
+2025-02-20,62.00,Health & Fitness,Massage therapy session
+2025-02-21,9.50,Food & drink,Afternoon tea
+2025-02-22,135.00,Home and office,Bookshelf
+2025-02-23,20.00,Arts and hobbies,Pottery class
+2025-02-24,44.99,Fees & services,Cloud storage annual plan
+2025-02-25,33.00,Food & drink,Dinner takeout
+2025-02-26,70.00,Transit and Fuel,Car wash and detail
+2025-02-27,15.00,Media & streaming,E-book purchase
+2025-02-28,29.99,Electronics & tech,USB hub
+2025-03-01,52.00,Food & drink,Brunch with friends
+2025-03-02,400.00,Home and office,Standing desk converter
+2025-03-03,6.50,Food & drink,Iced coffee
+2025-03-04,88.00,Apparel and Beauty,Skincare products
+2025-03-05,10.00,Transit and Fuel,Metro card top-up
+2025-03-06,35000.00,Misc,Used car down payment
+2025-03-07,17.50,Food & drink,Pizza delivery
+2025-03-08,24.99,Media & streaming,Audiobook credits
+2025-03-09,42.50,Arts and hobbies,Guitar strings and picks
+2025-03-10,300.00,Fees & services,Accountant consultation
+2026-03-05,12.5,Food & drink,Sandwich
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-03-04,4.5,Food & drink,coffee
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-03-08,20.0,Transit and Fuel,Bus pass
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,79.99,Electronics & tech,Headphones
+2026-03-05,0.99,Media & streaming,App purchase
+2026-03-05,200.0,Health & Fitness,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-05,1200.0,Electronics & tech,Laptop
+2026-03-05,12.5,Food & drink,Sandwich
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-02-27,60.0,Transit and Fuel,Gas
+2026-03-04,4.5,Food & drink,coffee
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-02-28,79.99,Electronics & tech,Headphones
+2026-03-05,0.99,Electronics & tech,App purchase
+2026-03-05,200.0,Health & Fitness,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-05,12.5,Food & drink,Sandwich
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-02-27,60.0,Transit and Fuel,Gas
+2026-03-08,20.0,Transit and Fuel,bus pass
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,79.99,Electronics & tech,Headphones
+2026-03-05,0.99,Media & streaming,App purchase
+2026-03-05,200.0,Health & Fitness,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-05,1200.0,Electronics & tech,Laptop
+2026-03-05,12.5,Food & drink,Sandwich
+2026-02-23,8.75,Food & drink,coffee
+2026-03-02,12.5,Food & drink,Sandwich
+2026-02-28,25.99,Media & streaming,Movie ticket
+2026-02-27,60.0,Transit and Fuel,Gas
+2026-03-04,4.5,Food & drink,coffee
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-02-27,18.0,Media & streaming,Movie ticket
+2026-03-08,20.0,Transit and Fuel,Bus pass
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,79.99,Electronics & tech,Headphones
+2026-03-05,35000.0,Transit and Fuel,Bought a car
+2026-03-05,0.99,Electronics & tech,App purchase
+2026-03-05,200.0,Apparel and Beauty,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-05,1200.0,Electronics & tech,Laptop
+2026-03-05,12.5,Food & drink,Sandwich
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-02-27,60.0,Transit and Fuel,Gas
+2026-03-04,4.5,Food & drink,coffee
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,79.99,Electronics & tech,Headphones
+2026-03-05,0.99,Electronics & tech,App purchase
+2026-03-05,200.0,Apparel and Beauty,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-05,1200.0,Electronics & tech,Laptop
+2026-03-05,12.5,Food & drink,Sandwich
+2026-03-02,12.5,Food & drink,Sandwich
+2026-02-28,25.99,Arts and hobbies,movie ticket
+2026-03-04,4.5,Food & drink,coffee
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-03-08,20.0,Transit and Fuel,Bus pass
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,79.99,Electronics & tech,Headphones
+2026-03-05,0.99,Media & streaming,App purchase
+2026-03-05,200.0,Health & Fitness,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-05,12.5,Food & drink,Sandwich
+2026-02-23,12.5,Food & drink,Sandwich
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-03-04,4.5,Food & drink,coffee
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-02-27,18.0,Arts and hobbies,Movie ticket
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,79.99,Electronics & tech,Headphones
+2026-03-05,0.99,Media & streaming,App purchase
+2026-03-05,200.0,Health & Fitness,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-05,12.5,Food & drink,Sandwich
+2026-03-02,12.5,Food & drink,Sandwich
+2026-02-28,25.99,Arts and hobbies,movie ticket
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,79.99,Electronics & tech,Headphones
+2026-03-05,0.99,Media & streaming,App purchase
+2026-03-05,200.0,Health & Fitness,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-05,12.5,Food & drink,Sandwich
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-02-27,60.0,Transit and Fuel,Gas
+2026-02-27,18.0,Arts and hobbies,Movie ticket
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,79.99,Electronics & tech,Headphones
+2026-03-05,0.99,Media & streaming,App purchase
+2026-03-05,200.0,Health & Fitness,spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-05,12.5,Food & drink,Bought a sandwich.
+2026-03-02,12.5,Food & drink,Bought a sandwich.
+2026-02-28,25.99,Arts and hobbies,Movie ticket.
+2026-02-27,60.0,Transit and Fuel,Gas purchase.
+2026-03-04,4.5,Food & drink,Coffee.
+2026-03-03,38.0,Transit and Fuel,Took an Uber to the airport.
+2026-03-08,20.0,Transit and Fuel,Bought a bus pass.
+2026-03-05,65.0,Food & drink,Instacart grocery delivery.
+2026-02-28,79.99,Electronics & tech,Bought headphones.
+2026-03-05,0.99,Media & streaming,App purchase.
+2026-03-05,200.0,Health & Fitness,Spa treatment.
+2026-03-05,50.0,Food & drink,Dinner.
+2026-03-05,12.5,Food & drink,Bought a sandwich.
+2026-03-02,12.5,Food & drink,Sandwich purchase.
+2026-02-28,25.99,Arts and hobbies,Movie ticket.
+2026-02-27,60.0,Transit and Fuel,Gas purchase.
+2026-03-04,4.5,Food & drink,Coffee.
+2026-03-03,38.0,Transit and Fuel,Uber ride to the airport.
+2026-03-08,20.0,Transit and Fuel,Bus pass purchase.
+2026-03-05,65.0,Food & drink,Instacart grocery delivery.
+2026-02-28,79.99,Electronics & tech,Bought headphones.
+2026-03-05,0.99,Media & streaming,App purchase.
+2026-03-05,200.0,Health & Fitness,Spa treatment.
+2026-03-05,50.0,Food & drink,Dinner.
+2026-03-05,12.5,Food & drink,Bought a sandwich.
+2026-03-02,12.5,Food & drink,Bought a sandwich.
+2026-02-28,25.99,Arts and hobbies,Movie ticket purchase.
+2026-02-27,60.0,Transit and Fuel,Gas purchase.
+2026-03-04,4.5,Food & drink,Coffee.
+2026-03-03,38.0,Transit and Fuel,Uber ride to the airport.
+2026-02-27,18.0,Arts and hobbies,Movie ticket purchase.
+2026-03-08,20.0,Transit and Fuel,Bus pass purchase.
+2026-03-05,65.0,Food & drink,Instacart grocery delivery.
+2026-02-28,79.99,Electronics & tech,Bought headphones.
+2026-03-05,0.99,Media & streaming,Bought an app.
+2026-03-05,200.0,Health & Fitness,Spa treatment.
+2026-03-05,50.0,Food & drink,Dinner.
+2026-03-05,12.5,Food & drink,Sandwich
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-03-04,4.5,Food & drink,coffee
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,79.99,Electronics & tech,Headphones
+2026-03-05,0.99,Media & streaming,App purchase
+2026-03-05,200.0,Health & Fitness,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-05,12.5,Food & drink,Sandwich
+2026-02-23,12.5,Food & drink,Sandwich purchase
+2026-02-23,8.75,Food & drink,Coffee
+2026-03-02,12.5,Food & drink,Sandwich purchase
+2026-02-28,25.99,Media & streaming,Movie ticket
+2026-02-27,60.0,Transit and Fuel,Gas purchase
+2026-03-04,4.5,Food & drink,Coffee
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-02-27,18.0,Media & streaming,Movie ticket
+2026-03-08,20.0,Transit and Fuel,Bus pass purchase
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,79.99,Electronics & tech,Headphones purchase
+2026-03-05,0.99,Electronics & tech,App purchase
+2026-03-05,200.0,Health & Fitness,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-05,1200.0,Electronics & tech,Laptop purchase
+2026-03-05,12.5,Food & drink,Sandwich
+2026-02-23,12.5,Food & drink,Sandwich purchase
+2026-02-23,8.75,Food & drink,Coffee
+2026-03-02,12.5,Food & drink,Sandwich
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-02-27,60.0,Transit and Fuel,Gas purchase
+2026-03-04,4.5,Food & drink,Coffee
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-02-27,18.0,Media & streaming,Movie ticket
+2026-03-08,20.0,Transit and Fuel,Bus pass
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,79.99,Electronics & tech,Headphones purchase
+2026-03-05,35000.0,Transit and Fuel,Car purchase
+2026-03-05,0.99,Electronics & tech,App purchase
+2026-03-05,200.0,Health & Fitness,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-05,1200.0,Electronics & tech,Compra de laptop
+2026-03-05,12.5,Food & drink,Sandwich
+2026-02-23,12.5,Food & drink,Sandwich
+2026-02-23,8.75,Food & drink,Coffee
+2026-03-02,12.5,Food & drink,Sandwich
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-02-27,60.0,Transit and Fuel,Gas purchase
+2026-03-04,4.5,Food & drink,Coffee
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-03-05,18.0,Arts and hobbies,Movie ticket
+2026-03-08,20.0,Transit and Fuel,Bus pass
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,79.99,Electronics & tech,Headphones purchase
+2026-03-05,35000.0,Transit and Fuel,Car purchase
+2026-03-05,0.99,Electronics & tech,App purchase
+2026-03-05,200.0,Health & Fitness,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-05,1200.0,Electronics & tech,Compra de laptop
+2026-03-05,12.5,Food & drink,Sandwich purchase
+2026-02-23,12.5,Food & drink,Sandwich purchase
+2026-02-23,8.75,Food & drink,Coffee purchase
+2026-03-02,12.5,Food & drink,Sandwich purchase
+2026-02-28,25.99,Media & streaming,Movie ticket
+2026-02-27,60.0,Transit and Fuel,Gas purchase
+2026-03-04,4.5,Food & drink,Coffee
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-02-27,18.0,Media & streaming,Movie ticket
+2026-03-08,20.0,Transit and Fuel,Bus pass purchase
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,79.99,Electronics & tech,Headphones purchase
+2026-03-05,35000.0,Misc,Car purchase
+2026-03-05,0.99,Electronics & tech,App purchase
+2026-03-05,200.0,Health & Fitness,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-05,1200.0,Electronics & tech,Compra de laptop
+2026-03-05,12.5,Food & drink,Sandwich purchase
+2026-02-23,12.5,Food & drink,Sandwich purchase
+2026-02-23,8.75,Food & drink,Coffee
+2026-03-02,12.5,Food & drink,Sandwich purchase
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-02-27,60.0,Transit and Fuel,Gas payment
+2026-03-04,4.5,Food & drink,Coffee
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-02-27,18.0,Arts and hobbies,Movie ticket
+2026-03-08,20.0,Transit and Fuel,Bus pass purchase
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,79.99,Electronics & tech,Headphones purchase
+2026-03-05,0.99,Electronics & tech,App purchase
+2026-03-05,200.0,Health & Fitness,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-05,1200.0,Electronics & tech,Laptop purchase
+2026-03-05,12.5,Food & drink,Sandwich purchase
+2026-02-23,12.5,Food & drink,Sandwich purchase
+2026-02-23,8.75,Food & drink,Coffee
+2026-03-02,12.5,Food & drink,Sandwich purchase
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-02-27,60.0,Transit and Fuel,Gas payment
+2026-03-04,4.5,Food & drink,Coffee
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-02-27,18.0,Media & streaming,Movie ticket
+2026-03-08,20.0,Transit and Fuel,Bus pass purchase
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,79.99,Electronics & tech,Headphones purchase
+2026-03-05,35000.0,Transit and Fuel,Car purchase
+2026-03-05,0.99,Electronics & tech,App purchase
+2026-03-05,200.0,Health & Fitness,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-05,1200.0,Electronics & tech,Compra de laptop
+2026-03-05,12.5,Food & drink,Sandwich
+2026-02-23,12.5,Food & drink,Sandwich
+2026-02-23,8.75,Food & drink,Coffee
+2026-03-02,12.5,Food & drink,Sandwich
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-02-27,60.0,Transit and Fuel,Gas purchase
+2026-03-04,4.5,Food & drink,Coffee
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-02-27,18.0,Arts and hobbies,Movie ticket
+2026-03-08,20.0,Transit and Fuel,Bus pass
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,79.99,Electronics & tech,Headphones purchase
+2026-03-05,35000.0,Transit and Fuel,Car purchase
+2026-03-05,0.99,Electronics & tech,App purchase
+2026-03-05,200.0,Health & Fitness,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-05,1200.0,Electronics & tech,Compra de laptop
+2026-03-05,12.5,Food & drink,Sandwich
+2026-02-23,12.5,Food & drink,Sandwich
+2026-02-23,8.75,Food & drink,Coffee
+2026-03-02,12.5,Food & drink,Sandwich
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-02-27,60.0,Transit and Fuel,Gas purchase
+2026-03-04,4.5,Food & drink,Coffee
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-02-27,18.0,Arts and hobbies,Movie ticket
+2026-03-08,20.0,Transit and Fuel,Bus pass
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,79.99,Electronics & tech,Headphones
+2026-03-05,35000.0,Transit and Fuel,Car purchase
+2026-03-05,0.99,Electronics & tech,App purchase
+2026-03-05,200.0,Health & Fitness,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-05,1200.0,Electronics & tech,Compra de laptop
+2026-03-05,12.5,Food & drink,Sandwich purchase
+2026-02-23,12.5,Food & drink,Sandwich purchase
+2026-02-23,8.75,Food & drink,Coffee
+2026-03-02,12.5,Food & drink,Sandwich purchase
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-02-27,60.0,Transit and Fuel,Gas purchase
+2026-03-04,4.5,Food & drink,Coffee
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-02-27,18.0,Arts and hobbies,Movie ticket
+2026-03-08,20.0,Transit and Fuel,Bus pass purchase
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,79.99,Electronics & tech,Headphones purchase
+2026-03-05,35000.0,Transit and Fuel,Car purchase
+2026-03-05,0.99,Electronics & tech,App purchase
+2026-03-05,200.0,Health & Fitness,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-05,1200.0,Electronics & tech,Laptop purchase
+2026-03-05,12.5,Food & drink,Bought a sandwich.
+2026-02-23,12.5,Food & drink,Bought a sandwich.
+2026-02-23,8.75,Food & drink,Purchased coffee.
+2026-03-02,12.5,Food & drink,Bought a sandwich.
+2026-02-28,25.99,Arts and hobbies,Purchased a movie ticket.
+2026-02-27,60.0,Transit and Fuel,Paid for gas.
+2026-03-04,4.5,Food & drink,Bought coffee.
+2026-03-03,38.0,Transit and Fuel,Uber ride to the airport.
+2026-02-27,18.0,Arts and hobbies,Purchased a movie ticket.
+2026-03-06,12.5,Food & drink,Sandwich
+2026-03-08,20.0,Transit and Fuel,Purchased a bus pass.
+2026-03-05,65.0,Food & drink,Paid for Instacart grocery delivery.
+2026-02-28,79.99,Electronics & tech,Purchased headphones.
+2026-03-05,35000.0,Transit and Fuel,Purchased a car.
+2026-03-05,0.99,Electronics & tech,Purchased an app.
+2026-03-05,200.0,Health & Fitness,Spa treatment.
+2026-03-05,50.0,Food & drink,Dinner expense.
+2026-03-05,1200.0,Electronics & tech,Purchased a laptop.
+2026-03-05,12.5,Food & drink,Bought a sandwich.
+2026-02-23,12.5,Food & drink,Purchased a sandwich.
+2026-02-23,8.75,Food & drink,Coffee purchase.
+2026-03-02,12.5,Food & drink,Bought a sandwich.
+2026-02-28,25.99,Arts and hobbies,Purchased a movie ticket.
+2026-02-28,60.0,Transit and Fuel,Gas purchase.
+2026-03-04,4.5,Food & drink,Coffee purchase.
+2026-03-03,38.0,Transit and Fuel,Uber to the airport.
+2026-03-06,12.5,Food & drink,Sandwich
+2026-02-27,18.0,Arts and hobbies,Purchased a movie ticket.
+2026-03-08,20.0,Transit and Fuel,Purchased a bus pass.
+2026-03-05,65.0,Food & drink,Instacart grocery delivery.
+2026-02-28,79.99,Electronics & tech,Purchased headphones.
+2026-03-05,35000.0,Transit and Fuel,Purchased a new car.
+2026-03-05,0.99,Electronics & tech,Purchased an app.
+2026-03-05,200.0,Health & Fitness,Spa treatment.
+2026-03-05,50.0,Food & drink,Dinner expense.
+2026-03-05,1200.0,Electronics & tech,Purchased a laptop.
+2026-03-05,12.5,Food & drink,Bought a sandwich.
+2026-02-23,12.5,Food & drink,Bought a sandwich.
+2026-03-02,12.5,Food & drink,Bought a sandwich.
+2026-02-28,25.99,Media & streaming,Purchased a movie ticket.
+2026-02-27,60.0,Transit and Fuel,Paid for gas on the last business day of February.
+2026-03-04,4.5,Food & drink,Bought coffee.
+2026-03-03,38.0,Transit and Fuel,Uber ride to the airport.
+2026-02-27,18.0,Media & streaming,Purchased a movie ticket.
+2026-03-08,20.0,Transit and Fuel,Purchased a bus pass.
+2026-03-05,65.0,Food & drink,Paid for Instacart grocery delivery.
+2026-02-28,79.99,Electronics & tech,Bought headphones.
+2026-03-05,35000.0,Transit and Fuel,Purchased a car.
+2026-03-05,0.99,Electronics & tech,Purchased an app.
+2026-03-05,200.0,Health & Fitness,Spa treatment.
+2026-03-05,50.0,Food & drink,Dinner expense.
+2026-03-05,1200.0,Electronics & tech,Compré una laptop.
+2026-03-05,12.5,Food & drink,Sandwich purchase
+2026-02-23,12.5,Food & drink,Sandwich purchase
+2026-02-23,8.75,Food & drink,Coffee
+2026-03-02,12.5,Food & drink,Sandwich purchase
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-02-28,60.0,Transit and Fuel,Gas
+2026-03-04,4.5,Food & drink,Coffee
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-02-27,18.0,Arts and hobbies,Movie ticket
+2026-03-08,20.0,Transit and Fuel,Bus pass purchase
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,79.99,Electronics & tech,Headphones purchase
+2026-03-05,35000.0,Transit and Fuel,Car purchase
+2026-03-05,0.99,Electronics & tech,App purchase
+2026-03-05,200.0,Health & Fitness,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-05,1200.0,Electronics & tech,Compra de laptop
+2026-03-06,12.5,Food & drink,Sandwich
+2026-02-23,12.5,Food & drink,Sandwich
+2026-02-23,8.75,Food & drink,Coffee
+2026-03-02,12.5,Food & drink,Sandwich
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-02-27,60.0,Transit and Fuel,Gas
+2026-03-05,4.5,Food & drink,Coffee
+2026-03-04,38.0,Transit and Fuel,Uber to the airport
+2026-03-06,18.0,Arts and hobbies,Movie ticket
+2026-03-09,20.0,Transit and Fuel,Bus pass
+2026-03-06,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,79.99,Electronics & tech,Headphones
+2026-03-06,35000.0,Transit and Fuel,Bought a car (USD)
+2026-03-06,0.99,Electronics & tech,App purchase
+2026-03-06,200.0,Apparel and Beauty,Spa treatment
+2026-03-06,50.0,Food & drink,Dinner
+2026-03-06,1200.0,Electronics & tech,Compra de laptop
+2026-03-06,12.5,Food & drink,sandwich
+2026-02-23,12.5,Food & drink,Sandwich
+2026-02-23,8.75,Food & drink,coffee
+2026-03-02,12.5,Food & drink,Sandwich
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-02-27,60.0,Transit and Fuel,Gas
+2026-03-05,4.5,Food & drink,Coffee
+2026-03-04,38.0,Transit and Fuel,Uber to the airport
+2026-03-06,18.0,Arts and hobbies,Movie ticket
+2026-03-09,20.0,Transit and Fuel,Bus pass
+2026-03-06,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,79.99,Electronics & tech,Headphones
+2026-03-06,35000.0,Transit and Fuel,Bought a car
+2026-03-06,0.99,Electronics & tech,App purchase
+2026-03-06,200.0,Apparel and Beauty,Spa treatment
+2026-03-06,50.0,Food & drink,Dinner
+2026-03-06,1200.0,Electronics & tech,Compra de laptop
+2026-03-06,12.5,Food & drink,Sandwich
+2026-02-23,12.5,Food & drink,Sandwich
+2026-02-16,8.75,Food & drink,Coffee
+2026-03-02,12.5,Food & drink,Sandwich
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-02-27,60.0,Transit and Fuel,Gas
+2026-03-05,4.5,Food & drink,coffee
+2026-03-04,38.0,Transit and Fuel,Uber to the airport
+2026-03-06,18.0,Arts and hobbies,Movie ticket
+2026-03-09,20.0,Transit and Fuel,Bus pass
+2026-03-06,65.0,Food & drink,Instacart grocery delivery
+2026-03-06,35000.0,Misc,Bought a car
+2026-03-06,0.99,Electronics & tech,App purchase
+2026-03-06,200.0,Apparel and Beauty,Spa treatment
+2026-03-06,50.0,Food & drink,Dinner
+2026-03-05,12.5,Food & drink,Sandwich
+2026-03-06,1200.0,Electronics & tech,Laptop
+2026-03-02,12.5,Food & drink,Sandwich
+2026-02-17,8.75,Food & drink,Coffee
+2026-03-06,12.5,Food & drink,Sandwich
+2026-03-02,12.5,Food & drink,Sandwich
+2026-02-23,12.5,Food & drink,Sandwich
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-02-27,60.0,Transit and Fuel,Gas
+2026-02-23,8.75,Food & drink,Coffee
+2026-03-04,4.5,Food & drink,coffee
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-03-02,12.5,Food & drink,Sandwich
+2026-02-28,18.0,Arts and hobbies,Movie ticket
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,25.99,Media & streaming,Movie ticket
+2026-02-28,79.99,Electronics & tech,Headphones
+2026-02-27,60.0,Transit and Fuel,Gas
+2026-03-05,0.99,Electronics & tech,App purchase
+2026-03-05,200.0,Health & Fitness,Spa treatment
+2026-03-05,4.5,Food & drink,Coffee
+2026-03-05,50.0,Food & drink,dinner
+2026-03-05,1200.0,Electronics & tech,Compra de laptop
+2026-03-04,38.0,Transit and Fuel,Uber to the airport
+2026-03-05,12.5,Food & drink,Sandwich
+2026-03-06,18.0,Media & streaming,Movie ticket
+2026-02-24,12.5,Food & drink,Sandwich
+2026-02-17,8.75,Food & drink,Coffee
+2026-03-09,20.0,Transit and Fuel,Bus pass
+2026-03-02,12.5,Food & drink,Sandwich purchase
+2026-02-28,25.99,Media & streaming,Movie ticket
+2026-03-06,65.0,Food & drink,Instacart grocery delivery
+2026-02-27,60.0,Transit and Fuel,Gas
+2026-03-04,4.5,Food & drink,Coffee
+2026-02-28,79.99,Electronics & tech,Headphones
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-02-28,18.0,Arts and hobbies,Movie ticket
+2026-03-06,35000.0,Misc,Bought a car
+2026-03-08,20.0,Transit and Fuel,Bus pass
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-03-06,0.99,Electronics & tech,App purchase
+2026-02-28,79.99,Electronics & tech,Headphones purchase
+2026-03-06,200.0,Apparel and Beauty,Spa treatment
+2026-03-05,0.99,Apparel and Beauty,App purchase
+2026-03-05,200.0,Apparel and Beauty,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-06,50.0,Food & drink,Dinner
+2026-03-05,1200.0,Electronics & tech,Compra de laptop
+2026-03-05,12.5,Food & drink,Sandwich
+2026-03-06,1200.0,Electronics & tech,Compra de laptop
+2026-02-24,12.5,Food & drink,Sandwich
+2026-02-17,8.75,Food & drink,Coffee
+2026-03-02,12.5,Food & drink,Sandwich
+2026-03-06,12.5,Food & drink,Sandwich
+2026-02-28,25.99,Media & streaming,Movie ticket
+2026-02-28,60.0,Transit and Fuel,Gas payment
+2026-02-23,12.5,Food & drink,Sandwich
+2026-03-04,4.5,Food & drink,coffee
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-02-28,18.0,Media & streaming,Movie ticket
+2026-02-23,8.75,Food & drink,Coffee
+2026-03-08,20.0,Transit and Fuel,Bus pass
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,79.99,Electronics & tech,Headphones
+2026-03-05,35000.0,Transit and Fuel,Car purchase
+2026-03-05,0.99,Apparel and Beauty,App purchase
+2026-03-05,200.0,Apparel and Beauty,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-05,1200.0,Electronics & tech,Compra de laptop
+2026-03-05,12.5,Food & drink,Sandwich
+2026-02-24,12.5,Food & drink,Sandwich purchase
+2026-02-17,8.75,Food & drink,Coffee
+2026-03-02,12.5,Food & drink,Sandwich purchase
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-02-28,25.99,Media & streaming,Movie ticket
+2026-02-28,60.0,Transit and Fuel,Gas purchase
+2026-03-04,4.5,Food & drink,Coffee
+2026-02-27,60.0,Transit and Fuel,Gas
+2026-03-03,38.0,Transit and Fuel,Uber ride to the airport
+2026-02-28,18.0,Media & streaming,Movie ticket
+2026-03-05,4.5,Food & drink,Coffee
+2026-03-08,20.0,Transit and Fuel,Bus pass purchase
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-03-04,38.0,Transit and Fuel,Uber to the airport
+2026-02-28,79.99,Electronics & tech,Headphones purchase
+2026-03-05,35000.0,Transit and Fuel,Car purchase
+2026-03-06,18.0,Arts and hobbies,Movie ticket
+2026-03-05,0.99,Electronics & tech,App purchase
+2026-03-05,200.0,Apparel and Beauty,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-09,20.0,Transit and Fuel,Bus pass
+2026-03-05,1200.0,Electronics & tech,Compra de laptop
+2026-03-05,12.5,Food & drink,Sandwich
+2026-02-24,12.5,Food & drink,Sandwich
+2026-03-06,65.0,Food & drink,Instacart grocery delivery
+2026-02-17,8.75,Food & drink,Coffee
+2026-03-02,12.5,Food & drink,Sandwich
+2026-02-28,79.99,Electronics & tech,Headphones
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-02-27,60.0,Transit and Fuel,Gas
+2026-03-06,35000.0,Transit and Fuel,Bought a car
+2026-03-04,4.5,Food & drink,coffee
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-03-06,0.99,Electronics & tech,App purchase
+2026-02-28,18.0,Arts and hobbies,Movie ticket
+2026-03-08,20.0,Transit and Fuel,Bus pass
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-03-06,200.0,Apparel and Beauty,Spa treatment
+2026-03-06,50.0,Food & drink,Dinner
+2026-03-05,200.0,Health & Fitness,Spa treatment
+2026-03-06,1200.0,Electronics & tech,Laptop
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-05,1200.0,Electronics & tech,Compra de laptop
+2026-03-05,12.5,Food & drink,Sandwich
+2026-03-06,12.5,Food & drink,Sandwich
+2026-03-02,12.5,Food & drink,Sandwich
+2026-02-17,8.75,Food & drink,Coffee
+2026-03-02,12.5,Food & drink,Sandwich
+2026-02-23,12.5,Food & drink,Sandwich
+2026-02-28,25.99,Media & streaming,Movie ticket
+2026-02-23,8.75,Food & drink,coffee
+2026-02-27,60.0,Transit and Fuel,Gas
+2026-03-04,4.5,Food & drink,coffee
+2026-03-02,12.5,Food & drink,Sandwich
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-02-28,18.0,Media & streaming,Movie ticket
+2026-03-08,20.0,Transit and Fuel,Bus pass
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-02-27,60.0,Transit and Fuel,Gas
+2026-02-28,79.99,Electronics & tech,Headphones
+2026-03-05,4.5,Food & drink,coffee
+2026-03-05,0.99,Apparel and Beauty,App purchase
+2026-03-05,200.0,Health & Fitness,Spa treatment
+2026-03-04,38.0,Transit and Fuel,Uber to the airport
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-05,1200.0,Electronics & tech,Compra de laptop
+2026-03-05,12.5,Food & drink,Sandwich
+2026-03-06,18.0,Arts and hobbies,Movie ticket
+2026-02-24,12.5,Food & drink,Sandwich
+2026-02-17,8.75,Food & drink,Coffee
+2026-03-09,20.0,Transit and Fuel,Bus pass
+2026-03-02,12.5,Food & drink,Sandwich
+2026-02-28,25.99,Media & streaming,Movie ticket
+2026-03-06,65.0,Food & drink,Instacart grocery delivery
+2026-02-27,60.0,Transit and Fuel,Gas
+2026-03-04,4.5,Food & drink,coffee
+2026-02-28,79.99,Electronics & tech,Headphones
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-02-28,18.0,Arts and hobbies,Movie ticket
+2026-03-06,35000.0,Transit and Fuel,Bought a car
+2026-03-08,20.0,Transit and Fuel,Bus pass
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-03-06,0.99,Electronics & tech,App purchase
+2026-02-28,79.99,Electronics & tech,Headphones
+2026-03-06,200.0,Apparel and Beauty,Spa treatment
+2026-03-05,0.99,Apparel and Beauty,App purchase
+2026-03-05,200.0,Apparel and Beauty,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-06,50.0,Food & drink,Dinner
+2026-03-05,1200.0,Electronics & tech,Compra de laptop
+2026-03-05,12.5,Food & drink,Sandwich
+2026-02-24,12.5,Food & drink,Sandwich
+2026-02-17,8.75,Food & drink,Coffee
+2026-03-02,12.5,Food & drink,Sandwich
+2026-02-27,60.0,Transit and Fuel,Gas
+2026-03-04,4.5,Food & drink,coffee
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-02-28,18.0,Media & streaming,Movie ticket
+2026-03-08,20.0,Transit and Fuel,Bus pass
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-03-06,12.5,Food & drink,Sandwich
+2026-02-28,79.99,Electronics & tech,Headphones
+2026-03-05,35000.0,Transit and Fuel,Car purchase
+2026-02-23,12.5,Food & drink,Sandwich
+2026-03-05,0.99,Apparel and Beauty,App purchase
+2026-03-05,200.0,Health & Fitness,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-02-23,8.75,Food & drink,Coffee
+2026-03-05,1200.0,Electronics & tech,Compra de laptop
+2026-03-05,12.5,Food & drink,Sandwich
+2026-03-02,12.5,Food & drink,Sandwich
+2026-03-02,12.5,Food & drink,Sandwich
+2026-02-17,8.75,Food & drink,Coffee
+2026-03-02,12.5,Food & drink,Sandwich
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-02-28,25.99,Media & streaming,Movie ticket
+2026-02-27,60.0,Transit and Fuel,Gas
+2026-02-27,60.0,Transit and Fuel,Gas
+2026-03-04,4.5,Food & drink,coffee
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-02-28,18.0,Media & streaming,Movie ticket
+2026-03-08,20.0,Transit and Fuel,Bus pass
+2026-03-05,4.5,Food & drink,coffee
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-03-04,38.0,Transit and Fuel,Uber to the airport
+2026-03-05,0.99,Apparel and Beauty,App purchase
+2026-03-06,18.0,Arts and hobbies,Movie ticket
+2026-03-05,200.0,Apparel and Beauty,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-05,1200.0,Electronics & tech,Compra de laptop
+2026-03-09,20.0,Transit and Fuel,Bus pass
+2026-03-05,12.5,Food & drink,Bought a sandwich.
+2026-02-24,12.5,Food & drink,Bought a sandwich.
+2026-03-06,65.0,Food & drink,Instacart grocery delivery
+2026-02-17,8.75,Food & drink,Bought coffee.
+2026-03-02,12.5,Food & drink,Bought a sandwich on the first Monday of March 2026.
+2026-02-28,79.99,Electronics & tech,Headphones
+2026-02-28,25.99,Media & streaming,Bought a movie ticket.
+2026-03-06,35000.0,Transit and Fuel,Bought a car
+2026-02-27,60.0,Transit and Fuel,Paid for gas.
+2026-03-04,4.5,Food & drink,Bought coffee.
+2026-03-03,38.0,Transit and Fuel,Uber ride to the airport.
+2026-03-06,0.99,Electronics & tech,App purchase
+2026-02-28,18.0,Media & streaming,Bought a movie ticket.
+2026-03-08,20.0,Transit and Fuel,Bus pass purchase.
+2026-03-06,200.0,Apparel and Beauty,Spa treatment
+2026-03-05,65.0,Food & drink,Paid for Instacart grocery delivery.
+2026-03-06,50.0,Food & drink,Dinner
+2026-02-28,79.99,Electronics & tech,Bought headphones.
+2026-03-05,0.99,Apparel and Beauty,Paid for an app.
+2026-03-06,1200.0,Electronics & tech,Laptop
+2026-03-05,200.0,Health & Fitness,Spa treatment.
+2026-03-05,50.0,Food & drink,Dinner expense.
+2026-03-06,12.5,Food & drink,Sandwich
+2026-03-05,1200.0,Electronics & tech,Compré una laptop.
+2026-03-05,12.5,Food & drink,Bought a sandwich.
+2026-02-23,12.5,Food & drink,Sandwich
+2026-02-24,12.5,Food & drink,Bought a sandwich.
+2026-02-17,8.75,Food & drink,Bought coffee.
+2026-03-02,12.5,Food & drink,Bought a sandwich.
+2026-02-16,8.75,Food & drink,Coffee
+2026-02-28,25.99,Media & streaming,Bought a movie ticket.
+2026-02-27,60.0,Transit and Fuel,Paid for gas.
+2026-03-02,12.5,Food & drink,Sandwich
+2026-03-04,4.5,Food & drink,Bought coffee.
+2026-03-03,38.0,Transit and Fuel,Uber ride to the airport.
+2026-02-28,18.0,Media & streaming,Movie ticket purchase.
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-03-05,65.0,Food & drink,Instacart grocery delivery.
+2026-02-28,79.99,Electronics & tech,Bought headphones.
+2026-02-27,60.0,Transit and Fuel,Gas
+2026-03-05,0.99,Apparel and Beauty,Paid for an app.
+2026-03-05,4.5,Food & drink,Coffee
+2026-03-05,200.0,Apparel and Beauty,Spa treatment.
+2026-03-05,50.0,Food & drink,Dinner expense.
+2026-03-05,1200.0,Electronics & tech,Compré una laptop.
+2026-03-04,38.0,Transit and Fuel,Uber to the airport
+2026-03-05,12.5,Food & drink,Bought a sandwich.
+2026-02-24,12.5,Food & drink,Bought a sandwich.
+2026-03-06,18.0,Media & streaming,Movie ticket
+2026-02-17,8.75,Food & drink,Bought coffee.
+2026-03-02,12.5,Food & drink,Bought a sandwich.
+2026-03-09,20.0,Transit and Fuel,Bus pass
+2026-02-28,25.99,Media & streaming,Bought a movie ticket.
+2026-02-27,60.0,Transit and Fuel,Paid for gas on the last business day of last month.
+2026-03-04,4.5,Food & drink,Bought coffee.
+2026-03-03,38.0,Transit and Fuel,Uber ride to the airport.
+2026-02-28,18.0,Media & streaming,Bought a movie ticket.
+2026-03-08,20.0,Transit and Fuel,Bus pass purchase.
+2026-03-05,65.0,Food & drink,Paid for Instacart grocery delivery.
+2026-03-05,0.99,Apparel and Beauty,Paid for an app.
+2026-03-05,200.0,Health & Fitness,Spa treatment.
+2026-03-05,50.0,Food & drink,Dinner expense.
+2026-02-28,79.99,Electronics & tech,Headphones
+2026-03-05,1200.0,Electronics & tech,Purchased a laptop.
+2026-03-05,12.5,Food & drink,Sandwich
+2026-03-06,35000.0,Transit and Fuel,Bought a car
+2026-02-24,12.5,Food & drink,Sandwich
+2026-02-17,8.75,Food & drink,Coffee
+2026-03-02,12.5,Food & drink,Sandwich purchase
+2026-03-06,0.99,Electronics & tech,App purchase
+2026-02-28,25.99,Media & streaming,Movie ticket
+2026-02-27,60.0,Transit and Fuel,Gas
+2026-03-06,200.0,Apparel and Beauty,Spa treatment
+2026-03-04,4.5,Food & drink,coffee
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-03-06,50.0,Food & drink,Dinner
+2026-02-28,18.0,Media & streaming,Movie ticket
+2026-03-08,20.0,Transit and Fuel,Bus pass
+2026-03-06,1200.0,Electronics & tech,Compra de laptop
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,79.99,Electronics & tech,Bought headphones
+2026-03-06,12.5,Food & drink,Sandwich
+2026-03-05,35000.0,Transit and Fuel,Car purchase
+2026-03-05,0.99,Apparel and Beauty,Paid for an app
+2026-02-23,12.5,Food & drink,Sandwich
+2026-03-05,200.0,Health & Fitness,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-05,1200.0,Electronics & tech,Compra de laptop
+2026-02-23,8.75,Food & drink,coffee
+2026-03-02,12.5,Food & drink,Sandwich
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-02-27,60.0,Transit and Fuel,Gas
+2026-03-05,4.5,Food & drink,coffee
+2026-03-04,38.0,Transit and Fuel,Uber to the airport
+2026-02-27,18.0,Arts and hobbies,Movie ticket
+2026-03-09,20.0,Transit and Fuel,Bus pass
+2026-03-06,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,79.99,Electronics & tech,Headphones
+2026-03-06,35000.0,Transit and Fuel,Bought a car
+2026-03-06,0.99,Electronics & tech,App purchase
+2026-03-06,200.0,Apparel and Beauty,Spa treatment
+2026-03-06,50.0,Food & drink,Dinner
+2026-03-06,1200.0,Electronics & tech,Laptop
+2026-03-06,12.5,Food & drink,Bought a sandwich.
+2026-02-23,12.5,Food & drink,Sandwich.
+2026-02-16,8.75,Food & drink,Coffee.
+2026-03-02,12.5,Food & drink,Bought a sandwich.
+2026-02-28,25.99,Arts and hobbies,Movie ticket purchase.
+2026-02-27,60.0,Transit and Fuel,Gas purchase.
+2026-03-04,38.0,Transit and Fuel,Uber to the airport.
+2026-03-06,18.0,Arts and hobbies,Movie ticket.
+2026-03-09,20.0,Transit and Fuel,Bus pass purchase.
+2026-03-05,65.0,Food & drink,Instacart grocery delivery.
+2026-02-28,79.99,Electronics & tech,Bought headphones.
+2026-03-06,35000.0,Transit and Fuel,Bought a car.
+2026-03-06,0.99,Electronics & tech,Purchased an app.
+2026-03-06,200.0,Apparel and Beauty,Spa treatment.
+2026-03-06,50.0,Food & drink,Dinner.
+2026-03-05,1200.0,Electronics & tech,Bought a laptop.
+2026-03-06,12.5,Food & drink,Sandwich.
+2026-02-23,12.5,Food & drink,Sandwich.
+2026-02-23,8.75,Food & drink,Coffee.
+2026-03-02,12.5,Food & drink,Sandwich.
+2026-02-28,25.99,Arts and hobbies,Movie ticket.
+2026-02-27,60.0,Transit and Fuel,Gas purchase.
+2026-03-05,4.5,Food & drink,Coffee.
+2026-03-04,38.0,Transit and Fuel,Uber ride to the airport.
+2026-03-06,18.0,Arts and hobbies,Movie ticket.
+2026-03-09,20.0,Transit and Fuel,Bus pass purchase.
+2026-03-06,65.0,Food & drink,Instacart grocery delivery.
+2026-02-28,79.99,Electronics & tech,Headphones purchase.
+2026-03-06,35000.0,Transit and Fuel,Bought a car.
+2026-03-06,0.99,Electronics & tech,App purchase.
+2026-03-06,200.0,Apparel and Beauty,Spa treatment.
+2026-03-06,50.0,Food & drink,Dinner.
+2026-03-06,1200.0,Electronics & tech,Laptop purchase.
+2026-03-06,12.5,Food & drink,Bought a sandwich.
+2026-02-23,12.5,Food & drink,Bought a sandwich.
+2026-02-16,8.75,Food & drink,Coffee.
+2026-03-02,12.5,Food & drink,Bought a sandwich.
+2026-02-28,25.99,Arts and hobbies,Movie ticket.
+2026-02-27,60.0,Transit and Fuel,Gas purchase.
+2026-03-05,4.5,Food & drink,Coffee.
+2026-03-04,38.0,Transit and Fuel,Uber ride to the airport.
+2026-03-06,18.0,Arts and hobbies,Movie ticket.
+2026-03-09,20.0,Transit and Fuel,Bought a bus pass.
+2026-03-06,65.0,Food & drink,Instacart grocery delivery.
+2026-02-28,79.99,Electronics & tech,Bought headphones.
+2026-03-06,35000.0,Transit and Fuel,Bought a car.
+2026-03-06,0.99,Electronics & tech,Bought an app.
+2026-03-06,200.0,Apparel and Beauty,Spa treatment.
+2026-03-06,50.0,Food & drink,Dinner.
+2026-03-06,1200.0,Electronics & tech,Compré una laptop.
+2026-03-06,12.5,Food & drink,Sandwich
+2026-02-23,12.5,Food & drink,sandwich
+2026-02-23,8.75,Food & drink,Coffee
+2026-03-02,12.5,Food & drink,Sandwich
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-02-27,60.0,Transit and Fuel,Gas
+2026-03-05,4.5,Food & drink,coffee
+2026-03-04,38.0,Transit and Fuel,Uber to the airport
+2026-03-06,18.0,Media & streaming,Movie ticket
+2026-03-09,20.0,Transit and Fuel,Bus pass
+2026-03-06,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,79.99,Electronics & tech,Headphones
+2026-03-06,35000.0,Misc,Bought a car
+2026-03-06,0.99,Electronics & tech,App purchase
+2026-03-06,200.0,Apparel and Beauty,Spa treatment
+2026-03-06,50.0,Food & drink,Dinner
+2026-03-06,1200.0,Electronics & tech,Compra de laptop
+2026-02-24,12.5,Food & drink,Sandwich
+2026-03-05,12.5,Food & drink,Sandwich
+2026-02-23,12.5,Food & drink,Sandwich
+2026-02-16,8.75,Food & drink,coffee
+2026-03-02,12.5,Food & drink,Sandwich
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-02-27,60.0,Transit and Fuel,Gas
+2026-03-04,4.5,Food & drink,coffee
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-02-27,18.0,Arts and hobbies,Movie ticket
+2026-03-08,20.0,Transit and Fuel,Bus pass
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,79.99,Electronics & tech,Headphones
+2026-03-05,35000.0,Transit and Fuel,Bought a car
+2026-03-05,0.99,Electronics & tech,App purchase
+2026-03-05,200.0,Apparel and Beauty,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-05,1200.0,Electronics & tech,Compra de laptop
+2026-03-05,12.5,Food & drink,Sandwich
+2026-02-23,12.5,Food & drink,Sandwich
+2026-02-23,8.75,Food & drink,Coffee
+2026-03-02,12.5,Food & drink,Sandwich
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-02-27,60.0,Transit and Fuel,Gas
+2026-03-04,4.5,Food & drink,coffee
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-02-27,18.0,Arts and hobbies,Movie ticket
+2026-03-08,20.0,Transit and Fuel,Bus pass
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,79.99,Electronics & tech,Headphones
+2026-03-05,35000.0,Transit and Fuel,Bought a car (USD)
+2026-03-05,0.99,Electronics & tech,App purchase
+2026-03-05,200.0,Apparel and Beauty,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-05,1200.0,Electronics & tech,Laptop
+2026-03-05,12.5,Food & drink,Sandwich
+2026-02-23,12.5,Food & drink,Sandwich
+2026-02-23,8.75,Food & drink,coffee
+2026-03-02,12.5,Food & drink,Sandwich
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-02-27,60.0,Transit and Fuel,Gas
+2026-03-04,4.5,Food & drink,Coffee
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-02-27,18.0,Arts and hobbies,Movie ticket
+2026-03-08,20.0,Transit and Fuel,Bus pass
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,79.99,Electronics & tech,Headphones
+2026-03-05,35000.0,Transit and Fuel,Bought a car
+2026-03-05,0.99,Electronics & tech,App purchase
+2026-03-05,200.0,Apparel and Beauty,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-05,1200.0,Electronics & tech,Laptop
+2026-03-05,12.5,Food & drink,Sandwich
+2026-02-23,12.5,Food & drink,Sandwich
+2026-02-23,8.75,Food & drink,Coffee
+2026-03-02,12.5,Food & drink,Sandwich
+2026-02-28,25.99,Media & streaming,Movie ticket
+2026-02-27,60.0,Transit and Fuel,Gas
+2026-03-04,4.5,Food & drink,Coffee
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-02-27,18.0,Media & streaming,Movie ticket
+2026-03-08,20.0,Transit and Fuel,Bus pass
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,79.99,Electronics & tech,Headphones
+2026-03-05,35000.0,Transit and Fuel,Bought a car
+2026-03-05,0.99,Electronics & tech,App purchase
+2026-03-05,200.0,Apparel and Beauty,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-05,1200.0,Electronics & tech,Compra de laptop
+2026-03-05,12.5,Food & drink,Sandwich
+2026-02-23,12.5,Food & drink,Sandwich
+2026-02-23,8.75,Food & drink,coffee
+2026-03-02,12.5,Food & drink,Sandwich
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-02-27,60.0,Transit and Fuel,Gas
+2026-03-04,4.5,Food & drink,coffee
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-02-27,18.0,Arts and hobbies,Movie ticket
+2026-03-08,20.0,Transit and Fuel,Bus pass
+2026-03-05,65.0,Food & drink,Instacart grocery delivery
+2026-02-28,79.99,Electronics & tech,Headphones
+2026-03-05,35000.0,Transit and Fuel,Bought a car
+2026-03-05,0.99,Media & streaming,App purchase
+2026-03-05,200.0,Apparel and Beauty,Spa treatment
+2026-03-05,50.0,Food & drink,Dinner
+2026-03-05,1200.0,Electronics & tech,Compra de laptop
+2026-03-05,12.5,Food & drink,Sandwich
+2026-02-23,12.5,Food & drink,Sandwich
+2026-02-23,8.75,Food & drink,Coffee
+2026-03-02,12.5,Food & drink,Sandwich
+2026-02-28,25.99,Arts and hobbies,Movie ticket
+2026-02-27,60.0,Transit and Fuel,Gas
+2026-03-04,4.5,Food & drink,Coffee
+2026-03-03,38.0,Transit and Fuel,Uber to the airport
+2026-02-27,18.0,Arts and hobbies,Movie ticket
+2026-03-08,20.0,Transit and Fuel,Bus pass

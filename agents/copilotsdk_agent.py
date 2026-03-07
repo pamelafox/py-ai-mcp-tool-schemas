@@ -24,7 +24,7 @@ import os
 from dataclasses import dataclass
 from datetime import datetime
 
-from copilot import CopilotClient, SessionConfig
+from copilot import CopilotClient, PermissionHandler, SessionConfig
 from copilot.generated.session_events import SessionEvent, SessionEventType
 from copilot.types import CopilotClientOptions, MCPRemoteServerConfig
 from dotenv import load_dotenv
@@ -42,7 +42,7 @@ logger.setLevel(logging.INFO)
 MCP_SERVER_URL = os.getenv("MCP_SERVER_URL", "http://localhost:8000/mcp")
 
 # Available models for Copilot SDK
-COPILOT_MODELS = ["gpt-5", "claude-sonnet-4", "claude-sonnet-4.5", "claude-haiku-4.5"]
+COPILOT_MODELS = ["gpt-5", "gpt-5.3-codex", "claude-sonnet-4", "claude-sonnet-4.5", "claude-haiku-4.5"]
 DEFAULT_COPILOT_MODEL = "claude-haiku-4.5"
 
 
@@ -139,19 +139,22 @@ async def run_query(
         )
 
         session_config = SessionConfig(
-            template_id="default",
             model=deployment,
-            mcp_servers=[
-                MCPRemoteServerConfig(
+            mcp_servers={
+                "expenses": MCPRemoteServerConfig(
                     type="http",
                     url=MCP_SERVER_URL,
                     tools=[tool_name],  # Filter to specific tool
                 )
-            ],
-            system_prompt=(
-                "You help users log expenses. "
-                f"Today's date is {datetime.now().strftime('%Y-%m-%d')}."
-            ),
+            },
+            system_message={
+                "mode": "replace",
+                "content": (
+                    "You help users log expenses. "
+                    f"Today's date is {datetime.now().strftime('%Y-%m-%d')}."
+                ),
+            },
+            on_permission_request=PermissionHandler.approve_all,
         )
 
         session = await client.create_session(session_config)

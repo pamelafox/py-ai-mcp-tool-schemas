@@ -8,7 +8,6 @@ Contains test cases with expense-logging prompts categorized by difficulty:
 
 from dataclasses import dataclass
 from datetime import date, timedelta
-from typing import Literal
 
 
 @dataclass
@@ -20,7 +19,6 @@ class ExpenseCase:
     expected_category: str | None = None  # Expected category value (if applicable)
     expected_date: str | None = None  # Expected date in YYYY-MM-DD format
     expected_amount: float | None = None
-    expected_reimbursable: bool | Literal["unknown"] | None = None
     difficulty: str = "clear"  # clear, ambiguous, edge_case
 
 
@@ -121,92 +119,7 @@ EXPENSE_CASES: list[ExpenseCase] = [
         expected_amount=12.50,
         difficulty="clear",
     ),
-    ExpenseCase(
-        name="clear_transport_today",
-        prompt=f"I paid $45 for gas today ({get_today()}).",
-        expected_category="Transit and Fuel",
-        expected_date=get_today(),
-        expected_amount=45.0,
-        difficulty="clear",
-    ),
-    ExpenseCase(
-        name="clear_entertainment",
-        prompt="On 2026-01-15 I spent $25.99 on a movie ticket.",
-        expected_category="Media & streaming",
-        expected_date="2026-01-15",
-        expected_amount=25.99,
-        difficulty="clear",
-    ),
-    ExpenseCase(
-        name="clear_shopping",
-        prompt="I bought new shoes for $125 on January 20, 2026.",
-        expected_category="Apparel and Beauty",
-        expected_date="2026-01-20",
-        expected_amount=125.0,
-        difficulty="clear",
-    ),
-    ExpenseCase(
-        name="clear_gadget",
-        prompt="Yesterday I purchased a laptop for 1200 bucks.",
-        expected_category="Electronics & tech",
-        expected_date=get_yesterday(),
-        expected_amount=1200.0,
-        difficulty="clear",
-    ),
-    ExpenseCase(
-        name="clear_reimbursable_true",
-        prompt="Yesterday I paid $18 for a taxi to a client meeting.",
-        expected_category="Transit and Fuel",
-        expected_date=get_yesterday(),
-        expected_amount=18.0,
-        expected_reimbursable=True,
-        difficulty="clear",
-    ),
-    ExpenseCase(
-        name="clear_reimbursable_true_customer_lunch",
-        prompt="Yesterday I spent $32 on lunch with a customer.",
-        expected_category="Food & drink",
-        expected_date=get_yesterday(),
-        expected_amount=32.0,
-        expected_reimbursable=True,
-        difficulty="clear",
-    ),
-    ExpenseCase(
-        name="clear_reimbursable_false",
-        prompt="Yesterday I bought a movie ticket for $22 with friends.",
-        expected_category="Media & streaming",
-        expected_date=get_yesterday(),
-        expected_amount=22.0,
-        expected_reimbursable=False,
-        difficulty="clear",
-    ),
-    ExpenseCase(
-        name="clear_reimbursable_false_personal_dinner",
-        prompt="Yesterday I spent $48 on dinner with my family.",
-        expected_category="Food & drink",
-        expected_date=get_yesterday(),
-        expected_amount=48.0,
-        expected_reimbursable=False,
-        difficulty="clear",
-    ),
-    ExpenseCase(
-        name="ambiguous_reimbursable_unknown",
-        prompt="Yesterday I bought lunch for $14 after a work event, but I'm not sure if it's reimbursable.",
-        expected_category="Food & drink",
-        expected_date=get_yesterday(),
-        expected_amount=14.0,
-        expected_reimbursable="unknown",
-        difficulty="ambiguous",
-    ),
-    ExpenseCase(
-        name="ambiguous_reimbursable_unknown_mixed_outing",
-        prompt="Yesterday I spent $24 on drinks after work with coworkers and friends.",
-        expected_category=None,
-        expected_date=get_yesterday(),
-        expected_amount=24.0,
-        expected_reimbursable="unknown",
-        difficulty="ambiguous",
-    ),
+
     # --- Hard-but-precise (relative-date) requests ---
     # These have a single correct date, but require calendar reasoning relative to "today".
     ExpenseCase(
@@ -366,3 +279,74 @@ def get_ambiguous_cases() -> list[ExpenseCase]:
 
 def get_edge_cases() -> list[ExpenseCase]:
     return get_cases_by_difficulty("edge_case")
+
+
+# =============================================================================
+# Output Variant Test Cases
+# =============================================================================
+
+
+@dataclass
+class OutputCase:
+    """A test case for evaluating get_expenses output schema variants.
+
+    Tests whether the agent can correctly interpret expense data returned
+    by different output schema variants (str, list[dict], list[Expense])
+    and answer questions about it.
+    """
+
+    name: str
+    prompt: str
+    # "count", "max_amount", "min_amount", "earliest_date",
+    # "field_of_max", "top_n_table", "filter_table"
+    check_type: str
+    check_params: dict | None = None
+    difficulty: str = "clear"
+
+
+OUTPUT_CASES: list[OutputCase] = [
+    OutputCase(
+        name="count_all",
+        prompt="How many expenses are recorded in total? Reply with just the number.",
+        check_type="count",
+    ),
+    OutputCase(
+        name="max_expense",
+        prompt="What is the dollar amount of the single most expensive expense? Reply with just the number.",
+        check_type="max_amount",
+    ),
+    OutputCase(
+        name="min_expense",
+        prompt="What is the dollar amount of the cheapest expense? Reply with just the number.",
+        check_type="min_amount",
+    ),
+    OutputCase(
+        name="earliest_date",
+        prompt="What is the date of the earliest recorded expense? Reply in YYYY-MM-DD format.",
+        check_type="earliest_date",
+    ),
+    OutputCase(
+        name="category_of_max",
+        prompt="What category does the most expensive expense belong to? Reply with just the category name.",
+        check_type="field_of_max",
+        check_params={"field": "category"},
+    ),
+    OutputCase(
+        name="top3_table",
+        prompt=(
+            "Show the 3 most expensive expenses as a markdown table"
+            " with columns: Description, Amount, Category, Date."
+        ),
+        check_type="top_n_table",
+        check_params={"n": 3},
+    ),
+    OutputCase(
+        name="electronics_table",
+        prompt=(
+            "Show all expenses in the 'Electronics & tech' category"
+            " as a markdown table with columns: Description, Amount, Date."
+        ),
+        check_type="filter_table",
+        check_params={"field": "category", "value": "Electronics & tech"},
+    ),
+]

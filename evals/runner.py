@@ -23,6 +23,7 @@ import json
 import logging
 import os
 import sys
+import time
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -38,7 +39,7 @@ from agents.copilotsdk_agent import run_query as copilot_run_query  # noqa: E402
 from agents.langchain_agent import run_query as langchain_run_query  # noqa: E402
 from agents.pydanticai_agent import ToolCallInfo  # noqa: E402
 from agents.pydanticai_agent import run_query as pydanticai_run_query
-from evals.dataset import EXPENSE_CASES, ExpenseCase  # noqa: E402
+from evals.dataset import EXPENSE_CASES, OUTPUT_CASES, ExpenseCase, OutputCase  # noqa: E402
 
 # Agent types
 AGENT_PYDANTICAI = "pydanticai"
@@ -46,7 +47,7 @@ AGENT_COPILOT = "copilot"
 AGENT_LANGCHAIN = "langchain"
 AGENT_AGENTFRAMEWORK = "agentframework"
 AVAILABLE_AGENTS = [AGENT_PYDANTICAI, AGENT_COPILOT, AGENT_LANGCHAIN, AGENT_AGENTFRAMEWORK]
-from evals.evaluators import EvalResult, compute_score, run_all_evaluations  # noqa: E402
+from evals.evaluators import EvalResult, compute_score, run_all_evaluations, run_output_evaluations  # noqa: E402
 from evals.report import generate_markdown_report  # noqa: E402
 
 load_dotenv(override=True)
@@ -64,6 +65,11 @@ logger.setLevel(logging.INFO)
 # =============================================================================
 
 MCP_SERVER_URL = os.getenv("MCP_SERVER_URL", "http://localhost:8000/mcp")
+
+# Path to the curated eval dataset for output variant testing.
+# Both the MCP server and the evaluator read EXPENSES_FILE from the environment,
+# so setting it before launching output evals ensures they share the same data.
+EXPENSES_EVAL_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "servers", "expenses_eval.csv")
 
 # Tool variants to test
 #
@@ -91,16 +97,36 @@ DATE_VARIANTS = [
     "add_expense_date_d",  # Annotated[date, Field(...)]
 ]
 
-REIMBURSABLE_VARIANTS = [
-    "add_expense_reimb_e",  # Annotated[bool | Literal["unknown"], Field(...)]
+DESCRIPTION_VARIANTS = [
+    "add_expense_desc_a",  # str
+    "add_expense_desc_b",  # Annotated[str, "Start with capital..."]
+    "add_expense_desc_c",  # Annotated[str, Field(pattern=...)]
+    "add_expense_desc_d",  # Annotated[str, Field(pattern=..., description=...)]
 ]
 
 MODEL_INPUT_VARIANTS = [
     "add_expense_model_a",  # Pydantic model input (nested object)
 ]
 
-# Default to all variants (category + date + reimbursable + nested model input)
-ALL_VARIANTS = CATEGORY_VARIANTS_DEFAULT + DATE_VARIANTS + REIMBURSABLE_VARIANTS + MODEL_INPUT_VARIANTS
+# Default to all variants (category + date + description + nested model input)
+ALL_VARIANTS = (
+    CATEGORY_VARIANTS_DEFAULT
+    + DATE_VARIANTS
+    + DESCRIPTION_VARIANTS
+    + MODEL_INPUT_VARIANTS
+)
+
+# Output variants (testing output schema handling)
+OUTPUT_VARIANTS = [
+    "get_expenses_a",  # str
+    "get_expenses_b",  # list[dict]
+    "get_expenses_c",  # list[Expense]
+]
+
+# Eval types
+EVAL_TYPE_INPUT = "input"
+EVAL_TYPE_OUTPUT = "output"
+EVAL_TYPES = [EVAL_TYPE_INPUT, EVAL_TYPE_OUTPUT]
 
 
 # =============================================================================
@@ -141,6 +167,10 @@ class RunResult:
     overall_score: float
     agent_output: str
     reasoning: str | None = None  # Model-provided reasoning summary text (if returned)
+    latency_ms: float | None = None  # Wall-clock time for the agent call in milliseconds
+    input_tokens: int | None = None  # Input token count from the model
+    output_tokens: int | None = None  # Output token count from the model
+    tool_response_size: int | None = None  # Size in chars of tool response content
     error: str | None = None
 
 
@@ -152,6 +182,10 @@ class VariantSummary:
     total_cases: int = 0
     passed_cases: int = 0
     total_score: float = 0.0
+    total_latency_ms: float = 0.0
+    total_input_tokens: int = 0
+    total_output_tokens: int = 0
+    total_tool_response_size: int = 0
     eval_counts: dict[str, dict[str, int]] = field(default_factory=dict)
 
     @property
@@ -161,6 +195,22 @@ class VariantSummary:
     @property
     def avg_score(self) -> float:
         return self.total_score / self.total_cases if self.total_cases > 0 else 0.0
+
+    @property
+    def avg_latency_ms(self) -> float:
+        return self.total_latency_ms / self.total_cases if self.total_cases > 0 else 0.0
+
+    @property
+    def avg_input_tokens(self) -> float:
+        return self.total_input_tokens / self.total_cases if self.total_cases > 0 else 0.0
+
+    @property
+    def avg_output_tokens(self) -> float:
+        return self.total_output_tokens / self.total_cases if self.total_cases > 0 else 0.0
+
+    @property
+    def avg_tool_response_size(self) -> float:
+        return self.total_tool_response_size / self.total_cases if self.total_cases > 0 else 0.0
 
 
 # =============================================================================
@@ -188,6 +238,7 @@ async def run_single_case(
         temperature: Sampling temperature
         reasoning_effort: Reasoning effort level (pydanticai only)
     """
+    t0 = time.perf_counter()
     if agent == AGENT_COPILOT:
         query_result = await copilot_run_query(tool_variant, case.prompt, model=deployment)
     elif agent == AGENT_LANGCHAIN:
@@ -206,6 +257,7 @@ async def run_single_case(
             tool_variant, case.prompt, model=deployment, seed=seed,
             temperature=temperature, reasoning_effort=reasoning_effort
         )
+    latency_ms = (time.perf_counter() - t0) * 1000
 
     # Convert agent-specific ToolCallInfo to pydanticai ToolCallInfo for compatibility
     tool_calls = [
@@ -223,12 +275,20 @@ async def run_single_case(
             eval_results={},
             overall_score=0.0,
             agent_output="",
+            latency_ms=latency_ms,
             error=query_result.error,
         )
 
     # Run evaluations
     eval_results = run_all_evaluations(tool_calls, case, tool_variant)
     overall_score = compute_score(eval_results)
+
+    # Extract token usage and tool response size (not all agents provide these)
+    usage = getattr(query_result, "usage", None)
+    input_tokens = usage.input_tokens if usage else None
+    output_tokens = usage.output_tokens if usage else None
+    tool_response_content = getattr(query_result, "tool_response_content", None)
+    tool_response_size = len(tool_response_content) if tool_response_content else None
 
     return RunResult(
         case_name=case.name,
@@ -239,6 +299,10 @@ async def run_single_case(
         overall_score=overall_score,
         agent_output=query_result.output,
         reasoning=query_result.reasoning,
+        latency_ms=latency_ms,
+        input_tokens=input_tokens,
+        output_tokens=output_tokens,
+        tool_response_size=tool_response_size,
     )
 
 
@@ -304,6 +368,14 @@ async def run_evaluation(
             summary = summaries[variant]
             summary.total_cases += 1
             summary.total_score += run_result.overall_score
+            if run_result.latency_ms is not None:
+                summary.total_latency_ms += run_result.latency_ms
+            if run_result.input_tokens is not None:
+                summary.total_input_tokens += run_result.input_tokens
+            if run_result.output_tokens is not None:
+                summary.total_output_tokens += run_result.output_tokens
+            if run_result.tool_response_size is not None:
+                summary.total_tool_response_size += run_result.tool_response_size
 
             # Count as passed if tool was called and category is valid
             tool_called = run_result.eval_results.get("tool_called")
@@ -312,6 +384,162 @@ async def run_evaluation(
                 summary.passed_cases += 1
 
             # Track individual eval results
+            for eval_name, eval_result in run_result.eval_results.items():
+                if eval_name not in summary.eval_counts:
+                    summary.eval_counts[eval_name] = {"passed": 0, "failed": 0}
+                if eval_result.passed:
+                    summary.eval_counts[eval_name]["passed"] += 1
+                else:
+                    summary.eval_counts[eval_name]["failed"] += 1
+
+    return results, summaries, model_name, model_settings
+
+
+async def run_single_output_case(
+    tool_variant: str,
+    case: OutputCase,
+    agent: str = AGENT_PYDANTICAI,
+    deployment: str | None = None,
+    seed: int | None = None,
+    temperature: float | None = None,
+    reasoning_effort: str | None = None,
+) -> RunResult:
+    """Run a single output test case with a specific get_expenses variant."""
+    t0 = time.perf_counter()
+    if agent == AGENT_COPILOT:
+        query_result = await copilot_run_query(tool_variant, case.prompt, model=deployment)
+    elif agent == AGENT_LANGCHAIN:
+        query_result = await langchain_run_query(
+            tool_variant, case.prompt, model=deployment,
+            temperature=temperature, reasoning_effort=reasoning_effort
+        )
+    elif agent == AGENT_AGENTFRAMEWORK:
+        query_result = await agentframework_run_query(
+            tool_variant, case.prompt, model=deployment, seed=seed,
+            temperature=temperature, reasoning_effort=reasoning_effort
+        )
+    else:
+        query_result = await pydanticai_run_query(
+            tool_variant, case.prompt, model=deployment, seed=seed,
+            temperature=temperature, reasoning_effort=reasoning_effort
+        )
+    latency_ms = (time.perf_counter() - t0) * 1000
+
+    tool_calls = [
+        ToolCallInfo(tool_name=tc.tool_name, arguments=tc.arguments)
+        for tc in query_result.tool_calls
+    ]
+
+    if query_result.error:
+        logger.error(f"Error running output case {case.name} with {tool_variant}: {query_result.error}")
+        return RunResult(
+            case_name=case.name,
+            user_query=case.prompt,
+            tool_variant=tool_variant,
+            tool_calls=[],
+            eval_results={},
+            overall_score=0.0,
+            agent_output="",
+            latency_ms=latency_ms,
+            error=query_result.error,
+        )
+
+    eval_results = run_output_evaluations(tool_calls, case, query_result.output, tool_variant)
+    overall_score = compute_score(eval_results)
+
+    # Extract token usage and tool response size (not all agents provide these)
+    usage = getattr(query_result, "usage", None)
+    input_tokens = usage.input_tokens if usage else None
+    output_tokens = usage.output_tokens if usage else None
+    tool_response_content = getattr(query_result, "tool_response_content", None)
+    tool_response_size = len(tool_response_content) if tool_response_content else None
+
+    return RunResult(
+        case_name=case.name,
+        user_query=case.prompt,
+        tool_variant=tool_variant,
+        tool_calls=tool_calls,
+        eval_results=eval_results,
+        overall_score=overall_score,
+        agent_output=query_result.output,
+        reasoning=query_result.reasoning,
+        latency_ms=latency_ms,
+        input_tokens=input_tokens,
+        output_tokens=output_tokens,
+        tool_response_size=tool_response_size,
+    )
+
+
+async def run_output_evaluation(
+    variants: list[str],
+    cases: list[OutputCase],
+    reasoning_effort: str = DEFAULT_REASONING,
+    seed: int = DEFAULT_SEED,
+    temperature: float | None = None,
+    deployment: str | None = None,
+    progress_callback: Callable[[str], None] | None = None,
+    agent: str = AGENT_PYDANTICAI,
+) -> tuple[list[RunResult], dict[str, VariantSummary], str, dict]:
+    """Run output evaluation across get_expenses variants and output cases.
+
+    Args:
+        variants: List of get_expenses tool variants to test
+        cases: List of output test cases to run
+        reasoning_effort: Reasoning effort level
+        seed: Seed for determinism/reproducibility
+        temperature: Optional sampling temperature
+        deployment: Optional deployment/model name
+        progress_callback: Optional callback for progress updates
+        agent: Agent framework to use
+    """
+    model_name = get_model_name(deployment)
+    results: list[RunResult] = []
+    summaries: dict[str, VariantSummary] = {v: VariantSummary(variant_name=v) for v in variants}
+
+    model_settings: dict = {"seed": seed}
+    if temperature is not None:
+        model_settings["temperature"] = temperature
+    if reasoning_effort is not None and agent == AGENT_PYDANTICAI:
+        model_settings["reasoning_effort"] = reasoning_effort
+
+    total = len(variants) * len(cases)
+    current = 0
+
+    for variant in variants:
+        for case in cases:
+            current += 1
+            if progress_callback:
+                progress_callback(f"[{current}/{total}] {variant} / {case.name}")
+
+            run_result = await run_single_output_case(
+                tool_variant=variant,
+                case=case,
+                agent=agent,
+                deployment=deployment,
+                seed=seed,
+                temperature=temperature,
+                reasoning_effort=reasoning_effort,
+            )
+            results.append(run_result)
+
+            summary = summaries[variant]
+            summary.total_cases += 1
+            summary.total_score += run_result.overall_score
+            if run_result.latency_ms is not None:
+                summary.total_latency_ms += run_result.latency_ms
+            if run_result.input_tokens is not None:
+                summary.total_input_tokens += run_result.input_tokens
+            if run_result.output_tokens is not None:
+                summary.total_output_tokens += run_result.output_tokens
+            if run_result.tool_response_size is not None:
+                summary.total_tool_response_size += run_result.tool_response_size
+
+            # Count as passed if tool was called and answer is correct
+            tool_called = run_result.eval_results.get("tool_called")
+            answer_correct = run_result.eval_results.get("answer_correct")
+            if tool_called and tool_called.passed and answer_correct and answer_correct.passed:
+                summary.passed_cases += 1
+
             for eval_name, eval_result in run_result.eval_results.items():
                 if eval_name not in summary.eval_counts:
                     summary.eval_counts[eval_name] = {"passed": 0, "failed": 0}
@@ -433,6 +661,10 @@ def export_results(
                 "passed_cases": s.passed_cases,
                 "pass_rate": s.pass_rate,
                 "avg_score": s.avg_score,
+                "avg_latency_ms": round(s.avg_latency_ms, 0),
+                "avg_input_tokens": round(s.avg_input_tokens, 0),
+                "avg_output_tokens": round(s.avg_output_tokens, 0),
+                "avg_tool_response_size": round(s.avg_tool_response_size, 0),
                 "eval_counts": s.eval_counts,
             }
             for name, s in summaries.items()
@@ -450,6 +682,10 @@ def export_results(
                 "overall_score": r.overall_score,
                 "agent_output": r.agent_output,
                 "reasoning": r.reasoning,
+                "latency_ms": r.latency_ms,
+                "input_tokens": r.input_tokens,
+                "output_tokens": r.output_tokens,
+                "tool_response_size": r.tool_response_size,
                 "error": r.error,
             }
             for r in results
@@ -538,32 +774,47 @@ def parse_args() -> argparse.Namespace:
         choices=AVAILABLE_AGENTS,
         help=f"Agent framework to use (default: {AGENT_PYDANTICAI})",
     )
+    parser.add_argument(
+        "--eval-type",
+        type=str,
+        default=EVAL_TYPE_INPUT,
+        choices=EVAL_TYPES,
+        help=f"Evaluation type: 'input' for add_expense variants, 'output' for get_expenses variants (default: {EVAL_TYPE_INPUT})",
+    )
     return parser.parse_args()
 
 
 async def main():
     args = parse_args()
+    is_output_eval = args.eval_type == EVAL_TYPE_OUTPUT
 
     # Parse variants
     if not args.variants:
-        variants = ALL_VARIANTS
-        if args.include_cat_a:
-            variants = CATEGORY_VARIANTS_ALL + DATE_VARIANTS
+        if is_output_eval:
+            variants = OUTPUT_VARIANTS
+        else:
+            variants = ALL_VARIANTS
+            if args.include_cat_a:
+                variants = CATEGORY_VARIANTS_ALL + DATE_VARIANTS
     else:
         variants = [v.strip() for v in args.variants.split(",") if v.strip()]
 
     # Parse cases
     if args.cases:
         case_names = {c.strip() for c in args.cases.split(",") if c.strip()}
-        cases = [c for c in EXPENSE_CASES if c.name in case_names]
+        if is_output_eval:
+            cases = [c for c in OUTPUT_CASES if c.name in case_names]
+        else:
+            cases = [c for c in EXPENSE_CASES if c.name in case_names]
         if not cases:
             logger.error(f"No matching cases found for: {args.cases}")
             return
     else:
-        cases = EXPENSE_CASES
+        cases = OUTPUT_CASES if is_output_eval else EXPENSE_CASES
 
     logger.info(
-        "Running evaluation with %s variants, %s cases, agent=%s, reasoning=%s, seed=%s, deployment=%s",
+        "Running %s evaluation with %s variants, %s cases, agent=%s, reasoning=%s, seed=%s, deployment=%s",
+        args.eval_type,
         len(variants),
         len(cases),
         args.agent,
@@ -575,16 +826,31 @@ async def main():
     def progress(msg: str) -> None:
         logger.info(msg)
 
-    results, summaries, model_name, model_settings = await run_evaluation(
-        variants,
-        cases,
-        reasoning_effort=args.reasoning,
-        seed=args.seed,
-        temperature=args.temperature,
-        deployment=args.deployment,
-        progress_callback=progress,
-        agent=args.agent,
-    )
+    if is_output_eval:
+        # Use the curated eval dataset so expected answers are stable
+        os.environ["EXPENSES_FILE"] = EXPENSES_EVAL_FILE
+        logger.info("Using eval dataset: %s", EXPENSES_EVAL_FILE)
+        results, summaries, model_name, model_settings = await run_output_evaluation(
+            variants,
+            cases,
+            reasoning_effort=args.reasoning,
+            seed=args.seed,
+            temperature=args.temperature,
+            deployment=args.deployment,
+            progress_callback=progress,
+            agent=args.agent,
+        )
+    else:
+        results, summaries, model_name, model_settings = await run_evaluation(
+            variants,
+            cases,
+            reasoning_effort=args.reasoning,
+            seed=args.seed,
+            temperature=args.temperature,
+            deployment=args.deployment,
+            progress_callback=progress,
+            agent=args.agent,
+        )
 
     # Print summary
     print_summary_table(summaries)

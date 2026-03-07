@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>TODO: Presentation Title</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reset.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/theme/simple.css" id="theme">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chicle&family=Work+Sans:wght@400;700&display=swap">
+    <link rel="stylesheet" href="../static/a11y-dark.min.css">
+		<link rel="stylesheet" href="../static/slides.css">
+		<style>
+		:root {
+			--neon-pink: #FF10F0;
+			--neon-pink-light: #FF69E0;
+			--neon-green: #39FF14;
+			--neon-cyan: #00FFFF;
+		}
+
+		/* White background */
+		.reveal {
+			background: #fff;
+		}
+
+		/* Headings: neon pink on black, chunky and loud */
+		.reveal h1, .reveal h2, .reveal h3 {
+			font-family: 'Chicle', cursive;
+			color: var(--neon-pink);
+			background: #000;
+			display: inline-block;
+			padding: 6px 18px;
+			text-transform: uppercase;
+			letter-spacing: 2px;
+		}
+
+		/* Body font */
+		.reveal {
+			font-family: 'Work Sans', sans-serif;
+		}
+
+		/* Links in neon pink */
+		.reveal a {
+			color: var(--neon-pink);
+		}
+		.reveal a:hover {
+			color: var(--neon-cyan);
+		}
+
+		/* Section heading slides: black background, centered */
+		.reveal section.heading-only {
+			display: flex !important;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			height: 100%;
+			min-height: 720px;
+			background: #000;
+		}
+
+		/* Blockquote: neon border, retro feel */
+		.reveal blockquote {
+			border-left: 5px solid var(--neon-pink);
+			background-color: #1a1a1a;
+			color: #fff;
+			font-family: 'Courier New', Courier, monospace;
+			padding: 16px 20px;
+		}
+
+		/* Table header accent */
+		.reveal table thead tr {
+			background-color: #000;
+			color: var(--neon-pink);
+		}
+		.reveal table thead th {
+			color: var(--neon-pink);
+			border-color: var(--neon-pink);
+		}
+		.reveal table {
+			border-color: var(--neon-pink);
+		}
+		.reveal table td {
+			border-color: #ccc;
+		}
+
+		/* Code block: dark bg with neon border */
+		.reveal pre {
+			border: 2px solid var(--neon-pink);
+			border-radius: 0;
+			box-shadow: 4px 4px 0 var(--neon-pink);
+		}
+
+		/* Slide number in neon pink */
+		.reveal .slide-number {
+			color: var(--neon-pink);
+		}
+
+		/* Body text stays dark */
+		.reveal p, .reveal li, .reveal td {
+			color: #222;
+		}
+		</style>
+	</head>
+    <body>
+    <div class="reveal">
+        <div class="slides">
+
+<!-- Title slide -->
+<section class="heading-only" style="padding-top:5%">
+    <h1 style="font-size:2.5em;">TODO: Presentation Title
+    </h1>
+    <br>
+    <h3>Pamela Fox</h3>
+
+    <div class="no-print" style="text-align: left; margin-top: 20px; font-size: 70%; display:none;">
+        Tips for navigating the slides:<br>
+        <ul>
+            <li>Press O or Escape for overview mode.</li>
+            <li>Visit <a href="?print-pdf" target="_blank">this link</a> for a nice printable version</li>
+            <li>Press the copy icon on the upper right of code blocks to copy the code</li>
+        </ul>
+    </div>
+</section>
+
+<!-- About me slide -->
+<section>
+    <h3>About me</h3>
+
+    <img src="photo_pamela_olaf.jpg" alt="Photo of Pamela smiling with an Olaf statue" style="float:right; height:400px;">
+    <p>Python Cloud Advocate at Microsoft</p>
+    <p>Formerly: UC Berkeley, Coursera, Khan Academy, Google</p>
+    <br>
+    <p>Find me online at:</p>
+    <table style="width:60%; float: left; font-size:28px;">
+        <tr>
+          <td>Mastodon
+          <td><a target="_blank" href="https://fosstodon.org/@pamelafox">@pamelafox@fosstodon.org</a></td>
+        </tr>
+        <tr>
+          <td>BlueSky
+          <td><a target="_blank" href="https://bsky.app/profile/pamelafox.bsky.social">@pamelafox.bsky.social</a></td>
+        </tr>
+        <tr>
+          <td>Twitter
+          <td><a target="_blank" href="https://www.twitter.com/pamelafox">@pamelafox</a></td>
+        </tr>
+        <tr>
+          <td>LinkedIn
+          <td><a target="_blank" href="https://www.linkedin.com/in/pamela-s-fox/">www.linkedin.com/in/pamela-s-fox/</a></td>
+        </tr>
+        <tr>
+            <td>GitHub
+            <td><a target="_blank" href="https://www.github.com/pamelafox">www.github.com/pamelafox</a></td>
+          </tr>
+        <tr>
+            <td>Website
+            <td><a target="_blank" href="https://www.pamelafox.org">pamelafox.org</a></td>
+          </tr>
+      </table>
+</section>
+
+<!-- Section heading slide -->
+<section class="heading-only">
+  <h2>TODO: Section Title
+  </h2>
+</section>
+
+<!-- Content slide with text and image -->
+<section>
+  <h3>TODO: Slide Title</h3>
+
+  <img src="TODO.png" alt="TODO: image description" style="float:right; width:400px;">
+  <p>TODO: Slide content goes here.</p>
+</section>
+
+<!-- Content slide with code example -->
+<section>
+  <h3>TODO: Code Example Title</h3>
+
+  <p>TODO: Description of the code example.</p>
+
+  <pre><code data-trim data-noescape class="python">
+# TODO: Add code example
+def hello():
+    print("Hello, world!")
+  </code></pre>
+</section>
+
+<!-- Content slide with a table -->
+<section>
+  <h3>TODO: Table Slide Title</h3>
+
+  <table style="width: 100%; border: 1px solid #ccc;">
+    <thead>
+      <tr>
+        <th>Column A</th>
+        <th>Column B</th>
+        <th>Column C</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>TODO</td>
+        <td>TODO</td>
+        <td>TODO</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Another section heading slide -->
+<section class="heading-only">
+  <h2>TODO: Another Section Title</h2>
+</section>
+
+<!-- Content slide with bullet points -->
+<section>
+  <h3>TODO: Bullet Points Slide Title</h3>
+
+  <ul>
+    <li>TODO: First point
+    <li>TODO: Second point
+    <li>TODO: Third point
+  </ul>
+</section>
+
+<!-- Content slide with a blockquote -->
+<section>
+  <h3>TODO: Quote Slide Title</h3>
+
+  <blockquote style="width:100%; background-color: #eaeaea; font-size:0.9em;">
+    TODO: Add a quote or callout here.
+  </blockquote>
+</section>
+
+<!-- Content slide with fragments (incremental reveal) -->
+<section>
+  <h3>TODO: Incremental Reveal Slide</h3>
+
+  <p class="fragment">TODO: First point (revealed on click)</p>
+  <p class="fragment">TODO: Second point (revealed on next click)</p>
+  <p class="fragment">TODO: Third point (revealed on next click)</p>
+</section>
+
+<!-- Thank you / closing slide -->
+<section>
+  <h3>Thank you!</h3>
+
+  <p>TODO: Add links to slides, repos, or resources.</p>
+
+  <p>Find me online at:</p>
+      <table style="width:60%; float: left; font-size:28px;">
+        <tr>
+          <td>Mastodon
+          <td><a target="_blank" href="https://fosstodon.org/@pamelafox">@pamelafox@fosstodon.org</a></td>
+        </tr>
+        <tr>
+          <td>BlueSky
+          <td><a target="_blank" href="https://bsky.app/profile/pamelafox.bsky.social">@pamelafox.bsky.social</a></td>
+        </tr>
+        <tr>
+          <td>Twitter
+          <td><a target="_blank" href="https://twitter.com/pamelafox">@pamelafox</a></td>
+        </tr>
+        <tr>
+          <td>LinkedIn
+          <td><a target="_blank" href="https://www.linkedin.com/in/pamela-s-fox/">www.linkedin.com/in/pamela-s-fox/</a></td>
+        </tr>
+        <tr>
+          <td>GitHub
+          <td><a target="_blank" href="https://www.github.com/pamelafox">www.github.com/pamelafox</a></td>
+        </tr>
+        <tr>
+          <td>Website
+          <td><a target="_blank" href="https://www.pamelafox.org">pamelafox.org</a></td>
+        </tr>
+      </table>
+</section>
+
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
+    <script>
+        Reveal.initialize({
+            width: 1280,
+            height: 720,
+            hash: true,
+            center: false,
+            slideNumber: true,
+            showNotes: false,
+            margin: 0.1,
+            preloadIframes: true,
+            autoPlayMedia: true,
+            plugins: [ RevealHighlight, RevealMenu ],
+            pdfSeparateFragments: true
+        });
+        window.highlightJsBadge();
+
+
+    </script>
+    </body>
+</html>

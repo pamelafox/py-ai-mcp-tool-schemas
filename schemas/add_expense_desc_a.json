@@ -1,5 +1,5 @@
 {
-  "name": "add_expense_cat_c",
+  "name": "add_expense_desc_a",
   "description": "Add a new expense.",
   "inputSchema": {
     "properties": {

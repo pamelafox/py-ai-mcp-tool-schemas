@@ -1,5 +1,5 @@
 {
-  "name": "add_expense_cat_c",
+  "name": "add_expense_desc_b",
   "description": "Add a new expense.",
   "inputSchema": {
     "properties": {
@@ -26,6 +26,7 @@
         "type": "string"
       },
       "description": {
+        "description": "Start with a capital letter and end with a period",
         "type": "string"
       }
     },

@@ -26,9 +26,9 @@ if os.getenv("LOGFIRE_TOKEN"):
 
 
 SCRIPT_DIR = Path(__file__).parent
-EXPENSES_FILE = SCRIPT_DIR / "expenses.csv"
+EXPENSES_FILE = Path(os.getenv("EXPENSES_FILE", SCRIPT_DIR / "expenses.csv"))
 
-CSV_FIELDNAMES = ["date", "amount", "category", "description", "payment_method", "reimbursable"]
+CSV_FIELDNAMES = ["date", "amount", "category", "description"]
 
 
 mcp = FastMCP("Expenses Tracker")
@@ -97,7 +97,6 @@ async def _add_expense_impl(
     amount: float,
     category: str,
     description: str,
-    reimbursable: str | None = None,
 ) -> str:
     """Shared implementation for all add_expense variants."""
     if amount <= 0:
@@ -119,9 +118,6 @@ async def _add_expense_impl(
                     "amount": amount,
                     "category": category,
                     "description": description,
-                    # The tools currently do not capture payment method.
-                    "payment_method": "",
-                    "reimbursable": reimbursable or "",
                 }
             )
 
@@ -175,8 +171,10 @@ async def add_expense_cat_b(
     amount: float,
     category: Annotated[
         str,
-        "Must be one of: Food & drink, Transit and Fuel, Media & streaming, Apparel and Beauty, "
-        "Electronics & tech, Home and office, Health & Fitness, Arts and hobbies, Fees & services, Misc",
+        Field(
+            description="Must be one of: Food & drink, Transit and Fuel, Media & streaming, Apparel and Beauty, "
+            "Electronics & tech, Home and office, Health & Fitness, Arts and hobbies, Fees & services, Misc"
+        ),
     ],
     description: str,
 ) -> str:
@@ -303,40 +301,58 @@ async def add_expense_model_a(expense: ExpenseInput) -> str:
 
 
 # =============================================================================
-# Reimbursable Field Variants (testing union/sentinel handling)
+# Description Field Variants (testing pattern constraints)
 # =============================================================================
 
 
 @mcp.tool
-async def add_expense_reimb_e(
+async def add_expense_desc_a(
     expense_date: date,
     amount: float,
     category: Category,
     description: str,
-    reimbursable: Annotated[
-        bool | Literal["unknown"],
+) -> str:
+    """Add a new expense."""
+    return await _add_expense_impl(expense_date, amount, category.value, description)
+
+
+@mcp.tool
+async def add_expense_desc_b(
+    expense_date: date,
+    amount: float,
+    category: Category,
+    description: Annotated[str, "Start with a capital letter and end with a period"],
+) -> str:
+    """Add a new expense."""
+    return await _add_expense_impl(expense_date, amount, category.value, description)
+
+
+@mcp.tool
+async def add_expense_desc_c(
+    expense_date: date,
+    amount: float,
+    category: Category,
+    description: Annotated[str, Field(pattern=r"^[A-Z].*\.$")],
+) -> str:
+    """Add a new expense."""
+    return await _add_expense_impl(expense_date, amount, category.value, description)
+
+
+@mcp.tool
+async def add_expense_desc_d(
+    expense_date: date,
+    amount: float,
+    category: Category,
+    description: Annotated[
+        str,
         Field(
-            description=(
-                "Whether this expense is reimbursable.\n\n"
-                "Infer reimbursable status from context; the user does not need to literally say \"reimbursable\". "
-                "Use true when the expense is clearly for work/business (e.g., work trip, client meeting, business lunch). "
-                "Use false when the expense is clearly personal (e.g., lunch with friends, personal expense). "
-                "If it's ambiguous or mixed, use the literal string \"unknown\".\n\n"
-                "Examples: \n"
-                "- true: 'Work trip hotel' / 'Taxi to client meeting' / 'Business lunch'\n"
-                "- false: 'Lunch with friends' / 'Personal expense' / 'Not work-related'\n"
-                "- unknown: no work/personal signal, or user is unsure"
-            )
+            pattern=r"^[A-Z].*\.$",
+            description="Start with a capital letter and end with a period",
         ),
     ],
 ) -> str:
     """Add a new expense."""
-    reimbursable_str = (
-        reimbursable
-        if isinstance(reimbursable, str) and reimbursable == "unknown"
-        else ("true" if reimbursable else "false")
-    )
-    return await _add_expense_impl(expense_date, amount, category.value, description, reimbursable=reimbursable_str)
+    return await _add_expense_impl(expense_date, amount, category.value, description)
 
 
 # =============================================================================

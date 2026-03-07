@@ -12,15 +12,15 @@
       },
       "category": {
         "enum": [
-          "Food & Drink",
-          "Transit & Fuel",
-          "Media & Streaming",
-          "Apparel & Beauty",
-          "Electronics & Tech",
-          "Home & Office",
+          "Food & drink",
+          "Transit and Fuel",
+          "Media & streaming",
+          "Apparel and Beauty",
+          "Electronics & tech",
+          "Home and office",
           "Health & Fitness",
-          "Arts & Hobbies",
-          "Fees & Services",
+          "Arts and hobbies",
+          "Fees & services",
           "Misc"
         ],
         "type": "string"
