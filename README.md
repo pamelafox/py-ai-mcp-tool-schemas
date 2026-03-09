@@ -1,27 +1,27 @@
-# MCP Tool Schema Variant Testing (Expenses)
+# MCP tool schema variants
 
-This repo is a small, focused testbed for a talk on **improving MCP tool schemas to increase agent reliability**.
+This repo accompanies the talk **"Improving MCP tool schemas to increase agent reliability"**.
+[View the slides](https://pamelafox.github.io/py-ai-mcp-tool-schemas/)
 
 It contains:
 
-- A FastMCP HTTP server that exposes multiple **tool schema variants** for the same underlying expense-tracking actions.
-- A PydanticAI agent runner that can be restricted to a specific tool variant and run at different **reasoning effort** levels.
-- An evaluation harness that runs a dataset of prompts across variants and writes comparable results.
+- A **FastMCP server** that exposes multiple tool schema variants for the same expense-tracking actions
+  (e.g., category as `str` vs `Literal` vs `Enum` vs `Annotated[Enum]`).
+- **Four agent implementations** (PydanticAI, GitHub Copilot SDK, LangChain, Microsoft Agent Framework)
+  that connect to the MCP server over Streamable HTTP.
+- An **evaluation harness** that runs 17 test cases across schema variants and generates comparison reports.
 
-## Repository layout
+## Table of contents
 
-| Path | What it is |
-| --- | --- |
-| [servers/expenses_mcp.py](servers/expenses_mcp.py) | MCP server (streamable HTTP) exposing schema variants |
-| [agents/pydanticai_agent.py](agents/pydanticai_agent.py) | Agent runner used standalone and by evals |
-| [evals/](evals/) | Dataset, evaluators, runner, report generator |
-| [schemas/](schemas/) | Auto-generated JSON schemas + diffs |
+- [Setup](#setup)
+- [Run the MCP server](#run-the-mcp-server)
+- [Run agents](#run-agents)
+- [Run evaluations](#run-evaluations)
+- [Tracing with Logfire](#tracing-with-logfire)
 
 ## Setup
 
 ### Install dependencies
-
-This repo uses `uv`:
 
 ```bash
 uv sync
@@ -29,93 +29,124 @@ uv sync
 
 ### Configure environment variables
 
-Copy the sample file:
+Create a `.env` file with:
 
-```bash
-cp .env-sample .env
+```env
+AZURE_OPENAI_ENDPOINT=https://<resource>.openai.azure.com/
+AZURE_OPENAI_CHAT_DEPLOYMENT=<your-deployment-name>
 ```
 
-For the PydanticAI-based agent + evals, the key variables are:
+You also need Azure credentials via `DefaultAzureCredential` (run `az login` for local dev),
+or set `AZURE_OPENAI_KEY` for API key auth.
 
-- `AZURE_OPENAI_ENDPOINT` (example: `https://<resource>.openai.azure.com/`)
-- `AZURE_OPENAI_CHAT_DEPLOYMENT` (your deployed model name)
+Optional:
 
-Optional variables:
+- `MCP_SERVER_URL` — defaults to `http://localhost:8000/mcp`
+- `LOGFIRE_TOKEN` — enables sending traces to [Logfire](https://logfire.pydantic.dev/)
 
-- `MCP_SERVER_URL` (defaults to `http://localhost:8000/mcp`)
-- `LOGFIRE_TOKEN` (enables sending traces to Logfire)
-
-You also need Azure credentials that work with `DefaultAzureCredential` (for local dev, `az login` is usually the easiest).
+To use different models, create separate env files (e.g., `.env.gpt4o`, `.env.gpt53codex`)
+and pass them with `--env-file`.
 
 ## Run the MCP server
-
-Start the HTTP MCP server (streamable HTTP on port 8000):
 
 ```bash
 uv run python servers/expenses_mcp.py
 ```
 
-This server exposes multiple variants of the same logical operations (e.g., category as `str` vs `Literal[...]` vs `Enum`).
+The server exposes multiple variants of each tool with different schema approaches:
 
-## Run the agent
+- **Category variants** (`cat_b` through `cat_e`): `Annotated[str]`, `Literal`, `Enum`, `Annotated[Enum]`
+- **Date variants** (`date_a` through `date_d`): `str`, `Annotated[str]`, `date`, `Field(pattern=...)`
+- **Output variants** (`get_expenses_a` through `get_expenses_c`): `str`, `list[dict]`, `list[Expense]`
 
-The agent in [agents/pydanticai_agent.py](agents/pydanticai_agent.py) connects to the MCP server and can be limited to specific tools.
+## Run agents
 
-Examples:
+Start the MCP server first, then run any agent:
+
+### PydanticAI
 
 ```bash
-# default tool variant
 uv run python agents/pydanticai_agent.py
-
-# single variant
-uv run python agents/pydanticai_agent.py --tools add_expense_cat_c \
-  --query "Yesterday I purchased a laptop for 1200 bucks." \
-  --reasoning medium
-
-# multiple allowed tools
-uv run python agents/pydanticai_agent.py --tools add_expense_cat_c,get_expenses_c
+uv run python agents/pydanticai_agent.py --tools add_expense_cat_e --query "Coffee for $5"
+uv run python agents/pydanticai_agent.py --reasoning medium --show-tool-calls --show-reasoning
 ```
 
-Reasoning effort levels supported by the CLI:
+### GitHub Copilot SDK
 
-- `none`, `minimal`, `low`, `medium`, `high`, `xhigh`
+```bash
+uv run python agents/copilotsdk_agent.py
+uv run python agents/copilotsdk_agent.py --model gpt-5.3-codex --show-tool-calls
+```
+
+### LangChain
+
+```bash
+uv run python agents/langchain_agent.py
+uv run python agents/langchain_agent.py --tools add_expense_cat_c --query "Lunch for $15"
+```
+
+### Microsoft Agent Framework
+
+```bash
+uv run python agents/agentframework_agent.py
+uv run python agents/agentframework_agent.py --tools add_expense_cat_e --reasoning high
+```
+
+### Common agent options
+
+| Option | Description |
+| -------- | ------------- |
+| `--tools` | Tool variant to use (e.g., `add_expense_cat_e`) |
+| `--query` | Custom query to send |
+| `--model` | Model deployment name |
+| `--seed` | Seed for reproducibility (default: 42) |
+| `--temperature` | Sampling temperature |
+| `--reasoning` | Reasoning effort: none, minimal, low, medium, high, xhigh |
+| `--show-tool-calls` | Print extracted tool calls |
+| `--show-reasoning` | Print reasoning summary |
+| `--env-file` | Path to .env file (PydanticAI only) |
 
 ## Run evaluations
 
-The evaluation harness runs a fixed dataset of prompts against tool variants and writes results to a timestamped folder under [evals/runs/](evals/runs/).
+The evaluation harness runs a dataset of 17 prompts across schema variants and writes results
+to a folder under [evals/runs/](evals/runs/).
 
 ```bash
-uv run python evals/runner.py --reasoning medium
+# Run all default variants (category + date)
+uv run python evals/runner.py --output evals/runs/my_run
+
+# Category variants only
+uv run python evals/runner.py --variants add_expense_cat_b,add_expense_cat_c,add_expense_cat_d,add_expense_cat_e \
+  --output evals/runs/my_cat_run
+
+# Date variants only
+uv run python evals/runner.py --variants add_expense_date_a,add_expense_date_b,add_expense_date_c,add_expense_date_d \
+  --output evals/runs/my_date_run
+
+# With a specific model
+uv run python evals/runner.py --env-file .env.gpt4o --seed 42 --temperature 0 \
+  --output evals/runs/gpt4o_run
+
+# With reasoning (required for gpt-5 level models)
+uv run python evals/runner.py --env-file .env.gpt53codex --reasoning medium \
+  --output evals/runs/gpt53codex_run
+
+# Output schema evals (get_expenses variants)
+uv run python evals/runner.py --eval-type output --output evals/runs/output_run
+
+# With a different agent framework
+uv run python evals/runner.py --agent copilot --deployment gpt-5.3-codex \
+  --output evals/runs/copilot_run
 ```
-
-By default, the runner evaluates all variants (category + date).
-
-Useful options:
-
-- `--variants add_expense_cat_a,add_expense_cat_c`
-- `--cases clear_food_yesterday,spanish_food`
-- `--output /path/to/output-folder`
 
 Each run produces:
 
-- `results.json` (machine-readable)
-- `RESULTS.md` (human-readable report)
+- `results.json` — machine-readable results with per-case eval details
+- `RESULTS.md` — human-readable summary report
 
-## Schemas
+## Tracing with Logfire
 
-Generate JSON schemas for the tool variants:
+Both the MCP server and agents support [Logfire](https://logfire.pydantic.dev/) tracing:
 
-```bash
-uv run python scripts/generate_schemas.py
-```
-
-See [schemas/README.md](schemas/README.md) for a summary of how Python typing differences translate into JSON Schema differences.
-
-## Tracing (Logfire)
-
-Tracing is supported via Logfire:
-
-- The MCP server enables Logfire instrumentation if `LOGFIRE_TOKEN` is set.
-- The PydanticAI agent configures Logfire and emits traces for model calls and MCP requests.
-
-To enable sending traces to Logfire, set `LOGFIRE_TOKEN` in `.env`.
+- Set `LOGFIRE_TOKEN` in `.env` to enable
+- The agent prints a Logfire trace URL after each run
