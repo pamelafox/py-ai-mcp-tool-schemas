@@ -9,6 +9,7 @@ __pycache__/
 .claude/
 .claude
 .claude*
+.playwright-mcp/
 
 # Distribution / packaging
 .Python
