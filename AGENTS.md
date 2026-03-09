@@ -90,6 +90,39 @@ uv run python agents/copilotsdk_agent.py --model claude-sonnet-4 --show-reasonin
 
 ## Running evals
 
+**Important:** For gpt-5 level models (gpt-5.2, gpt-5.3-codex, etc.), always specify `--reasoning medium` (or another explicit level) when running evals. Without an explicit reasoning effort, these models might default to no reasoning or might use an unpredictable amount of reasoning, which can lead to inconsistent results.
+
+**Reproducibility:** Always specify `--seed 42 --temperature 0` when the model supports it. This minimizes run-to-run variance and makes results comparable across runs.
+
+```bash
+# Run all default variants (category + date) with default .env
+uv run python evals/runner.py --output evals/runs/my_run
+
+# Run only category variants
+uv run python evals/runner.py --variants add_expense_cat_b,add_expense_cat_c,add_expense_cat_d,add_expense_cat_e --output evals/runs/my_cat_run
+
+# Run only date variants
+uv run python evals/runner.py --variants add_expense_date_a,add_expense_date_b,add_expense_date_c,add_expense_date_d --output evals/runs/my_date_run
+
+# Run with a specific model via env file
+uv run python evals/runner.py --env-file .env.gpt4o --output evals/runs/gpt4o_run
+
+# Run with specific seed and temperature
+uv run python evals/runner.py --seed 42 --temperature 0 --output evals/runs/deterministic_run
+
+# Run with reasoning effort (required for gpt-5 level models)
+uv run python evals/runner.py --env-file .env.gpt53codex --reasoning medium --output evals/runs/gpt53codex_med
+
+# Run output schema evals (get_expenses variants)
+uv run python evals/runner.py --eval-type output --output evals/runs/output_run
+
+# Run with a different agent framework
+uv run python evals/runner.py --agent copilot --output evals/runs/copilot_run
+
+# Run specific test cases only
+uv run python evals/runner.py --cases clear_food_yesterday,edge_large_amount --output evals/runs/subset_run
+```
+
 When you are done running evals, inform the developer by using the "say" command in the terminal:
 
 ```bash

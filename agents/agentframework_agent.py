@@ -227,7 +227,7 @@ async def run_query(
                 name="Expenses Agent",
                 instructions=(
                     "You help users log expenses. "
-                    f"Today's date is {datetime.now().strftime('%Y-%m-%d')}."
+                    f"Today's date is {datetime.now().strftime('%B %-d, %Y')}."
                 ),
                 default_options=chat_options if chat_options else None,
             ) as agent,

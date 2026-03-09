@@ -1,0 +1,3185 @@
+{
+  "metadata": {
+    "timestamp": "2026-03-09T04:01:31.595904",
+    "agent": "copilot",
+    "model_name": "gpt-5.3-codex",
+    "model_settings": {
+      "seed": 42
+    },
+    "mcp_server_url": "http://localhost:8000/mcp"
+  },
+  "summaries": {
+    "add_expense_date_a": {
+      "variant_name": "add_expense_date_a",
+      "total_cases": 17,
+      "passed_cases": 0,
+      "pass_rate": 0.0,
+      "avg_score": 1.0,
+      "avg_latency_ms": 12246.0,
+      "avg_input_tokens": 0.0,
+      "avg_output_tokens": 0.0,
+      "avg_tool_response_size": 0.0,
+      "eval_counts": {
+        "tool_called": {
+          "passed": 17,
+          "failed": 0
+        },
+        "date_format": {
+          "passed": 17,
+          "failed": 0
+        },
+        "date_match": {
+          "passed": 17,
+          "failed": 0
+        }
+      }
+    },
+    "add_expense_date_b": {
+      "variant_name": "add_expense_date_b",
+      "total_cases": 17,
+      "passed_cases": 0,
+      "pass_rate": 0.0,
+      "avg_score": 1.0,
+      "avg_latency_ms": 12392.0,
+      "avg_input_tokens": 0.0,
+      "avg_output_tokens": 0.0,
+      "avg_tool_response_size": 0.0,
+      "eval_counts": {
+        "tool_called": {
+          "passed": 17,
+          "failed": 0
+        },
+        "date_format": {
+          "passed": 17,
+          "failed": 0
+        },
+        "date_match": {
+          "passed": 17,
+          "failed": 0
+        }
+      }
+    },
+    "add_expense_date_c": {
+      "variant_name": "add_expense_date_c",
+      "total_cases": 17,
+      "passed_cases": 0,
+      "pass_rate": 0.0,
+      "avg_score": 1.0,
+      "avg_latency_ms": 10589.0,
+      "avg_input_tokens": 0.0,
+      "avg_output_tokens": 0.0,
+      "avg_tool_response_size": 0.0,
+      "eval_counts": {
+        "tool_called": {
+          "passed": 17,
+          "failed": 0
+        },
+        "date_format": {
+          "passed": 17,
+          "failed": 0
+        },
+        "date_match": {
+          "passed": 17,
+          "failed": 0
+        }
+      }
+    },
+    "add_expense_date_d": {
+      "variant_name": "add_expense_date_d",
+      "total_cases": 17,
+      "passed_cases": 0,
+      "pass_rate": 0.0,
+      "avg_score": 1.0,
+      "avg_latency_ms": 11673.0,
+      "avg_input_tokens": 0.0,
+      "avg_output_tokens": 0.0,
+      "avg_tool_response_size": 0.0,
+      "eval_counts": {
+        "tool_called": {
+          "passed": 17,
+          "failed": 0
+        },
+        "date_format": {
+          "passed": 17,
+          "failed": 0
+        },
+        "date_match": {
+          "passed": 17,
+          "failed": 0
+        }
+      }
+    }
+  },
+  "results": [
+    {
+      "case_name": "clear_food_yesterday",
+      "user_query": "Yesterday I bought a sandwich for $12.50.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged it as:\n\n- **Date:** 2026-03-08 (yesterday)  \n- **Amount:** **$12.50**  \n- **Category:** Food & drink  \n- **Description:** Sandwich",
+      "reasoning": "**Planning sequential tool calls**",
+      "latency_ms": 11707.399624981917,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_monday_before_this_one",
+      "user_query": "I bought a sandwich the Monday before this one for $12.50.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense entry"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-02",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' matches expected '2026-03-02'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Logged \u2705  \n- **Date:** 2026-03-02 (the Monday before this one)  \n- **Amount:** $12.50  \n- **Category:** Food & drink  \n- **Description:** Sandwich",
+      "reasoning": "**Clarifying tool call sequencing**",
+      "latency_ms": 14710.97200002987,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_two_mondays_ago",
+      "user_query": "Two Mondays ago I spent $8.75 on coffee.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense entry"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-02-23",
+            "amount": 8.75,
+            "category": "Food & drink",
+            "description": "Coffee"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-23' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-23' matches expected '2026-02-23'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$8.75** for **Coffee** on **2026-02-23** (two Mondays ago).",
+      "reasoning": "**Planning sequential tool calls**",
+      "latency_ms": 13352.516500046477,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_first_monday_this_month",
+      "user_query": "I bought a sandwich on the first Monday of this month for $12.50.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-02",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' matches expected '2026-03-02'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Logged \u2705  \n- **Date:** 2026-03-02 (first Monday of March 2026)  \n- **Amount:** $12.50  \n- **Category:** Food & drink  \n- **Description:** Sandwich",
+      "reasoning": "**Calculating first Monday date**",
+      "latency_ms": 13396.548832999542,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_day_last_month",
+      "user_query": "On the last day of last month I spent $25.99 on a movie ticket.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense entry"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-02-28",
+            "amount": 25.99,
+            "category": "Media & streaming",
+            "description": "Movie ticket"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' matches expected '2026-02-28'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged it as:\n\n- **Date:** 2026-02-28 (last day of last month)\n- **Amount:** **$25.99**\n- **Category:** **Media & streaming**\n- **Description:** Movie ticket",
+      "reasoning": "**Orchestrating parallel tool calls**",
+      "latency_ms": 14989.280915993731,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_business_day_last_month",
+      "user_query": "I paid $60 for gas on the last business day of last month.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-02-27",
+            "amount": 60,
+            "category": "Transit and Fuel",
+            "description": "Gas"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-27' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-27' matches expected '2026-02-27'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$60** for **Gas** on **2026-02-27** (the last business day of last month).",
+      "reasoning": "**Calculating last business day**",
+      "latency_ms": 11907.587375026196,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_day_before_yesterday_coffee",
+      "user_query": "The day before yesterday I spent $4.50 on coffee.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-07",
+            "amount": 4.5,
+            "category": "Food & drink",
+            "description": "Coffee"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-07' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-07' matches expected '2026-03-07'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged it as:\n\n- **Date:** 2026-03-07 (day before yesterday)\n- **Amount:** **$4.50**\n- **Category:** Food & drink\n- **Description:** Coffee",
+      "reasoning": "**Logging expense for past date**",
+      "latency_ms": 10242.877084005158,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_three_days_ago_rideshare",
+      "user_query": "Three days ago I took an Uber to the airport for $38.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-06",
+            "amount": 38,
+            "category": "Transit and Fuel",
+            "description": "Uber to the airport"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' matches expected '2026-03-06'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged it as:\n\n- **Date:** 2026-03-06  \n- **Amount:** **$38.00**  \n- **Category:** Transit and Fuel  \n- **Description:** Uber to the airport",
+      "reasoning": "**Sequencing intent report before expense logging**",
+      "latency_ms": 13211.28695900552,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_friday_movie",
+      "user_query": "Last Friday I spent $18 on a movie ticket.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-06",
+            "amount": 18,
+            "category": "Media & streaming",
+            "description": "Movie ticket"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' matches expected '2026-03-06'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged it as:\n\n- **Date:** 2026-03-06 (last Friday)\n- **Amount:** **$18**\n- **Category:** **Media & streaming**\n- **Description:** Movie ticket",
+      "reasoning": "**Planning sequential tool calls**",
+      "latency_ms": 13066.779125016183,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_day_after_tomorrow_bus_pass",
+      "user_query": "The day after tomorrow I will buy a bus pass for $20.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-11",
+            "amount": 20,
+            "category": "Transit and Fuel",
+            "description": "Bus pass"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-11' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-11' matches expected '2026-03-11'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged it for **2026-03-11**:\n\n- **$20**\n- **Transit and Fuel**\n- **Bus pass**",
+      "reasoning": "**Scheduling future expense addition**",
+      "latency_ms": 9209.887958015315,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "hard_category_grocery_delivery_yesterday",
+      "user_query": "Yesterday I paid $65 for Instacart grocery delivery.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 65,
+            "category": "Food & drink",
+            "description": "Instacart grocery delivery"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$65** for **Instacart grocery delivery** on **2026-03-08** (yesterday).",
+      "reasoning": "**Logging expense with relative date**",
+      "latency_ms": 8826.847125019412,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "hard_category_headphones_last_day_last_month",
+      "user_query": "On the last day of last month I bought headphones for $79.99.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-02-28",
+            "amount": 79.99,
+            "category": "Electronics & tech",
+            "description": "Headphones"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' matches expected '2026-02-28'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged an expense for **$79.99** on **2026-02-28** in **Electronics & tech** with description **\u201cHeadphones.\u201d**",
+      "reasoning": "**Adding expense with date interpretation**",
+      "latency_ms": 9865.357332979329,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "edge_large_amount",
+      "user_query": "Yesterday I bought a car for 35000 USD.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 35000,
+            "category": "Transit and Fuel",
+            "description": "Bought a car"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged this expense:\n\n- **Date:** 2026-03-08 (yesterday)\n- **Amount:** **$35,000 USD**\n- **Category:** Transit and Fuel\n- **Description:** Bought a car",
+      "reasoning": "**Planning sequential tool calls**",
+      "latency_ms": 12092.186249967199,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "edge_small_amount",
+      "user_query": "I paid $0.99 for an app yesterday.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 0.99,
+            "category": "Electronics & tech",
+            "description": "App purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$0.99** for **App purchase** on **2026-03-08** (yesterday) under **Electronics & tech**.",
+      "reasoning": "**Sequencing report intent and expense call**",
+      "latency_ms": 12617.703250027262,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "edge_unknown_category",
+      "user_query": "Yesterday I spent $200 on a spa treatment.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense entry"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 200,
+            "category": "Apparel and Beauty",
+            "description": "Spa treatment"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$200** for **spa treatment** on **2026-03-08** (yesterday) under **Apparel and Beauty**.",
+      "reasoning": "**Sequencing reporting and expense tools**",
+      "latency_ms": 12774.88020900637,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "edge_currency_symbol",
+      "user_query": "I spent \u20ac50 on dinner yesterday.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 50,
+            "category": "Food & drink",
+            "description": "Dinner"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **\u20ac50** for **Dinner** on **2026-03-08** (yesterday) under **Food & drink**.",
+      "reasoning": "**Logging expense with inferred date**",
+      "latency_ms": 10647.840041958261,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "spanish_gadget",
+      "user_query": "Ayer compr\u00e9 una laptop por 1200 d\u00f3lares.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Registrando gasto"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 1200,
+            "category": "Electronics & tech",
+            "description": "Compra de laptop"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "\u00a1Listo! Registr\u00e9 tu gasto de **$1200** por **compra de laptop** con fecha **2026-03-08** (ayer).",
+      "reasoning": "**Sequencing intent and expense calls**",
+      "latency_ms": 15566.147790988907,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "clear_food_yesterday",
+      "user_query": "Yesterday I bought a sandwich for $12.50.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Logged \u2705  \n**2026-03-08** \u2014 **$12.50** \u2014 **Food & drink** \u2014 *Sandwich*",
+      "reasoning": "**Preparing expense log with intent report**",
+      "latency_ms": 11530.288750014734,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_monday_before_this_one",
+      "user_query": "I bought a sandwich the Monday before this one for $12.50.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-02",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' matches expected '2026-03-02'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Logged \u2705  \n- **Date:** 2026-03-02 (the Monday before this one)  \n- **Amount:** $12.50  \n- **Category:** Food & drink  \n- **Description:** Sandwich",
+      "reasoning": "**Planning sequential tool calls**",
+      "latency_ms": 12211.13420900656,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_two_mondays_ago",
+      "user_query": "Two Mondays ago I spent $8.75 on coffee.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense entry"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-02-23",
+            "amount": 8.75,
+            "category": "Food & drink",
+            "description": "Coffee"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-23' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-23' matches expected '2026-02-23'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$8.75** for **coffee** on **2026-02-23** (two Mondays ago).",
+      "reasoning": "**Planning parallel expense logging**",
+      "latency_ms": 10751.040500006638,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_first_monday_this_month",
+      "user_query": "I bought a sandwich on the first Monday of this month for $12.50.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense entry"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-02",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' matches expected '2026-03-02'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged it as:\n\n- **Date:** 2026-03-02 (the first Monday of March 2026)  \n- **Amount:** **$12.50**  \n- **Category:** Food & drink  \n- **Description:** Sandwich",
+      "reasoning": "**Computing first Monday for expense addition**",
+      "latency_ms": 14021.471334039234,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_day_last_month",
+      "user_query": "On the last day of last month I spent $25.99 on a movie ticket.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-02-28",
+            "amount": 25.99,
+            "category": "Media & streaming",
+            "description": "Movie ticket"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' matches expected '2026-02-28'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Logged \u2705  \n**$25.99** for **Movie ticket** on **2026-02-28** under **Media & streaming**.",
+      "reasoning": "**Adding expense for last month**",
+      "latency_ms": 10269.540542038158,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_business_day_last_month",
+      "user_query": "I paid $60 for gas on the last business day of last month.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-02-27",
+            "amount": 60,
+            "category": "Transit and Fuel",
+            "description": "Gas"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-27' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-27' matches expected '2026-02-27'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$60** for **Gas** on **2026-02-27** (the last business day of last month) under **Transit and Fuel**.",
+      "reasoning": "**Determining last business day logic**",
+      "latency_ms": 17041.245667031035,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_day_before_yesterday_coffee",
+      "user_query": "The day before yesterday I spent $4.50 on coffee.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-07",
+            "amount": 4.5,
+            "category": "Food & drink",
+            "description": "Coffee"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-07' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-07' matches expected '2026-03-07'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged it as:\n\n- **Date:** 2026-03-07 (day before yesterday)\n- **Amount:** $4.50\n- **Category:** Food & drink\n- **Description:** Coffee",
+      "reasoning": "**Sequencing intent report before expense add**",
+      "latency_ms": 11750.180417031515,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_three_days_ago_rideshare",
+      "user_query": "Three days ago I took an Uber to the airport for $38.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense entry"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-06",
+            "amount": 38,
+            "category": "Transit and Fuel",
+            "description": "Uber to the airport"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' matches expected '2026-03-06'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Logged \u2705  \n**$38** for **Uber to the airport** on **2026-03-06** (category: **Transit and Fuel**).",
+      "reasoning": "**Sequencing intent then expense calls**",
+      "latency_ms": 16259.626750019379,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_friday_movie",
+      "user_query": "Last Friday I spent $18 on a movie ticket.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-06",
+            "amount": 18,
+            "category": "Media & streaming",
+            "description": "Movie ticket"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' matches expected '2026-03-06'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged it as:\n\n- **Date:** 2026-03-06 (last Friday)\n- **Amount:** **$18.00**\n- **Category:** Media & streaming\n- **Description:** Movie ticket",
+      "reasoning": "**Logging expense for last Friday**",
+      "latency_ms": 10310.632042004727,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_day_after_tomorrow_bus_pass",
+      "user_query": "The day after tomorrow I will buy a bus pass for $20.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-11",
+            "amount": 20,
+            "category": "Transit and Fuel",
+            "description": "Bus pass"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-11' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-11' matches expected '2026-03-11'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged it for **2026-03-11**:\n\n- **$20**\n- **Transit and Fuel**\n- **Bus pass**",
+      "reasoning": "**Planning sequential tool calls**",
+      "latency_ms": 14405.78629198717,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "hard_category_grocery_delivery_yesterday",
+      "user_query": "Yesterday I paid $65 for Instacart grocery delivery.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 65,
+            "category": "Food & drink",
+            "description": "Instacart grocery delivery"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$65** for **Instacart grocery delivery** on **2026-03-08** under **Food & drink**.",
+      "reasoning": "**Sequencing intent reporting before tool calls**",
+      "latency_ms": 16355.711832991801,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "hard_category_headphones_last_day_last_month",
+      "user_query": "On the last day of last month I bought headphones for $79.99.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-02-28",
+            "amount": 79.99,
+            "category": "Electronics & tech",
+            "description": "Headphones"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' matches expected '2026-02-28'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$79.99** for **Headphones** on **2026-02-28** under **Electronics & tech**.",
+      "reasoning": "**Logging last-month expense**",
+      "latency_ms": 8900.142416998278,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "edge_large_amount",
+      "user_query": "Yesterday I bought a car for 35000 USD.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 35000,
+            "category": "Transit and Fuel",
+            "description": "Bought a car"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Logged \u2705\n\n- **Date:** 2026-03-08  \n- **Amount:** $35,000  \n- **Category:** Transit and Fuel  \n- **Description:** Bought a car",
+      "reasoning": "**Interpreting expense logging details**",
+      "latency_ms": 8847.696500015445,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "edge_small_amount",
+      "user_query": "I paid $0.99 for an app yesterday.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 0.99,
+            "category": "Electronics & tech",
+            "description": "App purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Logged \u2705  \n- **Date:** 2026-03-08 (yesterday)  \n- **Amount:** $0.99  \n- **Category:** Electronics & tech  \n- **Description:** App purchase",
+      "reasoning": "**Preparing expense entry**",
+      "latency_ms": 8878.15858295653,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "edge_unknown_category",
+      "user_query": "Yesterday I spent $200 on a spa treatment.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense entry"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 200,
+            "category": "Apparel and Beauty",
+            "description": "Spa treatment"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$200** for **spa treatment** on **2026-03-08** under **Apparel and Beauty**.",
+      "reasoning": "**Planning sequential tool calls**",
+      "latency_ms": 12931.976541993208,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "edge_currency_symbol",
+      "user_query": "I spent \u20ac50 on dinner yesterday.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 50,
+            "category": "Food & drink",
+            "description": "Dinner"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **\u20ac50** for **Dinner** on **2026-03-08** (yesterday) under **Food & drink**.",
+      "reasoning": "**Planning sequential tool calls**",
+      "latency_ms": 13240.150958008599,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "spanish_gadget",
+      "user_query": "Ayer compr\u00e9 una laptop por 1200 d\u00f3lares.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Registrando gasto"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 1200,
+            "category": "Electronics & tech",
+            "description": "Compra de laptop"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "\u00a1Listo! Registr\u00e9 tu gasto de ayer:\n\n- **Fecha:** 2026-03-08  \n- **Monto:** \\$1200  \n- **Categor\u00eda:** **Electronics & tech**  \n- **Descripci\u00f3n:** Compra de laptop",
+      "reasoning": "**Sequencing intent and expense calls**",
+      "latency_ms": 12954.67429200653,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "clear_food_yesterday",
+      "user_query": "Yesterday I bought a sandwich for $12.50.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$12.50** for **Sandwich** on **2026-03-08** under **Food & drink**.",
+      "reasoning": "**Preparing expense entry**",
+      "latency_ms": 8978.216125047766,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_monday_before_this_one",
+      "user_query": "I bought a sandwich the Monday before this one for $12.50.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-02",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' matches expected '2026-03-02'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$12.50** for **Sandwich** on **2026-03-02** (the Monday before this one) under **Food & drink**.",
+      "reasoning": "**Preparing expense entry for prior Monday**",
+      "latency_ms": 8541.49391700048,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_two_mondays_ago",
+      "user_query": "Two Mondays ago I spent $8.75 on coffee.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-02-23",
+            "amount": 8.75,
+            "category": "Food & drink",
+            "description": "Coffee"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-23' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-23' matches expected '2026-02-23'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$8.75** for **Coffee** on **2026-02-23** (two Mondays ago).",
+      "reasoning": "**Resolving relative date for expense**",
+      "latency_ms": 9570.764833013527,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_first_monday_this_month",
+      "user_query": "I bought a sandwich on the first Monday of this month for $12.50.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-02",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' matches expected '2026-03-02'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$12.50** for **Sandwich** on **2026-03-02** (the first Monday of March 2026) under **Food & drink**.",
+      "reasoning": "**Calculating first Monday and planning tool calls**",
+      "latency_ms": 13188.84049996268,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_day_last_month",
+      "user_query": "On the last day of last month I spent $25.99 on a movie ticket.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense entry"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-02-28",
+            "amount": 25.99,
+            "category": "Media & streaming",
+            "description": "Movie ticket"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' matches expected '2026-02-28'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$25.99** for **Movie ticket** on **2026-02-28** under **Media & streaming**.",
+      "reasoning": "**Sequencing intent and expense calls**",
+      "latency_ms": 11091.80470899446,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_business_day_last_month",
+      "user_query": "I paid $60 for gas on the last business day of last month.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-02-27",
+            "amount": 60,
+            "category": "Transit and Fuel",
+            "description": "Gas"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-27' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-27' matches expected '2026-02-27'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Logged \u2705  \n**$60.00** for **Gas** on **2026-02-27** (the last business day of last month).",
+      "reasoning": "**Planning concurrent tool calls**",
+      "latency_ms": 13862.267707998399,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_day_before_yesterday_coffee",
+      "user_query": "The day before yesterday I spent $4.50 on coffee.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-07",
+            "amount": 4.5,
+            "category": "Food & drink",
+            "description": "Coffee"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-07' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-07' matches expected '2026-03-07'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$4.50** for **coffee** on **2026-03-07** (the day before yesterday).",
+      "reasoning": "**Logging expense with date parsing**",
+      "latency_ms": 9898.216750007123,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_three_days_ago_rideshare",
+      "user_query": "Three days ago I took an Uber to the airport for $38.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense entry"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-06",
+            "amount": 38,
+            "category": "Transit and Fuel",
+            "description": "Uber to the airport"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' matches expected '2026-03-06'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged it as:\n\n- **Date:** 2026-03-06  \n- **Amount:** **$38**  \n- **Category:** Transit and Fuel  \n- **Description:** Uber to the airport",
+      "reasoning": "**Sequencing intent and expense calls**",
+      "latency_ms": 12303.234499995597,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_friday_movie",
+      "user_query": "Last Friday I spent $18 on a movie ticket.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense entry"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-06",
+            "amount": 18,
+            "category": "Media & streaming",
+            "description": "Movie ticket"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' matches expected '2026-03-06'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged it as:\n\n- **Date:** 2026-03-06 (last Friday)  \n- **Amount:** **$18.00**  \n- **Category:** **Media & streaming**  \n- **Description:** Movie ticket",
+      "reasoning": "**Planning expense addition with date inference**",
+      "latency_ms": 8553.847540984862,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_day_after_tomorrow_bus_pass",
+      "user_query": "The day after tomorrow I will buy a bus pass for $20.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-11",
+            "amount": 20,
+            "category": "Transit and Fuel",
+            "description": "Bus pass"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-11' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-11' matches expected '2026-03-11'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$20** for **Bus pass** on **2026-03-11** under **Transit and Fuel**.",
+      "reasoning": "**Adding planned expense entry**",
+      "latency_ms": 9089.849332987797,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "hard_category_grocery_delivery_yesterday",
+      "user_query": "Yesterday I paid $65 for Instacart grocery delivery.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 65,
+            "category": "Food & drink",
+            "description": "Instacart grocery delivery"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$65** for **Instacart grocery delivery** on **2026-03-08** under **Food & drink**.",
+      "reasoning": "**Sequencing intent and expense calls**",
+      "latency_ms": 11548.039000015706,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "hard_category_headphones_last_day_last_month",
+      "user_query": "On the last day of last month I bought headphones for $79.99.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense entry"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-02-28",
+            "amount": 79.99,
+            "category": "Electronics & tech",
+            "description": "Headphones purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' matches expected '2026-02-28'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged an expense for **$79.99** on **2026-02-28** in **Electronics & tech** (\u201cHeadphones purchase\u201d).",
+      "reasoning": "**Logging expense with correct date**",
+      "latency_ms": 8934.589874988887,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "edge_large_amount",
+      "user_query": "Yesterday I bought a car for 35000 USD.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense entry"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 35000,
+            "category": "Transit and Fuel",
+            "description": "Bought a car"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged this expense:\n\n- **Date:** 2026-03-08 (yesterday)  \n- **Amount:** **$35,000 USD**  \n- **Category:** Transit and Fuel  \n- **Description:** Bought a car",
+      "reasoning": "**Planning sequential tool calls**",
+      "latency_ms": 13097.101167018991,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "edge_small_amount",
+      "user_query": "I paid $0.99 for an app yesterday.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 0.99,
+            "category": "Electronics & tech",
+            "description": "App purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$0.99** for an **App purchase** on **2026-03-08** under **Electronics & tech**.",
+      "reasoning": "**Adding expense with adjusted date**",
+      "latency_ms": 9551.760625035968,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "edge_unknown_category",
+      "user_query": "Yesterday I spent $200 on a spa treatment.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 200,
+            "category": "Apparel and Beauty",
+            "description": "Spa treatment"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$200** for **Spa treatment** on **2026-03-08** under **Apparel and Beauty**.",
+      "reasoning": "**Adding expense for yesterday**",
+      "latency_ms": 9467.684207949787,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "edge_currency_symbol",
+      "user_query": "I spent \u20ac50 on dinner yesterday.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 50,
+            "category": "Food & drink",
+            "description": "Dinner"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged your expense for **2026-03-08**:\n\n- **Amount:** \u20ac50  \n- **Category:** Food & drink  \n- **Description:** Dinner",
+      "reasoning": "**Sequencing tool calls for expense logging**",
+      "latency_ms": 11468.068832997233,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "spanish_gadget",
+      "user_query": "Ayer compr\u00e9 una laptop por 1200 d\u00f3lares.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Registrando gasto"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 1200,
+            "category": "Electronics & tech",
+            "description": "Compra de laptop"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "\u00a1Listo! Registr\u00e9 tu gasto de **$1200** del **2026-03-08** como **Electronics & tech** (compra de laptop).",
+      "reasoning": "**Preparing parallel tool calls**",
+      "latency_ms": 10871.970832988154,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "clear_food_yesterday",
+      "user_query": "Yesterday I bought a sandwich for $12.50.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$12.50** for **Sandwich** under **Food & drink** on **2026-03-08** (yesterday).",
+      "reasoning": "**Adding expense with inferred date**",
+      "latency_ms": 8409.297208010685,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_monday_before_this_one",
+      "user_query": "I bought a sandwich the Monday before this one for $12.50.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-02",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' matches expected '2026-03-02'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged it as:\n\n- **Date:** 2026-03-02 (the Monday before this one)\n- **Amount:** **$12.50**\n- **Category:** Food & drink\n- **Description:** Sandwich",
+      "reasoning": "**Determining prior Monday and planning sequential tool calls**",
+      "latency_ms": 13400.825334014371,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_two_mondays_ago",
+      "user_query": "Two Mondays ago I spent $8.75 on coffee.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-02-23",
+            "amount": 8.75,
+            "category": "Food & drink",
+            "description": "Coffee"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-23' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-23' matches expected '2026-02-23'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$8.75** for **Coffee** on **2026-02-23** (two Mondays ago).",
+      "reasoning": "**Planning parallel tool calls**",
+      "latency_ms": 12466.459040995687,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_first_monday_this_month",
+      "user_query": "I bought a sandwich on the first Monday of this month for $12.50.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense entry"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-02",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' matches expected '2026-03-02'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged it as:\n\n- **Date:** 2026-03-02 (first Monday of March 2026)  \n- **Amount:** **$12.50**  \n- **Category:** **Food & drink**  \n- **Description:** Sandwich",
+      "reasoning": "**Determining first Monday for expense logging**",
+      "latency_ms": 13432.517290988471,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_day_last_month",
+      "user_query": "On the last day of last month I spent $25.99 on a movie ticket.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense entry"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-02-28",
+            "amount": 25.99,
+            "category": "Media & streaming",
+            "description": "Movie ticket"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' matches expected '2026-02-28'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged:\n\n- **Date:** 2026-02-28 (last day of last month)\n- **Amount:** $25.99\n- **Category:** Media & streaming\n- **Description:** Movie ticket",
+      "reasoning": "**Determining last month date and sequencing tool calls**",
+      "latency_ms": 12291.369249986019,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_business_day_last_month",
+      "user_query": "I paid $60 for gas on the last business day of last month.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-02-27",
+            "amount": 60,
+            "category": "Transit and Fuel",
+            "description": "Gas"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-27' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-27' matches expected '2026-02-27'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Logged \u2705  \n**$60.00** for **Gas** on **2026-02-27** (the last business day of last month).",
+      "reasoning": "**Determining last business day**",
+      "latency_ms": 13284.981167002115,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_day_before_yesterday_coffee",
+      "user_query": "The day before yesterday I spent $4.50 on coffee.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-07",
+            "amount": 4.5,
+            "category": "Food & drink",
+            "description": "Coffee"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-07' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-07' matches expected '2026-03-07'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Logged \u2705  \n- **Date:** 2026-03-07 (day before yesterday)  \n- **Amount:** $4.50  \n- **Category:** Food & drink  \n- **Description:** Coffee",
+      "reasoning": "**Planning sequential tool calls**",
+      "latency_ms": 11624.943749979138,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_three_days_ago_rideshare",
+      "user_query": "Three days ago I took an Uber to the airport for $38.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-06",
+            "amount": 38,
+            "category": "Transit and Fuel",
+            "description": "Uber to the airport"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' matches expected '2026-03-06'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged it as:\n\n- **Date:** 2026-03-06 (three days ago)\n- **Amount:** **$38**\n- **Category:** Transit and Fuel\n- **Description:** Uber to the airport",
+      "reasoning": "**Planning sequential tool calls**",
+      "latency_ms": 11289.096874999814,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_friday_movie",
+      "user_query": "Last Friday I spent $18 on a movie ticket.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-06",
+            "amount": 18,
+            "category": "Media & streaming",
+            "description": "Movie ticket"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' matches expected '2026-03-06'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$18** for **Movie ticket** on **2026-03-06 (last Friday)** under **Media & streaming**.",
+      "reasoning": "**Planning expense addition command**",
+      "latency_ms": 9787.402416986879,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_day_after_tomorrow_bus_pass",
+      "user_query": "The day after tomorrow I will buy a bus pass for $20.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-11",
+            "amount": 20,
+            "category": "Transit and Fuel",
+            "description": "Bus pass"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-11' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-11' matches expected '2026-03-11'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged it for **2026-03-11** (the day after tomorrow):\n\n- **$20.00**\n- **Transit and Fuel**\n- **Bus pass**",
+      "reasoning": "**Planning expense logging flow**",
+      "latency_ms": 11513.633208000101,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "hard_category_grocery_delivery_yesterday",
+      "user_query": "Yesterday I paid $65 for Instacart grocery delivery.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 65,
+            "category": "Food & drink",
+            "description": "Instacart grocery delivery"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged it as:\n\n- **Date:** 2026-03-08 (yesterday)\n- **Amount:** **$65.00**\n- **Category:** **Food & drink**\n- **Description:** Instacart grocery delivery",
+      "reasoning": "**Planning sequential tool calls**",
+      "latency_ms": 11582.908959011547,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "hard_category_headphones_last_day_last_month",
+      "user_query": "On the last day of last month I bought headphones for $79.99.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense entry"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-02-28",
+            "amount": 79.99,
+            "category": "Electronics & tech",
+            "description": "Headphones purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' matches expected '2026-02-28'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged it as:\n\n- **Date:** 2026-02-28  \n- **Amount:** **$79.99**  \n- **Category:** **Electronics & tech**  \n- **Description:** Headphones purchase",
+      "reasoning": "**Planning sequential tool calls**",
+      "latency_ms": 11173.661125008948,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "edge_large_amount",
+      "user_query": "Yesterday I bought a car for 35000 USD.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 35000,
+            "category": "Transit and Fuel",
+            "description": "Bought a car"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Logged \u2705  \n- **Date:** 2026-03-08  \n- **Amount:** $35,000 USD  \n- **Category:** Transit and Fuel  \n- **Description:** Bought a car",
+      "reasoning": "**Selecting expense category and sequencing tools**",
+      "latency_ms": 13430.943583021872,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "edge_small_amount",
+      "user_query": "I paid $0.99 for an app yesterday.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense entry"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 0.99,
+            "category": "Electronics & tech",
+            "description": "App purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$0.99** for **App purchase** on **2026-03-08** (yesterday) under **Electronics & tech**.",
+      "reasoning": "**Planning sequential tool calls**",
+      "latency_ms": 11606.907041976228,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "edge_unknown_category",
+      "user_query": "Yesterday I spent $200 on a spa treatment.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense entry"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 200,
+            "category": "Apparel and Beauty",
+            "description": "Spa treatment"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$200** for **Spa treatment** on **2026-03-08** under **Apparel and Beauty**.",
+      "reasoning": "**Choosing expense category and ordering tool calls**",
+      "latency_ms": 12107.625417003874,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "edge_currency_symbol",
+      "user_query": "I spent \u20ac50 on dinner yesterday.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "report_intent",
+          "arguments": {
+            "intent": "Logging expense"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 50,
+            "category": "Food & drink",
+            "description": "Dinner"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Logged \u2705  \n- **Date:** 2026-03-08 (yesterday)  \n- **Amount:** \u20ac50  \n- **Category:** Food & drink  \n- **Description:** Dinner",
+      "reasoning": "**Planning sequential tool calls**",
+      "latency_ms": 11673.556916997768,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    },
+    {
+      "case_name": "spanish_gadget",
+      "user_query": "Ayer compr\u00e9 una laptop por 1200 d\u00f3lares.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 1200,
+            "category": "Electronics & tech",
+            "description": "Compra de laptop"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "\u00a1Listo! Registr\u00e9 tu gasto de **$1200** del **2026-03-08** en la categor\u00eda **Electronics & tech** con la descripci\u00f3n **\u201cCompra de laptop\u201d**.",
+      "reasoning": "**Preparing expense entry**",
+      "latency_ms": 9368.553375010379,
+      "input_tokens": null,
+      "output_tokens": null,
+      "tool_response_size": null,
+      "error": null
+    }
+  ]
+}

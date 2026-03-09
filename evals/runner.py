@@ -50,7 +50,7 @@ AVAILABLE_AGENTS = [AGENT_PYDANTICAI, AGENT_COPILOT, AGENT_LANGCHAIN, AGENT_AGEN
 from evals.evaluators import EvalResult, compute_score, run_all_evaluations, run_output_evaluations  # noqa: E402
 from evals.report import generate_markdown_report  # noqa: E402
 
-load_dotenv(override=True)
+# NOTE: load_dotenv is deferred to main() so --env-file can be applied first.
 
 # Configure Logfire tracing (console=False disables terminal output)
 logfire.configure(console=False)
@@ -781,11 +781,21 @@ def parse_args() -> argparse.Namespace:
         choices=EVAL_TYPES,
         help=f"Evaluation type: 'input' for add_expense variants, 'output' for get_expenses variants (default: {EVAL_TYPE_INPUT})",
     )
+    parser.add_argument(
+        "--env-file",
+        type=str,
+        default=".env",
+        help="Path to .env file (default: .env)",
+    )
     return parser.parse_args()
 
 
 async def main():
     args = parse_args()
+
+    # Load environment from specified .env file
+    load_dotenv(args.env_file, override=True)
+
     is_output_eval = args.eval_type == EVAL_TYPE_OUTPUT
 
     # Parse variants

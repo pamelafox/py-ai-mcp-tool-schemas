@@ -216,7 +216,7 @@ async def run_query(
         agent = create_agent(llm, tools)
 
         # Prepare query with context
-        today = datetime.now().strftime("%Y-%m-%d")
+        today = datetime.now().strftime("%B %-d, %Y")
         system_prompt = f"You help users log expenses. Today's date is {today}."
 
         # Invoke agent

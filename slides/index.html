@@ -3,13 +3,12 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-		<title>TODO: Presentation Title</title>
+		<title>Improving MCP tool schemas to increase agent reliability</title>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reset.css">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.css">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/theme/simple.css" id="theme">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chicle&family=Work+Sans:wght@400;700&display=swap">
-    <link rel="stylesheet" href="../static/a11y-dark.min.css">
-		<link rel="stylesheet" href="../static/slides.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/a11y-light.min.css">
 		<style>
 		:root {
 			--neon-pink: #FF10F0;
@@ -23,16 +22,31 @@
 			background: #fff;
 		}
 
-		/* Headings: neon pink on black, chunky and loud */
+		/* Left-align by default */
+		.reveal .slides section {
+			text-align: left;
+		}
+
+		/* Headings: neon pink with black outline, retro feel */
 		.reveal h1, .reveal h2, .reveal h3 {
 			font-family: 'Chicle', cursive;
 			color: var(--neon-pink);
-			background: #000;
-			display: inline-block;
-			padding: 6px 18px;
-			text-transform: uppercase;
+			background: none;
+			display: block;
+			padding: 6px 0;
+			text-transform: none;
 			letter-spacing: 2px;
+			-webkit-text-stroke: 2px #000;
+			text-shadow:
+				3px 3px 0 #000,
+				-1px -1px 0 #000,
+				1px -1px 0 #000,
+				-1px 1px 0 #000,
+				1px 1px 0 #000;
 		}
+		.reveal h1 { font-size: 2.2em; }
+		.reveal h2 { font-size: 1.8em; }
+		.reveal h3 { font-size: 2.0em; }
 
 		/* Body font */
 		.reveal {
@@ -47,15 +61,16 @@
 			color: var(--neon-cyan);
 		}
 
-		/* Section heading slides: black background, centered */
+		/* Section heading slides: white background with decorations, centered */
 		.reveal section.heading-only {
 			display: flex !important;
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
+			text-align: center;
 			height: 100%;
 			min-height: 720px;
-			background: #000;
+			background: #fff;
 		}
 
 		/* Blockquote: neon border, retro feel */
@@ -69,12 +84,13 @@
 
 		/* Table header accent */
 		.reveal table thead tr {
-			background-color: #000;
-			color: var(--neon-pink);
+			background-color: #fff;
+			color: #222;
 		}
 		.reveal table thead th {
-			color: var(--neon-pink);
-			border-color: var(--neon-pink);
+			color: #222;
+			border-color: #ccc;
+			font-weight: bold;
 		}
 		.reveal table {
 			border-color: var(--neon-pink);
@@ -83,11 +99,33 @@
 			border-color: #ccc;
 		}
 
-		/* Code block: dark bg with neon border */
+		/* Tighter table cells for heatmap slides */
+		.heatmap-slide table td,
+		.heatmap-slide table th {
+			padding: 2px 6px;
+		}
+		.heatmap-slide table {
+			width: 100%;
+			margin: 0;
+		}
+		.heatmap-slide > div > div {
+			padding-bottom: 0 !important;
+		}
+
+		/* Code block: neon border */
 		.reveal pre {
 			border: 2px solid var(--neon-pink);
 			border-radius: 0;
-			box-shadow: 4px 4px 0 var(--neon-pink);
+			box-shadow: 4px 4px 0 #000;
+			overflow: auto;
+			box-sizing: border-box;
+			margin-top: 4px;
+			margin-left: 0;
+			margin-right: 0;
+			width: 100%;
+		}
+		.reveal pre code.hljs {
+			background: rgb(245, 245, 245);
 		}
 
 		/* Slide number in neon pink */
@@ -107,174 +145,983 @@
 
 <!-- Title slide -->
 <section class="heading-only" style="padding-top:5%">
-    <h1 style="font-size:2.5em;">TODO: Presentation Title
-    </h1>
+    <h1 style="font-size:2.2em;">Improving MCP tool schemas<br> to increase agent reliability</h1>
     <br>
     <h3>Pamela Fox</h3>
+    <p style="color: var(--neon-pink-light); font-size: 0.8em;"><a target="_blank" href="https://www.pamelafox.org" style="color: var(--neon-pink-light);">pamelafox.org</a></p>
+</section>
 
-    <div class="no-print" style="text-align: left; margin-top: 20px; font-size: 70%; display:none;">
-        Tips for navigating the slides:<br>
-        <ul>
-            <li>Press O or Escape for overview mode.</li>
-            <li>Visit <a href="?print-pdf" target="_blank">this link</a> for a nice printable version</li>
-            <li>Press the copy icon on the upper right of code blocks to copy the code</li>
-        </ul>
+<!-- Fun with MCP -->
+<section>
+    <h3>But first... let's have fun with MCP!</h3>
+    <p>What if I could use MCP to pick my outfit for today?</p>
+    <p>What if I <em>DID</em> use MCP to pick my outfit for today...?</p>
+    <p><em>Add screenshot of demo</em></p>
+    <aside class="notes">
+        Demo it in VS Code. Now that the outfit is sorted.. on to the real talk!
+    </aside>
+</section>
+
+<section class="heading-only">
+    <h2>Building MCP servers with Python</h2>
+</section>
+
+<section>
+    <h3>A basic FastMCP server</h3>
+    <div style="display: flex; gap: 0; align-items: stretch;">
+        <div style="flex: 1; display: flex; flex-direction: column;">
+            <p style="font-size: 0.7em;">This tool signature:</p>
+            <pre style="font-size: 0.52em; flex: 1;"><code data-trim data-noescape class="python">
+@mcp.tool
+async def add_expense(
+    expense_date: str,
+    amount: float,
+    category: str,
+    description: str,
+) -> str:
+    """Add a new expense."""
+    ...
+            </code></pre>
+        </div>
+        <div style="display: flex; align-items: center; padding: 0 15px; font-size: 2em;">→</div>
+        <div style="flex: 1; display: flex; flex-direction: column;">
+            <p style="font-size: 0.7em;">becomes this schema:</p>
+            <pre style="font-size: 0.44em; flex: 1;"><code data-trim data-noescape class="json">
+{
+  "name": "add_expense",
+  "description": "Add a new expense.",
+  "inputSchema": {
+    "properties": {
+      "expense_date": {"type": "string"},
+      "amount": {"type": "number"},
+      "category": {"type": "string"},
+      "description": {"type": "string"}
+    },
+    "required": ["expense_date", "amount",
+      "category", "description"],
+    "type": "object"
+  }
+}
+            </code></pre>
+        </div>
+    </div>
+    <aside class="notes">
+        Demo the server in VS Code. Show in Logfire with reasoning and tool calls highlighted.
+    </aside>
+</section>
+
+<section>
+    <h3>LLMs can be <span style="text-decoration: line-through;">soo</span> too creative!</h3>
+    <p>What does the model suggest for the category string?
+      <br>Across 83 tool calls:</p>
+    <div style="text-align: center; padding: 10px; line-height: 1.8;">
+        <span style="font-size: 1.8em; color: #e91e63; font-weight: bold; transform: rotate(-3deg); display: inline-block;">Gas</span>
+        <span style="font-size: 1.8em; color: #9c27b0; font-weight: bold; transform: rotate(2deg); display: inline-block;">Electronics</span>
+        <span style="font-size: 1.8em; color: #2196f3; font-weight: bold; transform: rotate(-1deg); display: inline-block;">Coffee</span>
+        <span style="font-size: 1.5em; color: #ff9800; font-weight: bold; transform: rotate(3deg); display: inline-block;">Transportation</span>
+        <span style="font-size: 1.3em; color: #4caf50; font-weight: bold; transform: rotate(-2deg); display: inline-block;">Groceries</span>
+        <span style="font-size: 1.1em; color: #00bcd4; transform: rotate(4deg); display: inline-block;">Comida</span>
+        <span style="font-size: 1.1em; color: #f44336; transform: rotate(-3deg); display: inline-block;">Gasolina</span>
+        <span style="font-size: 1.1em; color: #673ab7; transform: rotate(1deg); display: inline-block;">Electrónica</span>
+        <span style="font-size: 0.95em; color: #795548; transform: rotate(-4deg); display: inline-block;">Clothing</span>
+        <span style="font-size: 0.95em; color: #607d8b; transform: rotate(2deg); display: inline-block;">Apps</span>
+        <span style="font-size: 0.95em; color: #e91e63; transform: rotate(-1deg); display: inline-block;">Spa</span>
+        <span style="font-size: 0.95em; color: #ff5722; transform: rotate(3deg); display: inline-block;">Entretenimiento</span>
+        <span style="font-size: 0.8em; color: #9e9e9e; transform: rotate(-2deg); display: inline-block;">Car purchase</span>
+        <span style="font-size: 0.8em; color: #3f51b5; transform: rotate(4deg); display: inline-block;">Dining</span>
+        <span style="font-size: 0.8em; color: #8bc34a; transform: rotate(-3deg); display: inline-block;">Shoes</span>
+        <span style="font-size: 0.8em; color: #ff9800; transform: rotate(1deg); display: inline-block;">Personal Care</span>
+        <span style="font-size: 0.8em; color: #00bcd4; transform: rotate(-1deg); display: inline-block;">Lunch</span>
+        <span style="font-size: 0.8em; color: #e91e63; transform: rotate(2deg); display: inline-block;">Dinner</span>
+        <span style="font-size: 0.8em; color: #673ab7; transform: rotate(-4deg); display: inline-block;">Ocio</span>
+        <span style="font-size: 0.8em; color: #4caf50; transform: rotate(3deg); display: inline-block;">Zapatos</span>
+        <span style="font-size: 0.8em; color: #795548; transform: rotate(-2deg); display: inline-block;">Calzado</span>
+        <span style="font-size: 0.8em; color: #f44336; transform: rotate(1deg); display: inline-block;">Grocery Delivery</span>
+        <span style="font-size: 0.8em; color: #2196f3; transform: rotate(-3deg); display: inline-block;">Ropa y calzado</span>
+        <span style="font-size: 0.8em; color: #9c27b0; transform: rotate(2deg); display: inline-block;">Apps &amp; Software</span>
+    </div>
+    <aside class="notes">
+        With no constraints at all, the model invents its own categories — and they vary wildly across runs.
+        68.7% of all tool calls used an invented category. Some are in Spanish because we tested with Spanish prompts too.
+    </aside>
+</section>
+
+<section class="heading-only">
+    <h2>Reign those LLMs in with better schemas!</h2>
+</section>
+
+<section>
+    <h3>Annotate tool arguments with descriptions</h3>
+    <div style="display: flex; gap: 0; align-items: stretch;">
+        <div style="flex: 1; display: flex; flex-direction: column;">
+            <p style="font-size: 0.7em;">Python code:</p>
+            <pre style="flex: 1;"><code data-trim data-noescape class="python">
+    category: Annotated[
+        str,
+        Field(
+            description="Must be one of: "
+            "Food &amp; drink, "
+            "Transit and Fuel, "
+            "Media &amp; streaming, "
+            "Apparel and Beauty, "
+            "Electronics &amp; tech, "
+            "Home and office, ..."
+        ),
+    ],
+            </code></pre>
+        </div>
+        <div style="display: flex; align-items: center; padding: 0 15px; font-size: 2em;">→</div>
+        <div style="flex: 1; display: flex; flex-direction: column;">
+            <p style="font-size: 0.7em;">Generated schema:</p>
+            <pre style="flex: 1;"><code data-trim data-noescape class="json">
+"category": {
+    "type": "string",
+    "description": "Must be one of:
+      Food &amp; drink,
+      Transit and Fuel,
+      Media &amp; streaming,
+      Apparel and Beauty,
+      Electronics &amp; tech,
+      Home and office, ..."
+}
+            </code></pre>
+        </div>
     </div>
 </section>
 
-<!-- About me slide -->
+<!-- Constrained types -->
 <section>
-    <h3>About me</h3>
+    <h3>Use constrained types like Literal or Enum</h3>
+    <div style="display: flex; gap: 0; align-items: stretch;">
+        <div style="flex: 1; display: flex; flex-direction: column;">
+            <p style="font-size: 0.7em;">Python code:</p>
+            <pre><code data-trim data-noescape class="python">
+CATEGORY_LITERAL = Literal[
+    "Food &amp; drink", "Transit and Fuel",
+    "Media &amp; streaming", ...
+]
+    category: CATEGORY_LITERAL,
+            </code></pre>
+            <pre><code data-trim data-noescape class="python">
+class Category(Enum):
+    FOOD_AND_DRINK = "Food &amp; drink"
+    TRANSIT_AND_FUEL = "Transit and Fuel"
+    ...
 
-    <img src="photo_pamela_olaf.jpg" alt="Photo of Pamela smiling with an Olaf statue" style="float:right; height:400px;">
-    <p>Python Cloud Advocate at Microsoft</p>
-    <p>Formerly: UC Berkeley, Coursera, Khan Academy, Google</p>
+    category: Category,
+            </code></pre>
+        </div>
+        <div style="display: flex; align-items: center; padding: 0 15px; font-size: 2em;">→</div>
+        <div style="flex: 1; display: flex; flex-direction: column;">
+            <p style="font-size: 0.7em;">Generated schema:</p>
+            <pre style="flex: 1;"><code data-trim data-noescape class="json">
+"category": {
+    "type": "string",
+    "enum": [
+        "Food &amp; drink",
+        "Transit and Fuel",
+        "Media &amp; streaming", ...
+    ]
+}
+            </code></pre>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h3>Why not both?</h3>
+    <div style="display: flex; gap: 0; align-items: stretch;">
+        <div style="flex: 1; display: flex; flex-direction: column;">
+            <p style="font-size: 0.7em;">Python code:</p>
+            <pre style="flex: 1;"><code data-trim data-noescape class="python">
+    category: Annotated[
+        Category,
+        Field(
+            description=(
+                "Choose the closest category. "
+                "If truly unclear, use Misc.\n\n"
+                "Heuristics: "
+                "Food &amp; drink=meals, coffee; "
+                "Transit and Fuel=rideshare, "
+                "gas, parking; ..."
+            )
+        ),
+    ],
+            </code></pre>
+        </div>
+        <div style="display: flex; align-items: center; padding: 0 15px; font-size: 2em;">→</div>
+        <div style="flex: 1; display: flex; flex-direction: column;">
+            <p style="font-size: 0.7em;">Generated schema:</p>
+            <pre style="flex: 1;"><code data-trim data-noescape class="json">
+"category": {
+    "type": "string",
+    "enum": [
+        "Food &amp; drink",
+        "Transit and Fuel",
+        "Media &amp; streaming", ...
+    ],
+    "description": "Choose the closest
+      category. If truly unclear, use
+      Misc. Heuristics: Food &amp; drink=
+      meals, coffee; Transit and Fuel=
+      rideshare, gas, parking; ..."
+}
+            </code></pre>
+        </div>
+    </div>
+</section>
+
+<section class="heading-only">
+    <h2>Do agents like stricter schemas?</h2>
+</section>
+
+<!-- Agent setup -->
+<section>
+    <h3>PydanticAI agent with MCP server</h3>
+    <pre><code data-trim data-noescape class="python">
+server = MCPServerStreamableHTTP(url="http://localhost:8000/mcp")
+
+model = OpenAIResponsesModel(
+    "gpt-5.3-codex",
+    provider=OpenAIProvider(openai_client=azure_openai_client))
+
+agent = Agent(
+    model,
+    system_prompt=(
+        "You help users log expenses. "
+        f"Today's date is {datetime.now().strftime('%B %-d, %Y')}."
+    ),
+    output_type=str,
+    toolsets=[server],
+)
+
+result = await agent.run("I bought a sandwich for $12.50.")
+    </code></pre>
+    <aside class="notes">
+        The agent connects to the MCP server over Streamable HTTP — it only sees the tool schemas, not the server code.
+        We set today's date in the system prompt so the model can resolve relative dates like "yesterday".
+    </aside>
+</section>
+
+<section>
+    <h3>Filtering tool variants</h3>
+    <p style="font-size: 0.7em;">The MCP server exposes multiple versions of the same tool with different schemas:</p>
+    <pre style="font-size: 0.53em;"><code data-trim data-noescape class="python">
+def add_expense_cat_b(category: Annotated[str, Field(description="...")], ...): ...
+
+def add_expense_cat_c(category: Literal["Food &amp; drink", ...], ...): ...
+
+def add_expense_cat_d(category: ExpenseCategory, ...): ...
+
+def add_expense_cat_e(category: Annotated[ExpenseCategory, Field(description="...")], ...): ...
+
+    </code></pre>
+    <p style="font-size: 0.7em;">The agent only sees one schema variant at a time, thanks to filtering:</p>
+    <pre style="font-size: 0.65em;"><code data-trim data-noescape class="python">
+toolset = server.filtered(
+    lambda ctx, tool: tool.name == f"add_expense_cat_b")
+agent = Agent(model, toolsets=[toolset], ...)
+result = await agent.run(case.prompt)
+    </code></pre>
+    <aside class="notes">
+        server.filtered() takes a lambda that selects which tools the agent can see.
+        This lets us test one schema variant at a time against the same prompts — isolating the effect of the schema.
+        The MCP server exposes all variants simultaneously; filtering happens client-side.
+    </aside>
+</section>
+
+<section>
+    <h3>Batch evaluation across schema variants</h3>
+    <div style="display: flex; gap: 20px;">
+        <div style="flex: 0 0 50%;">
+            <pre style="font-size: 0.42em; height: 600px;"><code data-trim data-noescape class="python">
+EXPENSE_CASES = [
+    ExpenseCase(
+        name="clear_food_yesterday",
+        prompt="Yesterday I bought a sandwich for $12.50.",
+        expected_category="Food &amp; drink",
+        expected_date=get_yesterday(),
+        expected_amount=12.50,
+    ),
+    ...  # 17 cases ➡️
+]
+
+def evaluate_category_match(tool_calls, expected):
+    """Does the category match what we expected?"""
+    for tc in tool_calls:
+        category = tc.arguments.get("category")
+        if category == expected:
+            return EvalResult(passed=True, score=1.0)
+    return EvalResult(passed=False, score=0.0)
+
+for variant in ["cat_b", "cat_c", "cat_d", "cat_e"]:
+    toolset = server.filtered(
+        tool_filter=lambda t: t.name == f"add_expense_{variant}")
+    agent = Agent(model, toolsets=[toolset], ...)
+    for case in EXPENSE_CASES:
+        result = await agent.run(case.prompt)
+        evals = run_all_evaluations(
+            result.tool_calls, case)
+            </code></pre>
+        </div>
+        <div style="flex: 0 0 auto; font-size: 0.42em; line-height: 1.6;">
+                <div style="display: flex; flex-direction: column; gap: 3px; margin-top: 4px;">
+                <div style="background: #f0f0f0; border-radius: 12px; padding: 2px 8px; border: 1px solid #ccc;">🗣️ Yesterday I bought a sandwich for $12.50.</div>
+                <div style="background: #f0f0f0; border-radius: 12px; padding: 2px 8px; border: 1px solid #ccc;">🗣️ The Monday before this one... $12.50.</div>
+                <div style="background: #f0f0f0; border-radius: 12px; padding: 2px 8px; border: 1px solid #ccc;">🗣️ Two Mondays ago... $8.75 coffee.</div>
+                <div style="background: #f0f0f0; border-radius: 12px; padding: 2px 8px; border: 1px solid #ccc;">🗣️ First Monday of this month... $12.50.</div>
+                <div style="background: #f0f0f0; border-radius: 12px; padding: 2px 8px; border: 1px solid #ccc;">🗣️ Last day of last month... $25.99 movie.</div>
+                <div style="background: #f0f0f0; border-radius: 12px; padding: 2px 8px; border: 1px solid #ccc;">🗣️ Last business day... $60 gas.</div>
+                <div style="background: #f0f0f0; border-radius: 12px; padding: 2px 8px; border: 1px solid #ccc;">🗣️ Day before yesterday... $4.50 coffee.</div>
+                <div style="background: #f0f0f0; border-radius: 12px; padding: 2px 8px; border: 1px solid #ccc;">🗣️ Three days ago... $38 Uber.</div>
+                <div style="background: #f0f0f0; border-radius: 12px; padding: 2px 8px; border: 1px solid #ccc;">🗣️ Last Friday... $18 movie ticket.</div>
+                <div style="background: #f0f0f0; border-radius: 12px; padding: 2px 8px; border: 1px solid #ccc;">🗣️ Day after tomorrow... $20 bus pass.</div>
+                <div style="background: #f0f0f0; border-radius: 12px; padding: 2px 8px; border: 1px solid #ccc;">🗣️ Yesterday... $65 Instacart delivery.</div>
+                <div style="background: #f0f0f0; border-radius: 12px; padding: 2px 8px; border: 1px solid #ccc;">🗣️ Last day of last month... $79.99 headphones.</div>
+                <div style="background: #f0f0f0; border-radius: 12px; padding: 2px 8px; border: 1px solid #ccc;">🗣️ Yesterday... car for 35000 USD.</div>
+                <div style="background: #f0f0f0; border-radius: 12px; padding: 2px 8px; border: 1px solid #ccc;">🗣️ Yesterday... $0.99 for an app.</div>
+                <div style="background: #f0f0f0; border-radius: 12px; padding: 2px 8px; border: 1px solid #ccc;">🗣️ Yesterday... $200 spa treatment.</div>
+                <div style="background: #f0f0f0; border-radius: 12px; padding: 2px 8px; border: 1px solid #ccc;">🗣️ Yesterday... €50 on dinner.</div>
+                <div style="background: #f0f0f0; border-radius: 12px; padding: 2px 8px; border: 1px solid #ccc;">🗣️ Ayer compré una laptop por $1200.</div>
+            </div>
+        </div>
+    </div>
+    <aside class="notes">
+        We run the same set of 17 test cases across multiple schema variants to see which leads to the most accurate outputs.
+        Cases cover: clear categories, ambiguous relative dates, edge amounts, non-USD currency, and Spanish language.
+    </aside>
+</section>
+
+<section class="heatmap-slide">
+    <h3>Evals: Which category schema did best?</h3>
+    <p style="font-size: 0.7em;">gpt-4.1-mini, 17 cases for each schema, with a Pydantic-AI agent:</p>
+    <table style="font-size: 0.6em;">
+        <thead>
+            <tr><th></th><th><code>Annotated[str]</code></th><th><code>Literal</code></th><th><code>Enum</code></th><th><code>Annotated[Enum]</code></th></tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>Was tool called?</strong></td><td data-value="15">15/17</td><td data-value="16">16/17</td><td data-value="16">16/17</td><td style="font-weight:bold;" data-value="17">17/17</td></tr>
+            <tr><td><strong>When called, did category match expected?</strong></td><td data-value="14">14/15</td><td data-value="13">13/16</td><td data-value="13">13/16</td><td style="font-weight:bold;" data-value="15">15/17</td></tr>
+            <tr><td><strong>Schema size (avg tokens)</strong></td><td>374</td><td>412</td><td>424</td><td style="font-weight:bold;">836</td></tr>
+        </tbody>
+    </table>
+    <p style="font-size: 0.7em; margin-bottom: 2px;">When did tool calling improve?</p>
+    <div style="font-size: 0.55em; margin-top: 0; display: flex; flex-direction: column; gap: 6px;">
+        <div style="display: flex; gap: 10px; align-items: stretch;">
+            <div style="background: #f0f0f0; border-radius: 18px; padding: 6px 12px; border: 2px solid #ccc; flex: 0 0 43%; display: flex; align-items: center;">
+                <span><span style="font-size: 1.1em;">🗣️</span> <em>"The day after tomorrow I will buy a bus pass for $20."</em></span>
+            </div>
+            <div style="background: #ffebee; border-radius: 14px; padding: 4px 10px; border: 2px solid #e57373; flex: 1;">
+                <code>Annotated[str]</code><br>🤖 <em style="color:#888;">"Could you please specify the category?"</em> ❌
+            </div>
+            <div style="background: #e8f5e9; border-radius: 14px; padding: 4px 10px; border: 2px solid #81c784; flex: 1;">
+                <code>Annotated[Enum]</code><br>🤖 <span style="color:green; font-weight:bold;">Transit and Fuel</span> ✅
+            </div>
+        </div>
+    </div>
+    <div class="fragment">
+    <p style="font-size: 0.7em; margin-bottom: 2px;">When did category match improve?</p>
+    <div style="font-size: 0.55em; margin-top: 0; display: flex; flex-direction: column; gap: 6px;">
+        <div style="display: flex; gap: 10px; align-items: stretch;">
+            <div style="background: #f0f0f0; border-radius: 18px; padding: 6px 12px; border: 2px solid #ccc; flex: 0 0 43%; display: flex; align-items: center;">
+                <span><span style="font-size: 1.1em;">🗣️</span> <em>"I paid $0.99 for an app"</em></span>
+            </div>
+            <div style="background: #ffebee; border-radius: 14px; padding: 4px 10px; border: 2px solid #e57373; flex: 1;">
+                <code>Literal</code><br>🤖 <span style="color:red; font-weight:bold;">Apparel and Beauty</span> ❌
+            </div>
+            <div style="background: #e8f5e9; border-radius: 14px; padding: 4px 10px; border: 2px solid #81c784; flex: 1;">
+                <code>Annotated[Enum]</code><br>🤖 <span style="color:green; font-weight:bold;">Electronics &amp; tech</span> ✅
+            </div>
+        </div>
+        <div style="display: flex; gap: 10px; align-items: stretch;">
+            <div style="background: #f0f0f0; border-radius: 18px; padding: 6px 12px; border: 2px solid #ccc; flex: 0 0 43%; display: flex; align-items: center;">
+                <span><span style="font-size: 1.1em;">🗣️</span> <em>"Last Friday I spent $18 on a movie ticket"</em></span>
+            </div>
+            <div style="background: #ffebee; border-radius: 14px; padding: 4px 10px; border: 2px solid #e57373; flex: 1;">
+                <code>Annotated[str]</code><br>🤖 <span style="color:red; font-weight:bold;">Arts and hobbies</span> ❌
+            </div>
+            <div style="background: #e8f5e9; border-radius: 14px; padding: 4px 10px; border: 2px solid #81c784; flex: 1;">
+                <code>Annotated[Enum]</code><br>🤖 <span style="color:green; font-weight:bold;">Media &amp; streaming</span> ✅
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <aside class="notes">
+        Annotated[Enum] is the clear winner — 17/17 tool calling AND 15/17 category match.
+        With the same description on cat_b, the match gap narrowed (14/15 vs 15/17) — descriptions do most of the heavy lifting.
+        But cat_b still has 2 refusals while cat_e has 0, so cat_e gets more cases right overall (15 vs 14).
+        Fractions are more honest than percentages with only 17 cases — 93.3% vs 88.2% sounds like a big gap but it's 14/15 vs 15/17.
+        Data source: evals/runs/gpt41mini_cat_v2
+    </aside>
+  </section>
+
+<section>
+    <h3>Date schema variants</h3>
+    <div style="display: grid; grid-template-columns: 0.7fr 1.4fr 0.7fr 1.4fr; gap: 12px; font-size: 0.6em;">
+        <p><strong>Bare string</strong></p>
+        <p><strong>Annotated description</strong></p>
+        <p><strong><code>date</code> type</strong></p>
+        <p><strong>Regex pattern</strong></p>
+
+        <pre style="margin: 0;"><code data-trim class="python">expense_date: str,</code></pre>
+        <pre style="margin: 0;"><code data-trim class="python">expense_date: Annotated[
+    str, "Date in YYYY-MM-DD format"
+],</code></pre>
+        <pre style="margin: 0;"><code data-trim class="python">expense_date: date,</code></pre>
+        <pre style="margin: 0;"><code data-trim class="python">expense_date: Annotated[
+    str,
+    Field(pattern=r"^\d{4}-\d{2}-\d{2}$"),
+],</code></pre>
+
+        <p style="text-align: center; margin: 0; font-size: 1.8em;">↓</p>
+        <p style="text-align: center; margin: 0; font-size: 1.8em;">↓</p>
+        <p style="text-align: center; margin: 0; font-size: 1.8em;">↓</p>
+        <p style="text-align: center; margin: 0; font-size: 1.8em;">↓</p>
+
+        <pre style="margin: 0;"><code data-trim class="json">"expense_date": {
+    "type": "string"
+}</code></pre>
+        <pre style="margin: 0;"><code data-trim class="json">"expense_date": {
+    "description": "Date in YYYY-MM-DD format",
+    "type": "string"
+}</code></pre>
+        <pre style="margin: 0;"><code data-trim class="json">"expense_date": {
+    "format": "date",
+    "type": "string"
+}</code></pre>
+        <pre style="margin: 0;"><code data-trim class="json">"expense_date": {
+    "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+    "type": "string"
+}</code></pre>
+    </div>
+</section>
+
+<section class="heatmap-slide">
+    <h3>Evals: Which date schema did best?</h3>
+    <p style="font-size: 0.7em;">gpt-4.1-mini, 17 cases for each date schema, with a Pydantic-AI agent:</p>
+    <table style="font-size: 0.6em; table-layout: fixed; width: 100%;">
+        <colgroup>
+            <col style="width: 30%">
+        </colgroup>
+        <thead>
+            <tr><th></th><th><code>str</code></th><th><code>Annotated[str]</code></th><th><code>date</code></th><th><code>Field(pattern)</code></th></tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>Was tool called?</strong></td><td data-value="17">17/17</td><td data-value="17">17/17</td><td data-value="17">17/17</td><td data-value="17">17/17</td></tr>
+            <tr><td><strong>Date match (of called)</strong></td><td data-value="12">12/17</td><td data-value="12">12/17</td><td data-value="12">12/17</td><td data-value="12">12/17</td></tr>
+            <tr><td><strong>Schema size (avg tokens)</strong></td><td>326</td><td>406</td><td>414</td><td>423</td></tr>
+        </tbody>
+    </table>
+    <p style="font-size: 0.7em;">Date schema made <strong>zero difference</strong>! All 4 variants produced identical results for every case.</p>
+    <p style="font-size: 0.7em; margin-bottom: 2px;">Why? The parameter name <code>expense_date</code> already implies ISO 8601 format:</p>
+    <div style="font-size: 0.55em; margin-top: 0; display: flex; flex-direction: column; gap: 6px;">
+        <div style="display: flex; gap: 10px; align-items: stretch;">
+            <div style="background: #f0f0f0; border-radius: 18px; padding: 6px 12px; border: 2px solid #ccc; flex: 0 0 30%; display: flex; align-items: center;">
+                <span><span style="font-size: 1.1em;">🗣️</span> <em>"Yesterday I bought a sandwich for $12.50."</em></span>
+            </div>
+            <div style="background: #e8f5e9; border-radius: 14px; padding: 4px 10px; border: 2px solid #81c784; flex: 1;">
+                <code>str</code> (no hints at all!)<br>🤖 <span style="color:green; font-weight:bold;">2026-03-07</span> ✅
+            </div>
+            <div style="background: #e8f5e9; border-radius: 14px; padding: 4px 10px; border: 2px solid #81c784; flex: 1;">
+                <code>Field(pattern)</code> (regex)<br>🤖 <span style="color:green; font-weight:bold;">2026-03-07</span> ✅
+            </div>
+        </div>
+    </div>
+    <p style="font-size: 0.7em; margin-bottom: 2px;">All 5 failures were date miscalculation on relative dates — not a schema issue:</p>
+    <div style="font-size: 0.55em; margin-top: 0; display: flex; flex-direction: column; gap: 6px;">
+        <div style="display: flex; gap: 10px; align-items: stretch;">
+            <div style="background: #f0f0f0; border-radius: 18px; padding: 6px 12px; border: 2px solid #ccc; flex: 0 0 30%; display: flex; align-items: center;">
+                <span><span style="font-size: 1.1em;">🗣️</span> <em>"Two Mondays ago I spent $8.75 on coffee."</em></span>
+            </div>
+            <div style="background: #ffebee; border-radius: 14px; padding: 4px 10px; border: 2px solid #e57373; flex: 1;">
+                <code>str</code><br>🤖 <span style="color:red; font-weight:bold;">2026-02-23</span> ❌
+            </div>
+            <div style="background: #ffebee; border-radius: 14px; padding: 4px 10px; border: 2px solid #e57373; flex: 1;">
+                <code>Field(pattern)</code><br>🤖 <span style="color:red; font-weight:bold;">2026-02-23</span> ❌ (same wrong answer)
+            </div>
+        </div>
+    </div>
+    <aside class="notes">
+        Surprise: date schemas make ZERO difference!
+        - All 4 variants — bare str, Annotated description, date type, regex pattern — produce identical results on every case.
+        - Date FORMAT is 100% correct for ALL variants, even bare str — models default to ISO 8601 (YYYY-MM-DD)
+          because the parameter is named "expense_date" and ISO is the dominant format in training data (JSON, SQL, APIs).
+          We even changed the system prompt from "2026-03-07" to "March 7, 2026" to avoid leaking the format hint — no difference.
+        - Date ACCURACY is 70.6% (12/17) across ALL schemas. The same 5 hard relative date cases fail everywhere:
+          "two Mondays ago", "last day of last month", "last business day", etc. — these are date reasoning errors, not schema errors.
+        - To actually test date format impact, you'd need an ambiguous parameter name (like "when") or test non-ISO formats.
+        Data source: evals/runs/gpt41mini_date_v4
+    </aside>
+</section>
+
+<section class="heading-only">
+    <h2>Do all models think alike?</h2>
+</section>
+
+<section class="heatmap-slide">
+    <h3>Evals across models</h3>
+    <p style="font-size: 0.6em;">Same 17 test cases, same Pydantic AI agent, <strong>different models</strong>:</p>
+    <div style="display: flex; gap: 30px; font-size: 0.5em;">
+        <div style="flex: 1; border: 3px solid var(--neon-pink); border-radius: 12px; padding: 5px 0; box-shadow: 4px 4px 0 #000;">
+            <p style="font-size: 1.4em; font-weight: bold; text-align: center;">Category</p>
+            <p><strong>Did agent call the tool?</strong></p>
+            <table>
+                <thead><tr><th>Schema</th><th>gpt-4o</th><th>4.1-mini</th><th>5.3-codex (med)</th></tr></thead>
+                <tbody>
+                    <tr><td><code>Annotated[str]</code></td><td data-value="17">17/17</td><td data-value="15">15/17</td><td data-value="17">17/17</td></tr>
+                    <tr><td><code>Literal</code></td><td data-value="17">17/17</td><td data-value="16">16/17</td><td data-value="17">17/17</td></tr>
+                    <tr><td><code>Enum</code></td><td data-value="17">17/17</td><td data-value="16">16/17</td><td data-value="17">17/17</td></tr>
+                    <tr><td><code>Annotated[Enum]</code></td><td data-value="17">17/17</td><td data-value="17">17/17</td><td data-value="17">17/17</td></tr>
+                </tbody>
+            </table>
+            <p><strong>When called, did category match expected?</strong></p>
+            <table>
+                <thead><tr><th>Schema</th><th>gpt-4o</th><th>4.1-mini</th><th>5.3-codex (med)</th></tr></thead>
+                <tbody>
+                    <tr><td><code>Annotated[str]</code></td><td data-value="17">17/17</td><td data-value="14">14/15</td><td data-value="15">15/17</td></tr>
+                    <tr><td><code>Literal</code></td><td data-value="15">15/17</td><td data-value="13">13/16</td><td data-value="13">13/17</td></tr>
+                    <tr><td><code>Enum</code></td><td data-value="14">14/17</td><td data-value="13">13/16</td><td data-value="13">13/17</td></tr>
+                    <tr><td><code>Annotated[Enum]</code></td><td data-value="17">17/17</td><td data-value="15">15/17</td><td data-value="15">15/17</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="flex: 1; border: 3px solid var(--neon-pink); border-radius: 12px; padding: 5px 0; box-shadow: 4px 4px 0 #000;">
+            <p style="font-size: 1.4em; font-weight: bold; text-align: center;">Date</p>
+            <p><strong>Did agent call the tool?</strong></p>
+            <table>
+                <thead><tr><th>Schema</th><th>gpt-4o</th><th>4.1-mini</th><th>5.3-codex (med)</th></tr></thead>
+                <tbody>
+                    <tr><td><code>str</code></td><td data-value="17">17/17</td><td data-value="17">17/17</td><td data-value="17">17/17</td></tr>
+                    <tr><td><code>Annotated[str]</code></td><td data-value="17">17/17</td><td data-value="17">17/17</td><td data-value="17">17/17</td></tr>
+                    <tr><td><code>date</code></td><td data-value="17">17/17</td><td data-value="17">17/17</td><td data-value="17">17/17</td></tr>
+                    <tr><td><code>Field(pattern)</code></td><td data-value="17">17/17</td><td data-value="17">17/17</td><td data-value="17">17/17</td></tr>
+                </tbody>
+            </table>
+            <p><strong>When called, did date match expected?</strong></p>
+            <table>
+                <thead><tr><th>Schema</th><th>gpt-4o</th><th>4.1-mini</th><th>5.3-codex (med)</th></tr></thead>
+                <tbody>
+                    <tr><td><code>str</code></td><td data-value="15">15/17</td><td data-value="12">12/17</td><td data-value="17">17/17</td></tr>
+                    <tr><td><code>Annotated[str]</code></td><td data-value="15">15/17</td><td data-value="12">12/17</td><td data-value="17">17/17</td></tr>
+                    <tr><td><code>date</code></td><td data-value="15">15/17</td><td data-value="12">12/17</td><td data-value="17">17/17</td></tr>
+                    <tr><td><code>Field(pattern)</code></td><td data-value="15">15/17</td><td data-value="12">12/17</td><td data-value="17">17/17</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <aside class="notes">
+        Key findings with updated data (all runs use AnnotatedCategory for date variants, natural language date in system prompt):
+        
+        CATEGORY:
+        - Tool calling: gpt-4o and 5.3-codex always call the tool (17/17). gpt-4.1-mini still refuses on some Annotated[str] and Literal cases.
+        - Category match: Annotated[Enum] and Annotated[str] are tied as best — the description does the heavy lifting.
+          gpt-4o is the most accurate (17/17 on both), while 4.1-mini and 5.3-codex plateau at 15/17.
+          Literal and Enum without descriptions consistently underperform across all models (13-15/17).
+        
+        DATE:
+        - Tool calling: 17/17 across ALL models and ALL schemas — no refusals anywhere.
+        - Date match: Identical across all 4 date schemas within each model — the schema makes zero difference.
+          gpt-5.3-codex gets perfect 17/17, gpt-4o gets 15/17, gpt-4.1-mini gets 12/17.
+          The difference is purely model capability at relative date reasoning, not schema quality.
+        
+        Data sources: evals/runs/gpt4o_cat_v3, gpt4o_date_v3, gpt41mini_cat_v2, gpt41mini_date_v4, gpt53codex_cat_v3, gpt53codex_date_v3
+    </aside>
+</section>
+
+<!-- Same prompt, different behavior -->
+<section>
+    <h3>Same prompt, different models</h3>
+    <p style="font-size: 0.7em; margin-bottom: 2px;"><strong>Category:</strong> <em>"Yesterday I spent $200 on a spa treatment."</em> with <code>Annotated[Enum]</code></p>
+    <div style="font-size: 0.6em; margin-top: 0; display: flex; flex-direction: column; gap: 6px;">
+        <div style="display: flex; gap: 10px; align-items: stretch;">
+            <div style="background: #e8f5e9; border-radius: 14px; padding: 4px 10px; border: 2px solid #81c784; flex: 1;">
+                <strong>gpt-4o</strong><br>🤖 <span style="color:green; font-weight:bold;">Health &amp; Fitness</span> ✅
+            </div>
+            <div style="background: #ffebee; border-radius: 14px; padding: 4px 10px; border: 2px solid #e57373; flex: 1;">
+                <strong>gpt-4.1-mini</strong><br>🤖 <span style="color:red; font-weight:bold;">Apparel and Beauty</span> ❌
+            </div>
+            <div style="background: #ffebee; border-radius: 14px; padding: 4px 10px; border: 2px solid #e57373; flex: 1;">
+                <strong>gpt-5.3-codex</strong><br>🤖 <span style="color:red; font-weight:bold;">Apparel and Beauty</span> ❌
+            </div>
+        </div>
+    </div>
+    <p style="font-size: 0.7em; margin-bottom: 2px; margin-top: 12px;"><strong>Category:</strong> <em>"Yesterday I bought a car for 35000 USD."</em> with <code>Annotated[Enum]</code></p>
+    <div style="font-size: 0.6em; margin-top: 0; display: flex; flex-direction: column; gap: 6px;">
+        <div style="display: flex; gap: 10px; align-items: stretch;">
+            <div style="background: #e8f5e9; border-radius: 14px; padding: 4px 10px; border: 2px solid #81c784; flex: 1;">
+                <strong>gpt-4o</strong><br>🤖 <span style="color:green; font-weight:bold;">Misc</span> ✅ <br> (followed the "if unclear, use Misc" heuristic)
+            </div>
+            <div style="background: #ffebee; border-radius: 14px; padding: 4px 10px; border: 2px solid #e57373; flex: 1;">
+                <strong>gpt-4.1-mini</strong><br>🤖 <span style="color:red; font-weight:bold;">Transit and Fuel</span> ❌
+            </div>
+            <div style="background: #ffebee; border-radius: 14px; padding: 4px 10px; border: 2px solid #e57373; flex: 1;">
+                <strong>gpt-5.3-codex</strong><br>🤖 <span style="color:red; font-weight:bold;">Transit and Fuel</span> ❌
+            </div>
+        </div>
+    </div>
+    <p style="font-size: 0.7em; margin-bottom: 2px; margin-top: 12px;"><strong>Date:</strong> <em>"On the last day of last month I bought headphones for $79.99."</em></p>
+    <div style="font-size: 0.6em; margin-top: 0; display: flex; flex-direction: column; gap: 6px;">
+        <div style="display: flex; gap: 10px; align-items: stretch;">
+            <div style="background: #ffebee; border-radius: 14px; padding: 4px 10px; border: 2px solid #e57373; flex: 1;">
+                <strong>gpt-4o</strong><br>🤖 <span style="color:red; font-weight:bold;">2026-02-29</span> ❌<br>(Feb 29 doesn't exist!)
+            </div>
+            <div style="background: #ffebee; border-radius: 14px; padding: 4px 10px; border: 2px solid #e57373; flex: 1;">
+                <strong>gpt-4.1-mini</strong><br>🤖 <span style="color:red; font-weight:bold;">2026-02-29</span> ❌<br>(still doesn't exist!)
+            </div>
+            <div style="background: #e8f5e9; border-radius: 14px; padding: 4px 10px; border: 2px solid #81c784; flex: 1;">
+                <strong>gpt-5.3-codex</strong><br>🤖 <span style="color:green; font-weight:bold;">2026-02-28</span> ✅
+            </div>
+        </div>
+    </div>
+    <p style="font-size: 0.7em; margin-top: 24px;">Disagree with the "expected" answers?<br>Evals can also reveal ambiguities in your categories or test data!</p>
+    <aside class="notes">
+        Three examples showing how the same schema produces different results across models:
+        1. Spa treatment: gpt-4o correctly picks Health &amp; Fitness, but 4.1-mini and 5.3-codex both pick Apparel and Beauty (spa = beauty?).
+        2. Car purchase: gpt-4o follows the "if unclear, use Misc" heuristic from the description, while the other two default to Transit and Fuel.
+        3. Last day of last month: gpt-4o and 4.1-mini both hallucinate Feb 29 (2026 is NOT a leap year!), while gpt-5.3-codex with reasoning correctly computes Feb 28.
+        The takeaway: the same schema can produce different results across models — always test with YOUR model.
+    </aside>
+</section>
+
+<!-- Reasoning levels -->
+<section class="heatmap-slide">
+    <h3>Don't overthink it!</h3>
+    <p style="font-size: 0.7em;">gpt-5.3-codex with <code>Annotated[Enum]</code>, same 17 cases, varying reasoning effort:</p>
+    <table style="font-size: 0.6em; table-layout: fixed; width: 100%;">
+        <colgroup>
+            <col style="width: 35%">
+            <col style="width: 16.25%">
+            <col style="width: 16.25%">
+            <col style="width: 16.25%">
+            <col style="width: 16.25%">
+        </colgroup>
+        <thead>
+            <tr><th></th><th>low</th><th>medium</th><th>high</th><th>xhigh</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>Did category match ground truth?</strong></td><td style="font-weight:bold;">100%</td><td>88.2%</td><td>88.2%</td><td>88.2%</td></tr>
+            <tr><td><strong>Did date match ground truth?</strong></td><td>94.1%</td><td>94.1%</td><td>94.1%</td><td>94.1%</td></tr>
+            <tr><td><strong>Schema size (average tokens)</strong></td><td>862</td><td>890</td><td>939</td><td>1114</td></tr>
+            <tr><td><strong>Latency (average ms)</strong></td><td>7,129</td><td>7,474</td><td>8,828</td><td>11,554</td></tr>
+        </tbody>
+    </table>
+    <p style="font-size: 0.7em; font-weight: bold; margin-bottom: 2px;">Why?</p>
+    <div style="display: flex; gap: 14px; align-items: flex-start; font-size: 0.55em;">
+        <!-- Speech bubble: user prompt -->
+        <div style="background: #f0f0f0; border-radius: 18px; padding: 8px 14px; position: relative; flex: 0 0 auto; max-width: 250px; border: 2px solid #ccc; margin-top: 4px;">
+            <span style="font-size: 1.1em;">🗣️</span> <em>"Yesterday I spent $200 on a spa treatment"</em>
+            <div style="position: absolute; right: -10px; top: 12px; width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 10px solid #ccc;"></div>
+        </div>
+        <!-- Two thinking bubbles side by side -->
+        <div style="flex: 1; display: flex; gap: 12px;">
+            <!-- Low reasoning -->
+            <div style="flex: 1;">
+                <div style="font-weight: bold; text-align: center; margin-bottom: 4px;"><code>low</code></div>
+                <div style="background: #e8f5e9; border-radius: 18px; padding: 8px 12px; border: 2px solid #81c784; position: relative;">
+                    <span style="position: absolute; top: -8px; left: 8px; font-size: 0.9em;">💭</span>
+                    <span style="font-size: 0.95em; margin-left: 16px;"><em>"considering Health &amp; Fitness or Apparel/Beauty... spa = personal care or wellness"</em></span>
+                </div>
+                <div style="text-align: center; margin-top: 4px;">→ <span style="color:green; font-weight:bold;">Health &amp; Fitness</span> ✅</div>
+            </div>
+            <!-- Medium reasoning -->
+            <div style="flex: 1;">
+                <div style="font-weight: bold; text-align: center; margin-bottom: 4px;"><code>medium</code></div>
+                <div style="background: #ffebee; border-radius: 18px; padding: 8px 12px; border: 2px solid #e57373; position: relative;">
+                    <span style="position: absolute; top: -8px; left: 8px; font-size: 0.9em;">💭</span>
+                    <span style="font-size: 0.95em; margin-left: 16px;"><em>"personal care fits in Apparel and Beauty, while wellness aligns with Health &amp; Fitness. Since a spa treatment feels more like a beauty or per..."</em></span>
+                </div>
+                <div style="text-align: center; margin-top: 4px;">→ <span style="color:red; font-weight:bold;">Apparel and Beauty</span> ❌</div>
+            </div>
+        </div>
+    </div>
+    <p style="font-size: 0.7em; margin-top: 4px;">More reasoning → more overthinking → wrong answer!</p>
+    <aside class="notes">
+        Surprising result: low reasoning gets perfect category match, while medium/high/xhigh all plateau at 88.2%.
+        The extra reasoning causes overthinking on edge cases. For the spa treatment, low quickly picks Health &amp; Fitness,
+        while medium explicitly reasons about both options and then talks itself into Apparel and Beauty.
+        Same pattern for the car purchase: low picks Misc (following the heuristic), medium picks Transit and Fuel.
+        Date match is identical across all levels — reasoning effort doesn't help with date calculation.
+        Latency increases significantly: 7.1s (low) → 11.6s (xhigh), a 63% slowdown for no accuracy gain.
+        Data sources: evals/runs/gpt53codex_low, gpt53codex_medium, gpt53codex_high, gpt53codex_xhigh
+    </aside>
+</section>
+
+<section class="heading-only">
+    <h2>Are all agent frameworks the same?</h2>
+</section>
+
+<section>
+    <h3>GitHub Copilot SDK agent with MCP server</h3>
+    <pre style="height:560px"><code data-trim data-noescape class="python">
+client = CopilotClient()
+
+session = await client.create_session(SessionConfig(
+    model="gpt-5.3-codex",
+    mcp_servers={
+        "expenses": MCPRemoteServerConfig(
+            type="http",
+            url="http://localhost:8000/mcp",
+            tools=["add_expense_cat_e"],
+        )
+    },
+    system_message={
+        "mode": "replace",
+        "content": "You help users log expenses. "
+            f"Today's date is {datetime.now().strftime('%B %-d, %Y')}.",
+    },
+))
+
+await session.send_and_wait({"prompt": "I bought a sandwich for $12.50."})
+    </code></pre>
+    <aside class="notes">
+        The Copilot SDK uses a session-based model — you create a client, configure a session with MCP servers, then send messages.
+        Tool filtering is done server-side via the tools parameter, unlike PydanticAI's client-side filtering.
+        The system prompt is the same as the PydanticAI agent for a fair comparison.
+    </aside>
+</section>
+
+<section class="heatmap-slide">
+    <h3>Pydantic AI vs. GitHub Copilot SDK</h3>
+    <p style="font-size: 0.6em;">Same model (gpt-5.3-codex), same 17 cases, same MCP server, <strong>different agent framework</strong>:</p>
+    <div style="display: flex; gap: 20px; font-size: 0.55em;">
+        <div style="flex: 1;">
+            <p><strong>Was tool called at all?</strong></p>
+            <table data-min="10" data-max="17">
+                <thead><tr><th>Schema</th><th>Pydantic AI</th><th>Copilot SDK</th></tr></thead>
+                <tbody>
+                    <tr><td><code>Annotated[str]</code></td><td data-value="17">17/17</td><td data-value="17">17/17</td></tr>
+                    <tr><td><code>Literal</code></td><td data-value="17">17/17</td><td data-value="17">17/17</td></tr>
+                    <tr><td><code>Enum</code></td><td data-value="17">17/17</td><td data-value="17">17/17</td></tr>
+                    <tr><td><code>Annotated[Enum]</code></td><td data-value="17">17/17</td><td data-value="17">17/17</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="flex: 1;">
+            <p><strong>Did category match expected?</strong></p>
+            <table data-min="10" data-max="17">
+                <thead><tr><th>Schema</th><th>Pydantic AI</th><th>Copilot SDK</th></tr></thead>
+                <tbody>
+                    <tr><td><code>Annotated[str]</code></td><td data-value="15">15/17</td><td data-value="15">15/17</td></tr>
+                    <tr><td><code>Literal</code></td><td data-value="13">13/17</td><td data-value="13">13/17</td></tr>
+                    <tr><td><code>Enum</code></td><td data-value="13">13/17</td><td data-value="13">13/17</td></tr>
+                    <tr><td><code>Annotated[Enum]</code></td><td data-value="15">15/17</td><td data-value="15">15/17</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="flex: 1;">
+            <p><strong>Did date match expected?</strong></p>
+            <table data-min="10" data-max="17">
+                <thead><tr><th>Schema</th><th>Pydantic AI</th><th>Copilot SDK</th></tr></thead>
+                <tbody>
+                    <tr><td><code>str</code></td><td data-value="17">17/17</td><td data-value="17">17/17</td></tr>
+                    <tr><td><code>Annotated[str]</code></td><td data-value="17">17/17</td><td data-value="17">17/17</td></tr>
+                    <tr><td><code>date</code></td><td data-value="17">17/17</td><td data-value="17">17/17</td></tr>
+                    <tr><td><code>Field(pattern)</code></td><td data-value="17">17/17</td><td data-value="17">17/17</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <aside class="notes">
+        With the updated system prompt (natural language date format), results are now identical across both frameworks:
+        - Tool calling: 17/17 everywhere
+        - Category match: identical (15/17 for Annotated[str] and Annotated[Enum], 13/17 for Literal and Enum)
+        - Date match: 17/17 everywhere — both frameworks get perfect date accuracy with gpt-5.3-codex
+        The framework makes no difference when the system prompt and model are the same.
+        Caveat: In an earlier run with the Copilot SDK (late evening PT), dates were consistently off-by-one —
+        the model was computing dates for the next day (UTC). The system prompt said "today is March 8" but
+        the model may have seen a UTC-based date of March 9. Re-running the next morning produced perfect results.
+        This suggests the Copilot SDK may inject its own date context or the model uses UTC internally.
+        Data sources: PydanticAI cat = gpt53codex_cat_v3, PydanticAI date = gpt53codex_date_v3,
+        Copilot cat = copilot_53codex_cat_v2, Copilot date = copilot_53codex_date_v3
+    </aside>
+</section>
+
+<!-- SECTION: Output schemas -->
+<section class="heading-only">
+    <h2>Tools have return schemas too!</h2>
+</section>
+
+<!-- Return a plain string -->
+<section>
+    <h3>Return a plain string</h3>
+    <div style="display: flex; gap: 0; align-items: stretch;">
+        <div style="flex: 1; display: flex; flex-direction: column;">
+            <p style="font-size: 0.7em;">Python code:</p>
+            <pre style="font-size: 0.5em; flex: 1;"><code data-trim data-noescape class="python">
+@mcp.tool
+def get_expenses_a() -> str:
+    """Get all expenses."""
+    return "\n".join(
+        f"Date: {e['date']}, Amount: ${e['amount']}, "
+        f"Category: {e['category']}, ..."
+        for e in expenses
+    )
+            </code></pre>
+        </div>
+        <div style="display: flex; align-items: center; padding: 0 15px; font-size: 2em;">→</div>
+        <div style="flex: 0 0 38%; display: flex; flex-direction: column;">
+            <p style="font-size: 0.7em;">Example output:</p>
+            <pre style="font-size: 0.36em; flex: 1;"><code data-trim class="text">
+Date: 2025-01-02, Amount: $4.50,
+  Category: Food &amp; drink,
+  Description: Morning coffee
+Date: 2025-01-02, Amount: $12.99,
+  Category: Food &amp; drink,
+  Description: Lunch sandwich
+Date: 2025-01-03, Amount: $45.00,
+  Category: Transit and Fuel,
+  Description: Gas station fill-up
+...
+            </code></pre>
+        </div>
+    </div>
+</section>
+
+<!-- Return a list of dicts (hidden - too similar to list[Expense]) -->
+<!--
+<section>
+    <h3>Return a list of dicts</h3>
+    <div style="display: flex; gap: 0; align-items: stretch;">
+        <div style="flex: 1; display: flex; flex-direction: column;">
+            <p style="font-size: 0.7em;">Python code:</p>
+            <pre style="flex: 1;"><code data-trim data-noescape class="python">
+@mcp.tool
+def get_expenses_b() -> list[dict]:
+    """Get all expenses."""
+    with open("expenses.csv") as file:
+        reader = csv.DictReader(file)
+        return list(reader)
+            </code></pre>
+        </div>
+        <div style="display: flex; align-items: center; padding: 0 15px; font-size: 2em;">→</div>
+        <div style="flex: 0 0 38%; display: flex; flex-direction: column;">
+            <p style="font-size: 0.7em;">Example output:</p>
+            <pre style="font-size: 0.5em; flex: 1;"><code data-trim class="json">
+[
+  {"date": "2025-01-02",
+   "amount": "4.50",
+   "category": "Food &amp; drink",
+   "description": "Morning coffee"},
+  {"date": "2025-01-02",
+   "amount": "12.99",
+   ...},
+  ...
+]
+            </code></pre>
+        </div>
+    </div>
+</section>
+-->
+
+<!-- Return a list of Pydantic models -->
+<section>
+    <h3>Return a list of Pydantic models</h3>
+    <div style="display: flex; gap: 0; align-items: stretch;">
+        <div style="flex: 1; display: flex; flex-direction: column;">
+            <p style="font-size: 0.7em;">Python code:</p>
+            <pre style="font-size: 0.42em; flex: 1;"><code data-trim data-noescape class="python">
+class Expense(BaseModel):
+    """A single expense record."""
+    expense_date: date = Field(
+        alias="date",
+        description="Date of the expense")
+    amount: float = Field(
+        description="Amount spent")
+    category: str = Field(
+        description="Category of expense")
+    description: str = Field(
+        description="Description of the expense")
+
+@mcp.tool
+def get_expenses_c() -> list[Expense]:
+    """Get all expenses."""
+    return [Expense(**e) for e in expenses]
+            </code></pre>
+        </div>
+        <div style="display: flex; align-items: center; padding: 0 15px; font-size: 2em;">→</div>
+        <div style="flex: 0 0 38%; display: flex; flex-direction: column;">
+            <p style="font-size: 0.7em;">Example output:</p>
+            <pre style="font-size: 0.5em; flex: 1;"><code data-trim class="json">
+[
+  {"date": "2025-01-02",
+   "amount": 4.5,
+   "category": "Food &amp; drink",
+   "description": "Morning coffee"},
+  {"date": "2025-01-02",
+   "amount": 12.99,
+   ...},
+  ...
+]
+            </code></pre>
+        </div>
+    </div>
+    <aside class="notes">
+        Notice the amounts are now numbers, not strings — Pydantic coerces the CSV string values to proper floats.
+        I didn't even notice the difference at first! That's a hidden benefit of typed return models.
+    </aside>
+</section>
+
+<section class="heatmap-slide">
+    <h3>Evals: Which output schema did best?</h3>
+    <p style="font-size: 0.7em;">gpt-5.3-codex, 7 cases for each schema, with a Pydantic-AI agent:</p>
+    <div style="display: flex; gap: 20px;">
+        <div style="flex: 0 0 auto; font-size: 0.5em; line-height: 1.6;">
+            <div style="display: flex; flex-direction: column; gap: 3px; margin-top: 4px;">
+                <div style="background: #f0f0f0; border-radius: 12px; padding: 2px 8px; border: 1px solid #ccc;">🗣️ How many expenses are recorded in total?</div>
+                <div style="background: #f0f0f0; border-radius: 12px; padding: 2px 8px; border: 1px solid #ccc;">🗣️ What is the most expensive expense?</div>
+                <div style="background: #f0f0f0; border-radius: 12px; padding: 2px 8px; border: 1px solid #ccc;">🗣️ What is the cheapest expense?</div>
+                <div style="background: #f0f0f0; border-radius: 12px; padding: 2px 8px; border: 1px solid #ccc;">🗣️ What is the date of the earliest expense?</div>
+                <div style="background: #f0f0f0; border-radius: 12px; padding: 2px 8px; border: 1px solid #ccc;">🗣️ What category is the most expensive expense?</div>
+                <div style="background: #f0f0f0; border-radius: 12px; padding: 2px 8px; border: 1px solid #ccc;">🗣️ Show the 3 most expensive as a table.</div>
+                <div style="background: #f0f0f0; border-radius: 12px; padding: 2px 8px; border: 1px solid #ccc;">🗣️ Show all Electronics &amp; tech as a table.</div>
+            </div>
+        </div>
+        <div style="flex: 1;">
+            <table style="font-size: 0.65em;">
+                <thead>
+                    <tr><th></th><th><code>str</code></th><th><code>list[Expense]</code></th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Answered correctly?</strong></td><td data-value="7">7/7</td><td data-value="7">7/7</td></tr>
+                    <tr><td><strong>Tool response size</strong></td><td>6,297 chars</td><td>7,306 chars</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <p style="font-size: 0.8em;">Accuracy is identical, but structured output costs more in tool response size.</p>
+    <p style="font-size: 0.8em;">So why use it? For consumption by downstream <strong>MCP servers or agents</strong>.</p>
+    <aside class="notes">
+        Accuracy is identical across all three output formats — the model answers correctly regardless.
+        Structured variants cost ~16-19% more in tool response size due to JSON overhead.
+        So why use structured output? For consumption by downstream MCP servers or agents — structured data is much easier to work with.
+        Data source: evals/runs/gpt53codex_medium
+    </aside>
+</section>
+
+<section>
+    <h3>Conclusions</h3>
+    <ul>
+        <li>Structured schemas benefit your code: type safety, validation, IDE autocompletion, and fewer runtime errors</li>
+        <li class="fragment">They <em>may</em> also improve model accuracy when calling tools</li>
+        <li class="fragment">The only way to know is to do evals! Don't go on vibes alone.
+            <img src="hamel_eval.png" alt="Hamel's tweet recommending doing evals" style="width: 60%; margin-top: 10px; border: 1px solid #ccc; border-radius: 8px;">
+        </li>
+    </ul>
+</section>
+
+<section>
+    <h3>Thank you!</h3>
+    <p>Grab slides + code from:
+        <br><a target="_blank" href="https://pamelafox.github.io/py-ai-mcp-tool-schemas/">pamelafox.github.io/py-ai-mcp-tool-schemas</a></p>
     <br>
-    <p>Find me online at:</p>
+    <p>Questions? Find me online at:</p>
     <table style="width:60%; float: left; font-size:28px;">
-        <tr>
-          <td>Mastodon
-          <td><a target="_blank" href="https://fosstodon.org/@pamelafox">@pamelafox@fosstodon.org</a></td>
-        </tr>
-        <tr>
-          <td>BlueSky
-          <td><a target="_blank" href="https://bsky.app/profile/pamelafox.bsky.social">@pamelafox.bsky.social</a></td>
-        </tr>
-        <tr>
-          <td>Twitter
-          <td><a target="_blank" href="https://www.twitter.com/pamelafox">@pamelafox</a></td>
-        </tr>
-        <tr>
-          <td>LinkedIn
-          <td><a target="_blank" href="https://www.linkedin.com/in/pamela-s-fox/">www.linkedin.com/in/pamela-s-fox/</a></td>
-        </tr>
-        <tr>
-            <td>GitHub
-            <td><a target="_blank" href="https://www.github.com/pamelafox">www.github.com/pamelafox</a></td>
-          </tr>
-        <tr>
-            <td>Website
-            <td><a target="_blank" href="https://www.pamelafox.org">pamelafox.org</a></td>
-          </tr>
-      </table>
-</section>
-
-<!-- Section heading slide -->
-<section class="heading-only">
-  <h2>TODO: Section Title
-  </h2>
-</section>
-
-<!-- Content slide with text and image -->
-<section>
-  <h3>TODO: Slide Title</h3>
-
-  <img src="TODO.png" alt="TODO: image description" style="float:right; width:400px;">
-  <p>TODO: Slide content goes here.</p>
-</section>
-
-<!-- Content slide with code example -->
-<section>
-  <h3>TODO: Code Example Title</h3>
-
-  <p>TODO: Description of the code example.</p>
-
-  <pre><code data-trim data-noescape class="python">
-# TODO: Add code example
-def hello():
-    print("Hello, world!")
-  </code></pre>
-</section>
-
-<!-- Content slide with a table -->
-<section>
-  <h3>TODO: Table Slide Title</h3>
-
-  <table style="width: 100%; border: 1px solid #ccc;">
-    <thead>
-      <tr>
-        <th>Column A</th>
-        <th>Column B</th>
-        <th>Column C</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>TODO</td>
-        <td>TODO</td>
-        <td>TODO</td>
-      </tr>
-    </tbody>
-  </table>
-</section>
-
-<!-- Another section heading slide -->
-<section class="heading-only">
-  <h2>TODO: Another Section Title</h2>
-</section>
-
-<!-- Content slide with bullet points -->
-<section>
-  <h3>TODO: Bullet Points Slide Title</h3>
-
-  <ul>
-    <li>TODO: First point
-    <li>TODO: Second point
-    <li>TODO: Third point
-  </ul>
-</section>
-
-<!-- Content slide with a blockquote -->
-<section>
-  <h3>TODO: Quote Slide Title</h3>
-
-  <blockquote style="width:100%; background-color: #eaeaea; font-size:0.9em;">
-    TODO: Add a quote or callout here.
-  </blockquote>
-</section>
-
-<!-- Content slide with fragments (incremental reveal) -->
-<section>
-  <h3>TODO: Incremental Reveal Slide</h3>
-
-  <p class="fragment">TODO: First point (revealed on click)</p>
-  <p class="fragment">TODO: Second point (revealed on next click)</p>
-  <p class="fragment">TODO: Third point (revealed on next click)</p>
-</section>
-
-<!-- Thank you / closing slide -->
-<section>
-  <h3>Thank you!</h3>
-
-  <p>TODO: Add links to slides, repos, or resources.</p>
-
-  <p>Find me online at:</p>
-      <table style="width:60%; float: left; font-size:28px;">
-        <tr>
-          <td>Mastodon
-          <td><a target="_blank" href="https://fosstodon.org/@pamelafox">@pamelafox@fosstodon.org</a></td>
-        </tr>
-        <tr>
-          <td>BlueSky
-          <td><a target="_blank" href="https://bsky.app/profile/pamelafox.bsky.social">@pamelafox.bsky.social</a></td>
-        </tr>
-        <tr>
-          <td>Twitter
-          <td><a target="_blank" href="https://twitter.com/pamelafox">@pamelafox</a></td>
-        </tr>
-        <tr>
-          <td>LinkedIn
-          <td><a target="_blank" href="https://www.linkedin.com/in/pamela-s-fox/">www.linkedin.com/in/pamela-s-fox/</a></td>
-        </tr>
-        <tr>
-          <td>GitHub
-          <td><a target="_blank" href="https://www.github.com/pamelafox">www.github.com/pamelafox</a></td>
-        </tr>
-        <tr>
-          <td>Website
-          <td><a target="_blank" href="https://www.pamelafox.org">pamelafox.org</a></td>
-        </tr>
-      </table>
+        <tr><td>Mastodon</td><td><a target="_blank" href="https://fosstodon.org/@pamelafox">@pamelafox@fosstodon.org</a></td></tr>
+        <tr><td>BlueSky</td><td><a target="_blank" href="https://bsky.app/profile/pamelafox.bsky.social">@pamelafox.bsky.social</a></td></tr>
+        <tr><td>GitHub</td><td><a target="_blank" href="https://www.github.com/pamelafox">www.github.com/pamelafox</a></td></tr>
+        <tr><td>Website</td><td><a target="_blank" href="https://www.pamelafox.org">pamelafox.org</a></td></tr>
+    </table>
 </section>
 
 
@@ -283,7 +1130,6 @@ def hello():
 
     <script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/highlight.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
     <script>
         Reveal.initialize({
@@ -299,7 +1145,51 @@ def hello():
             plugins: [ RevealHighlight, RevealMenu ],
             pdfSeparateFragments: true
         });
-        window.highlightJsBadge();
+
+        // Add sparkle decorations to heading-only slides
+        document.querySelectorAll('.heading-only').forEach(section => {
+            const top = document.createElement('div');
+            top.textContent = '✦ △ ✦ ▽ ✦ △ ✦';
+            top.style.cssText = 'font-size:1.5em; letter-spacing:25px; color:#FF10F0; opacity:0.35; margin-bottom:20px;';
+            const bot = document.createElement('div');
+            bot.textContent = '▽ ✦ △ ✦ ▽ ✦ △';
+            bot.style.cssText = 'font-size:1.5em; letter-spacing:25px; color:#00FFFF; opacity:0.35; margin-top:20px;';
+            section.insertBefore(top, section.firstChild);
+            section.appendChild(bot);
+        });
+
+        // Heatmap coloring for tables
+        document.querySelectorAll('.heatmap-slide table tbody tr').forEach(tr => {
+            const table = tr.closest('table');
+            const fixedMin = table.dataset.min ? parseFloat(table.dataset.min) : null;
+            const fixedMax = table.dataset.max ? parseFloat(table.dataset.max) : null;
+            const rowLabel = tr.firstElementChild?.textContent || '';
+            const isInverted = rowLabel.match(/token|size|cost|latency/i);
+            const dataTds = Array.from(tr.querySelectorAll('td')).slice(1); // skip label
+            const vals = dataTds.map(td => {
+                // Prefer data-value attribute, fall back to parsing text
+                if (td.dataset.value) return parseFloat(td.dataset.value);
+                const text = td.textContent.replace(/[%,ms]/g, '').trim();
+                return parseFloat(text);
+            }).filter(v => !isNaN(v));
+            if (vals.length === 0) return;
+            const rowMin = fixedMin !== null ? fixedMin : Math.min(...vals);
+            const rowMax = fixedMax !== null ? fixedMax : Math.max(...vals);
+            dataTds.forEach(td => {
+                const val = td.dataset.value ? parseFloat(td.dataset.value) : parseFloat(td.textContent.replace(/[%,ms]/g, '').trim());
+                if (isNaN(val)) return;
+                let hue;
+                if (isInverted) {
+                    const ratio = rowMax === rowMin ? 0 : (val - rowMin) / (rowMax - rowMin);
+                    hue = (1 - ratio) * 120;
+                } else {
+                    const ratio = rowMax === rowMin ? 1 : (val - rowMin) / (rowMax - rowMin);
+                    hue = ratio * 120;
+                }
+                td.style.backgroundColor = `hsl(${hue}, 70%, 85%)`;
+                td.style.color = '#222';
+            });
+        });
 
 
     </script>

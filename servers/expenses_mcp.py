@@ -65,6 +65,25 @@ CATEGORY_LITERAL = Literal[
     "Misc",
 ]
 
+CATEGORY_DESCRIPTION = (
+    "Choose the closest category for the expense. Do not ask follow-up questions just to "
+    "disambiguate the category; pick the best fit using the description and common sense. "
+    "If truly unclear, use Misc.\n\n"
+    "Heuristics: "
+    "Food & drink=meals, groceries, coffee, restaurants, snacks; "
+    "Transit and Fuel=rideshare, taxi, gas, parking, public transit, tolls; "
+    "Media & streaming=movies, concerts, subscriptions, streaming, games, tickets; "
+    "Apparel and Beauty=clothing, shoes, cosmetics, haircuts, personal care; "
+    "Electronics & tech=devices, gadgets, accessories, apps, software; "
+    "Home and office=furniture, supplies, housewares, decor, cleaning; "
+    "Health & Fitness=gym, medical, wellness, supplements, pharmacy; "
+    "Arts and hobbies=crafts, sports equipment, creative supplies, lessons; "
+    "Fees & services=banking, professional services, insurance, subscriptions; "
+    "Misc=anything that does not fit well into other categories."
+)
+
+AnnotatedCategory = Annotated[Category, Field(description=CATEGORY_DESCRIPTION)]
+
 
 class Expense(BaseModel):
     """A single expense record."""
@@ -173,7 +192,8 @@ async def add_expense_cat_b(
         str,
         Field(
             description="Must be one of: Food & drink, Transit and Fuel, Media & streaming, Apparel and Beauty, "
-            "Electronics & tech, Home and office, Health & Fitness, Arts and hobbies, Fees & services, Misc"
+            "Electronics & tech, Home and office, Health & Fitness, Arts and hobbies, Fees & services, Misc.\n\n"
+            + CATEGORY_DESCRIPTION
         ),
     ],
     description: str,
@@ -208,27 +228,7 @@ async def add_expense_cat_d(
 async def add_expense_cat_e(
     expense_date: date,
     amount: float,
-    category: Annotated[
-        Category,
-        Field(
-            description=(
-                "Choose the closest category for the expense. Do not ask follow-up questions just to "
-                "disambiguate the category; pick the best fit using the description and common sense. "
-                "If truly unclear, use Misc.\n\n"
-                "Heuristics: "
-                "Food & drink=meals, groceries, coffee, restaurants, snacks; "
-                "Transit and Fuel=rideshare, taxi, gas, parking, public transit, tolls; "
-                "Media & streaming=movies, concerts, subscriptions, streaming, games, tickets; "
-                "Apparel and Beauty=clothing, shoes, cosmetics, haircuts, personal care; "
-                "Electronics & tech=devices, gadgets, accessories, apps, software; "
-                "Home and office=furniture, supplies, housewares, decor, cleaning; "
-                "Health & Fitness=gym, medical, wellness, supplements, pharmacy; "
-                "Arts and hobbies=crafts, sports equipment, creative supplies, lessons; "
-                "Fees & services=banking, professional services, insurance, subscriptions; "
-                "Misc=anything that does not fit well into other categories."
-            )
-        ),
-    ],
+    category: AnnotatedCategory,
     description: str,
 ) -> str:
     """Add a new expense."""
@@ -244,7 +244,7 @@ async def add_expense_cat_e(
 async def add_expense_date_a(
     expense_date: str,
     amount: float,
-    category: Category,
+    category: AnnotatedCategory,
     description: str,
 ) -> str:
     """Add a new expense."""
@@ -255,7 +255,7 @@ async def add_expense_date_a(
 async def add_expense_date_b(
     expense_date: Annotated[str, "Date in YYYY-MM-DD format"],
     amount: float,
-    category: Category,
+    category: AnnotatedCategory,
     description: str,
 ) -> str:
     """Add a new expense."""
@@ -266,7 +266,7 @@ async def add_expense_date_b(
 async def add_expense_date_c(
     expense_date: date,
     amount: float,
-    category: Category,
+    category: AnnotatedCategory,
     description: str,
 ) -> str:
     """Add a new expense."""
@@ -277,7 +277,7 @@ async def add_expense_date_c(
 async def add_expense_date_d(
     expense_date: Annotated[str, Field(pattern=r"^\d{4}-\d{2}-\d{2}$")],
     amount: float,
-    category: Category,
+    category: AnnotatedCategory,
     description: str,
 ) -> str:
     """Add a new expense."""

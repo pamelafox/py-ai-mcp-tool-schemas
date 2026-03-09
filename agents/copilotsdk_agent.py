@@ -130,13 +130,7 @@ async def run_query(
     client = None
     session = None
     try:
-        client = CopilotClient(
-            options=CopilotClientOptions(
-                github_token=os.getenv("GITHUB_TOKEN"),  # Set if using GitHub auth
-                azure_openai_endpoint=os.environ.get("AZURE_OPENAI_ENDPOINT"),
-                azure_openai_deployment=deployment,
-            )
-        )
+        client = CopilotClient()
 
         session_config = SessionConfig(
             model=deployment,
@@ -151,7 +145,7 @@ async def run_query(
                 "mode": "replace",
                 "content": (
                     "You help users log expenses. "
-                    f"Today's date is {datetime.now().strftime('%Y-%m-%d')}."
+                    f"Today's date is {datetime.now().strftime('%B %-d, %Y')}."
                 ),
             },
             on_permission_request=PermissionHandler.approve_all,

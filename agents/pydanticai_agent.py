@@ -44,7 +44,7 @@ from pydantic_ai.models.openai import OpenAIResponsesModel
 from pydantic_ai.providers.openai import OpenAIProvider
 from pydantic_ai.usage import RunUsage
 
-load_dotenv(override=True)
+load_dotenv(override=True)  # Default; overridden by --env-file in main()
 
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger("pydanticai")
@@ -114,7 +114,7 @@ def get_model(
     seed: int | None = None,
     temperature: float | None = None,
     deployment: str | None = None,
-) -> tuple[OpenAIResponsesModel, dict, DefaultAzureCredential]:
+) -> tuple[OpenAIResponsesModel, dict, DefaultAzureCredential | None]:
     """Configure the model for Azure OpenAI.
 
     Args:
@@ -126,13 +126,20 @@ def get_model(
     Returns:
         Tuple of (model, model_settings, async_credential)
     """
-    async_credential = DefaultAzureCredential()
-    token_provider = get_bearer_token_provider(async_credential, "https://cognitiveservices.azure.com/.default")
-    # Responses API uses /openai/v1/ base URL
-    client = AsyncOpenAI(
-        base_url=os.environ["AZURE_OPENAI_ENDPOINT"],
-        api_key=token_provider,
-    )
+    api_key = os.environ.get("AZURE_OPENAI_KEY")
+    if api_key:
+        client = AsyncOpenAI(
+            base_url=os.environ["AZURE_OPENAI_ENDPOINT"],
+            api_key=api_key,
+        )
+        async_credential = None
+    else:
+        async_credential = DefaultAzureCredential()
+        token_provider = get_bearer_token_provider(async_credential, "https://cognitiveservices.azure.com/.default")
+        client = AsyncOpenAI(
+            base_url=os.environ["AZURE_OPENAI_ENDPOINT"],
+            api_key=token_provider,
+        )
     deployment_name = deployment or os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT"]
     model = OpenAIResponsesModel(deployment_name, provider=OpenAIProvider(openai_client=client))
 
@@ -297,7 +304,7 @@ def create_agent(toolset, model: OpenAIResponsesModel) -> Agent[None, str]:
         model,
         system_prompt=(
             "You help users log expenses. "
-            f"Today's date is {datetime.now().strftime('%Y-%m-%d')}."
+            f"Today's date is {datetime.now().strftime('%B %-d, %Y')}."
         ),
         output_type=str,
         toolsets=[toolset],
@@ -365,7 +372,8 @@ async def run_query(
             error=str(e),
         )
     finally:
-        await async_credential.close()
+        if async_credential:
+            await async_credential.close()
 
 
 # =============================================================================
@@ -420,12 +428,23 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Print extracted reasoning summary text after the run (default: off)",
     )
+    parser.add_argument(
+        "--env-file",
+        type=str,
+        default=None,
+        help="Path to .env file (default: .env)",
+    )
     return parser.parse_args()
 
 
 async def main():
     """Run the agent with command line arguments."""
     args = parse_args()
+
+    # Re-load env from specified file if provided
+    if args.env_file:
+        load_dotenv(args.env_file, override=True)
+
     allowed_tools = args.tools.split(",")
     logger.info(f"Using tools: {allowed_tools}")
     logger.info(f"Using seed: {args.seed}")
@@ -478,7 +497,8 @@ async def main():
             else:
                 print(f"Logfire trace id: {trace_id_hex}")
     finally:
-        await async_credential.close()
+        if async_credential:
+            await async_credential.close()
 
 
 if __name__ == "__main__":

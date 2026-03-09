@@ -1,0 +1,2904 @@
+{
+  "metadata": {
+    "timestamp": "2026-03-09T03:49:01.601469",
+    "agent": "pydanticai",
+    "model_name": "gpt-5.3-codex",
+    "model_settings": {
+      "seed": 42,
+      "reasoning_effort": "medium"
+    },
+    "mcp_server_url": "http://localhost:8000/mcp"
+  },
+  "summaries": {
+    "add_expense_date_a": {
+      "variant_name": "add_expense_date_a",
+      "total_cases": 17,
+      "passed_cases": 0,
+      "pass_rate": 0.0,
+      "avg_score": 1.0,
+      "avg_latency_ms": 25592.0,
+      "avg_input_tokens": 869.0,
+      "avg_output_tokens": 177.0,
+      "avg_tool_response_size": 63.0,
+      "eval_counts": {
+        "tool_called": {
+          "passed": 17,
+          "failed": 0
+        },
+        "date_format": {
+          "passed": 17,
+          "failed": 0
+        },
+        "date_match": {
+          "passed": 17,
+          "failed": 0
+        }
+      }
+    },
+    "add_expense_date_b": {
+      "variant_name": "add_expense_date_b",
+      "total_cases": 17,
+      "passed_cases": 0,
+      "pass_rate": 0.0,
+      "avg_score": 1.0,
+      "avg_latency_ms": 15657.0,
+      "avg_input_tokens": 891.0,
+      "avg_output_tokens": 184.0,
+      "avg_tool_response_size": 63.0,
+      "eval_counts": {
+        "tool_called": {
+          "passed": 17,
+          "failed": 0
+        },
+        "date_format": {
+          "passed": 17,
+          "failed": 0
+        },
+        "date_match": {
+          "passed": 17,
+          "failed": 0
+        }
+      }
+    },
+    "add_expense_date_c": {
+      "variant_name": "add_expense_date_c",
+      "total_cases": 17,
+      "passed_cases": 0,
+      "pass_rate": 0.0,
+      "avg_score": 1.0,
+      "avg_latency_ms": 13993.0,
+      "avg_input_tokens": 880.0,
+      "avg_output_tokens": 175.0,
+      "avg_tool_response_size": 63.0,
+      "eval_counts": {
+        "tool_called": {
+          "passed": 17,
+          "failed": 0
+        },
+        "date_format": {
+          "passed": 17,
+          "failed": 0
+        },
+        "date_match": {
+          "passed": 17,
+          "failed": 0
+        }
+      }
+    },
+    "add_expense_date_d": {
+      "variant_name": "add_expense_date_d",
+      "total_cases": 17,
+      "passed_cases": 0,
+      "pass_rate": 0.0,
+      "avg_score": 1.0,
+      "avg_latency_ms": 11376.0,
+      "avg_input_tokens": 902.0,
+      "avg_output_tokens": 172.0,
+      "avg_tool_response_size": 63.0,
+      "eval_counts": {
+        "tool_called": {
+          "passed": 17,
+          "failed": 0
+        },
+        "date_format": {
+          "passed": 17,
+          "failed": 0
+        },
+        "date_match": {
+          "passed": 17,
+          "failed": 0
+        }
+      }
+    }
+  },
+  "results": [
+    {
+      "case_name": "clear_food_yesterday",
+      "user_query": "Yesterday I bought a sandwich for $12.50.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Logged \u2705  \n- **Date:** 2026-03-08  \n- **Amount:** **$12.50**  \n- **Category:** Food & drink  \n- **Description:** Sandwich",
+      "reasoning": "**Logging an expense**\n\nI need to log an expense using the tool. Since today is 2026-03-09, I\u2019ll assume that the expense date is yesterday, 2026-03-08. The category will be Food & Drink, and I think a good description could be \"sandwich.\" I just need to make a single call to the tool to log this expense properly. Keeping things organized is so important!",
+      "latency_ms": 16982.032542000525,
+      "input_tokens": 806,
+      "output_tokens": 127,
+      "tool_response_size": 60,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_monday_before_this_one",
+      "user_query": "I bought a sandwich the Monday before this one for $12.50.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-02",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' matches expected '2026-03-02'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$12.50** for **Sandwich** under **Food & drink** on **2026-03-02**.",
+      "reasoning": "**Calculating date references**\n\nI need to determine the date the user mentioned: \"the Monday before this one.\" Today is March 9, 2026, which I confirmed is a Monday. So, the previous Monday would be March 2, 2026. I have also identified the expense category as Food & Drink with the description being \"sandwich.\" Now, I should call the function to add the expense with the correct date. Everything seems aligned; I'll proceed with this!",
+      "latency_ms": 14926.592958974652,
+      "input_tokens": 964,
+      "output_tokens": 269,
+      "tool_response_size": 60,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_two_mondays_ago",
+      "user_query": "Two Mondays ago I spent $8.75 on coffee.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-02-23",
+            "amount": 8.75,
+            "category": "Food & drink",
+            "description": "Coffee"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-23' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-23' matches expected '2026-02-23'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$8.75** for **coffee** on **2026-02-23** (two Mondays ago).",
+      "reasoning": "**Calculating dates and expenses**\n\nI need to interpret \"Two Mondays ago\" based on today's date, which is March 9, 2026. First, I should confirm what day that is. Given that 2026 does fall on a Monday, \"Two Mondays ago\" implies going back 14 days to February 23, 2026. This date matches two weeks back from today\u2019s Monday. Now, I need to add an expense in the Food & Drink category with the description of coffee. I'll use the appropriate tool to do that.",
+      "latency_ms": 13720.51170800114,
+      "input_tokens": 926,
+      "output_tokens": 234,
+      "tool_response_size": 58,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_first_monday_this_month",
+      "user_query": "I bought a sandwich on the first Monday of this month for $12.50.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-02",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' matches expected '2026-03-02'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Logged: **$12.50** for **Sandwich** on **2026-03-02** (first Monday of March).",
+      "reasoning": "**Calculating expense log date**\n\nI need to log an expense and will likely call the tool to add it. First, I need to determine the date; specifically, the first Monday of March 2026 relative to today, March 9, 2026. \n\nSo, I think March 1, 2026, falls on a Sunday. This means the first Monday is actually March 2, 2026. For this expense, the category is Food & Drink, the description is \"sandwich,\" and the amount is $12.50. I don\u2019t think I need any further clarification, so I\u2019ll call the tool!",
+      "latency_ms": 27729.403375007678,
+      "input_tokens": 971,
+      "output_tokens": 269,
+      "tool_response_size": 60,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_day_last_month",
+      "user_query": "On the last day of last month I spent $25.99 on a movie ticket.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-02-28",
+            "amount": 25.99,
+            "category": "Media & streaming",
+            "description": "Movie ticket"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' matches expected '2026-02-28'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$25.99** for **Movie ticket** on **2026-02-28** under **Media & streaming**.",
+      "reasoning": "**Adding an expense**\n\nI need to add an expense and decide on the date, which is today, March 9, 2026. Last month was February 2026, and the last day of February was the 28th. I remember that 2026 isn't a leap year, so the 2024 leap year was the last one, with 2028 being the next. I should categorize this under media & streaming since it\u2019s for a movie ticket. The description could just be \"movie ticket,\" and the amount will be $25.99. Now, I\u2019ll call the tool.",
+      "latency_ms": 28424.27795898402,
+      "input_tokens": 865,
+      "output_tokens": 163,
+      "tool_response_size": 65,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_business_day_last_month",
+      "user_query": "I paid $60 for gas on the last business day of last month.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-02-27",
+            "amount": 60,
+            "category": "Transit and Fuel",
+            "description": "Gas"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-27' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-27' matches expected '2026-02-27'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$60** for **Gas** under **Transit and Fuel** on **2026-02-27** (the last business day of last month).",
+      "reasoning": "**Interpreting the date for expenses**\n\nI need to figure out the last business day of February 2026, which is the 28th, a Saturday. So, that means the last business day would be Friday, February 27, 2026. I should log an expense in the category of Transit and Fuel, possibly labeled as gas. I\u2019ll use the add_expense_date_a function to input this. Once I've done that, I'll confirm everything succinctly. Let's proceed with the tool!",
+      "latency_ms": 54348.92829199089,
+      "input_tokens": 940,
+      "output_tokens": 250,
+      "tool_response_size": 55,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_day_before_yesterday_coffee",
+      "user_query": "The day before yesterday I spent $4.50 on coffee.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-07",
+            "amount": 4.5,
+            "category": "Food & drink",
+            "description": "Coffee"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-07' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-07' matches expected '2026-03-07'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Logged \u2014 **$4.50** for **coffee** on **2026-03-07**.",
+      "reasoning": "**Adding expense details**\n\nI need to add an expense with the date relative to today, which is March 9, 2026. If I'm considering the day before yesterday, that would be March 7, 2026. The category is Food & Drink, and the description might be something like coffee. I should call the tool to log this expense, and then I'll confirm that it\u2019s been added correctly. Alright, let\u2019s do this!",
+      "latency_ms": 18930.612624972127,
+      "input_tokens": 817,
+      "output_tokens": 117,
+      "tool_response_size": 57,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_three_days_ago_rideshare",
+      "user_query": "Three days ago I took an Uber to the airport for $38.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-06",
+            "amount": 38,
+            "category": "Transit and Fuel",
+            "description": "Uber to the airport"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' matches expected '2026-03-06'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Logged \u2705  \n- **Date:** 2026-03-06  \n- **Amount:** **$38.00**  \n- **Category:** Transit and Fuel  \n- **Description:** Uber to the airport",
+      "reasoning": "**Adding expense information**\n\nI need to add an expense. First, I need to set the date as three days ago, which is March 6, 2026. I\u2019m thinking about categorizing it under Transit and Fuel, with a description like \"Uber to airport.\" Now, I\u2019ll call the tool to enter this information. It\u2019s important I get this right so I can keep my records accurate! Let's get to it.",
+      "latency_ms": 27096.173249999993,
+      "input_tokens": 822,
+      "output_tokens": 137,
+      "tool_response_size": 71,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_friday_movie",
+      "user_query": "Last Friday I spent $18 on a movie ticket.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-06",
+            "amount": 18,
+            "category": "Media & streaming",
+            "description": "Movie ticket"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' matches expected '2026-03-06'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Logged: **$18** for **Movie ticket** on **2026-03-06** (last Friday) under **Media & streaming**.",
+      "reasoning": "**Logging expenses**\n\nI need to log an expense, specifically figuring out the date of the last Friday relative to today, March 9, 2026. Okay, I think March 9 is a Monday. So, I need to verify that quickly \u2014 seems like the first day of 2026 is a Thursday, making the last Friday before March 9, 2026, March 6. I\u2019ll categorize this as a movie ticket under Media & Streaming with an amount of 18. Now, let\u2019s call the tool to add this expense and confirm!",
+      "latency_ms": 32939.565833017696,
+      "input_tokens": 946,
+      "output_tokens": 258,
+      "tool_response_size": 64,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_day_after_tomorrow_bus_pass",
+      "user_query": "The day after tomorrow I will buy a bus pass for $20.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-11",
+            "amount": 20,
+            "category": "Transit and Fuel",
+            "description": "Bus pass"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-11' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-11' matches expected '2026-03-11'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Got it \u2014 I\u2019ve logged **$20** for a **bus pass** on **2026-03-11**.",
+      "reasoning": "**Planning future expense log**\n\nI'm preparing to parse the user's statement about a future expense. I need to log this expense likely for March 11, 2026, which is two days after March 9, 2026. The expense will fall under the category of Transit and Fuel, and I might label it as \"bus pass.\" I'll make sure to call the add_expense_date_a tool and then confirm to the user that I have logged it. Let's go ahead with that tool call!",
+      "latency_ms": 34899.966041964944,
+      "input_tokens": 835,
+      "output_tokens": 136,
+      "tool_response_size": 60,
+      "error": null
+    },
+    {
+      "case_name": "hard_category_grocery_delivery_yesterday",
+      "user_query": "Yesterday I paid $65 for Instacart grocery delivery.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 65,
+            "category": "Food & drink",
+            "description": "Instacart grocery delivery"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$65** for **Instacart grocery delivery** on **2026-03-08**.",
+      "reasoning": "**Logging expenses**\n\nI need to log an expense using the tool. I should parse yesterday's date relative to March 9, 2026, which means it\u2019s March 8, 2026. The category for this expense will likely be Food & Drink, probably for groceries. I think I\u2019ll describe it as \"Instacart grocery delivery\" with an amount of $65. I\u2019ll call the function to add this expense now!",
+      "latency_ms": 13744.142749987077,
+      "input_tokens": 831,
+      "output_tokens": 133,
+      "tool_response_size": 78,
+      "error": null
+    },
+    {
+      "case_name": "hard_category_headphones_last_day_last_month",
+      "user_query": "On the last day of last month I bought headphones for $79.99.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-02-28",
+            "amount": 79.99,
+            "category": "Electronics & tech",
+            "description": "Headphones"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' matches expected '2026-02-28'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$79.99** for **Headphones** under **Electronics & tech** on **2026-02-28**.",
+      "reasoning": "**Calculating expense date**\n\nI need to parse the date relative to today, March 9, 2026. The last day of the previous month is February 28, 2026, since it\u2019s not a leap year. For this expense, I\u2019m categorizing it as headphones under electronics and tech, with a description like \"headphones.\" I need to call the tool to add an expense with that date and category, then confirm once it's done. Sounds like a plan!",
+      "latency_ms": 33678.63854201278,
+      "input_tokens": 844,
+      "output_tokens": 147,
+      "tool_response_size": 63,
+      "error": null
+    },
+    {
+      "case_name": "edge_large_amount",
+      "user_query": "Yesterday I bought a car for 35000 USD.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 35000,
+            "category": "Transit and Fuel",
+            "description": "Bought a car"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$35,000** for **\u201cBought a car\u201d** on **2026-03-08** under **Transit and Fuel**.",
+      "reasoning": "**Adding an expense**\n\nI need to add an expense for yesterday, which is March 8, 2026. I'm wondering what category it should be in. A car purchase might fit, but that seems more like electronics, right? Hmm, since it relates to my vehicle, maybe it fits better under Transit and Fuel. I could also consider it as Miscellaneous, but I think Transit and Fuel is more accurate. For the description, I'll just say, \"Bought a car.\" Now, I need to call the tool.",
+      "latency_ms": 69587.30079198722,
+      "input_tokens": 855,
+      "output_tokens": 168,
+      "tool_response_size": 67,
+      "error": null
+    },
+    {
+      "case_name": "edge_small_amount",
+      "user_query": "I paid $0.99 for an app yesterday.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 0.99,
+            "category": "Electronics & tech",
+            "description": "App purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Logged \u2705  \n**$0.99** on **2026-03-08** as **Electronics & tech** (\u201cApp purchase\u201d).",
+      "reasoning": "**Adding an expense**\n\nI need to add an expense for yesterday, so I'll mark the date as March 8, 2026. This falls under the electronics and tech category because I think apps and software fit that description. I\u2019m considering using something like \"app purchase\" for the description. Now, I'll utilize the tool to process this expense entry correctly. Let's ensure everything is captured accurately!",
+      "latency_ms": 8899.566625012085,
+      "input_tokens": 826,
+      "output_tokens": 136,
+      "tool_response_size": 64,
+      "error": null
+    },
+    {
+      "case_name": "edge_unknown_category",
+      "user_query": "Yesterday I spent $200 on a spa treatment.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 200,
+            "category": "Apparel and Beauty",
+            "description": "Spa treatment"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$200** for **Spa treatment** on **2026-03-08** under **Apparel and Beauty**.",
+      "reasoning": "**Determining expense category**\n\nI need to add an expense from yesterday, which infers to March 8, 2026. I'm contemplating if it fits under Health & Fitness or Apparel and Beauty. Since it's a spa treatment related to personal care, it leans more towards Apparel and Beauty, because that category generally includes haircuts and cosmetics, while Health & Fitness is more about wellness and gym activities. I'll go ahead with the closest match and do the tool call, then confirm.",
+      "latency_ms": 8709.839666960761,
+      "input_tokens": 855,
+      "output_tokens": 168,
+      "tool_response_size": 66,
+      "error": null
+    },
+    {
+      "case_name": "edge_currency_symbol",
+      "user_query": "I spent \u20ac50 on dinner yesterday.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 50,
+            "category": "Food & drink",
+            "description": "Dinner"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **\u20ac50** for **Dinner** on **2026-03-08** (yesterday).",
+      "reasoning": "**Logging expense details**\n\nI need to log an expense using the tool add_expense_date_a. First, I should figure out the date for yesterday based on March 9, 2026, which leads me to March 8, 2026. The category I\u2019ll use is Food & Drink, and I\u2019m thinking of describing it as \"dinner.\" The amount is 50, but since it\u2019s in euros, that detail isn't really important for this. I'll call the tool and then confirm everything.",
+      "latency_ms": 10374.943208007608,
+      "input_tokens": 815,
+      "output_tokens": 128,
+      "tool_response_size": 58,
+      "error": null
+    },
+    {
+      "case_name": "spanish_gadget",
+      "user_query": "Ayer compr\u00e9 una laptop por 1200 d\u00f3lares.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 1200,
+            "category": "Electronics & tech",
+            "description": "Compra de laptop"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "\u00a1Listo! Registr\u00e9 tu gasto de **$1200** con fecha **2026-03-08** en la categor\u00eda **Electronics & tech**.",
+      "reasoning": null,
+      "latency_ms": 20075.168791983742,
+      "input_tokens": 853,
+      "output_tokens": 164,
+      "tool_response_size": 70,
+      "error": null
+    },
+    {
+      "case_name": "clear_food_yesterday",
+      "user_query": "Yesterday I bought a sandwich for $12.50.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$12.50** for **Sandwich** on **2026-03-08** in **Food & drink**.",
+      "reasoning": "**Adding expense entry**\n\nI need to add an expense, inferring that the date yesterday was March 8, 2026, based on today\u2019s date. The category will be Food & Drink, and I\u2019m thinking the description could be something like \u201csandwich.\u201d I\u2019m getting ready to call the appropriate tool to input this information. It\u2019s important to make sure the details are accurate, especially the date and category! Let\u2019s get this set up correctly!",
+      "latency_ms": 8156.973042001482,
+      "input_tokens": 818,
+      "output_tokens": 117,
+      "tool_response_size": 60,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_monday_before_this_one",
+      "user_query": "I bought a sandwich the Monday before this one for $12.50.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-02",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' matches expected '2026-03-02'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$12.50** for a **sandwich** on **2026-03-02** (the Monday before this one).",
+      "reasoning": "**Calculating dates**\n\nI need to parse the date for \"the Monday before this one,\" with today being March 9, 2026. So first, I should verify what day it is. I'll calculate quickly that March 9, 2026, is indeed a Monday. This means \"the Monday before this one\" refers to the previous Monday, which is March 2, 2026. I\u2019ll categorize it under food & drink, possibly as \"sandwich.\" Next, I\u2019ll call the tool to add this expense date.",
+      "latency_ms": 17175.24487496121,
+      "input_tokens": 1014,
+      "output_tokens": 306,
+      "tool_response_size": 60,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_two_mondays_ago",
+      "user_query": "Two Mondays ago I spent $8.75 on coffee.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-02-23",
+            "amount": 8.75,
+            "category": "Food & drink",
+            "description": "Coffee"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-23' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-23' matches expected '2026-02-23'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$8.75** for **coffee** on **2026-02-23**.",
+      "reasoning": "**Calculating a date**\n\nI need to parse \"Two Mondays ago\" from today, March 9, 2026, and determine that date. First, let\u2019s check the day of the week for March 9, 2026. Since today is Monday, two Mondays ago would be February 23, 2026. I should categorize this as Food & Drink because it involves coffee. I\u2019ll need to call the function add_expense_date_b with that date and description.",
+      "latency_ms": 19602.959624957293,
+      "input_tokens": 974,
+      "output_tokens": 264,
+      "tool_response_size": 58,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_first_monday_this_month",
+      "user_query": "I bought a sandwich on the first Monday of this month for $12.50.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-02",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' matches expected '2026-03-02'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$12.50** for **Sandwich** on **2026-03-02** under **Food & drink**.",
+      "reasoning": "**Determining date for expense**\n\nI need to figure out the date today, which is March 9, 2026, and determine the first Monday of this month. It turns out that March 1, 2026, is a Sunday. So, the first Monday is March 2. I\u2019ll call the function to add an expense for that date with an amount of $12.50 for the category Food & Drink, possibly for a sandwich. I want to confirm the addition concisely. Let's proceed with the tool call!",
+      "latency_ms": 23770.193542004563,
+      "input_tokens": 973,
+      "output_tokens": 260,
+      "tool_response_size": 60,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_day_last_month",
+      "user_query": "On the last day of last month I spent $25.99 on a movie ticket.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-02-28",
+            "amount": 25.99,
+            "category": "Media & streaming",
+            "description": "Movie ticket"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' matches expected '2026-02-28'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$25.99** for **Movie ticket** on **2026-02-28** under **Media & streaming**.",
+      "reasoning": "**Parsing date for expense**\n\nI need to figure out today's date, which is March 9, 2026. The last day of last month would be February 28, 2026, since 2026 isn't a leap year. It's related to the category of media and streaming, specifically for a movie ticket expense. I\u2019m planning to use the add_expense_date_b function to add this date for the expense, and then I\u2019ll confirm that the date has been set correctly.",
+      "latency_ms": 19329.92083398858,
+      "input_tokens": 849,
+      "output_tokens": 133,
+      "tool_response_size": 65,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_business_day_last_month",
+      "user_query": "I paid $60 for gas on the last business day of last month.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-02-27",
+            "amount": 60,
+            "category": "Transit and Fuel",
+            "description": "Gas"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-27' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-27' matches expected '2026-02-27'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$60** for **gas** on **2026-02-27** (the last business day of last month).",
+      "reasoning": null,
+      "latency_ms": 15119.664957979694,
+      "input_tokens": 1025,
+      "output_tokens": 315,
+      "tool_response_size": 55,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_day_before_yesterday_coffee",
+      "user_query": "The day before yesterday I spent $4.50 on coffee.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-07",
+            "amount": 4.5,
+            "category": "Food & drink",
+            "description": "Coffee"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-07' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-07' matches expected '2026-03-07'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$4.50** for **coffee** on **2026-03-07**.",
+      "reasoning": "**Logging an expense**\n\nI need to log an expense for a coffee from two days ago, on March 7, 2026. The category for this expense is \"Food & Drink,\" and I'll describe it simply as \"coffee.\" It looks like I need to call the tool to add this expense with the correct date. Getting these details right is important, so I don\u2019t mess it up! Let\u2019s get started on that.",
+      "latency_ms": 8075.999833003152,
+      "input_tokens": 835,
+      "output_tokens": 123,
+      "tool_response_size": 57,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_three_days_ago_rideshare",
+      "user_query": "Three days ago I took an Uber to the airport for $38.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-06",
+            "amount": 38,
+            "category": "Transit and Fuel",
+            "description": "Uber to the airport"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' matches expected '2026-03-06'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Logged: **$38** on **2026-03-06** for **Uber to the airport** under **Transit and Fuel**.",
+      "reasoning": "**Adding expense details**\n\nI'm focused on adding an expense. I need to set the date as March 6, 2026, which is three days ago from today, March 9. The category will be Transit and Fuel, and I think the description could be something like \"Uber to airport.\" I\u2019ll just use a single tool to complete this task efficiently. Keeping it straightforward helps ensure that I get all the details correct!",
+      "latency_ms": 9155.503792047966,
+      "input_tokens": 836,
+      "output_tokens": 124,
+      "tool_response_size": 71,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_friday_movie",
+      "user_query": "Last Friday I spent $18 on a movie ticket.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-06",
+            "amount": 18,
+            "category": "Media & streaming",
+            "description": "Movie ticket"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' matches expected '2026-03-06'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$18** for a **movie ticket** on **2026-03-06** (last Friday) under **Media & streaming**.",
+      "reasoning": "**Calculating last Friday's date**\n\nI need to interpret what \"last Friday\" means relative to today, which is March 9, 2026. First, I\u2019ll calculate the day of the week for this date. Since 2026 isn\u2019t a leap year, I know 2024 is\u2014but I\u2019ll double-check to find out that January 1, 2026, falls on a Thursday. So, working backward, I find that last Friday would be March 6, 2026. Now I\u2019ll categorize it as a movie ticket under Media & Streaming and add the expense.",
+      "latency_ms": 15434.573458041996,
+      "input_tokens": 998,
+      "output_tokens": 299,
+      "tool_response_size": 64,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_day_after_tomorrow_bus_pass",
+      "user_query": "The day after tomorrow I will buy a bus pass for $20.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-11",
+            "amount": 20,
+            "category": "Transit and Fuel",
+            "description": "Bus pass"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-11' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-11' matches expected '2026-03-11'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged an expense for **$20** on **2026-03-11** for **Bus pass** under **Transit and Fuel**.",
+      "reasoning": "**Planning future expenses**\n\nI'm interpreting the request and it looks like I need to add a future expense for \"day after tomorrow,\" which would be March 11, 2026, relative to today, March 9, 2026. I'll need to call `add_expense_date_b` with this date, the category of Transit and Fuel, a description like \"bus pass,\" and an amount of 20. After that, I should confirm that the entry has been made.",
+      "latency_ms": 7193.011707975529,
+      "input_tokens": 849,
+      "output_tokens": 142,
+      "tool_response_size": 60,
+      "error": null
+    },
+    {
+      "case_name": "hard_category_grocery_delivery_yesterday",
+      "user_query": "Yesterday I paid $65 for Instacart grocery delivery.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 65,
+            "category": "Food & drink",
+            "description": "Instacart grocery delivery"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$65** for **Instacart grocery delivery** on **2026-03-08**.",
+      "reasoning": "**Adding expense details**\n\nI need to add an expense and figure out the date for yesterday, which would be March 8, 2026, based on the reference of March 9. The category will likely be Food & Drink, probably for groceries. I might consider that it includes delivery fees, but I'll choose the closest fit as instructed. I'll make sure to include a description that specifies Instacart grocery delivery before making the tool call.",
+      "latency_ms": 17870.104207948316,
+      "input_tokens": 843,
+      "output_tokens": 131,
+      "tool_response_size": 78,
+      "error": null
+    },
+    {
+      "case_name": "hard_category_headphones_last_day_last_month",
+      "user_query": "On the last day of last month I bought headphones for $79.99.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-02-28",
+            "amount": 79.99,
+            "category": "Electronics & tech",
+            "description": "Headphones"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' matches expected '2026-02-28'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged it as:\n\n- **Date:** 2026-02-28  \n- **Amount:** **$79.99**  \n- **Category:** **Electronics & tech**  \n- **Description:** Headphones",
+      "reasoning": "**Logging expense details**\n\nI need to log an expense for today, March 9, 2026. Since February had 28 days in 2026, it\u2019s not a leap year. The category is electronics and tech, and I'm thinking of describing the expense as \"headphones.\" I should call the tool to add this expense along with the correct date. Let\u2019s make sure everything is accurately recorded! It\u2019s a good step to keep track of my expenses.",
+      "latency_ms": 16236.935583990999,
+      "input_tokens": 861,
+      "output_tokens": 165,
+      "tool_response_size": 63,
+      "error": null
+    },
+    {
+      "case_name": "edge_large_amount",
+      "user_query": "Yesterday I bought a car for 35000 USD.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 35000,
+            "category": "Transit and Fuel",
+            "description": "Bought a car"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$35,000** for **\u201cBought a car\u201d** on **2026-03-08** (yesterday).",
+      "reasoning": "**Deciding on expense category**\n\nI need to add an expense and infer that yesterday's date is 2026-03-08. The category could possibly be \"Transit and Fuel,\" but there are limited options. Since car purchase isn\u2019t listed, maybe \"Misc\" would be best. However, \"Transit and Fuel\" is the closest option for transportation, and I'm leaning towards that because I should choose the most sensible category. I\u2019ll also include a description from the user and call the tool to add the expense.",
+      "latency_ms": 30743.010458012577,
+      "input_tokens": 884,
+      "output_tokens": 180,
+      "tool_response_size": 67,
+      "error": null
+    },
+    {
+      "case_name": "edge_small_amount",
+      "user_query": "I paid $0.99 for an app yesterday.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 0.99,
+            "category": "Electronics & tech",
+            "description": "App purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$0.99** for an **app purchase** on **2026-03-08**.",
+      "reasoning": "**Logging an expense**\n\nI need to log an expense from yesterday, which is 2026-03-08. The category will likely be electronics and tech, possibly for an app or software. I'll use the tool to add this expense with the noted date. After that, I should confirm the entry concisely to ensure everything is recorded properly. This should be a straightforward process, and I want to make sure it's all clear and accurate!",
+      "latency_ms": 26864.031667006202,
+      "input_tokens": 829,
+      "output_tokens": 122,
+      "tool_response_size": 64,
+      "error": null
+    },
+    {
+      "case_name": "edge_unknown_category",
+      "user_query": "Yesterday I spent $200 on a spa treatment.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 200,
+            "category": "Apparel and Beauty",
+            "description": "Spa treatment"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$200** for **Spa treatment** on **2026-03-08** under **Apparel and Beauty**.",
+      "reasoning": "**Logging expense details**\n\nI need to log an expense for yesterday, which would be March 8, 2026. It seems to fall under the category of spa treatment, which could fit into either Apparel and Beauty or Health & Fitness. My heuristic suggests that spa treatments are more personal care-related, so I think Apparel and Beauty might be the better choice. I\u2019ll call the tool to add the expense, then confirm it concisely!",
+      "latency_ms": 9875.247000018135,
+      "input_tokens": 864,
+      "output_tokens": 163,
+      "tool_response_size": 66,
+      "error": null
+    },
+    {
+      "case_name": "edge_currency_symbol",
+      "user_query": "I spent \u20ac50 on dinner yesterday.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 50,
+            "category": "Food & drink",
+            "description": "Dinner"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **\u20ac50** for **Dinner** on **2026-03-08**.",
+      "reasoning": "**Adding expense details**\n\nI need to add an expense for yesterday, which is March 8, 2026, relative to today's date. The category is Food & Drink, and I\u2019ll describe it as \"dinner\" with an amount of 50. I haven\u2019t specified a currency since the tool uses a number without it. I\u2019ll call the tool to finalize this and then confirm my entry. This feels straightforward, but I want to make sure I get it right!",
+      "latency_ms": 9329.942249984015,
+      "input_tokens": 836,
+      "output_tokens": 132,
+      "tool_response_size": 58,
+      "error": null
+    },
+    {
+      "case_name": "spanish_gadget",
+      "user_query": "Ayer compr\u00e9 una laptop por 1200 d\u00f3lares.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 1200,
+            "category": "Electronics & tech",
+            "description": "Compra de laptop"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "\u00a1Listo! Registr\u00e9 tu gasto de **$1200** del **2026-03-08** en la categor\u00eda **Electronics & tech** (compra de laptop).",
+      "reasoning": "**Planning expense entry**\n\nI need to interpret a Spanish sentence about buying a laptop for $1200. I should add this expense, assigning it the date of yesterday (March 8, 2026), and categorize it under Electronics & Tech. Since the user mentioned Spanish, I\u2019ll also use the term \u201claptop\u201d for the description. I plan to use a tool to add this expense with the correct details and then confirm the entry with the user in Spanish.",
+      "latency_ms": 12243.232500040904,
+      "input_tokens": 859,
+      "output_tokens": 160,
+      "tool_response_size": 70,
+      "error": null
+    },
+    {
+      "case_name": "clear_food_yesterday",
+      "user_query": "Yesterday I bought a sandwich for $12.50.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$12.50** for **Sandwich** on **2026-03-08** under **Food & drink**.",
+      "reasoning": "**Logging expenses**\n\nI need to log an expense for food and drink from yesterday, which is March 8, 2026, relative to March 9, 2026. I\u2019m thinking maybe I\u2019ll describe it as a sandwich. I'll go ahead and use the tool to add the expense with that date. Once I\u2019ve added it, I\u2019ll make sure to confirm that everything went through correctly. It's all about keeping track, right?",
+      "latency_ms": 10666.553249990102,
+      "input_tokens": 827,
+      "output_tokens": 128,
+      "tool_response_size": 60,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_monday_before_this_one",
+      "user_query": "I bought a sandwich the Monday before this one for $12.50.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-02",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' matches expected '2026-03-02'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$12.50** for a **sandwich** on **2026-03-02** under **Food & drink**.",
+      "reasoning": "**Interpreting the date**\n\nI need to interpret the date for today, which is March 9, 2026. I'm checking if it\u2019s indeed a Monday\u2014let\u2019s calculate. Since January 1, 2026, is a Thursday, I confirm that March 9 is a Monday. \n\nSo, if today is March 9, the Monday before this would be March 2, 2026. Now, I\u2019ll add an expense under the category \"Food & drink,\" maybe for a sandwich costing $12.50, with the expense date formatted as \"2026-03-02.\" I\u2019m ready to make the tool call and confirm!",
+      "latency_ms": 19230.955208011437,
+      "input_tokens": 996,
+      "output_tokens": 290,
+      "tool_response_size": 60,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_two_mondays_ago",
+      "user_query": "Two Mondays ago I spent $8.75 on coffee.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-02-23",
+            "amount": 8.75,
+            "category": "Food & drink",
+            "description": "Coffee"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-23' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-23' matches expected '2026-02-23'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Logged it \u2014 **$8.75** for **Coffee** on **2026-02-23**.",
+      "reasoning": "**Calculating date references**\n\nI need to interpret \"Two Mondays ago\" relative to today's date, March 9, 2026. First, I'll confirm that March 9, 2026, is a Monday. It looks like it is, as I checked the weekday progression: January 1, 2024, is a Monday, so January 1, 2026, is a Thursday, which means March 9 falls on a Monday. Thus, \"Two Mondays ago\" refers to February 23, 2026. Now, I\u2019ll add an expense for coffee on that date for $8.75.",
+      "latency_ms": 18648.365333967377,
+      "input_tokens": 972,
+      "output_tokens": 263,
+      "tool_response_size": 58,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_first_monday_this_month",
+      "user_query": "I bought a sandwich on the first Monday of this month for $12.50.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-02",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' matches expected '2026-03-02'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$12.50** for a **sandwich** on **2026-03-02** (the first Monday of this month) under **Food & drink**.",
+      "reasoning": "**Calculating first Monday of March**\n\nI need to figure out the date since today is March 9, 2026. First, I need to determine the day of March 1, 2026. 2026 is not a leap year, so I'll start from January 1, 2026, which is a Thursday. This means March 1 is a Sunday, so the first Monday is March 2, 2026. Now, I\u2019ll call the add_expense_date_c tool using that date format, adding an amount of 12.5 for a food and drink expense, probably for a sandwich. Then I\u2019ll confirm.",
+      "latency_ms": 16005.009374988731,
+      "input_tokens": 978,
+      "output_tokens": 276,
+      "tool_response_size": 60,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_day_last_month",
+      "user_query": "On the last day of last month I spent $25.99 on a movie ticket.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-02-28",
+            "amount": 25.99,
+            "category": "Media & streaming",
+            "description": "Movie ticket"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' matches expected '2026-02-28'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$25.99** for **Movie ticket** on **2026-02-28**.",
+      "reasoning": "**Adding an expense**\n\nI need to add an expense for March 9, 2026. Since February 2026 isn't a leap year, the last day would be February 28, 2026. The category is Media & Streaming for a movie ticket. I should use a description of \"movie ticket.\" To get this done, I need to call the tool to add the expense with the specified date. Let's make sure I handle this correctly!",
+      "latency_ms": 9972.21699997317,
+      "input_tokens": 860,
+      "output_tokens": 140,
+      "tool_response_size": 65,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_business_day_last_month",
+      "user_query": "I paid $60 for gas on the last business day of last month.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-02-27",
+            "amount": 60,
+            "category": "Transit and Fuel",
+            "description": "Gas"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-27' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-27' matches expected '2026-02-27'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Logged \u2705  \n**$60** for **Gas** on **2026-02-27** (last business day of last month).",
+      "reasoning": "**Calculating date details**\n\nI need to figure out the dates relative to today, March 9, 2026, and check the last business day in February 2026. I realized February 28, 2026, is a Saturday, so the last business day would be Friday, February 27, 2026. I should call a function to add an expense with that date, an amount of $60 for the category \"Transit and Fuel,\" describing it as gas. Time to make that tool call!",
+      "latency_ms": 23076.59045798937,
+      "input_tokens": 1037,
+      "output_tokens": 327,
+      "tool_response_size": 55,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_day_before_yesterday_coffee",
+      "user_query": "The day before yesterday I spent $4.50 on coffee.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-07",
+            "amount": 4.5,
+            "category": "Food & drink",
+            "description": "Coffee"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-07' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-07' matches expected '2026-03-07'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$4.50** for **coffee** under **Food & drink** on **2026-03-07**.",
+      "reasoning": "**Logging an expense**\n\nI need to log an expense for today, which is March 9, 2026. So, if I\u2019m considering the day before yesterday, that would be March 7, 2026. The category for this expense is Food & Drink, and the description might be something like coffee. I'll go ahead and call the tool to add the expense with the date included. It's important to keep track of these things!",
+      "latency_ms": 11068.577874975745,
+      "input_tokens": 831,
+      "output_tokens": 127,
+      "tool_response_size": 57,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_three_days_ago_rideshare",
+      "user_query": "Three days ago I took an Uber to the airport for $38.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-06",
+            "amount": 38,
+            "category": "Transit and Fuel",
+            "description": "Uber to the airport"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' matches expected '2026-03-06'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$38** for **Uber to the airport** on **2026-03-06** under **Transit and Fuel**.",
+      "reasoning": "**Logging expense details**\n\nI need to parse the user's intent to log an expense. So, I'll call the add_expense_date_c function with the date set as three days ago from March 9, 2026, which takes it to March 6, 2026. The category will be Transit and Fuel, and I\u2019m thinking of using \"Uber to the airport\" as the description, with an amount of $38. After that, I'll respond with a concise confirmation and proceed with the tool call.",
+      "latency_ms": 24938.68029100122,
+      "input_tokens": 850,
+      "output_tokens": 142,
+      "tool_response_size": 71,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_friday_movie",
+      "user_query": "Last Friday I spent $18 on a movie ticket.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-06",
+            "amount": 18,
+            "category": "Media & streaming",
+            "description": "Movie ticket"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' matches expected '2026-03-06'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Logged!  \n**$18** for **Movie ticket** on **2026-03-06** (last Friday) in **Media & streaming**.",
+      "reasoning": "**Interpreting date for expenses**\n\nI need to interpret the date today, which is March 9, 2026. I should find the last Friday, which is likely March 6, since March 9 is a Monday. Just to confirm, March 9, 2026, is indeed a Monday. So the last Friday is March 6, 2026. In regards to categorizing a movie ticket, it fits under Media & Streaming according to my heuristics. I'll go ahead and use the add_expense_date_c function to proceed.",
+      "latency_ms": 12284.911540977191,
+      "input_tokens": 855,
+      "output_tokens": 156,
+      "tool_response_size": 64,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_day_after_tomorrow_bus_pass",
+      "user_query": "The day after tomorrow I will buy a bus pass for $20.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-11",
+            "amount": 20,
+            "category": "Transit and Fuel",
+            "description": "Bus pass"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-11' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-11' matches expected '2026-03-11'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$20** for **Bus pass** on **2026-03-11**.",
+      "reasoning": "**Logging future expense**\n\nI need to understand the user's intent to log a future expense. The \"day after tomorrow,\" referring to today, March 9, 2026, means I\u2019ll note it for March 11, 2026. I think the category here should be Transit and Fuel, with a description perhaps as \"Bus pass.\" I need to call the tool to add this expense with the date, and then I\u2019ll confirm it!",
+      "latency_ms": 8805.321542022284,
+      "input_tokens": 845,
+      "output_tokens": 131,
+      "tool_response_size": 60,
+      "error": null
+    },
+    {
+      "case_name": "hard_category_grocery_delivery_yesterday",
+      "user_query": "Yesterday I paid $65 for Instacart grocery delivery.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 65,
+            "category": "Food & drink",
+            "description": "Instacart grocery delivery"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Logged \u2705  \n**$65** \u2014 *Instacart grocery delivery*  \n**Date:** 2026-03-08  \n**Category:** Food & drink",
+      "reasoning": "**Logging an expense**\n\nI need to log an expense using the tool. The date I\u2019m looking at is March 8, 2026, which is yesterday relative to March 9, 2026. The category will be Food & Drink, likely groceries, but I should also consider delivery fees or services, focusing on the main grocery delivery. For the description, I\u2019ll include \"Instacart grocery delivery,\" and the amount will be $65. Then I\u2019ll call the function to add the expense.",
+      "latency_ms": 11483.23520901613,
+      "input_tokens": 849,
+      "output_tokens": 146,
+      "tool_response_size": 78,
+      "error": null
+    },
+    {
+      "case_name": "hard_category_headphones_last_day_last_month",
+      "user_query": "On the last day of last month I bought headphones for $79.99.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-02-28",
+            "amount": 79.99,
+            "category": "Electronics & tech",
+            "description": "Headphones"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' matches expected '2026-02-28'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Got it \u2014 I logged **$79.99** for **Headphones** on **2026-02-28** under **Electronics & tech**.",
+      "reasoning": "I need to determine a date relative to today, which is March 9, 2026. The last day of the previous month was February 28, 2026, since it's not a leap year. I\u2019m focusing on the category of headphones within Electronics & Tech. The next step is to call the function to add the expense date. I\u2019ll make sure to confirm once that's done!",
+      "latency_ms": 8587.23825000925,
+      "input_tokens": 841,
+      "output_tokens": 133,
+      "tool_response_size": 63,
+      "error": null
+    },
+    {
+      "case_name": "edge_large_amount",
+      "user_query": "Yesterday I bought a car for 35000 USD.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 35000,
+            "category": "Misc",
+            "description": "Bought a car"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$35,000** for **\u201cBought a car\u201d** on **2026-03-08** (yesterday) under **Misc**.",
+      "reasoning": "**Processing expense entry**\n\nI need to add an expense and infer that yesterday's date is 2026-03-08. The category could be car purchase, but I'm thinking it might fit better in Miscellaneous instead of Transit and Fuel. Transit and Fuel usually covers things like rideshare, taxi, or gas, but car purchases don't really fit. So I'll go with Miscellaneous for the description \"Bought a car\" and proceed to call the tool.",
+      "latency_ms": 11081.98016602546,
+      "input_tokens": 857,
+      "output_tokens": 160,
+      "tool_response_size": 67,
+      "error": null
+    },
+    {
+      "case_name": "edge_small_amount",
+      "user_query": "I paid $0.99 for an app yesterday.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 0.99,
+            "category": "Electronics & tech",
+            "description": "App purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Logged: **$0.99** for **App purchase** on **2026-03-08** under **Electronics & tech**.",
+      "reasoning": "**Adding an expense**\n\nI need to add an expense, so first, I should establish the date for yesterday relative to today, which is March 9, 2026. That would make it March 8, 2026. I'll categorize it under electronics and tech because it probably relates to an app or software based on the user's description. It's a straightforward task; I just need to call the tool to complete the expense entry.",
+      "latency_ms": 11012.297166045755,
+      "input_tokens": 826,
+      "output_tokens": 125,
+      "tool_response_size": 64,
+      "error": null
+    },
+    {
+      "case_name": "edge_unknown_category",
+      "user_query": "Yesterday I spent $200 on a spa treatment.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 200,
+            "category": "Apparel and Beauty",
+            "description": "Spa treatment"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$200** for **spa treatment** on **2026-03-08** (yesterday).",
+      "reasoning": "**Deciding on expense category**\n\nI need to add an expense from yesterday, which is March 8, 2026. I\u2019m figuring out if it falls under Apparel and Beauty or Health & Fitness. Since it\u2019s a spa treatment focusing on personal care and wellness, it seems to fit better under Apparel and Beauty. Health & Fitness feels more like gym or medical expenses. So, I'll go with Apparel and Beauty for this expense. Now I need to call the tool.",
+      "latency_ms": 19815.698416961823,
+      "input_tokens": 880,
+      "output_tokens": 177,
+      "tool_response_size": 66,
+      "error": null
+    },
+    {
+      "case_name": "edge_currency_symbol",
+      "user_query": "I spent \u20ac50 on dinner yesterday.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 50,
+            "category": "Food & drink",
+            "description": "Dinner"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **\u20ac50** for **Dinner** on **2026-03-08** under **Food & drink**.",
+      "reasoning": "I need to add an expense for yesterday, which would be March 8, 2026. The category will be \"Food & Drink,\" and I'm thinking of describing it as dinner. The amount I want to add is $50. I\u2019ll call the necessary tool to log this expense correctly. Keeping track of expenses is important, and I want to make sure I do it right! Let\u2019s get that recorded!",
+      "latency_ms": 12892.705292033497,
+      "input_tokens": 808,
+      "output_tokens": 112,
+      "tool_response_size": 58,
+      "error": null
+    },
+    {
+      "case_name": "spanish_gadget",
+      "user_query": "Ayer compr\u00e9 una laptop por 1200 d\u00f3lares.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 1200,
+            "category": "Electronics & tech",
+            "description": "Compra de laptop"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "\u00a1Listo! Registr\u00e9 tu gasto de **$1200** de **laptop** con fecha de **2026-03-08** (ayer).",
+      "reasoning": "**Logging expense for laptop**\n\nI need to respond in Spanish since the user mentioned that they bought a laptop for $1200 yesterday. I'll log this expense using the tool for adding an expense. The date for this will be March 8, 2026, since it's the day before today. I'll categorize this under Electronics & Tech, giving it the description of \"laptop\" and the amount as $1200. Time to execute the tool!",
+      "latency_ms": 8302.911665989086,
+      "input_tokens": 851,
+      "output_tokens": 149,
+      "tool_response_size": 70,
+      "error": null
+    },
+    {
+      "case_name": "clear_food_yesterday",
+      "user_query": "Yesterday I bought a sandwich for $12.50.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$12.50** for **Sandwich** on **2026-03-08** under **Food & drink**.",
+      "reasoning": "**Adding expense details**\n\nI need to add an expense from yesterday, which would be March 8, 2026. The category is food and drink, and I\u2019m considering using \"sandwich\" as the description. Now, I should just call the tool to register this expense. I want to make sure everything is accurate so that it reflects properly in the records. Let\u2019s get that done!",
+      "latency_ms": 8223.326458013617,
+      "input_tokens": 850,
+      "output_tokens": 125,
+      "tool_response_size": 60,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_monday_before_this_one",
+      "user_query": "I bought a sandwich the Monday before this one for $12.50.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-02",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' matches expected '2026-03-02'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$12.50** for **Sandwich** on **2026-03-02** (the Monday before this one) under **Food & drink**.",
+      "reasoning": "**Calculating and adding an expense**\n\nI need to parse the date relative to today, which is March 9, 2026. It seems like the \"Monday before this one\" would be March 2, 2026. I'll double-check: March 9 is a Monday, and I can trace back that previous Monday as easily as I can. Now, I need to add an expense for food and drink, probably a sandwich, for $12.50. Once done, I\u2019ll confirm concisely! I have to use the tool to add this expense.",
+      "latency_ms": 24215.459708007984,
+      "input_tokens": 1009,
+      "output_tokens": 283,
+      "tool_response_size": 60,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_two_mondays_ago",
+      "user_query": "Two Mondays ago I spent $8.75 on coffee.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-02-23",
+            "amount": 8.75,
+            "category": "Food & drink",
+            "description": "Coffee"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-23' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-23' matches expected '2026-02-23'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Logged! I added **$8.75** for **coffee** on **2026-02-23** (two Mondays ago).",
+      "reasoning": "**Calculating past dates**\n\nI need to parse the date in relation to today, which is March 9, 2026. I should check if today is a Monday, and it looks like it is! Now, if today is March 9, \u201ctwo Mondays ago\u201d is actually February 23. So, I'll add an expense with that date string, the amount of $8.75 for the category \"Food & drink,\" possibly for coffee. I\u2019ll call the tool and then confirm. Let's get this sorted!",
+      "latency_ms": 22027.266875025816,
+      "input_tokens": 923,
+      "output_tokens": 193,
+      "tool_response_size": 58,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_first_monday_this_month",
+      "user_query": "I bought a sandwich on the first Monday of this month for $12.50.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-02",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' matches expected '2026-03-02'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$12.50** for **Sandwich** on **2026-03-02** under **Food & drink**.",
+      "reasoning": "**Interpreting the date**\n\nI need to interpret today's date, which is March 9, 2026. So, the first Monday of the month would be March 2, 2026. I want to verify that March 1, 2026, is a Sunday, which means I might run a quick check or use Zeller's Congruence to be sure. If March 9 is indeed a Monday, then March 2 is the first Monday. I need to submit an expense for a sandwich under the Food & Drink category for $12.50 on March 2, 2026.",
+      "latency_ms": 14926.169833983295,
+      "input_tokens": 970,
+      "output_tokens": 233,
+      "tool_response_size": 60,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_day_last_month",
+      "user_query": "On the last day of last month I spent $25.99 on a movie ticket.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-02-28",
+            "amount": 25.99,
+            "category": "Media & streaming",
+            "description": "Movie ticket"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' matches expected '2026-02-28'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$25.99** for **Movie ticket** on **2026-02-28**.",
+      "reasoning": "**Processing expense entry**\n\nI need to extract the date today, which is 2026-03-09, meaning last month was February 2026, and the last day of that month is February 28. That\u2019s important since it\u2019s not a leap year. Next, I need to add an expense in the category of Media & Streaming, categorized as a movie ticket. I\u2019ll describe it as \"movie ticket\" with an amount of $25.99. I'll make a single tool call to confirm this.",
+      "latency_ms": 11869.355625007302,
+      "input_tokens": 893,
+      "output_tokens": 147,
+      "tool_response_size": 65,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_business_day_last_month",
+      "user_query": "I paid $60 for gas on the last business day of last month.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-02-27",
+            "amount": 60,
+            "category": "Transit and Fuel",
+            "description": "Gas"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-27' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-27' matches expected '2026-02-27'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$60** for **Gas** under **Transit and Fuel** on **2026-02-27** (the last business day of last month).",
+      "reasoning": "**Determining expense details**\n\nI need to figure out the user's intent, which seems to be adding an expense. The date is today, March 9, 2026, so I\u2019m calculating the last business day of February 2026, which is February 27. I\u2019ve confirmed that 2026 is not a leap year, so February has 28 days. To double-check, I calculated the days of the week, and it turns out February 28 falls on a Saturday. The expense category is for transit and fuel, and I plan to record a $60 gas expense. Now, I\u2019ll call the tool to add this expense.",
+      "latency_ms": 14957.744250015821,
+      "input_tokens": 1044,
+      "output_tokens": 316,
+      "tool_response_size": 55,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_day_before_yesterday_coffee",
+      "user_query": "The day before yesterday I spent $4.50 on coffee.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-07",
+            "amount": 4.5,
+            "category": "Food & drink",
+            "description": "Coffee"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-07' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-07' matches expected '2026-03-07'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$4.50** for **coffee** on **2026-03-07**.",
+      "reasoning": "**Parsing dates and adding expenses**\n\nI need to parse the relative date, which is today, March 9, 2026. So, the day before yesterday would be March 7, 2026. Now, I want to add an expense in the Food & Drink category, possibly for coffee. I'll go ahead and call the appropriate tool to log this expense. It's straightforward, but I want to ensure everything is correct before finalizing it!",
+      "latency_ms": 9479.922333033755,
+      "input_tokens": 852,
+      "output_tokens": 116,
+      "tool_response_size": 57,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_three_days_ago_rideshare",
+      "user_query": "Three days ago I took an Uber to the airport for $38.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-06",
+            "amount": 38,
+            "category": "Transit and Fuel",
+            "description": "Uber to the airport"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' matches expected '2026-03-06'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Logged \u2014 **$38** for **Uber to the airport** on **2026-03-06** under **Transit and Fuel**.",
+      "reasoning": "**Adding expense details**\n\nI need to add an expense from three days ago, which is March 6, 2026. The category will be Transit and Fuel, and I\u2019m thinking of calling it \"Uber to airport.\" I\u2019ll definitely need to use the tool for this, as it\u2019s the best way to keep everything organized. Let\u2019s proceed with that! It's a straightforward task, but I want to ensure it's done right.",
+      "latency_ms": 7068.953458976466,
+      "input_tokens": 856,
+      "output_tokens": 120,
+      "tool_response_size": 71,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_friday_movie",
+      "user_query": "Last Friday I spent $18 on a movie ticket.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-06",
+            "amount": 18,
+            "category": "Media & streaming",
+            "description": "Movie ticket"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' matches expected '2026-03-06'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$18** for a **movie ticket** on **2026-03-06** (last Friday) under **Media & streaming**.",
+      "reasoning": "**Adding expense details**\n\nI need to log an expense, which means I\u2019ll likely call the add_expense_date_d function. I should infer the date, which is today, March 9, 2026. I\u2019ll verify that today is indeed a Monday. The last Friday relative to today would be March 6, 2026. I\u2019m thinking of categorizing it under media & streaming as a movie ticket. The amount is $18. After that, I\u2019ll confirm with the user and use the tool to finalize it.",
+      "latency_ms": 8851.360375003424,
+      "input_tokens": 892,
+      "output_tokens": 169,
+      "tool_response_size": 64,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_day_after_tomorrow_bus_pass",
+      "user_query": "The day after tomorrow I will buy a bus pass for $20.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-11",
+            "amount": 20,
+            "category": "Transit and Fuel",
+            "description": "Bus pass"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-11' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-11' matches expected '2026-03-11'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$20** for **Bus pass** on **2026-03-11**.",
+      "reasoning": "**Interpreting future dates**\n\nI need to interpret the relative date from the developer. Today is March 9, 2026, so the day after tomorrow will be March 11, 2026. I should add an expense using the tool, categorizing it under Transit and Fuel for a bus pass, with a description like \"bus pass.\" Since it's in the future tense, I'll phrase it as \"will buy.\" I guess I should log the planned expense too, so I\u2019ll confirm after making the tool call!",
+      "latency_ms": 9212.781250011176,
+      "input_tokens": 893,
+      "output_tokens": 153,
+      "tool_response_size": 60,
+      "error": null
+    },
+    {
+      "case_name": "hard_category_grocery_delivery_yesterday",
+      "user_query": "Yesterday I paid $65 for Instacart grocery delivery.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 65,
+            "category": "Food & drink",
+            "description": "Instacart grocery delivery"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$65** for **Instacart grocery delivery** on **2026-03-08**.",
+      "reasoning": "I need to add an expense from yesterday, which would be March 8, 2026. It seems like the category should be food and drink, probably related to groceries. I'll use the description that the user provided. My next step is to call the tool to make this entry. It's pretty straightforward but important to ensure I get all the details right for the user. Alright, let's get this done!",
+      "latency_ms": 7371.067833038978,
+      "input_tokens": 847,
+      "output_tokens": 111,
+      "tool_response_size": 78,
+      "error": null
+    },
+    {
+      "case_name": "hard_category_headphones_last_day_last_month",
+      "user_query": "On the last day of last month I bought headphones for $79.99.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-02-28",
+            "amount": 79.99,
+            "category": "Electronics & tech",
+            "description": "Headphones"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-28' matches expected '2026-02-28'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Logged \u2705  \n**2026-02-28** \u2014 **$79.99** \u2014 **Electronics & tech** \u2014 *Headphones*",
+      "reasoning": "**Parsing expense details**\n\nI need to note that today is March 9, 2026, and the last day of last month was February 28, 2026, since 2026 isn\u2019t a leap year. I\u2019m focusing on the category of electronics and tech for headphones. Next, I need to call the tool to add the expense date. I\u2019ll ensure to confirm the entry concisely to keep everything clear. Let\u2019s get moving on this!",
+      "latency_ms": 11480.463375046384,
+      "input_tokens": 877,
+      "output_tokens": 140,
+      "tool_response_size": 63,
+      "error": null
+    },
+    {
+      "case_name": "edge_large_amount",
+      "user_query": "Yesterday I bought a car for 35000 USD.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 35000,
+            "category": "Transit and Fuel",
+            "description": "Bought a car"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$35,000** for **\u201cBought a car\u201d** on **2026-03-08** under **Transit and Fuel**.",
+      "reasoning": "**Adding an expense**\n\nI need to respond by adding an expense for yesterday, which would be March 8, 2026. It seems like the category might be Transit and Fuel, especially if it includes things like gas or rideshare. Although there could be some confusion about whether it's a car purchase, I think the broader category of Transit and Fuel fits best. The description might be \"Bought a car,\" and I need to call the tool to add this expense.",
+      "latency_ms": 10067.764208011795,
+      "input_tokens": 903,
+      "output_tokens": 178,
+      "tool_response_size": 67,
+      "error": null
+    },
+    {
+      "case_name": "edge_small_amount",
+      "user_query": "I paid $0.99 for an app yesterday.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 0.99,
+            "category": "Electronics & tech",
+            "description": "App purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$0.99** for **App purchase** on **2026-03-08** under **Electronics & tech**.",
+      "reasoning": "**Logging expense**\n\nI need to log an expense using the tool. The date for this expense is yesterday, which is March 8, 2026, so I'll note that down. It looks like the category should be Electronics & Tech, since I think apps and software fall under that. I\u2019ll describe it as \"app purchase\" and the amount is $0.99. Now, I just need to call the tool to get this logged!",
+      "latency_ms": 8173.243708966766,
+      "input_tokens": 871,
+      "output_tokens": 146,
+      "tool_response_size": 64,
+      "error": null
+    },
+    {
+      "case_name": "edge_unknown_category",
+      "user_query": "Yesterday I spent $200 on a spa treatment.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 200,
+            "category": "Health & Fitness",
+            "description": "Spa treatment"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Done \u2014 I logged **$200** for **Spa treatment** on **2026-03-08** under **Health & Fitness**.",
+      "reasoning": "**Logging expense decision**\n\nI need to log an expense and infer the date as March 8, 2026, from March 9. Now I'm thinking about the category for a spa treatment. It could go under Health & Fitness or Apparel and Beauty. My instinct is that Apparel and Beauty includes personal care, while Health & Fitness covers wellness. I\u2019m tentatively leaning toward Health & Fitness since it feels like a better fit for wellness. I'll add the expense using the tool and confirm it!",
+      "latency_ms": 8158.286833029706,
+      "input_tokens": 899,
+      "output_tokens": 173,
+      "tool_response_size": 66,
+      "error": null
+    },
+    {
+      "case_name": "edge_currency_symbol",
+      "user_query": "I spent \u20ac50 on dinner yesterday.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 50,
+            "category": "Food & drink",
+            "description": "Dinner"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Logged! I added **\u20ac50** for **Dinner** on **2026-03-08** under **Food & drink**.",
+      "reasoning": "**Logging expenses**\n\nI need to act as an expense logger since the user provided expense information. The date is relative to today, which is March 9, 2026, so I'll log it as March 8, 2026. The category is Food & Drink, and I\u2019ll describe it as dinner, with an amount of 50. I need to confirm that the tool will process this without a currency field, but since it only needs the number, my assumption of 50 should be fine.",
+      "latency_ms": 8119.652500026859,
+      "input_tokens": 875,
+      "output_tokens": 153,
+      "tool_response_size": 58,
+      "error": null
+    },
+    {
+      "case_name": "spanish_gadget",
+      "user_query": "Ayer compr\u00e9 una laptop por 1200 d\u00f3lares.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 1200,
+            "category": "Electronics & tech",
+            "description": "Compra de laptop"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "\u00a1Listo! Registr\u00e9 el gasto:\n\n- **Fecha:** 2026-03-08 (ayer)  \n- **Monto:** **$1200**  \n- **Categor\u00eda:** Electr\u00f3nica y tecnolog\u00eda  \n- **Descripci\u00f3n:** Compra de laptop",
+      "reasoning": null,
+      "latency_ms": 9186.458500043955,
+      "input_tokens": 886,
+      "output_tokens": 176,
+      "tool_response_size": 70,
+      "error": null
+    }
+  ]
+}

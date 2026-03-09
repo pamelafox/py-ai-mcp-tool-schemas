@@ -1,0 +1,2976 @@
+{
+  "metadata": {
+    "timestamp": "2026-03-09T03:29:55.108632",
+    "agent": "pydanticai",
+    "model_name": "eval",
+    "model_settings": {
+      "seed": 42,
+      "temperature": 0.0
+    },
+    "mcp_server_url": "http://localhost:8000/mcp"
+  },
+  "summaries": {
+    "add_expense_date_a": {
+      "variant_name": "add_expense_date_a",
+      "total_cases": 17,
+      "passed_cases": 0,
+      "pass_rate": 0.0,
+      "avg_score": 0.9607843137254903,
+      "avg_latency_ms": 3355.0,
+      "avg_input_tokens": 809.0,
+      "avg_output_tokens": 76.0,
+      "avg_tool_response_size": 67.0,
+      "eval_counts": {
+        "tool_called": {
+          "passed": 17,
+          "failed": 0
+        },
+        "date_format": {
+          "passed": 17,
+          "failed": 0
+        },
+        "date_match": {
+          "passed": 15,
+          "failed": 2
+        }
+      }
+    },
+    "add_expense_date_b": {
+      "variant_name": "add_expense_date_b",
+      "total_cases": 17,
+      "passed_cases": 0,
+      "pass_rate": 0.0,
+      "avg_score": 0.9607843137254903,
+      "avg_latency_ms": 2706.0,
+      "avg_input_tokens": 824.0,
+      "avg_output_tokens": 76.0,
+      "avg_tool_response_size": 66.0,
+      "eval_counts": {
+        "tool_called": {
+          "passed": 17,
+          "failed": 0
+        },
+        "date_format": {
+          "passed": 17,
+          "failed": 0
+        },
+        "date_match": {
+          "passed": 15,
+          "failed": 2
+        }
+      }
+    },
+    "add_expense_date_c": {
+      "variant_name": "add_expense_date_c",
+      "total_cases": 17,
+      "passed_cases": 0,
+      "pass_rate": 0.0,
+      "avg_score": 0.9607843137254903,
+      "avg_latency_ms": 3831.0,
+      "avg_input_tokens": 836.0,
+      "avg_output_tokens": 76.0,
+      "avg_tool_response_size": 67.0,
+      "eval_counts": {
+        "tool_called": {
+          "passed": 17,
+          "failed": 0
+        },
+        "date_format": {
+          "passed": 17,
+          "failed": 0
+        },
+        "date_match": {
+          "passed": 15,
+          "failed": 2
+        }
+      }
+    },
+    "add_expense_date_d": {
+      "variant_name": "add_expense_date_d",
+      "total_cases": 17,
+      "passed_cases": 0,
+      "pass_rate": 0.0,
+      "avg_score": 0.9607843137254903,
+      "avg_latency_ms": 2731.0,
+      "avg_input_tokens": 849.0,
+      "avg_output_tokens": 79.0,
+      "avg_tool_response_size": 67.0,
+      "eval_counts": {
+        "tool_called": {
+          "passed": 17,
+          "failed": 0
+        },
+        "date_format": {
+          "passed": 17,
+          "failed": 0
+        },
+        "date_match": {
+          "passed": 15,
+          "failed": 2
+        }
+      }
+    }
+  },
+  "results": [
+    {
+      "case_name": "clear_food_yesterday",
+      "user_query": "Yesterday I bought a sandwich for $12.50.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your expense of $12.50 for a sandwich on March 8, 2026.",
+      "reasoning": null,
+      "latency_ms": 3728.520667005796,
+      "input_tokens": 743,
+      "output_tokens": 65,
+      "tool_response_size": 69,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_monday_before_this_one",
+      "user_query": "I bought a sandwich the Monday before this one for $12.50.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-02",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' matches expected '2026-03-02'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your expense of $12.50 for a sandwich on March 2, 2026.",
+      "reasoning": null,
+      "latency_ms": 4085.2116250316612,
+      "input_tokens": 751,
+      "output_tokens": 65,
+      "tool_response_size": 69,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_two_mondays_ago",
+      "user_query": "Two Mondays ago I spent $8.75 on coffee.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-02-23",
+            "amount": 8.75,
+            "category": "Food & drink",
+            "description": "Coffee purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-23' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-23' matches expected '2026-02-23'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Your coffee expense of $8.75 on February 23, 2026, has been recorded.",
+      "reasoning": null,
+      "latency_ms": 3221.1071670171805,
+      "input_tokens": 744,
+      "output_tokens": 64,
+      "tool_response_size": 67,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_first_monday_this_month",
+      "user_query": "I bought a sandwich on the first Monday of this month for $12.50.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-02",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' matches expected '2026-03-02'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your expense of $12.50 for a sandwich on March 2, 2026.",
+      "reasoning": null,
+      "latency_ms": 2292.576249979902,
+      "input_tokens": 755,
+      "output_tokens": 65,
+      "tool_response_size": 69,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_day_last_month",
+      "user_query": "On the last day of last month I spent $25.99 on a movie ticket.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-02-29",
+            "amount": 25.99,
+            "category": "Media & streaming",
+            "description": "Movie ticket"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-02-28",
+            "amount": 25.99,
+            "category": "Media & streaming",
+            "description": "Movie ticket"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-29' is in correct format"
+        },
+        "date_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Date '2026-02-29' does not match expected '2026-02-28'"
+        }
+      },
+      "overall_score": 0.6666666666666666,
+      "agent_output": "The expense of $25.99 for the movie ticket on February 28, 2026, has been successfully logged.",
+      "reasoning": null,
+      "latency_ms": 3284.5667080255225,
+      "input_tokens": 1289,
+      "output_tokens": 146,
+      "tool_response_size": 65,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_business_day_last_month",
+      "user_query": "I paid $60 for gas on the last business day of last month.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-02-27",
+            "amount": 60,
+            "category": "Transit and Fuel",
+            "description": "Gas purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-27' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-27' matches expected '2026-02-27'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your $60 gas expense for February 27, 2026. If you have more expenses to add, feel free to let me know!",
+      "reasoning": null,
+      "latency_ms": 4426.709915976971,
+      "input_tokens": 748,
+      "output_tokens": 72,
+      "tool_response_size": 64,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_day_before_yesterday_coffee",
+      "user_query": "The day before yesterday I spent $4.50 on coffee.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-07",
+            "amount": 4.5,
+            "category": "Food & drink",
+            "description": "Coffee"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-07' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-07' matches expected '2026-03-07'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your coffee expense of $4.50 for March 7, 2026.",
+      "reasoning": null,
+      "latency_ms": 2003.4080000477843,
+      "input_tokens": 744,
+      "output_tokens": 61,
+      "tool_response_size": 57,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_three_days_ago_rideshare",
+      "user_query": "Three days ago I took an Uber to the airport for $38.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-06",
+            "amount": 38,
+            "category": "Transit and Fuel",
+            "description": "Uber to the airport"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' matches expected '2026-03-06'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged the expense of $38 for the Uber to the airport on March 6, 2026.",
+      "reasoning": null,
+      "latency_ms": 2691.7469580075704,
+      "input_tokens": 750,
+      "output_tokens": 65,
+      "tool_response_size": 71,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_friday_movie",
+      "user_query": "Last Friday I spent $18 on a movie ticket.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-06",
+            "amount": 18,
+            "category": "Media & streaming",
+            "description": "Movie ticket"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' matches expected '2026-03-06'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your expense of $18 for a movie ticket on March 6, 2026. If you have more expenses to add, feel free to let me know!",
+      "reasoning": null,
+      "latency_ms": 2599.08345900476,
+      "input_tokens": 740,
+      "output_tokens": 76,
+      "tool_response_size": 64,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_day_after_tomorrow_bus_pass",
+      "user_query": "The day after tomorrow I will buy a bus pass for $20.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-11",
+            "amount": 20,
+            "category": "Transit and Fuel",
+            "description": "Bus pass purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-11' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-11' matches expected '2026-03-11'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your bus pass purchase of $20 for March 11, 2026, under Transit and Fuel.",
+      "reasoning": null,
+      "latency_ms": 3153.7293340079486,
+      "input_tokens": 748,
+      "output_tokens": 65,
+      "tool_response_size": 69,
+      "error": null
+    },
+    {
+      "case_name": "hard_category_grocery_delivery_yesterday",
+      "user_query": "Yesterday I paid $65 for Instacart grocery delivery.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 65,
+            "category": "Food & drink",
+            "description": "Instacart grocery delivery"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged the expense of $65 for Instacart grocery delivery on March 8, 2026.",
+      "reasoning": null,
+      "latency_ms": 6691.522084001917,
+      "input_tokens": 748,
+      "output_tokens": 66,
+      "tool_response_size": 78,
+      "error": null
+    },
+    {
+      "case_name": "hard_category_headphones_last_day_last_month",
+      "user_query": "On the last day of last month I bought headphones for $79.99.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-02-29",
+            "amount": 79.99,
+            "category": "Electronics & tech",
+            "description": "Headphones purchase"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-02-28",
+            "amount": 79.99,
+            "category": "Electronics & tech",
+            "description": "Headphones purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-29' is in correct format"
+        },
+        "date_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Date '2026-02-29' does not match expected '2026-02-28'"
+        }
+      },
+      "overall_score": 0.6666666666666666,
+      "agent_output": "The expense of $79.99 for the headphones has been successfully logged for February 28, 2026.",
+      "reasoning": null,
+      "latency_ms": 4102.862415951677,
+      "input_tokens": 1293,
+      "output_tokens": 151,
+      "tool_response_size": 72,
+      "error": null
+    },
+    {
+      "case_name": "edge_large_amount",
+      "user_query": "Yesterday I bought a car for 35000 USD.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 35000,
+            "category": "Misc",
+            "description": "Car purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged the car purchase of $35,000 on March 8, 2026, under the \"Misc\" category.",
+      "reasoning": null,
+      "latency_ms": 3844.1368750063702,
+      "input_tokens": 740,
+      "output_tokens": 66,
+      "tool_response_size": 67,
+      "error": null
+    },
+    {
+      "case_name": "edge_small_amount",
+      "user_query": "I paid $0.99 for an app yesterday.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 0.99,
+            "category": "Electronics & tech",
+            "description": "App purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged the expense of $0.99 for the app purchase on March 8, 2026.",
+      "reasoning": null,
+      "latency_ms": 2888.4752499870956,
+      "input_tokens": 743,
+      "output_tokens": 66,
+      "tool_response_size": 64,
+      "error": null
+    },
+    {
+      "case_name": "edge_unknown_category",
+      "user_query": "Yesterday I spent $200 on a spa treatment.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 200,
+            "category": "Health & Fitness",
+            "description": "Spa treatment"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your expense of $200 for a spa treatment on March 8, 2026, under Health & Fitness.",
+      "reasoning": null,
+      "latency_ms": 2143.8285829499364,
+      "input_tokens": 738,
+      "output_tokens": 66,
+      "tool_response_size": 66,
+      "error": null
+    },
+    {
+      "case_name": "edge_currency_symbol",
+      "user_query": "I spent \u20ac50 on dinner yesterday.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 50,
+            "category": "Food & drink",
+            "description": "Dinner"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your \u20ac50 dinner expense for March 8, 2026. If you have more expenses to add, feel free to let me know!",
+      "reasoning": null,
+      "latency_ms": 3991.6945419972762,
+      "input_tokens": 732,
+      "output_tokens": 71,
+      "tool_response_size": 58,
+      "error": null
+    },
+    {
+      "case_name": "spanish_gadget",
+      "user_query": "Ayer compr\u00e9 una laptop por 1200 d\u00f3lares.",
+      "tool_variant": "add_expense_date_a",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_a",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 1200,
+            "category": "Electronics & tech",
+            "description": "Compra de laptop"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_a' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "He registrado la compra de la laptop por $1200 el 8 de marzo de 2026.",
+      "reasoning": null,
+      "latency_ms": 1881.743457983248,
+      "input_tokens": 747,
+      "output_tokens": 65,
+      "tool_response_size": 70,
+      "error": null
+    },
+    {
+      "case_name": "clear_food_yesterday",
+      "user_query": "Yesterday I bought a sandwich for $12.50.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your expense of $12.50 for a sandwich on March 8, 2026.",
+      "reasoning": null,
+      "latency_ms": 2299.462124996353,
+      "input_tokens": 755,
+      "output_tokens": 64,
+      "tool_response_size": 60,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_monday_before_this_one",
+      "user_query": "I bought a sandwich the Monday before this one for $12.50.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-02",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' matches expected '2026-03-02'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your expense of $12.50 for a sandwich on March 2, 2026.",
+      "reasoning": null,
+      "latency_ms": 2259.344667021651,
+      "input_tokens": 765,
+      "output_tokens": 65,
+      "tool_response_size": 69,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_two_mondays_ago",
+      "user_query": "Two Mondays ago I spent $8.75 on coffee.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-02-23",
+            "amount": 8.75,
+            "category": "Food & drink",
+            "description": "Coffee purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-23' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-23' matches expected '2026-02-23'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your coffee expense of $8.75 on February 23, 2026.",
+      "reasoning": null,
+      "latency_ms": 2355.969499971252,
+      "input_tokens": 758,
+      "output_tokens": 62,
+      "tool_response_size": 67,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_first_monday_this_month",
+      "user_query": "I bought a sandwich on the first Monday of this month for $12.50.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-02",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' matches expected '2026-03-02'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your expense of $12.50 for a sandwich on March 2, 2026.",
+      "reasoning": null,
+      "latency_ms": 2139.727875008248,
+      "input_tokens": 769,
+      "output_tokens": 65,
+      "tool_response_size": 69,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_day_last_month",
+      "user_query": "On the last day of last month I spent $25.99 on a movie ticket.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-02-29",
+            "amount": 25.99,
+            "category": "Media & streaming",
+            "description": "Movie ticket"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-02-28",
+            "amount": 25.99,
+            "category": "Media & streaming",
+            "description": "Movie ticket"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-29' is in correct format"
+        },
+        "date_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Date '2026-02-29' does not match expected '2026-02-28'"
+        }
+      },
+      "overall_score": 0.6666666666666666,
+      "agent_output": "The expense of $25.99 for the movie ticket on February 28, 2026, has been successfully logged.",
+      "reasoning": null,
+      "latency_ms": 2839.764792006463,
+      "input_tokens": 1305,
+      "output_tokens": 141,
+      "tool_response_size": 65,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_business_day_last_month",
+      "user_query": "I paid $60 for gas on the last business day of last month.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-02-27",
+            "amount": 60,
+            "category": "Transit and Fuel",
+            "description": "Gas purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-27' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-27' matches expected '2026-02-27'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your $60 gas expense for February 27, 2026. If you have more expenses to add, feel free to let me know!",
+      "reasoning": null,
+      "latency_ms": 3747.4591670325026,
+      "input_tokens": 762,
+      "output_tokens": 72,
+      "tool_response_size": 64,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_day_before_yesterday_coffee",
+      "user_query": "The day before yesterday I spent $4.50 on coffee.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-07",
+            "amount": 4.5,
+            "category": "Food & drink",
+            "description": "Coffee"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-07' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-07' matches expected '2026-03-07'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your coffee expense of $4.50 for March 7, 2026. If you have more expenses to add, just let me know!",
+      "reasoning": null,
+      "latency_ms": 3744.485584029462,
+      "input_tokens": 758,
+      "output_tokens": 74,
+      "tool_response_size": 57,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_three_days_ago_rideshare",
+      "user_query": "Three days ago I took an Uber to the airport for $38.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-06",
+            "amount": 38,
+            "category": "Transit and Fuel",
+            "description": "Uber to the airport"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' matches expected '2026-03-06'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged the Uber expense of $38 to the airport on March 6, 2026.",
+      "reasoning": null,
+      "latency_ms": 3533.5475410101935,
+      "input_tokens": 764,
+      "output_tokens": 63,
+      "tool_response_size": 71,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_friday_movie",
+      "user_query": "Last Friday I spent $18 on a movie ticket.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-06",
+            "amount": 18,
+            "category": "Media & streaming",
+            "description": "Movie ticket"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' matches expected '2026-03-06'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your expense of $18 for a movie ticket on March 6, 2026.",
+      "reasoning": null,
+      "latency_ms": 3292.0975830056705,
+      "input_tokens": 754,
+      "output_tokens": 61,
+      "tool_response_size": 64,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_day_after_tomorrow_bus_pass",
+      "user_query": "The day after tomorrow I will buy a bus pass for $20.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-11",
+            "amount": 20,
+            "category": "Transit and Fuel",
+            "description": "Bus pass purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-11' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-11' matches expected '2026-03-11'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged the bus pass purchase of $20 for March 11, 2026, under Transit and Fuel.",
+      "reasoning": null,
+      "latency_ms": 2214.9881250225008,
+      "input_tokens": 762,
+      "output_tokens": 65,
+      "tool_response_size": 69,
+      "error": null
+    },
+    {
+      "case_name": "hard_category_grocery_delivery_yesterday",
+      "user_query": "Yesterday I paid $65 for Instacart grocery delivery.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 65,
+            "category": "Food & drink",
+            "description": "Instacart grocery delivery"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged the expense of $65 for Instacart grocery delivery on March 8, 2026, under the \"Food & drink\" category.",
+      "reasoning": null,
+      "latency_ms": 2946.0043750004843,
+      "input_tokens": 762,
+      "output_tokens": 75,
+      "tool_response_size": 78,
+      "error": null
+    },
+    {
+      "case_name": "hard_category_headphones_last_day_last_month",
+      "user_query": "On the last day of last month I bought headphones for $79.99.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-02-29",
+            "amount": 79.99,
+            "category": "Electronics & tech",
+            "description": "Headphones purchase"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-02-28",
+            "amount": 79.99,
+            "category": "Electronics & tech",
+            "description": "Headphones purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-29' is in correct format"
+        },
+        "date_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Date '2026-02-29' does not match expected '2026-02-28'"
+        }
+      },
+      "overall_score": 0.6666666666666666,
+      "agent_output": "The expense of $79.99 for the headphones purchased on February 28, 2026, has been successfully logged.",
+      "reasoning": null,
+      "latency_ms": 3237.891791970469,
+      "input_tokens": 1323,
+      "output_tokens": 162,
+      "tool_response_size": 72,
+      "error": null
+    },
+    {
+      "case_name": "edge_large_amount",
+      "user_query": "Yesterday I bought a car for 35000 USD.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 35000,
+            "category": "Misc",
+            "description": "Car purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "The expense of $35,000 for the car purchase on March 8, 2026, has been successfully logged.",
+      "reasoning": null,
+      "latency_ms": 2008.3679999806918,
+      "input_tokens": 754,
+      "output_tokens": 65,
+      "tool_response_size": 67,
+      "error": null
+    },
+    {
+      "case_name": "edge_small_amount",
+      "user_query": "I paid $0.99 for an app yesterday.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 0.99,
+            "category": "Electronics & tech",
+            "description": "App purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged the expense of $0.99 for the app purchase on March 8, 2026.",
+      "reasoning": null,
+      "latency_ms": 2249.534083006438,
+      "input_tokens": 757,
+      "output_tokens": 66,
+      "tool_response_size": 64,
+      "error": null
+    },
+    {
+      "case_name": "edge_unknown_category",
+      "user_query": "Yesterday I spent $200 on a spa treatment.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 200,
+            "category": "Health & Fitness",
+            "description": "Spa treatment"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your expense of $200 for a spa treatment on March 8, 2026, under Health & Fitness.",
+      "reasoning": null,
+      "latency_ms": 1892.0305829960853,
+      "input_tokens": 752,
+      "output_tokens": 66,
+      "tool_response_size": 66,
+      "error": null
+    },
+    {
+      "case_name": "edge_currency_symbol",
+      "user_query": "I spent \u20ac50 on dinner yesterday.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 50,
+            "category": "Food & drink",
+            "description": "Dinner"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your \u20ac50 dinner expense for March 8, 2026.",
+      "reasoning": null,
+      "latency_ms": 2183.0544999684207,
+      "input_tokens": 746,
+      "output_tokens": 56,
+      "tool_response_size": 58,
+      "error": null
+    },
+    {
+      "case_name": "spanish_gadget",
+      "user_query": "Ayer compr\u00e9 una laptop por 1200 d\u00f3lares.",
+      "tool_variant": "add_expense_date_b",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_b",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 1200,
+            "category": "Electronics & tech",
+            "description": "Compra de laptop"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_b' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "He registrado la compra de la laptop por $1200 el 8 de marzo de 2026.",
+      "reasoning": null,
+      "latency_ms": 3062.689541024156,
+      "input_tokens": 761,
+      "output_tokens": 65,
+      "tool_response_size": 70,
+      "error": null
+    },
+    {
+      "case_name": "clear_food_yesterday",
+      "user_query": "Yesterday I bought a sandwich for $12.50.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your expense of $12.50 for a sandwich on March 8, 2026.",
+      "reasoning": null,
+      "latency_ms": 3942.8068750421517,
+      "input_tokens": 755,
+      "output_tokens": 65,
+      "tool_response_size": 69,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_monday_before_this_one",
+      "user_query": "I bought a sandwich the Monday before this one for $12.50.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-02",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' matches expected '2026-03-02'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your expense of $12.50 for a sandwich on March 2, 2026.",
+      "reasoning": null,
+      "latency_ms": 4174.256041005719,
+      "input_tokens": 763,
+      "output_tokens": 65,
+      "tool_response_size": 69,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_two_mondays_ago",
+      "user_query": "Two Mondays ago I spent $8.75 on coffee.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-02-23",
+            "amount": 8.75,
+            "category": "Food & drink",
+            "description": "Coffee purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-23' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-23' matches expected '2026-02-23'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your coffee expense of $8.75 on February 23, 2026.",
+      "reasoning": null,
+      "latency_ms": 3976.10954195261,
+      "input_tokens": 756,
+      "output_tokens": 62,
+      "tool_response_size": 67,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_first_monday_this_month",
+      "user_query": "I bought a sandwich on the first Monday of this month for $12.50.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-02",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' matches expected '2026-03-02'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your expense of $12.50 for a sandwich on March 2, 2026.",
+      "reasoning": null,
+      "latency_ms": 4031.338708009571,
+      "input_tokens": 767,
+      "output_tokens": 65,
+      "tool_response_size": 69,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_day_last_month",
+      "user_query": "On the last day of last month I spent $25.99 on a movie ticket.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-02-29",
+            "amount": 25.99,
+            "category": "Media & streaming",
+            "description": "Movie ticket"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-02-28",
+            "amount": 25.99,
+            "category": "Media & streaming",
+            "description": "Movie ticket"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-29' is in correct format"
+        },
+        "date_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Date '2026-02-29' does not match expected '2026-02-28'"
+        }
+      },
+      "overall_score": 0.6666666666666666,
+      "agent_output": "I've logged your expense of $25.99 for a movie ticket on February 28, 2026. If you have any more expenses to add, feel free to let me know!",
+      "reasoning": null,
+      "latency_ms": 4636.329292028677,
+      "input_tokens": 1432,
+      "output_tokens": 168,
+      "tool_response_size": 65,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_business_day_last_month",
+      "user_query": "I paid $60 for gas on the last business day of last month.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-02-27",
+            "amount": 60,
+            "category": "Transit and Fuel",
+            "description": "Gas purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-27' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-27' matches expected '2026-02-27'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your $60 gas expense for February 27, 2026.",
+      "reasoning": null,
+      "latency_ms": 3268.5488749993965,
+      "input_tokens": 760,
+      "output_tokens": 57,
+      "tool_response_size": 64,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_day_before_yesterday_coffee",
+      "user_query": "The day before yesterday I spent $4.50 on coffee.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-07",
+            "amount": 4.5,
+            "category": "Food & drink",
+            "description": "Coffee"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-07' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-07' matches expected '2026-03-07'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your coffee expense of $4.50 for March 7, 2026.",
+      "reasoning": null,
+      "latency_ms": 2828.4547090297565,
+      "input_tokens": 756,
+      "output_tokens": 61,
+      "tool_response_size": 57,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_three_days_ago_rideshare",
+      "user_query": "Three days ago I took an Uber to the airport for $38.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-06",
+            "amount": 38,
+            "category": "Transit and Fuel",
+            "description": "Uber to the airport"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' matches expected '2026-03-06'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged the Uber expense of $38 to the airport on March 6, 2026.",
+      "reasoning": null,
+      "latency_ms": 4559.491874999367,
+      "input_tokens": 762,
+      "output_tokens": 63,
+      "tool_response_size": 71,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_friday_movie",
+      "user_query": "Last Friday I spent $18 on a movie ticket.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-06",
+            "amount": 18,
+            "category": "Media & streaming",
+            "description": "Movie ticket"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' matches expected '2026-03-06'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your expense of $18 for a movie ticket on March 6, 2026.",
+      "reasoning": null,
+      "latency_ms": 2854.2356669786386,
+      "input_tokens": 752,
+      "output_tokens": 61,
+      "tool_response_size": 64,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_day_after_tomorrow_bus_pass",
+      "user_query": "The day after tomorrow I will buy a bus pass for $20.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-11",
+            "amount": 20,
+            "category": "Transit and Fuel",
+            "description": "Bus pass purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-11' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-11' matches expected '2026-03-11'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your bus pass purchase of $20 for March 11, 2026, under Transit and Fuel.",
+      "reasoning": null,
+      "latency_ms": 4833.162375027314,
+      "input_tokens": 760,
+      "output_tokens": 65,
+      "tool_response_size": 69,
+      "error": null
+    },
+    {
+      "case_name": "hard_category_grocery_delivery_yesterday",
+      "user_query": "Yesterday I paid $65 for Instacart grocery delivery.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 65,
+            "category": "Food & drink",
+            "description": "Instacart grocery delivery"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged the expense of $65 for Instacart grocery delivery on March 8, 2026.",
+      "reasoning": null,
+      "latency_ms": 3975.3395409788936,
+      "input_tokens": 760,
+      "output_tokens": 66,
+      "tool_response_size": 78,
+      "error": null
+    },
+    {
+      "case_name": "hard_category_headphones_last_day_last_month",
+      "user_query": "On the last day of last month I bought headphones for $79.99.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-02-29",
+            "amount": 79.99,
+            "category": "Electronics & tech",
+            "description": "Headphones purchase"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-02-28",
+            "amount": 79.99,
+            "category": "Electronics & tech",
+            "description": "Headphones purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-29' is in correct format"
+        },
+        "date_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Date '2026-02-29' does not match expected '2026-02-28'"
+        }
+      },
+      "overall_score": 0.6666666666666666,
+      "agent_output": "I've logged your purchase of headphones for $79.99 on February 28, 2026. If you have any more expenses to add, feel free to let me know!",
+      "reasoning": null,
+      "latency_ms": 6359.284417005256,
+      "input_tokens": 1433,
+      "output_tokens": 170,
+      "tool_response_size": 72,
+      "error": null
+    },
+    {
+      "case_name": "edge_large_amount",
+      "user_query": "Yesterday I bought a car for 35000 USD.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 35000,
+            "category": "Misc",
+            "description": "Car purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "The expense of $35,000 for the car purchase on March 8, 2026, has been successfully logged.",
+      "reasoning": null,
+      "latency_ms": 3972.5754579994828,
+      "input_tokens": 752,
+      "output_tokens": 65,
+      "tool_response_size": 67,
+      "error": null
+    },
+    {
+      "case_name": "edge_small_amount",
+      "user_query": "I paid $0.99 for an app yesterday.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 0.99,
+            "category": "Electronics & tech",
+            "description": "App purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged the expense of $0.99 for the app purchase on March 8, 2026.",
+      "reasoning": null,
+      "latency_ms": 3575.1570840366185,
+      "input_tokens": 755,
+      "output_tokens": 66,
+      "tool_response_size": 64,
+      "error": null
+    },
+    {
+      "case_name": "edge_unknown_category",
+      "user_query": "Yesterday I spent $200 on a spa treatment.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 200,
+            "category": "Health & Fitness",
+            "description": "Spa treatment"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your expense of $200 for a spa treatment on March 8, 2026, under Health & Fitness.",
+      "reasoning": null,
+      "latency_ms": 2591.1111250170507,
+      "input_tokens": 750,
+      "output_tokens": 66,
+      "tool_response_size": 66,
+      "error": null
+    },
+    {
+      "case_name": "edge_currency_symbol",
+      "user_query": "I spent \u20ac50 on dinner yesterday.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 50,
+            "category": "Food & drink",
+            "description": "Dinner"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your \u20ac50 dinner expense for March 8, 2026.",
+      "reasoning": null,
+      "latency_ms": 2639.8784579942003,
+      "input_tokens": 744,
+      "output_tokens": 56,
+      "tool_response_size": 58,
+      "error": null
+    },
+    {
+      "case_name": "spanish_gadget",
+      "user_query": "Ayer compr\u00e9 una laptop por 1200 d\u00f3lares.",
+      "tool_variant": "add_expense_date_c",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_c",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 1200,
+            "category": "Electronics & tech",
+            "description": "Compra de laptop"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_c' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "He registrado la compra de la laptop por 1200 d\u00f3lares el 8 de marzo de 2026.",
+      "reasoning": null,
+      "latency_ms": 2907.6480410294607,
+      "input_tokens": 759,
+      "output_tokens": 66,
+      "tool_response_size": 70,
+      "error": null
+    },
+    {
+      "case_name": "clear_food_yesterday",
+      "user_query": "Yesterday I bought a sandwich for $12.50.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your expense of $12.50 for a sandwich on March 8, 2026. If you have more expenses to add, feel free to let me know!",
+      "reasoning": null,
+      "latency_ms": 2111.6336249979213,
+      "input_tokens": 781,
+      "output_tokens": 80,
+      "tool_response_size": 69,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_monday_before_this_one",
+      "user_query": "I bought a sandwich the Monday before this one for $12.50.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-02",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' matches expected '2026-03-02'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your expense of $12.50 for a sandwich on March 2, 2026.",
+      "reasoning": null,
+      "latency_ms": 2901.2709999806248,
+      "input_tokens": 789,
+      "output_tokens": 65,
+      "tool_response_size": 69,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_two_mondays_ago",
+      "user_query": "Two Mondays ago I spent $8.75 on coffee.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-02-23",
+            "amount": 8.75,
+            "category": "Food & drink",
+            "description": "Coffee purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-23' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-23' matches expected '2026-02-23'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your coffee expense of $8.75 on February 23, 2026.",
+      "reasoning": null,
+      "latency_ms": 2216.6536659933627,
+      "input_tokens": 782,
+      "output_tokens": 62,
+      "tool_response_size": 67,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_first_monday_this_month",
+      "user_query": "I bought a sandwich on the first Monday of this month for $12.50.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-02",
+            "amount": 12.5,
+            "category": "Food & drink",
+            "description": "Sandwich purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-02' matches expected '2026-03-02'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your expense of $12.50 for a sandwich on March 2, 2026.",
+      "reasoning": null,
+      "latency_ms": 2429.758792044595,
+      "input_tokens": 793,
+      "output_tokens": 65,
+      "tool_response_size": 69,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_day_last_month",
+      "user_query": "On the last day of last month I spent $25.99 on a movie ticket.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-02-29",
+            "amount": 25.99,
+            "category": "Media & streaming",
+            "description": "Movie ticket"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-02-28",
+            "amount": 25.99,
+            "category": "Media & streaming",
+            "description": "Movie ticket"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-29' is in correct format"
+        },
+        "date_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Date '2026-02-29' does not match expected '2026-02-28'"
+        }
+      },
+      "overall_score": 0.6666666666666666,
+      "agent_output": "I've logged your expense of $25.99 for a movie ticket on February 28, 2026. If you have any more expenses to add, feel free to let me know!",
+      "reasoning": null,
+      "latency_ms": 4543.349624960683,
+      "input_tokens": 1341,
+      "output_tokens": 154,
+      "tool_response_size": 65,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_business_day_last_month",
+      "user_query": "I paid $60 for gas on the last business day of last month.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-02-27",
+            "amount": 60,
+            "category": "Transit and Fuel",
+            "description": "Gas purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-27' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-27' matches expected '2026-02-27'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your $60 gas expense for February 27, 2026. If you have any more expenses to add, just let me know!",
+      "reasoning": null,
+      "latency_ms": 3375.591833028011,
+      "input_tokens": 786,
+      "output_tokens": 71,
+      "tool_response_size": 64,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_day_before_yesterday_coffee",
+      "user_query": "The day before yesterday I spent $4.50 on coffee.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-07",
+            "amount": 4.5,
+            "category": "Food & drink",
+            "description": "Coffee"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-07' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-07' matches expected '2026-03-07'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your coffee expense of $4.50 for March 7, 2026. If you have more expenses to add, feel free to let me know!",
+      "reasoning": null,
+      "latency_ms": 3447.6692089810967,
+      "input_tokens": 782,
+      "output_tokens": 76,
+      "tool_response_size": 57,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_three_days_ago_rideshare",
+      "user_query": "Three days ago I took an Uber to the airport for $38.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-06",
+            "amount": 38,
+            "category": "Transit and Fuel",
+            "description": "Uber to the airport"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' matches expected '2026-03-06'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your Uber expense of $38 on March 6, 2026, under \"Transit and Fuel.\"",
+      "reasoning": null,
+      "latency_ms": 3156.032332975883,
+      "input_tokens": 788,
+      "output_tokens": 66,
+      "tool_response_size": 71,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_last_friday_movie",
+      "user_query": "Last Friday I spent $18 on a movie ticket.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-06",
+            "amount": 18,
+            "category": "Media & streaming",
+            "description": "Movie ticket"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-06' matches expected '2026-03-06'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your expense of $18 for a movie ticket on March 6, 2026.",
+      "reasoning": null,
+      "latency_ms": 2848.572834045626,
+      "input_tokens": 778,
+      "output_tokens": 61,
+      "tool_response_size": 64,
+      "error": null
+    },
+    {
+      "case_name": "relative_date_day_after_tomorrow_bus_pass",
+      "user_query": "The day after tomorrow I will buy a bus pass for $20.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-11",
+            "amount": 20,
+            "category": "Transit and Fuel",
+            "description": "Bus pass purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-11' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-11' matches expected '2026-03-11'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your bus pass purchase of $20 for March 11, 2026, under Transit and Fuel.",
+      "reasoning": null,
+      "latency_ms": 2191.801042004954,
+      "input_tokens": 786,
+      "output_tokens": 65,
+      "tool_response_size": 69,
+      "error": null
+    },
+    {
+      "case_name": "hard_category_grocery_delivery_yesterday",
+      "user_query": "Yesterday I paid $65 for Instacart grocery delivery.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 65,
+            "category": "Food & drink",
+            "description": "Instacart grocery delivery"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "Your expense of $65 for Instacart grocery delivery on March 8, 2026, has been successfully logged under \"Food & drink.\"",
+      "reasoning": null,
+      "latency_ms": 2492.5579170230776,
+      "input_tokens": 786,
+      "output_tokens": 74,
+      "tool_response_size": 78,
+      "error": null
+    },
+    {
+      "case_name": "hard_category_headphones_last_day_last_month",
+      "user_query": "On the last day of last month I bought headphones for $79.99.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-02-29",
+            "amount": 79.99,
+            "category": "Electronics & tech",
+            "description": "Headphones purchase"
+          }
+        },
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-02-28",
+            "amount": 79.99,
+            "category": "Electronics & tech",
+            "description": "Headphones purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-02-29' is in correct format"
+        },
+        "date_match": {
+          "passed": false,
+          "score": 0.0,
+          "message": "Date '2026-02-29' does not match expected '2026-02-28'"
+        }
+      },
+      "overall_score": 0.6666666666666666,
+      "agent_output": "The expense of $79.99 for the headphones has been successfully logged for February 28, 2026. If you have any more expenses to add, feel free to let me know!",
+      "reasoning": null,
+      "latency_ms": 3810.4626670246944,
+      "input_tokens": 1350,
+      "output_tokens": 167,
+      "tool_response_size": 72,
+      "error": null
+    },
+    {
+      "case_name": "edge_large_amount",
+      "user_query": "Yesterday I bought a car for 35000 USD.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 35000,
+            "category": "Misc",
+            "description": "Car purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "The expense of $35,000 for the car purchase on March 8, 2026, has been successfully logged.",
+      "reasoning": null,
+      "latency_ms": 2025.5448749521747,
+      "input_tokens": 778,
+      "output_tokens": 65,
+      "tool_response_size": 67,
+      "error": null
+    },
+    {
+      "case_name": "edge_small_amount",
+      "user_query": "I paid $0.99 for an app yesterday.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 0.99,
+            "category": "Electronics & tech",
+            "description": "App purchase"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged the expense of $0.99 for the app purchase on March 8, 2026.",
+      "reasoning": null,
+      "latency_ms": 2019.7725410107523,
+      "input_tokens": 781,
+      "output_tokens": 66,
+      "tool_response_size": 64,
+      "error": null
+    },
+    {
+      "case_name": "edge_unknown_category",
+      "user_query": "Yesterday I spent $200 on a spa treatment.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 200,
+            "category": "Health & Fitness",
+            "description": "Spa treatment"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your expense of $200 for a spa treatment on March 8, 2026, under Health & Fitness.",
+      "reasoning": null,
+      "latency_ms": 1920.130499987863,
+      "input_tokens": 776,
+      "output_tokens": 66,
+      "tool_response_size": 66,
+      "error": null
+    },
+    {
+      "case_name": "edge_currency_symbol",
+      "user_query": "I spent \u20ac50 on dinner yesterday.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 50,
+            "category": "Food & drink",
+            "description": "Dinner"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "I've logged your \u20ac50 dinner expense for March 8, 2026. If you have more expenses to add, just let me know!",
+      "reasoning": null,
+      "latency_ms": 2990.9336249693297,
+      "input_tokens": 770,
+      "output_tokens": 69,
+      "tool_response_size": 58,
+      "error": null
+    },
+    {
+      "case_name": "spanish_gadget",
+      "user_query": "Ayer compr\u00e9 una laptop por 1200 d\u00f3lares.",
+      "tool_variant": "add_expense_date_d",
+      "tool_calls": [
+        {
+          "tool_name": "add_expense_date_d",
+          "arguments": {
+            "expense_date": "2026-03-08",
+            "amount": 1200,
+            "category": "Electronics & tech",
+            "description": "Compra de laptop"
+          }
+        }
+      ],
+      "eval_results": {
+        "tool_called": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Tool 'add_expense_date_d' was called"
+        },
+        "date_format": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' is in correct format"
+        },
+        "date_match": {
+          "passed": true,
+          "score": 1.0,
+          "message": "Date '2026-03-08' matches expected '2026-03-08'"
+        }
+      },
+      "overall_score": 1.0,
+      "agent_output": "He registrado la compra de la laptop por 1200 d\u00f3lares el 8 de marzo de 2026.",
+      "reasoning": null,
+      "latency_ms": 1939.287208020687,
+      "input_tokens": 785,
+      "output_tokens": 66,
+      "tool_response_size": 70,
+      "error": null
+    }
+  ]
+}
