@@ -3,6 +3,7 @@ import logging
 import os
 from pathlib import Path
 
+import logfire
 from fastmcp import FastMCP
 
 logging.basicConfig(level=logging.WARNING, format="%(asctime)s - %(message)s")
@@ -14,6 +15,13 @@ EXPENSES_FILE = Path(os.getenv("EXPENSES_FILE", SCRIPT_DIR / "expenses.csv"))
 CSV_FIELDNAMES = ["date", "amount", "category", "description"]
 
 mcp = FastMCP("Expenses Tracker")
+
+# Configure Logfire tracing if LOGFIRE_TOKEN is set
+# Reference: https://logfire.pydantic.dev/docs/integrations/llms/mcp/
+if os.getenv("LOGFIRE_TOKEN"):
+    logger.info("Setting up Logfire instrumentation")
+    logfire.configure(service_name="basic-expenses-mcp")
+    logfire.instrument_mcp()
 
 
 @mcp.tool

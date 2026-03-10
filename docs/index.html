@@ -53,12 +53,14 @@
 			font-family: 'Work Sans', sans-serif;
 		}
 
-		/* Links in neon pink */
+		/* Links in black */
 		.reveal a {
-			color: var(--neon-pink);
+			color: #000;
+			text-decoration: underline;
 		}
 		.reveal a:hover {
-			color: var(--neon-cyan);
+			color: #000;
+			background: var(--neon-pink-light);
 		}
 
 		/* Section heading slides: white background with decorations, centered */
@@ -128,9 +130,10 @@
 			background: rgb(245, 245, 245);
 		}
 
-		/* Slide number in neon pink */
+		/* Slide number in black */
 		.reveal .slide-number {
-			color: var(--neon-pink);
+			color: #000;
+			background: var(--neon-pink-light);
 		}
 
 		/* Body text stays dark */
@@ -144,19 +147,19 @@
         <div class="slides">
 
 <!-- Title slide -->
-<section class="heading-only" style="padding-top:5%">
+<section class="heading-only">
     <h1 style="font-size:2.2em;">Improving MCP tool schemas<br> to increase agent reliability</h1>
     <br>
     <h3>Pamela Fox</h3>
-    <p style="color: var(--neon-pink-light); font-size: 0.8em;"><a target="_blank" href="https://www.pamelafox.org" style="color: var(--neon-pink-light);">pamelafox.org</a></p>
+    <p style="font-size: 0.8em;"><a target="_blank" href="https://www.pamelafox.org">pamelafox.org</a></p>
 </section>
 
 <section>
     <h3>But first... let's have fun with MCP!</h3>
     <p>What if I could use MCP to pick my outfit for today?</p>
-    <img src="closet_mcp.png" alt="An MCP server searching clothes images and rendering in VS Code Copilot" height="500" style="border:1px solid #ccc">
-    <p>What if I <em>DID</em> use MCP to pick my outfit for today...?</p>
-    <aside class="notes">
+    <img src="closet_mcp.png" alt="An MCP server searching clothes images and rendering in VS Code Copilot" height="380" style="border:1px solid #ccc; margin: 0px;">
+	<p><a target="_blank" href="https://github.com/Azure-Samples/image-search-aisearch/">github.com/Azure-Samples/image-search-aisearch</a></p>
+	<aside class="notes">
         Demo it in VS Code. Now that the outfit is sorted.. on to the real talk!
     </aside>
 </section>
@@ -937,12 +940,12 @@ await session.send_and_wait({"prompt": "I bought a sandwich for $12.50."})
 </section>
 
 <!-- SECTION: Output schemas -->
-<section class="heading-only">
+<section class="heading-only hidden">
     <h2>Tools have return schemas too!</h2>
 </section>
 
 <!-- Return a plain string -->
-<section>
+<section class="hidden">
     <h3>Return a plain string</h3>
     <div style="display: flex; gap: 0; align-items: stretch;">
         <div style="flex: 1; display: flex; flex-direction: column;">
@@ -1014,7 +1017,7 @@ def get_expenses_b() -> list[dict]:
 -->
 
 <!-- Return a list of Pydantic models -->
-<section>
+<section class="hidden">
     <h3>Return a list of Pydantic models</h3>
     <div style="display: flex; gap: 0; align-items: stretch;">
         <div style="flex: 1; display: flex; flex-direction: column;">
@@ -1061,7 +1064,7 @@ def get_expenses_c() -> list[Expense]:
     </aside>
 </section>
 
-<section class="heatmap-slide">
+<section class="heatmap-slide hidden">
     <h3>Evals: Which output schema did best?</h3>
     <p style="font-size: 0.7em;">gpt-5.3-codex, 7 cases for each schema, with a Pydantic-AI agent:</p>
     <div style="display: flex; gap: 20px;">
