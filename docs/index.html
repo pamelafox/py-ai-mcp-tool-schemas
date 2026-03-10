@@ -80,7 +80,7 @@
 			border-left: 5px solid var(--neon-pink);
 			background-color: #1a1a1a;
 			color: #fff;
-			font-family: 'Courier New', Courier, monospace;
+			font-family: Menlo, monospace;
 			padding: 16px 20px;
 		}
 
@@ -493,6 +493,31 @@ for variant in ["cat_b", "cat_c", "cat_d", "cat_e"]:
         Cases cover: clear categories, ambiguous relative dates, edge amounts, non-USD currency, and Spanish language.
     </aside>
 </section>
+
+
+<section>
+    <h3>Running + reviewing evals</h3>
+    <ol style="font-size: 0.8em; line-height: 2;">
+        <li><strong>Run batch evaluations</strong> <span style="font-size:0.8em;">→ results.json + RESULTS.md</span>
+            <pre style="font-size: 0.6em; margin: 4px 0 0 0;"><code data-trim class="bash">uv run python evals/runner.py \
+  --model gpt-4.1-mini \
+  --seed 42 --temperature 0 \
+  --output evals/runs/my_run</code></pre>
+        </li>
+        <li><strong>Collaborate with GitHub Copilot on reviewing the results</strong>
+            <blockquote style="font-size: 0.75em; margin: 4px 0 0 0;">
+                Summarize the most recent run
+            </blockquote>
+			<blockquote style="font-size: 0.75em; margin: 4px 0 0 0;">
+                Compare the runs across model X and Y, and summarize any differences you see in the results
+            </blockquote>
+			<blockquote style="font-size: 0.75em; margin: 4px 0 0 0;">
+                Highlight interesting failures
+            </blockquote>
+        </li>
+    </ol>
+</section>
+
 
 <section class="heatmap-slide">
     <h3>Evals: Which category schema did best?</h3>
@@ -940,12 +965,12 @@ await session.send_and_wait({"prompt": "I bought a sandwich for $12.50."})
 </section>
 
 <!-- SECTION: Output schemas -->
-<section class="heading-only hidden">
+<section class="heading-only" data-visibility="hidden">
     <h2>Tools have return schemas too!</h2>
 </section>
 
 <!-- Return a plain string -->
-<section class="hidden">
+<section data-visibility="hidden">
     <h3>Return a plain string</h3>
     <div style="display: flex; gap: 0; align-items: stretch;">
         <div style="flex: 1; display: flex; flex-direction: column;">
@@ -1017,7 +1042,7 @@ def get_expenses_b() -> list[dict]:
 -->
 
 <!-- Return a list of Pydantic models -->
-<section class="hidden">
+<section data-visibility="hidden">
     <h3>Return a list of Pydantic models</h3>
     <div style="display: flex; gap: 0; align-items: stretch;">
         <div style="flex: 1; display: flex; flex-direction: column;">
@@ -1064,7 +1089,7 @@ def get_expenses_c() -> list[Expense]:
     </aside>
 </section>
 
-<section class="heatmap-slide hidden">
+<section class="heatmap-slide" data-visibility="hidden">
     <h3>Evals: Which output schema did best?</h3>
     <p style="font-size: 0.7em;">gpt-5.3-codex, 7 cases for each schema, with a Pydantic-AI agent:</p>
     <div style="display: flex; gap: 20px;">
