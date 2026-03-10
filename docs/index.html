@@ -61,7 +61,7 @@
 			color: var(--neon-cyan);
 		}
 
-		/* Section heading slides: white background with decorations, centered */
+		/* Section heading slides: dark background with neon glow, centered */
 		.reveal section.heading-only {
 			display: flex !important;
 			flex-direction: column;
@@ -70,7 +70,26 @@
 			text-align: center;
 			height: 100%;
 			min-height: 720px;
-			background: #fff;
+			background: #0e0e0e;
+		}
+
+		/* Neon glow headings on dark heading-only slides */
+		.reveal section.heading-only h1,
+		.reveal section.heading-only h2,
+		.reveal section.heading-only h3 {
+			-webkit-text-stroke: 0;
+			text-shadow:
+				0 0 20px var(--neon-pink),
+				0 0 40px rgba(255, 127, 255, 0.5),
+				0 0 80px rgba(255, 127, 255, 0.25);
+		}
+
+		/* Light text on dark heading-only slides */
+		.reveal section.heading-only p {
+			color: #d0d0d0;
+		}
+		.reveal section.heading-only a {
+			color: var(--neon-pink-light);
 		}
 
 		/* Blockquote: neon border, retro feel */
@@ -154,7 +173,7 @@
 <section>
     <h3>But first... let's have fun with MCP!</h3>
     <p>What if I could use MCP to pick my outfit for today?</p>
-    <img src="closet_mcp.png" alt="An MCP server searching clothes images and rendering in VS Code Copilot" height="500" style="border:1px solid #ccc">
+    <img src="closet_mcp.png" alt="An MCP server searching clothes images and rendering in VS Code Copilot" height="400" style="border:1px solid #ccc">
     <p>What if I <em>DID</em> use MCP to pick my outfit for today...?</p>
     <aside class="notes">
         Demo it in VS Code. Now that the outfit is sorted.. on to the real talk!
@@ -1125,6 +1144,7 @@ def get_expenses_c() -> list[Expense]:
         <tr><td>GitHub</td><td><a target="_blank" href="https://www.github.com/pamelafox">www.github.com/pamelafox</a></td></tr>
         <tr><td>Website</td><td><a target="_blank" href="https://www.pamelafox.org">pamelafox.org</a></td></tr>
     </table>
+    <div style="clear:both; padding-top: 40px; font-size: 1.3em; letter-spacing: 18px; color: var(--neon-cyan); opacity: 0.7; text-align: center;">✦ △ ✦ ▽ ✦ △ ✦</div>
 </section>
 
 
@@ -1153,10 +1173,10 @@ def get_expenses_c() -> list[Expense]:
         document.querySelectorAll('.heading-only').forEach(section => {
             const top = document.createElement('div');
             top.textContent = '✦ △ ✦ ▽ ✦ △ ✦';
-            top.style.cssText = 'font-size:1.5em; letter-spacing:25px; color:#FF10F0; opacity:0.35; margin-bottom:20px;';
+            top.style.cssText = 'font-size:1.8em; letter-spacing:20px; color:#FF7FFF; margin-bottom:20px; text-shadow: 0 0 10px #FF7FFF, 0 0 25px #FF10F0;';
             const bot = document.createElement('div');
             bot.textContent = '▽ ✦ △ ✦ ▽ ✦ △';
-            bot.style.cssText = 'font-size:1.5em; letter-spacing:25px; color:#00FFFF; opacity:0.35; margin-top:20px;';
+            bot.style.cssText = 'font-size:1.8em; letter-spacing:20px; color:#00FFFF; margin-top:20px; text-shadow: 0 0 10px #00FFFF, 0 0 25px #00FFFF;';
             section.insertBefore(top, section.firstChild);
             section.appendChild(bot);
         });
