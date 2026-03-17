@@ -1,0 +1,557 @@
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+
+<p>MCP servers contain tools, and each tool is described by its name, description, input parameters, and return type. When an agent is calling a tool, it formulates its call based on <em>only</em> that metadata; it does not know anything about the internals of a tool. For my PyAI talk last week, I investigated this hypothesis:</p>
+
+<pre>If we use stricter types for our MCP tool schemas, then the agents calling those tools will be more successful.</pre>
+
+<p>This was a hypothesis based on my personal experience over the last year of developing with agents and MCP servers, where I'd started with MCP servers with very minimal schemas, witnessed agents failing to call them correctly, and then iterated on the schemas to improve tool-calling success. I thought for sure that my hypothesis would be validated with flying colors. Let's see what I discovered instead...</p>
+
+<h2>A basic MCP tool and schema</h2>
+
+<p>For this experiment, I am building an MCP server that can add expenses to a database. My <code>add_expense</code> tool needs four pieces of information:
+<ul>
+    <li><strong>date</strong>: The date that the expense was incurred
+    <li><strong>amount</strong>: The amount of the expense
+    <li><strong>category</strong>: The category of the expense
+    <li><strong>description</strong>: A free-form description of the expense
+</ul>
+
+<p>This is what a first attempt at the tool might look like, using the Python FastMCP framework, and a Python type annotation for each parameter:</p>
+
+<pre class="language-python"><code>@mcp.tool
+async def add_expense(
+    expense_date: str,
+    amount: float,
+    category: str,
+    description: str,
+):
+    """Add a new expense."""
+    ...
+</code></pre>
+
+<p>When FastMCP generates the schema based off that function signature, it produces this JSON schema:</p>
+
+<pre class="language-json"><code>{
+  "name": "add_expense",
+  "description": "Add a new expense.",
+  "inputSchema": {
+    "properties": {
+      "expense_date": {"type": "string"},
+      "amount": {"type": "number"},
+      "category": {"type": "string"},
+      "description": {"type": "string"}
+    },
+    "required": ["expense_date", "amount",
+      "category", "description"],
+    "type": "object"
+  }
+}</code></pre>
+
+<p>That schema is what agents see - nothing else! The name is the function name, the description is the function docstring, and the <code>inputSchema</code> describes each parameter based off their type annotation, and marks all of them as required, since none of them are marked as optional.</p>
+
+<p>We've done only the bare minimum for that tool schema, assigning types for each parameter. But most of those types are bare strings, so the LLM can decide what they want to pass into each string. As we know, LLMs can be <em>very</em> creative, and can vary wildly in their choices. For example, this is a word cloud of the category values across 83 tool calls:</p>
+
+<img alt="Word cloud of category strings" width="550" border="0" data-original-height="466" data-original-width="1497" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEglTDisRGLGMWUuaefYGeHPJN_EPmYB5_qOD4CZAqbmY51yMCmxoxyvLBEqSOxUEGQFn0mQysuQSMXETTKCfvVldH9hFNUPsf47QlSvpH6TpRRDQmih5eWzuV86gaSPMX5Vvru7yeKhXaIg1qKXLqqv3GEVYYZcvO4VZiwNhVr-ab0rhiLIF6g06TnUIw/s1600/Screenshot%202026-03-16%20at%201.51.52%E2%80%AFPM.png"/>
+
+<p>So now we will explore different ways to enhance the generated schemas, and evaluate whether those better schemas improve agent success.</p>
+
+<h2>Parameter descriptions</h2>
+
+<p>The first step that I always recommend to developers is to annotate each parameter with a <strong>description</strong>. Any LLM that is using the tool will see the description, and will alter their behavior based off the guidance inside. (We are basically doing prompt engineering inside our function signatures!) To add a description with FastMCP, wrap the type annotation in <code>typing.Annotated</code> and pass in a <code>pydantic.Field</code> with a description. This tool definition adds a description to just the category field:</p>
+
+<pre class="language-python"><code>from pydantic import Field
+from typing import Annotated
+
+@mcp.tool
+async def add_expense_cat_b(
+    expense_date: date,
+    amount: float,
+    category: Annotated[
+        str,
+        Field(
+            description="Must be one of: Food & drink, Transit and Fuel, Media & streaming, Apparel and Beauty, "
+            "Electronics & tech, Home and office, ..."
+        ),
+    ],
+    description: str,
+):</code></pre>
+
+
+<p>With that change, the generated JSON schema now includes the description:</p>
+
+<pre class="language-json"><code>"category": {
+    "type": "string",
+    "description": "Must be one of:
+      Food & drink,
+      Transit and Fuel,
+      Media & streaming,
+      Apparel and Beauty,
+      Electronics & tech,
+      Home and office, ..."
+}</code></pre>
+
+
+<p>The description can be quite long - and in fact, my actual description became a lot longer to guide the LLM when faced with ambiguous cases:</p>
+  
+<pre class="language-text"><code>
+Choose the closest category for the expense. Do not ask follow-up questions just to disambiguate the category; pick the best fit using the description and common sense. If truly unclear, use Misc.
+
+Heuristics: Food & drink = meals, groceries, coffee, restaurants, snacks;
+Transit and Fuel = rideshare, taxi, gas, parking, public transit, tolls;
+Media & streaming = movies, concerts, subscriptions, streaming, games, tickets;
+Apparel and Beauty = clothing, shoes, cosmetics, haircuts, personal care;
+Electronics & tech = devices, gadgets, accessories, apps, software;
+Home and office = furniture, supplies, housewares, decor, cleaning;
+Health & Fitness = gym, medical, wellness, supplements, pharmacy;
+Arts and hobbies = crafts, sports equipment, creative supplies, lessons;
+Fees & services = banking, professional services, insurance, subscriptions;
+Misc = anything that does not fit well into other categories.
+</code></pre>
+
+<p>However, the longer the description, the higher the token cost, so you don't get a long description for free!</p>
+
+<p>See how we're asking the LLM to constrain itself to a single option in a pre-determined list of options? In this case, we can enforce that in the schema, using enum types. With FastMCP, we can specify that in two different ways. The first option is to type the parameter as a <code>Literal</code>:</p>
+
+<pre class="language-python"><code>from typing import Literal
+
+@mcp.tool
+async def add_expense_cat_b(
+    expense_date: date,
+    amount: float,
+    category: Literal[
+      "Food & drink", "Transit and Fuel", "Media & streaming", ...
+    ],
+    description: str,
+):
+</code></pre>
+
+<p>The second option is to type the parameter as an <code>Enum</code>:</p>
+
+<pre class="language-python"><code>from enum import Enum
+
+class Category(Enum):
+    FOOD_AND_DRINK = "Food & drink"
+    TRANSIT_AND_FUEL = "Transit and Fuel"
+    ...
+
+@mcp.tool
+async def add_expense_cat_b(
+    expense_date: date,
+    amount: float,
+    category: Category,
+    description: str,
+):
+</code></pre>
+
+<p>Both of those options result in the <em>same</em> generated JSON schema for the category parameter:</p>
+
+<pre class="language-json"><code>"category": {
+    "type": "string",
+    "enum": [
+        "Food & drink",
+        "Transit and Fuel",
+        "Media & streaming", ...
+    ]
+}</code></pre>
+
+<p>Interestingly, FastMCP used to generate a different JSON schema for the <code>Enum</code> case that used "references", but multiple models error'ed when they saw that schema, so FastMCP simplified both cases to output the flat enum array.</p>
+
+<p>We can combine these approaches, wrapping an enum with a description, like so:</p>
+
+<pre class="language-python"><code>category: Annotated[
+    Category,
+    Field(
+        description=(
+            "Choose the closest category. "
+            "If truly unclear, use Misc.\n\n"
+            "Heuristics: "
+            "Food & drink=meals, coffee; "
+            "Transit and Fuel=rideshare, "
+            "gas, parking; ..."
+        )
+    ),
+],</code></pre>
+
+<p>Then the generated schema includes both the possible values and the description with guidance on selecting them:</p>
+
+<pre class="language-json"><code>"category": {
+    "type": "string",
+    "enum": [
+        "Food & drink",
+        "Transit and Fuel",
+        "Media & streaming", ...
+    ],
+    "description": "Choose the closest
+      category. If truly unclear, use
+      Misc. Heuristics: Food & drink=
+      meals, coffee; Transit and Fuel=
+      rideshare, gas, parking; ..."
+}</code></pre>
+
+<p>Now, we come to the big question: how much do these schema changes help agents when they're choosing what to send into the category field? Obviously, we're not going to see all those made-up categories when we had a bare string with no constraints at all, but which of the better schemas has the greatest impact on getting the agent to pass in the right category?</p>
+
+<h2>Evaluating agent success with schemas</h2>
+
+<p>In my expenses MCP server, I defined multiple tools, each with a different version of the schema:</p>
+
+<pre class="language-python"><code>def add_expense_cat_b(category: Annotated[str, Field(description="...")], ...): ...
+
+def add_expense_cat_c(category: Literal["Food & drink", ...], ...): ...
+
+def add_expense_cat_d(category: Category, ...): ...
+
+def add_expense_cat_e(category: Annotated[Category, Field(description="...")], ...): ...</code></pre>
+
+<p>Next, I created an agent using Pydantic AI and pointed it to my local expenses MCP server. Simplified code:</p>
+
+<pre class="language-python"><code>server = MCPServerStreamableHTTP(url="http://localhost:8000/mcp")
+
+model = OpenAIResponsesModel(
+    "gpt-5.3-codex",
+    provider=OpenAIProvider(openai_client=azure_openai_client))
+
+agent = Agent(
+    model,
+    system_prompt=(
+        "You help users log expenses. "
+        f"Today's date is {datetime.now().strftime('%B %-d, %Y')}."
+    ),
+    output_type=str,
+    toolsets=[server],
+)
+
+result = await agent.run("I bought a sandwich for $12.50.")</code></pre>
+
+<p>Now, I needed a way to vary which tool schema the agent saw. Fortunately, Pydantic AI makes it easy to filter tools on MCP servers, using code like this:</p>
+
+<pre class="language-python"><code>toolset = server.filtered(
+    lambda ctx, tool: tool.name == f"add_expense_cat_b")
+agent = Agent(model, toolsets=[toolset], ...)
+result = await agent.run(case.prompt)
+</code></pre>
+
+<p>I came up with 17 different example user inputs for the agent:</p>
+
+<ul>
+  <li>Yesterday I bought a sandwich for $12.50.</li>
+  <li>I bought a sandwich the Monday before this one for $12.50.</li>
+  <li>Two Mondays ago I spent $8.75 on coffee.</li>
+  <li>I bought a sandwich on the first Monday of this month for $12.50.</li>
+  <li>On the last day of last month I spent $25.99 on a movie ticket.</li>
+  <li>I paid $60 for gas on the last business day of last month.</li>
+  <li>The day before yesterday I spent $4.50 on coffee.</li>
+  <li>Three days ago I took an Uber to the airport for $38.</li>
+  <li>Last Friday I spent $18 on a movie ticket.</li>
+  <li>The day after tomorrow I will buy a bus pass for $20.</li>
+  <li>Yesterday I paid $65 for Instacart grocery delivery.</li>
+  <li>On the last day of last month I bought headphones for $79.99.</li>
+  <li>Yesterday I bought a car for 35000 USD.</li>
+  <li>I paid $0.99 for an app yesterday.</li>
+  <li>Yesterday I spent $200 on a spa treatment.</li>
+  <li>I spent €50 on dinner yesterday.</li>
+  <li>Ayer compré una laptop por 1200 dólares.</li>
+</ul>
+
+<p>For each input, I stored the desired values for each of the tool parameters, like so:</p>
+
+<pre class="language-python"><code>EXPENSE_CASES = [
+    ExpenseCase(
+        name="clear_food_yesterday",
+        prompt="Yesterday I bought a sandwich for $12.50.",
+        expected_category="Food & drink",
+        expected_date=get_yesterday(),
+        expected_amount=12.50,
+    ),
+    ...  # 17 cases ➡️
+]</code></pre>
+
+<p>I ran the agent on each input for each tool schema variant, a total of 17x4 cases, 85 runs total:</p>
+  
+<pre class="language-python"><code>for variant in ["cat_b", "cat_c", "cat_d", "cat_e"]:
+    toolset = server.filtered(
+        tool_filter=lambda t: t.name == f"add_expense_{variant}")
+    agent = Agent(model, toolsets=[toolset], ...)
+    for case in EXPENSE_CASES:
+        result = await agent.run(case.prompt)
+        evals = run_all_evaluations(
+            result.tool_calls, case)</code></pre>
+
+<p>Each time the agent ran, I inspected the tool calls to verify whether it had issued a tool call at all, and whether the tool call arguments matched my desired arguments. I recorded the results in both a JSON file and more human-readable Markdown file.</p>
+
+<h2>Evaluation results for category schema</h2>
+
+<p>For the four category variants, these are the results across the 17 cases:</p>
+
+<table style="font-size: 0.6em;">
+        <thead>
+            <tr><th></th><th><code>Annotated[str]</code></th><th><code>Literal</code></th><th><code>Enum</code></th><th><code>Annotated[Enum]</code></th></tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>Was tool called?</strong></td><td data-value="15" style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">15/17</td><td data-value="16" style="background-color: rgb(244, 244, 190); color: rgb(34, 34, 34);">16/17</td><td data-value="16" style="background-color: rgb(244, 244, 190); color: rgb(34, 34, 34);">16/17</td><td style="font-weight: bold; background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);" data-value="17">17/17</td></tr>
+            <tr><td><strong>When called, did category match expected?</strong></td><td data-value="14" style="background-color: rgb(244, 244, 190); color: rgb(34, 34, 34);">14/15</td><td data-value="13" style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">13/16</td><td data-value="13" style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">13/16</td><td style="font-weight: bold; background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);" data-value="15">15/17</td></tr>
+            <tr><td><strong>Schema size (avg tokens)</strong></td><td style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">374</td><td style="background-color: rgb(199, 244, 190); color: rgb(34, 34, 34);">412</td><td style="background-color: rgb(202, 244, 190); color: rgb(34, 34, 34);">424</td><td style="font-weight: bold; background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">836</td></tr>
+        </tbody>
+    </table>
+  
+<p>There's no clear winner amongst the first three schemas. For the first schema, where we just provided a description, the agent was more likely to decided not to call the tool at all, and instead respond with a clarifying question, like "could you please provide a category?". That may be desirable for some scenarios, to encourage agents to ask users in the face of ambiguity, but if we believe that we've provided enough information in the schema for the agent to make a clear choice, then our schema has failed. For the middle two schemas, where we provided just the enum options with no description, the agent was more likely to call the tool, but it selected the wrong category more often. That makes sense, since the schema lacked the description with the additional guidance.</p>
+
+<p>The final schema is the clear winner, as the agent called the tool all the time, and matched the desired category the most often. There is a drawback of course, and that's why I included the schema size in the table: the combination of description and enum list increased the size of the schema to be double any of the other variants. That extra cost is likely worth it, but we always need to consider any improvements that increase quality at the expense of tokens.</p>
+
+<p>You might be thinking, "hey, clearly stricter schemas are always better!" Alas, the story gets murkier.</p>
+
+<h2>Date schema variants</h2>
+
+<p>Remember that our <code>add_expense</code> tool also has the <code>expense_date</code> parameter, specified as a string in our basic schema. I wanted to make sure that those dates always came in a format that I could easily store in my database as YYYY-MM-DD, so I came up with three stricter schemas.</p>
+
+<p>I started off by adding a description specifying the format:</p>
+
+<pre class="language-python"><code>expense_date: Annotated[
+    str, "Date in YYYY-MM-DD format"
+]</code></pre>
+
+<p>As a reminder, that generates this JSON schema:</p>
+
+<pre class="language-json"><code>"expense_date": {
+    "description": "Date in YYYY-MM-DD format",
+    "type": "string"
+}</code></pre>
+
+<p>Then I discovered that FastMCP supports <code>date</code> as a type for tool parameters, so I added that variant:</p>
+
+<pre class="language-python"><code>expense_date: date</code></pre>
+
+<p>That results in this JSON schema:</p>
+
+<pre class="language-json"><code>"expense_date": {
+    "format": "date",
+    "type": "string"
+}</code></pre>
+
+<p>I thought it'd be fun to also try using a regular expression, since FastMCP supports that too:</p>
+
+<pre class="language-python"><code>expense_date: Annotated[
+    str,
+    Field(pattern=r"^\d{4}-\d{2}-\d{2}$"),
+],</code></pre>
+
+<p>That schema adds a "pattern" field to the generated JSON schema:</p>
+
+<pre class="language-json"><code>"expense_date": {
+    "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+    "type": "string"
+}</code></pre>
+
+<p>Here are the evaluation results running the Pydantic AI agent with gpt-4.1-mini across the 17 cases and 4 schema variants, including the bare string:</p>
+
+<table style="font-size: 0.6em; table-layout: fixed; width: 100%;">
+    <colgroup>
+        <col style="width: 30%">
+    </colgroup>
+    <thead>
+        <tr><th></th><th><code>str</code></th><th><code>Annotated[str]</code></th><th><code>date</code></th><th><code>Field(pattern)</code></th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>Was tool called?</strong></td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td></tr>
+        <tr><td><strong>Date match (of called)</strong></td><td data-value="12" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">12/17</td><td data-value="12" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">12/17</td><td data-value="12" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">12/17</td><td data-value="12" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">12/17</td></tr>
+        <tr><td><strong>Schema size (avg tokens)</strong></td><td style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">326</td><td style="background-color: rgb(244, 209, 190); color: rgb(34, 34, 34);">406</td><td style="background-color: rgb(244, 200, 190); color: rgb(34, 34, 34);">414</td><td style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">423</td></tr>
+    </tbody>
+</table>
+
+<p>Do you see what I see? Every single variant had the same success rates! The agent called the tool 100% of the time, and it matched the expected date the same fraction of the time. I expected to see lower success for that first schema, but even without any description at all, the agent always used YYYY-MM-DD format to specify the date. It appears that since I named the field with "_date" and YYYY-MM-DD is the standard ISO format for dates, that's what the model suggests. I suspect that if I had tried the evaluation with a SLM or the oldest tool-calling model possible, I may have seen worse results. With our frontier models however, they do not need any additional prompting to produce a date in standard ISO formats.</p>
+
+<p>Of course, you likely still want to use one of these schemas to guide the agents, to be on the safe side, and they fortunately do not increase the token size significantly. Personally, I like the <code>date</code> option, since that plays nicely with the rest of the Python server code.</p>
+
+<p>You might be wondering about all the cases where the agent failed to suggest the right date. All of those failures were due to date math. For example, when the user says "Two Mondays ago I spent $8.75 on coffee.", the agent calculated the date as one Monday ago instead of two Mondays ago. If users were truly entering their data like this, then it might be a good idea to equip the server with some date calculation tools, or give the agent some guidance on when it should ask users to clarify the date.</p>
+
+<h2>Cross-model evaluations</h2>
+
+<p>After seeing the results for an agent powered by gpt-4.1-mini, I was super curious to see what would happen with both an older model and a newer model, so I deployed a gpt-4o and a gpt-5.3-codex and ran them through the same evaluations.</p>
+
+<p>For the category schema variants, the results are very interesting:</p>
+<p><strong>Did agent call the tool?</strong></p>
+<table>
+  <thead><tr><th>Schema</th><th>gpt-4o</th><th>4.1-mini</th><th>5.3-codex (med)</th></tr></thead>
+  <tbody>
+    <tr><td><code>Annotated[str]</code></td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td><td data-value="15" style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">15/17</td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td></tr>
+    <tr><td><code>Literal</code></td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td><td data-value="16" style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">16/17</td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td></tr>
+    <tr><td><code>Enum</code></td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td><td data-value="16" style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">16/17</td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td></tr>
+    <tr><td><code>Annotated[Enum]</code></td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td></tr>
+  </tbody>
+</table>
+<p><strong>When called, did category match expected?</strong></p>
+<table>
+  <thead><tr><th>Schema</th><th>gpt-4o</th><th>4.1-mini</th><th>5.3-codex (med)</th></tr></thead>
+  <tbody>
+    <tr><td><code>Annotated[str]</code></td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td><td data-value="14" style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">14/15</td><td data-value="15" style="background-color: rgb(244, 226, 190); color: rgb(34, 34, 34);">15/17</td></tr>
+    <tr><td><code>Literal</code></td><td data-value="15" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">15/17</td><td data-value="13" style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">13/16</td><td data-value="13" style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">13/17</td></tr>
+    <tr><td><code>Enum</code></td><td data-value="14" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">14/17</td><td data-value="13" style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">13/16</td><td data-value="13" style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">13/17</td></tr>
+    <tr><td><code>Annotated[Enum]</code></td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td><td data-value="15" style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">15/17</td><td data-value="15" style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">15/17</td></tr>
+  </tbody>
+</table>
+
+<p>As you can see, the gpt-4o model appears to be the winner: it always calls the tool, and it matches the category correctly 100% of the time, as long as it is provided a description. The gpt-5.3-codex model also always calls the tool, but it often chooses a different category than our desired category. So, at least for this particular scenario, the gpt-4o model aligns closer to our human decision-making process than the gpt-5.3-codex model.</p>
+
+<p>But what if the newer model is just smarter than we are? Consider this example input and category choices:</p>
+
+<p style="font-size: 0.7em; margin-bottom: 2px;"><em>"Yesterday I spent $200 on a spa treatment."</em> with <code>Annotated[Enum]</code></p>
+<div style="font-size: 0.6em; margin-top: 0; display: flex; flex-direction: column; gap: 6px;">
+  <div style="display: flex; gap: 10px; align-items: stretch;">
+    <div style="background: #e8f5e9; border-radius: 14px; padding: 4px 10px; border: 2px solid #81c784; flex: 1;">
+      <strong>gpt-4o</strong><br>🤖 <span style="color:green; font-weight:bold;">Health &amp; Fitness</span> ✅
+    </div>
+    <div style="background: #ffebee; border-radius: 14px; padding: 4px 10px; border: 2px solid #e57373; flex: 1;">
+      <strong>gpt-4.1-mini</strong><br>🤖 <span style="color:red; font-weight:bold;">Apparel and Beauty</span> ❌
+    </div>
+    <div style="background: #ffebee; border-radius: 14px; padding: 4px 10px; border: 2px solid #e57373; flex: 1;">
+      <strong>gpt-5.3-codex</strong><br>🤖 <span style="color:red; font-weight:bold;">Apparel and Beauty</span> ❌
+    </div>
+  </div>
+</div>
+
+<p>We marked "spa treatment" as "Health & Fitness" in our data, but newer models both preferred "Apparel and Beauty". Both of them seem like reasonable options, so the model disagreement is pointing out the ambiguity in the categories of our ground truth data. If we really wanted "spa treatment" to be "Health & Fitness", then we may need to give that example in our category description. Or, we might decide to change our ground truth data entirely to agree with the newer model's category selection. That's one thing that I love about running evaluations: they force you to think more deeply about your expectations of LLMs in the face of diverse user inputs.</p>
+
+<p>For the date schema variants, we see a very different story:</p>
+
+<p><strong>Did agent call the tool?</strong></p>
+<table>
+  <thead><tr><th>Schema</th><th>gpt-4o</th><th>4.1-mini</th><th>5.3-codex (med)</th></tr></thead>
+  <tbody>
+    <tr><td><code>str</code></td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td></tr>
+    <tr><td><code>Annotated[str]</code></td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td></tr>
+    <tr><td><code>date</code></td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td></tr>
+    <tr><td><code>Field(pattern)</code></td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td></tr>
+  </tbody>
+</table>
+<p><strong>When called, did date match expected?</strong></p>
+<table>
+  <thead><tr><th>Schema</th><th>gpt-4o</th><th>4.1-mini</th><th>5.3-codex (med)</th></tr></thead>
+  <tbody>
+    <tr><td><code>str</code></td><td data-value="15" style="background-color: rgb(233, 244, 190); color: rgb(34, 34, 34);">15/17</td><td data-value="12" style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">12/17</td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td></tr>
+    <tr><td><code>Annotated[str]</code></td><td data-value="15" style="background-color: rgb(233, 244, 190); color: rgb(34, 34, 34);">15/17</td><td data-value="12" style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">12/17</td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td></tr>
+    <tr><td><code>date</code></td><td data-value="15" style="background-color: rgb(233, 244, 190); color: rgb(34, 34, 34);">15/17</td><td data-value="12" style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">12/17</td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td></tr>
+    <tr><td><code>Field(pattern)</code></td><td data-value="15" style="background-color: rgb(233, 244, 190); color: rgb(34, 34, 34);">15/17</td><td data-value="12" style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">12/17</td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td></tr>
+  </tbody>
+</table>
+
+<p>The gpt-5.3-codex model is the clear winner here, as it calls the tool <em>and</em> selects the right tool 100% of the time. Remember how gpt-4.1-mini couldn't do the date match? Apparently this newer model can! It correctly calculated "two Mondays ago" and when told "the last day of the month", it even realized that there is no February 29th in 2026. The gpt-4.1-mini model has the worst results here, and that may be due to it being a "-mini" model.</p>
+
+<p>But now we're scratching our heads, because gpt-5.3-codex was not the winner across the board, despite being the much newer model. Let's dig deeper.</p>
+      
+<h2>Impact of reasoning effort</h2>
+      
+<p>The gpt-5.3-codex model is a reasoning model - and reasoning models can have <em>very</em> different outputs based off their reasoning effort level. I ran that evaluation on "medium", the default level, but for that model, the effort can be either "low", "medium", "high", or "xhigh". Here are the results:</p>
+
+<table style="font-size: 0.6em; table-layout: fixed; width: 100%;">
+  <colgroup>
+    <col style="width: 35%">
+    <col style="width: 16.25%">
+    <col style="width: 16.25%">
+    <col style="width: 16.25%">
+    <col style="width: 16.25%">
+  </colgroup>
+  <thead>
+    <tr><th></th><th>low</th><th>medium</th><th>high</th><th>xhigh</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Did category match ground truth?</strong></td><td style="font-weight: bold; background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">100%</td><td style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">88.2%</td><td style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">88.2%</td><td style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">88.2%</td></tr>
+    <tr><td><strong>Did date match ground truth?</strong></td><td style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">94.1%</td><td style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">94.1%</td><td style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">94.1%</td><td style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">94.1%</td></tr>
+    <tr><td><strong>Schema size (average tokens)</strong></td><td style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">862</td><td style="background-color: rgb(202, 244, 190); color: rgb(34, 34, 34);">890</td><td style="background-color: rgb(223, 244, 190); color: rgb(34, 34, 34);">939</td><td style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">1114</td></tr>
+    <tr><td><strong>Latency (average ms)</strong></td><td style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">7,129</td><td style="background-color: rgb(198, 244, 190); color: rgb(34, 34, 34);">7,474</td><td style="background-color: rgb(231, 244, 190); color: rgb(34, 34, 34);">8,828</td><td style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">11,554</td></tr>
+  </tbody>
+</table>
+
+<p>For the category schema variants, we see that the category match percentage drops from 100% to 88% as soon as we go from "low" to "medium" and stays there, while the schema size increases by 250 tokens and the latency increases by 5 seconds.</p>
+
+<p>Since this is a reasoning model, we can actually dig into the reasoning traces, to give us more insight into how we might steer the model more towards our desired category.</p>
+
+<p>Here's how it reasons on "low" mode:</p>
+<p style="background-color:#ccc">
+I’m considering categories like Health &amp; Fitness or Apparel/Beauty since it’s for a spa treatment. There’s ambiguity because spa treatments could fit into personal care or wellness, but I might lean towards Apparel and Beauty. However, Health &amp; Fitness could work too, especially under wellness. I’ll go with one of those!
+</p>
+
+<p>As you can see, it's not even sure which category to select at this level of reasoning - we only see its final selection in the tool call itself. Compare that to "medium" mode:</p>
+
+<p style="background-color:#ccc">The category for this expense is a spa treatment. I’m considering whether it should go under Apparel and Beauty or Health &amp; Fitness. Using some heuristics, personal care fits in Apparel and Beauty, while wellness aligns with Health &amp; Fitness. Since a spa treatment feels more like a beauty or personal care choice, I think I'll choose Apparel and Beauty.</p>
+
+<p>This time, it explicitly decided on the category in its reasoning, and called the tool with the selection. Once again, you might agree with the model's choice here, and change the ground truth itself.</p>
+
+<p>When we are developing MCP servers, we're not necessarily in control of the models powering the agents that call those MCP servers. Ideally, we're designing tool schemas that are clear and constrained enough so that all the most popular models at all reasoning effort levels will call our tools the way we expect.</p>
+
+
+<h2>A comparison of agent frameworks</h2>
+
+<p>We live in a world with hundreds of agent frameworks and coding agent tools. All of them share a common approach: calling tools in a loop until the user's goal is reached. Behind the scenes, agent implementation varies. Some agents attach their own system prompts to your prompt; some agents add in memory and caching; some agents have special built-in reflection and retry loops. So when it comes to calling MCP servers, how much variance might we expect to see?</p>
+
+<p>For my final evaluation, I wrote an agent using the GitHub Copilot SDK, and gave it the same system prompt and MCP server connection as the Pydantic AI agent. The simplified code:</p>
+
+<pre class="language-python"><code>client = CopilotClient()
+
+session = await client.create_session(SessionConfig(
+    model="gpt-5.3-codex",
+    mcp_servers={
+        "expenses": MCPRemoteServerConfig(
+            type="http",
+            url="http://localhost:8000/mcp",
+            tools=["add_expense_cat_e"],
+        )
+    },
+    system_message={
+        "mode": "replace",
+        "content": "You help users log expenses. "
+            f"Today's date is {datetime.now().strftime('%B %-d, %Y')}.",
+    },
+))
+
+await session.send_and_wait({"prompt": "I bought a sandwich for $12.50."})</code></pre>
+
+<p>For the evaluation, I used the gpt-5.3-codex model on medium effort across the 4 category schemas, 4 date schemas, and 17 variants. The results:</p>
+
+<p><strong>Was tool called at all?</strong></p>
+<table data-min="10" data-max="17">
+  <thead><tr><th>Schema</th><th>Pydantic AI</th><th>Copilot SDK</th></tr></thead>
+  <tbody>
+    <tr><td><code>Annotated[str]</code></td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td></tr>
+    <tr><td><code>Literal</code></td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td></tr>
+    <tr><td><code>Enum</code></td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td></tr>
+    <tr><td><code>Annotated[Enum]</code></td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td></tr>
+  </tbody>
+</table>
+
+  <p><strong>Did category match expected?</strong></p>
+  <table data-min="10" data-max="17">
+    <thead><tr><th>Schema</th><th>Pydantic AI</th><th>Copilot SDK</th></tr></thead>
+    <tbody>
+      <tr><td><code>Annotated[str]</code></td><td data-value="15" style="background-color: rgb(221, 244, 190); color: rgb(34, 34, 34);">15/17</td><td data-value="15" style="background-color: rgb(221, 244, 190); color: rgb(34, 34, 34);">15/17</td></tr>
+      <tr><td><code>Literal</code></td><td data-value="13" style="background-color: rgb(244, 236, 190); color: rgb(34, 34, 34);">13/17</td><td data-value="13" style="background-color: rgb(244, 236, 190); color: rgb(34, 34, 34);">13/17</td></tr>
+      <tr><td><code>Enum</code></td><td data-value="13" style="background-color: rgb(244, 236, 190); color: rgb(34, 34, 34);">13/17</td><td data-value="13" style="background-color: rgb(244, 236, 190); color: rgb(34, 34, 34);">13/17</td></tr>
+      <tr><td><code>Annotated[Enum]</code></td><td data-value="15" style="background-color: rgb(221, 244, 190); color: rgb(34, 34, 34);">15/17</td><td data-value="15" style="background-color: rgb(221, 244, 190); color: rgb(34, 34, 34);">15/17</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Did date match expected?</strong></p>
+  <table data-min="10" data-max="17">
+    <thead><tr><th>Schema</th><th>Pydantic AI</th><th>Copilot SDK</th></tr></thead>
+    <tbody>
+      <tr><td><code>str</code></td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td></tr>
+      <tr><td><code>Annotated[str]</code></td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td></tr>
+      <tr><td><code>date</code></td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td></tr>
+      <tr><td><code>Field(pattern)</code></td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td><td data-value="17" style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">17/17</td></tr>
+    </tbody>
+  </table>
+
+<p>The success rates are exactly the same across both agents! Now, I will confess that in my first attempt at evaluation, the Copilot SDK agent had an off-by-one error for each date it selected, and I suspect that there may be a UTC date somewhere in the default system prompt. When I re-ran the evaluation at a date where UTC and my timezone (PT) were the same, the dates were all correct. You learn all sorts of things when running evaluations.</p>
+
+<h2>Takeaways</h2>
+
+<p>I went into this investigation certain that I would see significant improvement from agents when I used stricter types and constraints for the parameter types. I realize now that the models have improved so much and  been so robustly trained for tool calling, that they often do not need the specificity of the stricter types. They mostly need clarity whenever there is ambiguity, and that can come in the way of a string description.</p>
+
+<p>However, there are still other benefits to using stricter schemas, like increased type safety and validation in our MCP server codebase. Personally, I would rather use <code>date</code> for the date input and <code>Enum</code> for the category input, as those lead to cleaner code inside the tool code.</p>
+
+<p>LLMs, and the agents powered by them, are both non-deterministic and not that predictable. The only way to really see how an agent will respond to your MCP server tool schemas is to set up evaluations for the scenarios that you care about. If you're new to evaluations, check out the fantastic resources from ML engineer <a target="_blank" href="https://hamel.dev/">Hamel Husain</a>.</p>
+
+<p>I learned a lot during this investigation, and hope my approach is useful to you as well. Please share any of your own experience with MCP tool schemas and evaluations with me. Thank you!</p>
+
+
+
+
