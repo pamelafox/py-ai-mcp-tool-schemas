@@ -30,6 +30,7 @@ async def add_expense(
     """Add a new expense."""
     ...
 </code></pre>
+<p style="font-size: 0.85em;">See full code in <a target="_blank" href="https://github.com/pamelafox/py-ai-mcp-tool-schemas/blob/main/servers/expenses_mcp.py">expenses_mcp.py</a>.</p>
 
 <p>When FastMCP generates the schema based off that function signature, it produces this <a target="_blank" href="https://json-schema.org/">JSON schema</a>:</p>
 
@@ -77,6 +78,7 @@ async def add_expense_cat_b(
     ],
     description: str,
 ):</code></pre>
+<p style="font-size: 0.85em;">See full code in <a target="_blank" href="https://github.com/pamelafox/py-ai-mcp-tool-schemas/blob/main/servers/expenses_mcp.py">expenses_mcp.py</a>.</p>
 
 
 <p>With that change, the generated JSON schema now includes the description:</p>
@@ -126,6 +128,7 @@ async def add_expense_cat_b(
     description: str,
 ):
 </code></pre>
+<p style="font-size: 0.85em;">See full code in <a target="_blank" href="https://github.com/pamelafox/py-ai-mcp-tool-schemas/blob/main/servers/expenses_mcp.py">expenses_mcp.py</a>.</p>
 
 <p>The second option is to type the parameter as an <code>Enum</code>:</p>
 
@@ -144,6 +147,7 @@ async def add_expense_cat_b(
     description: str,
 ):
 </code></pre>
+<p style="font-size: 0.85em;">See full code in <a target="_blank" href="https://github.com/pamelafox/py-ai-mcp-tool-schemas/blob/main/servers/expenses_mcp.py">expenses_mcp.py</a>.</p>
 
 <p>Both of those options result in the <em>same</em> generated JSON schema for the category parameter:</p>
 
@@ -173,6 +177,7 @@ async def add_expense_cat_b(
         )
     ),
 ],</code></pre>
+<p style="font-size: 0.85em;">See full code in <a target="_blank" href="https://github.com/pamelafox/py-ai-mcp-tool-schemas/blob/main/servers/expenses_mcp.py">expenses_mcp.py</a>.</p>
 
 <p>Then the generated schema includes both the possible values and the description with guidance on selecting them:</p>
 
@@ -203,6 +208,7 @@ def add_expense_cat_c(category: Literal["Food & drink", ...], ...): ...
 def add_expense_cat_d(category: Category, ...): ...
 
 def add_expense_cat_e(category: Annotated[Category, Field(description="...")], ...): ...</code></pre>
+<p style="font-size: 0.85em;">See full code in <a target="_blank" href="https://github.com/pamelafox/py-ai-mcp-tool-schemas/blob/main/servers/expenses_mcp.py">expenses_mcp.py</a>.</p>
 
 <p>Next, I created an agent using <a target="_blank" href="https://ai.pydantic.dev/">Pydantic AI</a> and pointed it to my local expenses MCP server. Simplified code:</p>
 
@@ -223,6 +229,7 @@ agent = Agent(
 )
 
 result = await agent.run("I bought a sandwich for $12.50.")</code></pre>
+<p style="font-size: 0.85em;">See full code in <a target="_blank" href="https://github.com/pamelafox/py-ai-mcp-tool-schemas/blob/main/agents/pydanticai_agent.py">pydanticai_agent.py</a>.</p>
 
 <p>Now, I needed a way to vary which tool schema the agent saw. Fortunately, Pydantic AI makes it easy to filter tools on MCP servers, using code like this:</p>
 
@@ -231,6 +238,7 @@ result = await agent.run("I bought a sandwich for $12.50.")</code></pre>
 agent = Agent(model, toolsets=[toolset], ...)
 result = await agent.run(case.prompt)
 </code></pre>
+<p style="font-size: 0.85em;">See full code in <a target="_blank" href="https://github.com/pamelafox/py-ai-mcp-tool-schemas/blob/main/evals/runner.py">runner.py</a>.</p>
 
 <p>I came up with 17 different example user inputs for the agent:</p>
 
@@ -266,6 +274,7 @@ result = await agent.run(case.prompt)
     ),
     ...  # 17 cases ➡️
 ]</code></pre>
+<p style="font-size: 0.85em;">See full code in <a target="_blank" href="https://github.com/pamelafox/py-ai-mcp-tool-schemas/blob/main/evals/dataset.py">dataset.py</a>.</p>
 
 <p>I ran the agent on each input for each tool schema variant, a total of 17x4 cases, 68 runs total:</p>
   
@@ -277,6 +286,7 @@ result = await agent.run(case.prompt)
         result = await agent.run(case.prompt)
         evals = run_all_evaluations(
             result.tool_calls, case)</code></pre>
+<p style="font-size: 0.85em;">See full code in <a target="_blank" href="https://github.com/pamelafox/py-ai-mcp-tool-schemas/blob/main/evals/runner.py">runner.py</a>.</p>
 
 <p>Each time the agent ran, I inspected the tool calls to verify whether it had issued a tool call at all, and whether the tool call arguments matched my desired arguments. I recorded the results in both a JSON file and more human-readable Markdown file.</p>
 
@@ -310,6 +320,7 @@ result = await agent.run(case.prompt)
 <pre class="language-python"><code>expense_date: Annotated[
     str, "Date in YYYY-MM-DD format"
 ]</code></pre>
+<p style="font-size: 0.85em;">See full code in <a target="_blank" href="https://github.com/pamelafox/py-ai-mcp-tool-schemas/blob/main/servers/expenses_mcp.py">expenses_mcp.py</a>.</p>
 
 <p>As a reminder, that generates this JSON schema:</p>
 
@@ -321,6 +332,7 @@ result = await agent.run(case.prompt)
 <p>Then I discovered that FastMCP supports <code>date</code> as a type for tool parameters, so I added that variant:</p>
 
 <pre class="language-python"><code>expense_date: date</code></pre>
+<p style="font-size: 0.85em;">See full code in <a target="_blank" href="https://github.com/pamelafox/py-ai-mcp-tool-schemas/blob/main/servers/expenses_mcp.py">expenses_mcp.py</a>.</p>
 
 <p>That results in this JSON schema:</p>
 
@@ -335,6 +347,7 @@ result = await agent.run(case.prompt)
     str,
     Field(pattern=r"^\d{4}-\d{2}-\d{2}$"),
 ],</code></pre>
+<p style="font-size: 0.85em;">See full code in <a target="_blank" href="https://github.com/pamelafox/py-ai-mcp-tool-schemas/blob/main/servers/expenses_mcp.py">expenses_mcp.py</a>.</p>
 
 <p>That schema adds a "pattern" field to the generated JSON schema:</p>
 
@@ -505,6 +518,7 @@ session = await client.create_session(SessionConfig(
 ))
 
 await session.send_and_wait({"prompt": "I bought a sandwich for $12.50."})</code></pre>
+<p style="font-size: 0.85em;">See full code in <a target="_blank" href="https://github.com/pamelafox/py-ai-mcp-tool-schemas/blob/main/agents/copilotsdk_agent.py">copilotsdk_agent.py</a>.</p>
 
 <p>For the evaluation, I used the gpt-5.3-codex model on medium effort across the 4 category schemas, 4 date schemas, and 17 variants. The results:</p>
 
@@ -550,6 +564,6 @@ await session.send_and_wait({"prompt": "I bought a sandwich for $12.50."})</code
 
 <p>LLMs, and the agents powered by them, are both non-deterministic and not that predictable. The only way to really see how an agent will respond to your MCP server tool schemas is to set up evaluations for the scenarios that you care about. If you're new to evaluations, check out the fantastic resources from ML engineer <a target="_blank" href="https://hamel.dev/">Hamel Husain</a>.</p>
 
-<p>I learned a lot during this investigation, and hope my approach is useful to you as well. Please share any of your own experience with MCP tool schemas and evaluations with me. Thank you!</p>
+<p>I learned a lot during this investigation, and hope my approach is useful to you as well. All of the code — the MCP server, schema variants, agents, and evaluation framework — is available in <a target="_blank" href="https://github.com/pamelafox/py-ai-mcp-tool-schemas">my GitHub repository</a>, so feel free to explore, adapt, and run your own experiments. Please share any of your own experience with MCP tool schemas and evaluations with me. Thank you!</p>
 
 <script>hljs.highlightAll();</script>
