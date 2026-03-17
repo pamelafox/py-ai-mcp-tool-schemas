@@ -10,7 +10,7 @@
 
 <h2>A basic MCP tool and schema</h2>
 
-<p>For this experiment, I am building an MCP server that can add expenses to a database. My <code>add_expense</code> tool needs four pieces of information:
+<p>For this experiment, I built an MCP server that can add expenses to a database. My <code>add_expense</code> tool needs four pieces of information:
 <ul>
     <li><strong>date</strong>: The date that the expense was incurred
     <li><strong>amount</strong>: The amount of the expense
@@ -56,7 +56,7 @@ async def add_expense(
 
 <img alt="Word cloud of category strings" width="550" border="0" data-original-height="466" data-original-width="1497" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEglTDisRGLGMWUuaefYGeHPJN_EPmYB5_qOD4CZAqbmY51yMCmxoxyvLBEqSOxUEGQFn0mQysuQSMXETTKCfvVldH9hFNUPsf47QlSvpH6TpRRDQmih5eWzuV86gaSPMX5Vvru7yeKhXaIg1qKXLqqv3GEVYYZcvO4VZiwNhVr-ab0rhiLIF6g06TnUIw/s1600/Screenshot%202026-03-16%20at%201.51.52%E2%80%AFPM.png"/>
 
-<p>So now we will explore different ways to enhance the generated schemas, and evaluate whether those better schemas improve agent success.</p>
+<p>Now let's explore different ways to enhance the generated schemas, and evaluate whether those better schemas improve agent success.</p>
 
 <h2>Annotating parameters with descriptions</h2>
 
@@ -307,7 +307,7 @@ result = await agent.run(case.prompt)
         </tbody>
     </table>
   
-<p>There's no clear winner amongst the first three schemas. For the first schema, where we just provided a description, the agent was more likely to decided not to call the tool at all, and instead respond with a clarifying question, like "could you please provide a category?". That may be desirable for some scenarios, to encourage agents to ask users in the face of ambiguity, but if we believe that we've provided enough information in the schema for the agent to make a clear choice, then our schema has failed. For the middle two schemas, where we provided just the enum options with no description, the agent was more likely to call the tool, but it selected the wrong category more often. That makes sense, since the schema lacked the description with the additional guidance.</p>
+<p>There's no clear winner amongst the first three schemas. For the first schema, where we just provided a description, the agent was more likely to decide not to call the tool at all, and instead respond with a clarifying question, like "could you please provide a category?". That may be desirable for some scenarios, to encourage agents to ask users in the face of ambiguity, but if we believe that we've provided enough information in the schema for the agent to make a clear choice, then our schema has failed. For the middle two schemas, where we provided just the enum options with no description, the agent was more likely to call the tool, but it selected the wrong category more often. That makes sense, since the schema lacked the description with the additional guidance.</p>
 
 <p>The final schema is the clear winner, as the agent called the tool all the time, and matched the desired category the most often. There is a drawback of course, and that's why I included the schema size in the table: the combination of description and enum list increased the size of the schema to be double any of the other variants. That extra cost is likely worth it, but we always need to consider any improvements that increase quality at the expense of tokens.</p>
 
