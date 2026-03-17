@@ -58,7 +58,7 @@ async def add_expense(
 
 <p>So now we will explore different ways to enhance the generated schemas, and evaluate whether those better schemas improve agent success.</p>
 
-<h2>Parameter descriptions</h2>
+<h2>Annotating parameters with descriptions</h2>
 
 <p>The first step that I always recommend to developers is to annotate each parameter with a <strong>description</strong>. Any LLM that is using the tool will see the description, and will alter their behavior based off the guidance inside. (We are basically doing prompt engineering inside our function signatures!) To add a description with FastMCP, wrap the type annotation in <a target="_blank" href="https://docs.python.org/3/library/typing.html#typing.Annotated"><code>typing.Annotated</code></a> and pass in a <a target="_blank" href="https://docs.pydantic.dev/latest/api/fields/#pydantic.fields.Field"><code>pydantic.Field</code></a> with a description. This tool definition adds a description to just the category field:</p>
 
@@ -113,6 +113,8 @@ Misc = anything that does not fit well into other categories.
 </code></pre>
 
 <p>However, the longer the description, the higher the token cost, so you don't get a long description for free!</p>
+
+<h2>Constraining parameters with types</h2>
 
 <p>See how we're asking the LLM to constrain itself to a single option in a pre-determined list of options? In this case, we can enforce that in the schema, using enum types. With FastMCP, we can specify that in two different ways. The first option is to type the parameter as a <code>Literal</code>:</p>
 
@@ -197,7 +199,7 @@ async def add_expense_cat_b(
 
 <p>Now, we come to the big question: how much do these schema changes help agents when they're choosing what to send into the category field? Obviously, we're not going to see all those made-up categories when we had a bare string with no constraints at all, but which of the better schemas has the greatest impact on getting the agent to pass in the right category?</p>
 
-<h2>Evaluating agent success with schemas</h2>
+<h2>Setting up evaluations</h2>
 
 <p>In my expenses MCP server, I defined multiple tools, each with a different version of the schema:</p>
 
@@ -290,7 +292,7 @@ result = await agent.run(case.prompt)
 
 <p>Each time the agent ran, I inspected the tool calls to verify whether it had issued a tool call at all, and whether the tool call arguments matched my desired arguments. I recorded the results in both a JSON file and more human-readable Markdown file.</p>
 
-<h2>Evaluation results for category schema</h2>
+<h2>Evaluation results: category</h2>
 
 <p>For the four category variants, these are the results across the 17 cases:</p>
 
@@ -311,7 +313,7 @@ result = await agent.run(case.prompt)
 
 <p>You might be thinking, "hey, clearly stricter schemas are always better!" Alas, the story gets murkier.</p>
 
-<h2>Date schema variants</h2>
+<h2>Evaluation results: date</h2>
 
 <p>Remember that our <code>add_expense</code> tool also has the <code>expense_date</code> parameter, specified as a string in our basic schema. I wanted to make sure that those dates always came in a format that I could easily store in my database as YYYY-MM-DD, so I came up with three stricter schemas.</p>
 
@@ -493,7 +495,7 @@ I’m considering categories like Health &amp; Fitness or Apparel/Beauty since i
 <p>When we are developing MCP servers, we're not necessarily in control of the models powering the agents that call those MCP servers. Ideally, we're designing tool schemas that are clear and constrained enough so that all the most popular models at all reasoning effort levels will call our tools the way we expect.</p>
 
 
-<h2>A comparison of agent frameworks</h2>
+<h2>Comparing agent frameworks</h2>
 
 <p>We live in a world with hundreds of agent frameworks and coding agent tools. All of them share a common approach: calling tools in a loop until the user's goal is reached. Behind the scenes, agent implementation varies. Some agents attach their own system prompts to your prompt; some agents add in memory and caching; some agents have special built-in reflection and retry loops. So when it comes to calling MCP servers, how much variance might we expect to see?</p>
 
