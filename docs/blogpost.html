@@ -4,11 +4,25 @@
 
 <p><a target="_blank" href="https://modelcontextprotocol.io/">MCP</a> servers contain tools, and each tool is described by its name, description, input parameters, and return type. When an agent is calling a tool, it formulates its call based on <em>only</em> that metadata; it does not know anything about the internals of a tool. For my <a target="_blank" href="https://pyai.events/">PyAI</a> talk last week, I investigated this hypothesis:</p>
 
-<pre>If we use stricter types for our MCP tool schemas, then the agents calling those tools will be more successful.</pre>
+<p style="border-left: 4px solid #ccc; padding: 0.5em 1em; margin: 1em 0; font-style: italic; color: #555;">If we use stricter types for MCP tool schemas, then agents calling those tools will be more successful.</p>
 
 <p>This was a hypothesis based on my personal experience over the last year of developing with agents and MCP servers, where I'd started with MCP servers with very minimal schemas, witnessed agents failing to call them correctly, and then iterated on the schemas to improve tool-calling success. I thought for sure that my hypothesis would be validated with flying colors. Let's see what I discovered instead...</p>
 
-<h2>A basic MCP tool and schema</h2>
+<strong>Table of contents:</strong>
+<ol style="margin-top: 4px;">
+  <li><a href="#basic-tool">A basic MCP tool and schema</a></li>
+  <li><a href="#descriptions">Annotating parameters with descriptions</a></li>
+  <li><a href="#types">Constraining parameters with types</a></li>
+  <li><a href="#eval-setup">Setting up evaluations</a></li>
+  <li><a href="#eval-category">Evaluation results: category</a></li>
+  <li><a href="#eval-date">Evaluation results: date</a></li>
+  <li><a href="#cross-model">Cross-model evaluations</a></li>
+  <li><a href="#reasoning">Impact of reasoning effort</a></li>
+  <li><a href="#frameworks">Comparing agent frameworks</a></li>
+  <li><a href="#takeaways">Takeaways</a></li>
+</ol>
+
+<h2 id="basic-tool">A basic MCP tool and schema</h2>
 
 <p>For this experiment, I built an MCP server that can add expenses to a database. My <code>add_expense</code> tool needs four pieces of information:
 <ul>
@@ -58,7 +72,7 @@ async def add_expense(
 
 <p>Now let's explore different ways to enhance the generated schemas, and evaluate whether those better schemas improve agent success.</p>
 
-<h2>Annotating parameters with descriptions</h2>
+<h2 id="descriptions">Annotating parameters with descriptions</h2>
 
 <p>The first step that I always recommend to developers is to annotate each parameter with a <strong>description</strong>. Any LLM that is using the tool will see the description, and will alter their behavior based off the guidance inside. (We are basically doing prompt engineering inside our function signatures!) To add a description with FastMCP, wrap the type annotation in <a target="_blank" href="https://docs.python.org/3/library/typing.html#typing.Annotated"><code>typing.Annotated</code></a> and pass in a <a target="_blank" href="https://docs.pydantic.dev/latest/api/fields/#pydantic.fields.Field"><code>pydantic.Field</code></a> with a description. This tool definition adds a description to just the category field:</p>
 
@@ -78,8 +92,6 @@ async def add_expense_cat_b(
     ],
     description: str,
 ):</code></pre>
-<p style="font-size: 0.85em;">See full code in <a target="_blank" href="https://github.com/pamelafox/py-ai-mcp-tool-schemas/blob/main/servers/expenses_mcp.py">expenses_mcp.py</a>.</p>
-
 
 <p>With that change, the generated JSON schema now includes the description:</p>
 
@@ -98,7 +110,10 @@ async def add_expense_cat_b(
 <p>The description can be quite long - and in fact, my actual description became a lot longer to guide the LLM when faced with ambiguous cases:</p>
   
 <pre class="language-text"><code>
-Choose the closest category for the expense. Do not ask follow-up questions just to disambiguate the category; pick the best fit using the description and common sense. If truly unclear, use Misc.
+Choose the closest category for the expense.
+Do not ask follow-up questions just to disambiguate the category;
+pick the best fit using the description and common sense.
+If truly unclear, use Misc.
 
 Heuristics: Food & drink = meals, groceries, coffee, restaurants, snacks;
 Transit and Fuel = rideshare, taxi, gas, parking, public transit, tolls;
@@ -114,7 +129,7 @@ Misc = anything that does not fit well into other categories.
 
 <p>However, the longer the description, the higher the token cost, so you don't get a long description for free!</p>
 
-<h2>Constraining parameters with types</h2>
+<h2 id="types">Constraining parameters with types</h2>
 
 <p>See how we're asking the LLM to constrain itself to a single option in a pre-determined list of options? In this case, we can enforce that in the schema, using enum types. With FastMCP, we can specify that in two different ways. The first option is to type the parameter as a <code>Literal</code>:</p>
 
@@ -130,7 +145,6 @@ async def add_expense_cat_b(
     description: str,
 ):
 </code></pre>
-<p style="font-size: 0.85em;">See full code in <a target="_blank" href="https://github.com/pamelafox/py-ai-mcp-tool-schemas/blob/main/servers/expenses_mcp.py">expenses_mcp.py</a>.</p>
 
 <p>The second option is to type the parameter as an <code>Enum</code>:</p>
 
@@ -149,7 +163,6 @@ async def add_expense_cat_b(
     description: str,
 ):
 </code></pre>
-<p style="font-size: 0.85em;">See full code in <a target="_blank" href="https://github.com/pamelafox/py-ai-mcp-tool-schemas/blob/main/servers/expenses_mcp.py">expenses_mcp.py</a>.</p>
 
 <p>Both of those options result in the <em>same</em> generated JSON schema for the category parameter:</p>
 
@@ -162,9 +175,9 @@ async def add_expense_cat_b(
     ]
 }</code></pre>
 
-<p>Interestingly, FastMCP used to generate a different JSON schema for the <code>Enum</code> case that used "references", but multiple models error'ed when they saw that schema, so FastMCP simplified both cases to output the flat enum array.</p>
+<p>Fun fact: For the <code>Enum</code> case, FastMCP used to generate a different JSON schema that used "references", but multiple models error'ed when they saw that schema. FastMCP decided to simplify both cases to always output the flat enum array to reduce model errors.</p>
 
-<p>We can combine these approaches, wrapping an enum with a description, like so:</p>
+<p>We can combine these approaches, wrapping an <code>Enum</code> with a description, like so:</p>
 
 <pre class="language-python"><code>category: Annotated[
     Category,
@@ -197,9 +210,9 @@ async def add_expense_cat_b(
       rideshare, gas, parking; ..."
 }</code></pre>
 
-<p>Now, we come to the big question: how much do these schema changes help agents when they're choosing what to send into the category field? Obviously, we're not going to see all those made-up categories when we had a bare string with no constraints at all, but which of the better schemas has the greatest impact on getting the agent to pass in the right category?</p>
+<p>Any constraint should beat a bare string for something as free-form as category — but which of these schemas has the <em>greatest</em> impact on getting the agent to pass in the right one? To find out, I set up a series of evaluations.</p>
 
-<h2>Setting up evaluations</h2>
+<h2 id="eval-setup">Setting up evaluations</h2>
 
 <p>In my expenses MCP server, I defined multiple tools, each with a different version of the schema:</p>
 
@@ -210,9 +223,8 @@ def add_expense_cat_c(category: Literal["Food & drink", ...], ...): ...
 def add_expense_cat_d(category: Category, ...): ...
 
 def add_expense_cat_e(category: Annotated[Category, Field(description="...")], ...): ...</code></pre>
-<p style="font-size: 0.85em;">See full code in <a target="_blank" href="https://github.com/pamelafox/py-ai-mcp-tool-schemas/blob/main/servers/expenses_mcp.py">expenses_mcp.py</a>.</p>
 
-<p>Next, I created an agent using <a target="_blank" href="https://ai.pydantic.dev/">Pydantic AI</a> and pointed it to my local expenses MCP server. Simplified code:</p>
+<p>Next, I created an agent using <a target="_blank" href="https://ai.pydantic.dev/">Pydantic AI</a> and pointed it to my local expenses MCP server. Here's simplified code:</p>
 
 <pre class="language-python"><code>server = MCPServerStreamableHTTP(url="http://localhost:8000/mcp")
 
@@ -292,20 +304,20 @@ result = await agent.run(case.prompt)
 
 <p>Each time the agent ran, I inspected the tool calls to verify whether it had issued a tool call at all, and whether the tool call arguments matched my desired arguments. I recorded the results in both a JSON file and more human-readable Markdown file.</p>
 
-<h2>Evaluation results: category</h2>
+<h2 id="eval-category">Evaluation results: category</h2>
 
 <p>For the four category variants, these are the results across the 17 cases:</p>
 
-<table style="font-size: 0.6em;">
-        <thead>
-            <tr><th></th><th><code>Annotated[str]</code></th><th><code>Literal</code></th><th><code>Enum</code></th><th><code>Annotated[Enum]</code></th></tr>
-        </thead>
-        <tbody>
-            <tr><td><strong>Was tool called?</strong></td><td data-value="15" style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">15/17</td><td data-value="16" style="background-color: rgb(244, 244, 190); color: rgb(34, 34, 34);">16/17</td><td data-value="16" style="background-color: rgb(244, 244, 190); color: rgb(34, 34, 34);">16/17</td><td style="font-weight: bold; background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);" data-value="17">17/17</td></tr>
-            <tr><td><strong>When called, did category match expected?</strong></td><td data-value="14" style="background-color: rgb(244, 244, 190); color: rgb(34, 34, 34);">14/15</td><td data-value="13" style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">13/16</td><td data-value="13" style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">13/16</td><td style="font-weight: bold; background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);" data-value="15">15/17</td></tr>
-            <tr><td><strong>Schema size (avg tokens)</strong></td><td style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">374</td><td style="background-color: rgb(199, 244, 190); color: rgb(34, 34, 34);">412</td><td style="background-color: rgb(202, 244, 190); color: rgb(34, 34, 34);">424</td><td style="font-weight: bold; background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">836</td></tr>
-        </tbody>
-    </table>
+<table>
+    <thead>
+        <tr><th></th><th><code>Annotated[str]</code></th><th><code>Literal</code></th><th><code>Enum</code></th><th><code>Annotated[Enum]</code></th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>Was tool called?</strong></td><td data-value="15" style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">15/17</td><td data-value="16" style="background-color: rgb(244, 244, 190); color: rgb(34, 34, 34);">16/17</td><td data-value="16" style="background-color: rgb(244, 244, 190); color: rgb(34, 34, 34);">16/17</td><td style="font-weight: bold; background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);" data-value="17">17/17</td></tr>
+        <tr><td><strong>When called, did category match expected?</strong></td><td data-value="14" style="background-color: rgb(244, 244, 190); color: rgb(34, 34, 34);">14/15</td><td data-value="13" style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">13/16</td><td data-value="13" style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">13/16</td><td style="font-weight: bold; background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);" data-value="15">15/17</td></tr>
+        <tr><td><strong>Schema size (avg tokens)</strong></td><td style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">374</td><td style="background-color: rgb(199, 244, 190); color: rgb(34, 34, 34);">412</td><td style="background-color: rgb(202, 244, 190); color: rgb(34, 34, 34);">424</td><td style="font-weight: bold; background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">836</td></tr>
+    </tbody>
+</table>
   
 <p>There's no clear winner amongst the first three schemas. For the first schema, where we just provided a description, the agent was more likely to decide not to call the tool at all, and instead respond with a clarifying question, like "could you please provide a category?". That may be desirable for some scenarios, to encourage agents to ask users in the face of ambiguity, but if we believe that we've provided enough information in the schema for the agent to make a clear choice, then our schema has failed. For the middle two schemas, where we provided just the enum options with no description, the agent was more likely to call the tool, but it selected the wrong category more often. That makes sense, since the schema lacked the description with the additional guidance.</p>
 
@@ -313,7 +325,7 @@ result = await agent.run(case.prompt)
 
 <p>You might be thinking, "hey, clearly stricter schemas are always better!" Alas, the story gets murkier.</p>
 
-<h2>Evaluation results: date</h2>
+<h2 id="eval-date">Evaluation results: date</h2>
 
 <p>Remember that our <code>add_expense</code> tool also has the <code>expense_date</code> parameter, specified as a string in our basic schema. I wanted to make sure that those dates always came in a format that I could easily store in my database as YYYY-MM-DD, so I came up with three stricter schemas.</p>
 
@@ -322,7 +334,6 @@ result = await agent.run(case.prompt)
 <pre class="language-python"><code>expense_date: Annotated[
     str, "Date in YYYY-MM-DD format"
 ]</code></pre>
-<p style="font-size: 0.85em;">See full code in <a target="_blank" href="https://github.com/pamelafox/py-ai-mcp-tool-schemas/blob/main/servers/expenses_mcp.py">expenses_mcp.py</a>.</p>
 
 <p>As a reminder, that generates this JSON schema:</p>
 
@@ -334,7 +345,6 @@ result = await agent.run(case.prompt)
 <p>Then I discovered that FastMCP supports <code>date</code> as a type for tool parameters, so I added that variant:</p>
 
 <pre class="language-python"><code>expense_date: date</code></pre>
-<p style="font-size: 0.85em;">See full code in <a target="_blank" href="https://github.com/pamelafox/py-ai-mcp-tool-schemas/blob/main/servers/expenses_mcp.py">expenses_mcp.py</a>.</p>
 
 <p>That results in this JSON schema:</p>
 
@@ -360,7 +370,7 @@ result = await agent.run(case.prompt)
 
 <p>Here are the evaluation results running the Pydantic AI agent with gpt-4.1-mini across the 17 cases and 4 schema variants, including the bare string:</p>
 
-<table style="font-size: 0.6em; table-layout: fixed; width: 100%;">
+<table style="table-layout: fixed; width: 100%;">
     <colgroup>
         <col style="width: 30%">
     </colgroup>
@@ -380,7 +390,7 @@ result = await agent.run(case.prompt)
 
 <p>You might be wondering about all the cases where the agent failed to suggest the right date. All of those failures were due to date math. For example, when the user says "Two Mondays ago I spent $8.75 on coffee.", the agent calculated the date as one Monday ago instead of two Mondays ago. If users were truly entering their data like this, then it might be a good idea to equip the server with some date calculation tools, or give the agent some guidance on when it should ask users to clarify the date.</p>
 
-<h2>Cross-model evaluations</h2>
+<h2 id="cross-model">Cross-model evaluations</h2>
 
 <p>After seeing the results for an agent powered by gpt-4.1-mini, I was super curious to see what would happen with both an older model and a newer model, so I deployed a gpt-4o and a gpt-5.3-codex and ran them through the same evaluations.</p>
 
@@ -410,8 +420,8 @@ result = await agent.run(case.prompt)
 
 <p>But what if the newer model is just smarter than we are? Consider this example input and category choices:</p>
 
-<p style="font-size: 0.7em; margin-bottom: 2px;"><em>"Yesterday I spent $200 on a spa treatment."</em> with <code>Annotated[Enum]</code></p>
-<div style="font-size: 0.6em; margin-top: 0; display: flex; flex-direction: column; gap: 6px;">
+<p style="margin-bottom: 2px;"><em>"Yesterday I spent $200 on a spa treatment."</em> with <code>Annotated[Enum]</code></p>
+<div style="margin-top: 0; display: flex; flex-direction: column; gap: 6px;">
   <div style="display: flex; gap: 10px; align-items: stretch;">
     <div style="background: #e8f5e9; border-radius: 14px; padding: 4px 10px; border: 2px solid #81c784; flex: 1;">
       <strong>gpt-4o</strong><br>🤖 <span style="color:green; font-weight:bold;">Health &amp; Fitness</span> ✅
@@ -454,11 +464,11 @@ result = await agent.run(case.prompt)
 
 <p>But now we're scratching our heads, because gpt-5.3-codex was not the winner across the board, despite being the much newer model. Let's dig deeper.</p>
       
-<h2>Impact of reasoning effort</h2>
+<h2 id="reasoning">Impact of reasoning effort</h2>
       
 <p>The gpt-5.3-codex model is a reasoning model - and reasoning models can have <em>very</em> different outputs based off their reasoning effort level. I ran that evaluation on "medium", the default level, but for that model, the effort can be either "low", "medium", "high", or "xhigh". Here are the results:</p>
 
-<table style="font-size: 0.6em; table-layout: fixed; width: 100%;">
+<table style="table-layout: fixed; width: 100%;">
   <colgroup>
     <col style="width: 35%">
     <col style="width: 16.25%">
@@ -482,20 +492,20 @@ result = await agent.run(case.prompt)
 <p>Since this is a reasoning model, we can actually dig into the reasoning traces, to give us more insight into how we might steer the model more towards our desired category.</p>
 
 <p>Here's how it reasons on "low" mode:</p>
-<p style="background-color:#ccc">
+<p style="border-left: 4px solid #ccc; padding: 0.5em 1em; margin: 1em 0; font-style: italic; color: #555;">
 I’m considering categories like Health &amp; Fitness or Apparel/Beauty since it’s for a spa treatment. There’s ambiguity because spa treatments could fit into personal care or wellness, but I might lean towards Apparel and Beauty. However, Health &amp; Fitness could work too, especially under wellness. I’ll go with one of those!
 </p>
 
 <p>As you can see, it's not even sure which category to select at this level of reasoning - we only see its final selection in the tool call itself. Compare that to "medium" mode:</p>
 
-<p style="background-color:#ccc">The category for this expense is a spa treatment. I’m considering whether it should go under Apparel and Beauty or Health &amp; Fitness. Using some heuristics, personal care fits in Apparel and Beauty, while wellness aligns with Health &amp; Fitness. Since a spa treatment feels more like a beauty or personal care choice, I think I'll choose Apparel and Beauty.</p>
+<p style="border-left: 4px solid #ccc; padding: 0.5em 1em; margin: 1em 0; font-style: italic; color: #555;">The category for this expense is a spa treatment. I'm considering whether it should go under Apparel and Beauty or Health &amp; Fitness. Using some heuristics, personal care fits in Apparel and Beauty, while wellness aligns with Health &amp; Fitness. Since a spa treatment feels more like a beauty or personal care choice, I think I'll choose Apparel and Beauty.</p>
 
 <p>This time, it explicitly decided on the category in its reasoning, and called the tool with the selection. Once again, you might agree with the model's choice here, and change the ground truth itself.</p>
 
 <p>When we are developing MCP servers, we're not necessarily in control of the models powering the agents that call those MCP servers. Ideally, we're designing tool schemas that are clear and constrained enough so that all the most popular models at all reasoning effort levels will call our tools the way we expect.</p>
 
 
-<h2>Comparing agent frameworks</h2>
+<h2 id="frameworks">Comparing agent frameworks</h2>
 
 <p>We live in a world with hundreds of agent frameworks and coding agent tools. All of them share a common approach: calling tools in a loop until the user's goal is reached. Behind the scenes, agent implementation varies. Some agents attach their own system prompts to your prompt; some agents add in memory and caching; some agents have special built-in reflection and retry loops. So when it comes to calling MCP servers, how much variance might we expect to see?</p>
 
@@ -558,7 +568,7 @@ await session.send_and_wait({"prompt": "I bought a sandwich for $12.50."})</code
 
 <p>The success rates are exactly the same across both agents! Now, I will confess that in my first attempt at evaluation, the Copilot SDK agent had an off-by-one error for each date it selected, and I suspect that there may be a UTC date somewhere in the default system prompt. When I re-ran the evaluation at a date where UTC and my timezone (PT) were the same, the dates were all correct. You learn all sorts of things when running evaluations.</p>
 
-<h2>Takeaways</h2>
+<h2 id="takeaways">Takeaways</h2>
 
 <p>I went into this investigation certain that I would see significant improvement from agents when I used stricter types and constraints for the parameter types. I realize now that the models have improved so much and  been so robustly trained for tool calling, that they often do not need the specificity of the stricter types. They mostly need clarity whenever there is ambiguity, and that can come in the way of a string description.</p>
 
