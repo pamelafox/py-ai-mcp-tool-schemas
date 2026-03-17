@@ -2,7 +2,7 @@
       href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
 
-<p>MCP servers contain tools, and each tool is described by its name, description, input parameters, and return type. When an agent is calling a tool, it formulates its call based on <em>only</em> that metadata; it does not know anything about the internals of a tool. For my PyAI talk last week, I investigated this hypothesis:</p>
+<p><a target="_blank" href="https://modelcontextprotocol.io/">MCP</a> servers contain tools, and each tool is described by its name, description, input parameters, and return type. When an agent is calling a tool, it formulates its call based on <em>only</em> that metadata; it does not know anything about the internals of a tool. For my <a target="_blank" href="https://pyai.events/">PyAI</a> talk last week, I investigated this hypothesis:</p>
 
 <pre>If we use stricter types for our MCP tool schemas, then the agents calling those tools will be more successful.</pre>
 
@@ -18,7 +18,7 @@
     <li><strong>description</strong>: A free-form description of the expense
 </ul>
 
-<p>This is what a first attempt at the tool might look like, using the Python FastMCP framework, and a Python type annotation for each parameter:</p>
+<p>This is what a first attempt at the tool might look like, using the Python <a target="_blank" href="https://gofastmcp.com/">FastMCP</a> framework, and a Python type annotation for each parameter:</p>
 
 <pre class="language-python"><code>@mcp.tool
 async def add_expense(
@@ -31,7 +31,7 @@ async def add_expense(
     ...
 </code></pre>
 
-<p>When FastMCP generates the schema based off that function signature, it produces this JSON schema:</p>
+<p>When FastMCP generates the schema based off that function signature, it produces this <a target="_blank" href="https://json-schema.org/">JSON schema</a>:</p>
 
 <pre class="language-json"><code>{
   "name": "add_expense",
@@ -59,7 +59,7 @@ async def add_expense(
 
 <h2>Parameter descriptions</h2>
 
-<p>The first step that I always recommend to developers is to annotate each parameter with a <strong>description</strong>. Any LLM that is using the tool will see the description, and will alter their behavior based off the guidance inside. (We are basically doing prompt engineering inside our function signatures!) To add a description with FastMCP, wrap the type annotation in <code>typing.Annotated</code> and pass in a <code>pydantic.Field</code> with a description. This tool definition adds a description to just the category field:</p>
+<p>The first step that I always recommend to developers is to annotate each parameter with a <strong>description</strong>. Any LLM that is using the tool will see the description, and will alter their behavior based off the guidance inside. (We are basically doing prompt engineering inside our function signatures!) To add a description with FastMCP, wrap the type annotation in <a target="_blank" href="https://docs.python.org/3/library/typing.html#typing.Annotated"><code>typing.Annotated</code></a> and pass in a <a target="_blank" href="https://docs.pydantic.dev/latest/api/fields/#pydantic.fields.Field"><code>pydantic.Field</code></a> with a description. This tool definition adds a description to just the category field:</p>
 
 <pre class="language-python"><code>from pydantic import Field
 from typing import Annotated
@@ -204,12 +204,12 @@ def add_expense_cat_d(category: Category, ...): ...
 
 def add_expense_cat_e(category: Annotated[Category, Field(description="...")], ...): ...</code></pre>
 
-<p>Next, I created an agent using Pydantic AI and pointed it to my local expenses MCP server. Simplified code:</p>
+<p>Next, I created an agent using <a target="_blank" href="https://ai.pydantic.dev/">Pydantic AI</a> and pointed it to my local expenses MCP server. Simplified code:</p>
 
 <pre class="language-python"><code>server = MCPServerStreamableHTTP(url="http://localhost:8000/mcp")
 
 model = OpenAIResponsesModel(
-    "gpt-5.3-codex",
+    "gpt-4.1-mini",
     provider=OpenAIProvider(openai_client=azure_openai_client))
 
 agent = Agent(
@@ -267,7 +267,7 @@ result = await agent.run(case.prompt)
     ...  # 17 cases ➡️
 ]</code></pre>
 
-<p>I ran the agent on each input for each tool schema variant, a total of 17x4 cases, 85 runs total:</p>
+<p>I ran the agent on each input for each tool schema variant, a total of 17x4 cases, 68 runs total:</p>
   
 <pre class="language-python"><code>for variant in ["cat_b", "cat_c", "cat_d", "cat_e"]:
     toolset = server.filtered(
@@ -456,13 +456,13 @@ result = await agent.run(case.prompt)
   </thead>
   <tbody>
     <tr><td><strong>Did category match ground truth?</strong></td><td style="font-weight: bold; background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">100%</td><td style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">88.2%</td><td style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">88.2%</td><td style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">88.2%</td></tr>
-    <tr><td><strong>Did date match ground truth?</strong></td><td style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">94.1%</td><td style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">94.1%</td><td style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">94.1%</td><td style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">94.1%</td></tr>
+    <tr><td><strong>Did date match ground truth?</strong></td><td style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">100%</td><td style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">100%</td><td style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">100%</td><td style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">100%</td></tr>
     <tr><td><strong>Schema size (average tokens)</strong></td><td style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">862</td><td style="background-color: rgb(202, 244, 190); color: rgb(34, 34, 34);">890</td><td style="background-color: rgb(223, 244, 190); color: rgb(34, 34, 34);">939</td><td style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">1114</td></tr>
     <tr><td><strong>Latency (average ms)</strong></td><td style="background-color: rgb(190, 244, 190); color: rgb(34, 34, 34);">7,129</td><td style="background-color: rgb(198, 244, 190); color: rgb(34, 34, 34);">7,474</td><td style="background-color: rgb(231, 244, 190); color: rgb(34, 34, 34);">8,828</td><td style="background-color: rgb(244, 190, 190); color: rgb(34, 34, 34);">11,554</td></tr>
   </tbody>
 </table>
 
-<p>For the category schema variants, we see that the category match percentage drops from 100% to 88% as soon as we go from "low" to "medium" and stays there, while the schema size increases by 250 tokens and the latency increases by 5 seconds.</p>
+<p>For the category schema variants, we see that the category match percentage drops from 100% to 88% as soon as we go from "low" to "medium" and stays there. Meanwhile, higher reasoning effort steadily increases cost and latency: by the time we reach "xhigh", the schema size has grown by 250 tokens and the latency has nearly doubled.</p>
 
 <p>Since this is a reasoning model, we can actually dig into the reasoning traces, to give us more insight into how we might steer the model more towards our desired category.</p>
 
@@ -484,7 +484,7 @@ I’m considering categories like Health &amp; Fitness or Apparel/Beauty since i
 
 <p>We live in a world with hundreds of agent frameworks and coding agent tools. All of them share a common approach: calling tools in a loop until the user's goal is reached. Behind the scenes, agent implementation varies. Some agents attach their own system prompts to your prompt; some agents add in memory and caching; some agents have special built-in reflection and retry loops. So when it comes to calling MCP servers, how much variance might we expect to see?</p>
 
-<p>For my final evaluation, I wrote an agent using the GitHub Copilot SDK, and gave it the same system prompt and MCP server connection as the Pydantic AI agent. The simplified code:</p>
+<p>For my final evaluation, I wrote an agent using the <a target="_blank" href="https://github.com/github/copilot-sdk">GitHub Copilot SDK</a>, and gave it the same system prompt and MCP server connection as the Pydantic AI agent. The simplified code:</p>
 
 <pre class="language-python"><code>client = CopilotClient()
 
@@ -552,6 +552,4 @@ await session.send_and_wait({"prompt": "I bought a sandwich for $12.50."})</code
 
 <p>I learned a lot during this investigation, and hope my approach is useful to you as well. Please share any of your own experience with MCP tool schemas and evaluations with me. Thank you!</p>
 
-
-
-
+<script>hljs.highlightAll();</script>
